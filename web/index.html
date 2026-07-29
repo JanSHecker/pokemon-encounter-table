@@ -27,6 +27,7 @@
         <div class="toolbar-actions">
           <button type="button" id="new-run-button">Neuer Run</button>
           <button type="button" id="add-location-button">Ort hinzufügen</button>
+          <span id="team-count" class="team-badge" title="Links, die gerade gespielt werden"></span>
           <span id="last-updated" class="last-updated"></span>
         </div>
       </div>
@@ -52,6 +53,18 @@
         </div>
         <div id="cap-list" class="cap-list"></div>
       </section>
+
+      <div class="table-toolbar">
+        <label for="sort-select">Sortierung</label>
+        <select id="sort-select" aria-label="Tabelle sortieren">
+          <option value="order">Spielreihenfolge</option>
+          <option value="open">Offene zuerst</option>
+          <option value="caught">Gefangene zuerst</option>
+          <option value="team">Team zuerst</option>
+          <option value="status">Nach Zustand</option>
+        </select>
+        <span class="hint">Ein Klick auf „Ort“ oder „Status“ sortiert ebenfalls</span>
+      </div>
 
       <div class="table-wrap">
         <table>

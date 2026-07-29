@@ -1,6 +1,6 @@
 # Gemeinsame Pokémon-Encounter-Tabelle
 
-Gekoppelte Nuzlocke-Soullink-Tabelle für **Marc**, **Nicolai** und **KNEV** – über mehrere
+Gekoppelte Nuzlocke-Soullink-Tabelle für **Marc**, **Nicolai** und **Knev** – über mehrere
 Editionen und Runs hinweg.
 
 - Live-Tabelle: https://bronze-brawl.de/encounter-table/
@@ -13,6 +13,12 @@ Unterstützte Spiele: **Pokémon Platin** und **Pokémon Schwarz 2 / Weiß 2**.
 
 - Ein neuer Run enthält **alle Orte des Spiels** in Spielreihenfolge als offene Zeilen.
 - Beim Eintragen stehen nur die Pokémon zur Auswahl, die **an diesem Ort fangbar** sind.
+- Die gerade gespielten Links sind **hervorgehoben** (★, grüner Rand); der Rest ist die Box.
+  Maximal sechs gleichzeitig, ein Zähler oben zeigt den Stand.
+- Zeilenfarben auf einen Blick: **grün** im Team, **weiß** lebend in der Box, **grau** Encounter
+  verloren, **rot** tot.
+- **Sortierung** umschaltbar – Spielreihenfolge, Offene zuerst, Gefangene zuerst, Team zuerst oder
+  nach Zustand gruppiert. Die Auswahl bleibt im Browser gespeichert.
 - Ein gemeldeter Tod **koppelt automatisch die ganze Reihe** – alle drei gelten als tot.
 - Wird eine Zeile auf **Verloren** gesetzt, tragen alle drei „Encounter verloren“.
 - Die **Level-Caps** des Spiels stehen über der Tabelle, das jeweils nächste ist hervorgehoben.
@@ -116,5 +122,7 @@ Nützliche Parameter und Header:
   bestätigten Toden getrennt. Ist jemand in der Reihe tot, hat der Tod Vorrang.
 - `responsible_player` ist der Spieler, dessen Pokémon gestorben ist bzw. der den Encounter
   vergeigt hat.
+- `in_team` markiert die Links, die gerade gespielt werden. Höchstens sechs gleichzeitig, nur
+  vollständig gefangene Reihen – stirbt oder verliert eine Reihe, fliegt sie automatisch raus.
 - Spieler werden intern als IDs geführt (`marc`, `nicolai`, `knev`); die Anzeigenamen stehen in
   `players` und lassen sich ändern, ohne Zeilen anzufassen.

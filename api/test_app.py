@@ -144,7 +144,7 @@ def test_legacy_state_migrates_to_players_and_picks(legacy_client):
     assert payload["players"] == [
         {"id": "marc", "name": "Marc"},
         {"id": "nicolai", "name": "Nicolai"},
-        {"id": "knev", "name": "KNEV"},
+        {"id": "knev", "name": "Knev"},
     ]
 
     first = payload["encounters"][0]
@@ -162,6 +162,21 @@ def test_legacy_lost_encounter_keeps_its_outcome(legacy_client):
     assert lost["outcome"] == "failed"
     assert lost["picks"]["knev"]["name"] == "Encounter verloren"
     assert lost["picks"]["knev"]["species"] is None
+
+
+def test_shouted_legacy_name_is_corrected_in_v3_data(client, data_file):
+    client.get("/encounters")  # legt den Store ueberhaupt erst an
+    stored = json.loads(data_file.read_text(encoding="utf-8"))
+    stored["players"] = [
+        {"id": "marc", "name": "Marc"},
+        {"id": "nicolai", "name": "Nicolai"},
+        {"id": "knev", "name": "KNEV"},
+    ]
+    data_file.write_text(json.dumps(stored, ensure_ascii=False), encoding="utf-8")
+
+    names = [player["name"] for player in client.get("/runs").json()["players"]]
+
+    assert names == ["Marc", "Nicolai", "Knev"]
 
 
 def test_migration_is_written_back_once(legacy_client, data_file):
@@ -293,6 +308,78 @@ def test_outcome_follows_the_picks(client):
         json={"picks": {"knev": {"species": None, "name": "Encounter verloren"}}},
     )
     assert lost.json()["outcome"] == "failed"
+
+
+# ----------------------------------------------------------- Aktive Links ---
+
+
+def catch_row(client, row_id, species="starly", name="Staralili"):
+    """Reihe vollstaendig fuellen, damit sie ins Team darf."""
+    return client.patch(
+        f"/encounters/{row_id}?force=true",
+        headers=AUTHOR,
+        json={"picks": {player: {"species": species, "name": name} for player in ("marc", "nicolai", "knev")}},
+    )
+
+
+def test_a_caught_row_can_join_the_team(client):
+    catch_row(client, "sinnoh-route-201")
+
+    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
+
+    assert response.status_code == 200
+    assert response.json()["in_team"] is True
+    assert client.get("/runs").json()["runs"][0]["team_count"] == 1
+
+
+def test_an_unfinished_row_cannot_join_the_team(client):
+    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
+
+    assert response.status_code == 422
+
+
+def test_the_team_holds_at_most_six_links(client):
+    # Der Mini-Katalog hat zwei Orte, der Rest kommt als Freitext-Zeile dazu.
+    for index in range(7):
+        row_id = f"platz-{index}"
+        client.post(
+            "/encounters",
+            headers=AUTHOR,
+            json={
+                "id": row_id,
+                "encounter": f"Platz {index}",
+                "picks": {player: {"name": "Irgendwas"} for player in ("marc", "nicolai", "knev")},
+            },
+        )
+        response = client.patch(f"/encounters/{row_id}", headers=AUTHOR, json={"in_team": True})
+        expected = 200 if index < 6 else 409
+        assert response.status_code == expected, f"Platz {index}: {response.json()}"
+
+    assert client.get("/runs").json()["runs"][0]["team_count"] == 6
+    assert "voll" in response.json()["detail"]
+
+
+def test_a_death_takes_the_link_out_of_the_team(client):
+    catch_row(client, "sinnoh-route-201")
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
+
+    response = client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"picks": {"marc": {"status": "dead"}}},
+    )
+
+    assert response.json()["outcome"] == "dead"
+    assert response.json()["in_team"] is False
+
+
+def test_a_lost_row_leaves_the_team_as_well(client):
+    catch_row(client, "sinnoh-route-201")
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
+
+    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"outcome": "failed"})
+
+    assert response.json()["in_team"] is False
 
 
 # ------------------------------------------------------------ Validierung ---

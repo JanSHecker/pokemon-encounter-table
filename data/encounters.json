@@ -11,7 +11,7 @@
     },
     {
       "id": "knev",
-      "name": "KNEV"
+      "name": "Knev"
     }
   ],
   "current_run_id": "run-2",
@@ -28,12 +28,13 @@
         {
           "id": "starter",
           "location_id": "starter",
-          "order": 0,
+          "order": 1,
           "encounter": "Starter",
           "note": "KNEV hat seinen Starter verloren – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "knev",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "chimchar",
@@ -55,12 +56,13 @@
         {
           "id": "route-202",
           "location_id": "sinnoh-route-202",
-          "order": 0,
+          "order": 4,
           "encounter": "Route 202",
           "note": "Mark hat sein Sheinux getötet – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "marc",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "shinx",
@@ -82,12 +84,13 @@
         {
           "id": "lake-verity",
           "location_id": "lake-verity",
-          "order": 0,
+          "order": 3,
           "encounter": "See der Wahrheit",
           "note": "Nikolai hat sein Staralili verloren – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "nicolai",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "bidoof",
@@ -109,12 +112,13 @@
         {
           "id": "route-204",
           "location_id": "sinnoh-route-204",
-          "order": 0,
+          "order": 9,
           "encounter": "Route 204",
           "note": "Nikolai hat sein Knospi getötet – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "nicolai",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "zubat",
@@ -136,12 +140,13 @@
         {
           "id": "ruinental",
           "location_id": "ravaged-path",
-          "order": 0,
+          "order": 10,
           "encounter": "Ruinental",
           "note": "Als Tunnel bei Route 204 interpretiert. KNEV hat sein Enton getötet – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "knev",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "psyduck",
@@ -163,12 +168,13 @@
         {
           "id": "route-203",
           "location_id": "sinnoh-route-203",
-          "order": 0,
+          "order": 5,
           "encounter": "Route 203",
           "note": "Encounter verloren – von Mark verkackt.",
           "responsible_player": "marc",
           "outcome": "failed",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": null,
@@ -190,12 +196,13 @@
         {
           "id": "erzelinger-tunnel",
           "location_id": "oreburgh-gate",
-          "order": 0,
+          "order": 6,
           "encounter": "Erzelinger Tunnel",
           "note": "Mark hat sein Kleinstein verloren – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "marc",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "geodude",
@@ -217,12 +224,13 @@
         {
           "id": "erzelingen-mine",
           "location_id": "oreburgh-mine",
-          "order": 0,
+          "order": 7,
           "encounter": "Erzelingen-Mine",
           "note": "Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
           "responsible_player": "knev",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "onix",
@@ -244,12 +252,13 @@
         {
           "id": "route-207",
           "location_id": "sinnoh-route-207",
-          "order": 0,
+          "order": 8,
           "encounter": "Route 207",
           "note": "Als Route über Erzelingen interpretiert. Nikolai hat sein Machollo getötet – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "nicolai",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "ponyta",
@@ -271,12 +280,13 @@
         {
           "id": "windkraftwerk",
           "location_id": "valley-windworks",
-          "order": 0,
+          "order": 11,
           "encounter": "Windkraftwerk",
           "note": "Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
           "responsible_player": "knev",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "buizel",
@@ -298,12 +308,13 @@
         {
           "id": "route-205",
           "location_id": "sinnoh-route-205",
-          "order": 0,
+          "order": 12,
           "encounter": "Route 205",
           "note": "Encounter verloren – von Mark verkackt.",
           "responsible_player": "marc",
           "outcome": "failed",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": null,
@@ -325,12 +336,13 @@
         {
           "id": "route-218",
           "location_id": "sinnoh-route-218",
-          "order": 0,
+          "order": 30,
           "encounter": "Route 218",
           "note": "Mark hat sein Garados (aus dem Karpador-Encounter) getötet – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "marc",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "magikarp",
@@ -352,12 +364,13 @@
         {
           "id": "ewigwald",
           "location_id": "eterna-forest",
-          "order": 0,
+          "order": 13,
           "encounter": "Ewigwald",
           "note": "Als Ewigwald interpretiert; „Cricketot“ als Zirpurze eingetragen. Nikolai hat sein Burmy verloren – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "nicolai",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "kricketot",
@@ -379,12 +392,13 @@
         {
           "id": "route-211",
           "location_id": "sinnoh-route-211",
-          "order": 0,
+          "order": 15,
           "encounter": "Route 211",
           "note": "Pokémon-Namen aus der Sprachnachricht normalisiert: „Mascholo“ → Machollo, „Medite“ → Meditie. Mark hat sein Meditie verloren – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "marc",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "meditite",
@@ -406,12 +420,13 @@
         {
           "id": "kraterberg",
           "location_id": "mt-coronet",
-          "order": 0,
+          "order": 41,
           "encounter": "Kraterberg",
           "note": "Als Kraterberg interpretiert; „Bronzill“ als Bronzel eingetragen. Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
           "responsible_player": "knev",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "bronzor",
@@ -433,12 +448,13 @@
         {
           "id": "route-206",
           "location_id": "sinnoh-route-206",
-          "order": 0,
+          "order": 16,
           "encounter": "Route 206",
           "note": "Pokémon-Namen normalisiert: „Stankie“ → Skunkapuh, „Mascholo“ → Machollo, „Punita“ → Ponita. Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
           "responsible_player": "knev",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "machop",
@@ -460,12 +476,13 @@
         {
           "id": "bizarre-hoehle",
           "location_id": "wayward-cave",
-          "order": 0,
+          "order": 17,
           "encounter": "Bizarre Höhle",
           "note": "Mark hat sein Kaumalat getötet – die gesamte Encounter-Reihe ist tot.",
           "responsible_player": "marc",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "gible",
@@ -487,12 +504,13 @@
         {
           "id": "alte-villa",
           "location_id": "old-chateau",
-          "order": 0,
+          "order": 14,
           "encounter": "Alte Villa",
           "note": "Pokémon-Namen normalisiert: „Roturm“ → Rotom. Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
           "responsible_player": "knev",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "rotom",
@@ -514,12 +532,13 @@
         {
           "id": "route-208",
           "location_id": "sinnoh-route-208",
-          "order": 0,
+          "order": 18,
           "encounter": "Route 208",
           "note": "Neue Encounter verloren – von Nikolai verkackt. Pokémonname noch nicht genannt; nicht mit Route 206 verknüpft.",
           "responsible_player": "nicolai",
           "outcome": "failed",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": null,
@@ -552,12 +571,13 @@
         {
           "id": "starter",
           "location_id": "starter",
-          "order": 0,
+          "order": 1,
           "encounter": "Starter",
           "note": "Run 2 gestartet – dieselben Starter wie in Run 1; Starter bei Route 201.",
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "chimchar",
@@ -579,12 +599,13 @@
         {
           "id": "route-202",
           "location_id": "sinnoh-route-202",
-          "order": 0,
+          "order": 4,
           "encounter": "Route 202",
           "note": null,
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "bidoof",
@@ -606,12 +627,13 @@
         {
           "id": "lake-verity",
           "location_id": "lake-verity",
-          "order": 0,
+          "order": 3,
           "encounter": "See der Wahrheit",
           "note": "Als Lake Verity interpretiert.",
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "starly",
@@ -633,12 +655,13 @@
         {
           "id": "route-208",
           "location_id": "sinnoh-route-208",
-          "order": 0,
+          "order": 18,
           "encounter": "Route 208",
           "note": "Alle drei haben Karpador.",
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "magikarp",
@@ -660,12 +683,13 @@
         {
           "id": "route-204",
           "location_id": "sinnoh-route-204",
-          "order": 0,
+          "order": 9,
           "encounter": "Route 204",
           "note": "„Kricketot“ als Zirpurze eingetragen; „Chings“ als Sheinux interpretiert.",
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "shinx",
@@ -687,12 +711,13 @@
         {
           "id": "route-203",
           "location_id": "sinnoh-route-203",
-          "order": 0,
+          "order": 5,
           "encounter": "Route 203",
           "note": "Encounter verloren – von Mark verkackt.",
           "responsible_player": "marc",
           "outcome": "failed",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": null,
@@ -714,12 +739,13 @@
         {
           "id": "erzelinger-tunnel",
           "location_id": "oreburgh-gate",
-          "order": 0,
+          "order": 6,
           "encounter": "Erzelinger Tunnel",
           "note": "Encounter verloren – von Mark verkackt.",
           "responsible_player": "marc",
           "outcome": "failed",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": null,
@@ -741,12 +767,13 @@
         {
           "id": "ruinental",
           "location_id": "ravaged-path",
-          "order": 0,
+          "order": 10,
           "encounter": "Ruinental",
           "note": "Als Ravaged Path interpretiert.",
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "zubat",
@@ -768,12 +795,13 @@
         {
           "id": "route-207",
           "location_id": "sinnoh-route-207",
-          "order": 0,
+          "order": 8,
           "encounter": "Route 207",
           "note": null,
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "machop",
@@ -795,12 +823,13 @@
         {
           "id": "erzelingen-mine",
           "location_id": "oreburgh-mine",
-          "order": 0,
+          "order": 7,
           "encounter": "Erzelingen-Mine",
           "note": "Encounter verloren – von KNEV verkackt.",
           "responsible_player": "knev",
           "outcome": "failed",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": null,
@@ -822,12 +851,13 @@
         {
           "id": "windkraftwerk",
           "location_id": "valley-windworks",
-          "order": 0,
+          "order": 11,
           "encounter": "Windkraftwerk",
           "note": "„Bammelin“ als Bamelin, „paar Chirizo“ als Pachirisu und „Kombi“ korrigiert zu Wadribie (dreiteilige Biene).",
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "pachirisu",
@@ -849,12 +879,13 @@
         {
           "id": "route-205",
           "location_id": "sinnoh-route-205",
-          "order": 0,
+          "order": 12,
           "encounter": "Route 205",
           "note": "„Scheider aus“ als Schalellos und „Wartrebi“ als Wadribie eingetragen.",
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "combee",
@@ -876,12 +907,13 @@
         {
           "id": "ewigwald",
           "location_id": "eterna-forest",
-          "order": 0,
+          "order": 13,
           "encounter": "Ewigwald",
           "note": "Nikolai hat sein Kricketot/Zirpurze getötet – damit ist die gesamte Encounter-Reihe tot; auch Marks Zirpurze und KNEVs Haspiror. Ruhe in Frieden.",
           "responsible_player": "nicolai",
           "outcome": "dead",
           "postgame": false,
+          "in_team": false,
           "picks": {
             "marc": {
               "species": "kricketot",

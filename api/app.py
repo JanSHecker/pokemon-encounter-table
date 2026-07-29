@@ -24,8 +24,12 @@ RunStatus = Literal["active", "completed"]
 DEFAULT_PLAYERS = [
     {"id": "marc", "name": "Marc"},
     {"id": "nicolai", "name": "Nicolai"},
-    {"id": "knev", "name": "KNEV"},
+    {"id": "knev", "name": "Knev"},
 ]
+
+# Bis Schema v2 war der Anzeigename die Identitaet, entsprechend falsch geschrieben.
+# Einmalige Korrektur beim Laden; danach ist Umbenennen eine reine Datenaenderung.
+LEGACY_DISPLAY_NAMES = {"Mark": "Marc", "Nikolai": "Nicolai", "KNEV": "Knev"}
 DEFAULT_GAME_ID = "platinum"
 
 # Freitext, der einen verlorenen Encounter markiert (Alt-Daten und weiterhin erlaubt).
@@ -57,6 +61,10 @@ LEGACY_LOCATION_IDS = {
 LEGACY_SEA_ROUTES = {"220", "223", "226", "230"}
 
 HISTORY_LIMIT = 500
+
+# Ein Link belegt bei allen drei Spielern denselben Teamplatz, also gilt schlicht
+# die Teamgroesse.
+TEAM_SIZE = 6
 
 app = FastAPI(
     title="Pokémon Encounter API",
@@ -176,6 +184,7 @@ class EncounterRow(BaseModel):
     responsible_player: str | None = Field(default=None, max_length=40)
     outcome: Outcome = "pending"
     postgame: bool = False
+    in_team: bool = False
     picks: dict[str, Pick] = Field(default_factory=dict)
 
 
@@ -186,6 +195,7 @@ class EncounterPatch(BaseModel):
     note: str | None = Field(default=None, max_length=500)
     responsible_player: str | None = Field(default=None, max_length=40)
     outcome: Outcome | None = None
+    in_team: bool | None = None
     picks: dict[str, PickPatch] | None = None
 
 
@@ -243,6 +253,7 @@ class RunSummary(BaseModel):
     completed_at: str | None
     progress: int
     encounter_count: int
+    team_count: int
     pending_count: int
     caught_count: int
     failed_count: int
@@ -332,6 +343,7 @@ def normalize_encounter(raw: dict[str, Any], player_ids: list[str], game_id: str
     row.setdefault("note", None)
     row.setdefault("order", 0)
     row.setdefault("postgame", False)
+    row.setdefault("in_team", False)
 
     if "picks" not in row:
         # Schema v2: mark/nikolai/knev als feste Felder plus *_status.
@@ -349,6 +361,12 @@ def normalize_encounter(raw: dict[str, Any], player_ids: list[str], game_id: str
         row.setdefault("location_id", legacy_location_id(str(row.get("id", ""))))
 
     row.setdefault("location_id", None)
+
+    # Alt-Zeilen kennen ihre Position im Spielverlauf nicht - die steht im Katalog.
+    if not row.get("order") and row.get("location_id"):
+        location = catalog_locations(game_id).get(row["location_id"])
+        if location:
+            row["order"] = location["order"]
 
     responsible = row.get("responsible_player")
     if responsible in LEGACY_PLAYER_LABELS:
@@ -395,11 +413,10 @@ def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
             {"id": LEGACY_PLAYER_LABELS.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")), "name": name}
             for name in players
         ]
-        by_id = {player["id"]: player for player in players}
-        for default in DEFAULT_PLAYERS:
-            if default["id"] in by_id:
-                by_id[default["id"]]["name"] = default["name"]
-    players = [Player.model_validate(player).model_dump() for player in players]
+    players = [
+        Player.model_validate(player).model_dump() | {"name": LEGACY_DISPLAY_NAMES.get(player["name"], player["name"])}
+        for player in players
+    ]
     player_ids = [player["id"] for player in players]
 
     runs_raw = raw.get("runs")
@@ -646,6 +663,7 @@ def collection_for(state: dict[str, Any], run: dict[str, Any]) -> dict[str, Any]
 def row_counts(rows: list[dict[str, Any]]) -> dict[str, int]:
     return {
         "encounter_count": len(rows),
+        "team_count": sum(bool(row.get("in_team")) for row in rows),
         "pending_count": sum(row["outcome"] == "pending" for row in rows),
         "caught_count": sum(row["outcome"] == "caught" for row in rows),
         "failed_count": sum(row["outcome"] == "failed" for row in rows),
@@ -694,6 +712,30 @@ def validate_species(run: dict[str, Any], row: dict[str, Any], picks: dict[str, 
                     f"(Spieler '{player_id}'). Mit force=true trotzdem speichern."
                 ),
             )
+
+
+def require_team_slot(run: dict[str, Any], row: dict[str, Any]) -> None:
+    """Mehr als sechs Links gleichzeitig gehen nicht - erst einer raus."""
+    active = [entry for entry in run["encounters"] if entry.get("in_team") and entry["id"] != row["id"]]
+    if len(active) >= TEAM_SIZE:
+        dabei = ", ".join(entry["encounter"] for entry in active)
+        raise HTTPException(
+            status_code=409,
+            detail=f"Das Team ist voll ({TEAM_SIZE} Links). Erst einen herausnehmen. Aktuell dabei: {dabei}.",
+        )
+
+
+def apply_team_rules(run: dict[str, Any], row: dict[str, Any], requested: bool | None) -> None:
+    """Nur vollstaendige, lebende Reihen spielen mit."""
+    if requested and row["outcome"] != "caught":
+        raise HTTPException(
+            status_code=422,
+            detail="Nur Reihen, in denen alle drei ein lebendes Pokémon haben, können ins Team.",
+        )
+    if row["outcome"] != "caught":
+        row["in_team"] = False
+    elif requested:
+        require_team_slot(run, row)
 
 
 def couple_deaths(row: dict[str, Any], responsible: str | None) -> bool:
@@ -773,6 +815,8 @@ def apply_encounter_patch(
         couple_failure(row, updates.get("outcome"))
     if "outcome" not in updates:
         row["outcome"] = derive_outcome(row["picks"], before.get("outcome"))
+
+    apply_team_rules(run, row, updates.get("in_team"))
 
     return EncounterRow.model_validate(row).model_dump(), before
 
@@ -1118,6 +1162,7 @@ def add_row(
     validate_species(run, record, record["picks"], force)
     record["outcome"] = row.outcome if "outcome" in row.model_fields_set else derive_outcome(record["picks"])
     couple_deaths(record, record.get("responsible_player"))
+    apply_team_rules(run, record, record["in_team"])
 
     run["encounters"].append(record)
     record_history(
@@ -1185,6 +1230,8 @@ def describe_patch(before: dict[str, Any], after: dict[str, Any], players: list[
             parts.append(f"{label}: {old.get('name') or '–'} → {pick.get('name') or '–'}")
         elif pick.get("status") != old.get("status"):
             parts.append(f"{label}: {pick['status']}")
+    if after.get("in_team") != before.get("in_team"):
+        parts.append("ins Team" if after.get("in_team") else "aus dem Team")
     if after["outcome"] != before["outcome"]:
         parts.append(f"Status {before['outcome']} → {after['outcome']}")
     if after.get("note") != before.get("note"):

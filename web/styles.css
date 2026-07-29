@@ -12,6 +12,7 @@
   --dark: #2d2a26;
   --dead: #8c2f2f;
   --warn: #8a6d1f;
+  --team: #3f7d3f;
 }
 
 * { box-sizing: border-box; }
@@ -135,6 +136,20 @@ button:disabled:hover { background: var(--paper); color: var(--ink); }
 
 /* --------------------------------------------------------------- Table -- */
 
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.table-toolbar .hint { color: var(--muted); font-size: 12px; }
+
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable:hover { background: #45403a; }
+th.is-sorted { background: #45403a; }
+
 .table-wrap { overflow-x: auto; }
 
 table {
@@ -163,9 +178,38 @@ th {
 
 tbody tr:last-child td { border-bottom: 0; }
 tbody tr:hover { background: #f5f0e8; }
-tbody tr.row-dead { background: #fbf1f0; }
-tbody tr.row-dead:hover { background: #f7e9e7; }
+
+/* Zeilenfarben nach Zustand:
+   aktiv gruen, tot rot, verloren ausgegraut, gefangen-in-der-Box weiss. */
+
+tbody tr.row-dead { background: #a8615c; }
+tbody tr.row-dead:hover { background: #a05752; }
+tbody tr.row-dead td { color: #fdf1f0; }
+
+tbody tr.row-failed { background: #9b968d; }
+tbody tr.row-failed:hover { background: #938e85; }
+tbody tr.row-failed td { color: #fbfaf7; }
+
+/* Die Bedienelemente bleiben hell: ein Dropdown mit dunklem Grund waere in der
+   aufgeklappten Liste kaum noch lesbar. */
+tbody tr.row-dead :is(select, input),
+tbody tr.row-failed :is(select, input) {
+  background: rgba(255, 253, 249, .88);
+  border-color: rgba(0, 0, 0, .22);
+  color: var(--ink);
+}
+
+tbody tr.row-dead .team-toggle.is-blocked,
+tbody tr.row-failed .team-toggle.is-blocked { color: inherit; opacity: .6; }
+tbody tr.row-dead .postgame-tag,
+tbody tr.row-failed .postgame-tag { background: rgba(255, 253, 249, .22); color: inherit; }
+
 tbody tr.row-pending td { color: #8a8378; }
+
+tbody tr.row-team { background: #dfeed6; }
+tbody tr.row-team:hover { background: #d6e8cb; }
+tbody tr.row-team td:first-child { box-shadow: inset 4px 0 0 var(--team); }
+tbody tr.row-team td:first-child strong { font-weight: 750; }
 
 .col-location { min-width: 160px; }
 .col-player { min-width: 196px; }
@@ -184,6 +228,40 @@ tbody tr.row-pending td { color: #8a8378; }
 .note-input:focus { background: var(--paper); }
 
 td.location strong { display: block; font-weight: 650; color: var(--ink); }
+
+.location-cell { display: flex; align-items: baseline; gap: 7px; }
+
+.team-toggle {
+  flex: 0 0 auto;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: 17px;
+  line-height: 1.1;
+  color: #b9b1a5;
+}
+
+.team-toggle:hover { background: none; color: var(--team); }
+.team-toggle.is-active { color: var(--team); }
+
+/* Platzhalter statt Stern, damit die Ortsnamen in einer Flucht bleiben. */
+.team-toggle-spacer {
+  flex: 0 0 auto;
+  display: inline-block;
+  width: 15px;
+}
+
+.team-badge {
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: #e8e2d8;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.team-badge.full { background: var(--team); color: var(--paper); }
 
 .note {
   display: block;

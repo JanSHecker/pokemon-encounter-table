@@ -18,6 +18,17 @@ const API_BASE =
 const ARTWORK_BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
 const LOST_LABEL = 'Encounter verloren';
 const POLL_INTERVAL_MS = 10000;
+const TEAM_SIZE = 6;
+const SORT_KEY = 'encounter-sort';
+
+// Jede Sortierung gruppiert nur; innerhalb der Gruppe bleibt die Spielreihenfolge.
+const SORTERS = {
+  order: () => 0,
+  open: (row) => (row.outcome === 'pending' ? 0 : 1),
+  caught: (row) => (row.outcome === 'caught' ? 0 : 1),
+  team: (row) => (row.in_team ? 0 : 1),
+  status: (row) => (row.in_team ? 0 : { caught: 1, pending: 2, failed: 3, dead: 4 }[row.outcome] ?? 5),
+};
 
 const OUTCOME_LABELS = {
   pending: 'Offen',
@@ -35,13 +46,14 @@ const state = {
   run: null,
   updatedAt: null,
   view: 'table',
-  busy: false,
 };
 
 const el = {
   gameSelect: document.getElementById('game-select'),
   runSelect: document.getElementById('run-select'),
   runStatus: document.getElementById('run-status'),
+  sortSelect: document.getElementById('sort-select'),
+  teamCount: document.getElementById('team-count'),
   lastUpdated: document.getElementById('last-updated'),
   globalError: document.getElementById('global-error'),
   tableHead: document.getElementById('table-head'),
@@ -122,27 +134,41 @@ function clearError() {
   el.globalError.textContent = '';
 }
 
+// Schreibvorgaenge laufen nacheinander statt parallel: wer schnell mehrere
+// Zeilen umschaltet, soll keine Klicks verlieren, und die Antworten kommen in
+// derselben Reihenfolge zurueck, in der geklickt wurde.
+let writeChain = Promise.resolve();
+let pendingWrites = 0;
+
 /** Schreiboperation mit einheitlicher Fehlerbehandlung. */
-async function write(action) {
-  if (state.busy) return null;
-  state.busy = true;
+function write(action) {
+  pendingWrites += 1;
   document.body.classList.add('saving');
-  try {
-    const result = await action();
-    clearError();
-    return result;
-  } catch (error) {
-    if (error instanceof ApiError && error.status === 412) {
-      showError('Die Tabelle wurde zwischenzeitlich geändert. Es wird neu geladen.');
-      await loadRun(state.currentRunId);
-    } else {
-      showError(`Speichern fehlgeschlagen: ${error.message}`);
-    }
-    return null;
-  } finally {
-    state.busy = false;
-    document.body.classList.remove('saving');
-  }
+
+  const running = writeChain.then(action);
+  writeChain = running.catch(() => {});
+
+  return running
+    .then((result) => {
+      clearError();
+      return result;
+    })
+    .catch(async (error) => {
+      if (error instanceof ApiError && error.status === 412) {
+        showError('Die Tabelle wurde zwischenzeitlich geändert. Es wird neu geladen.');
+        await loadRun(state.currentRunId);
+      } else if (error instanceof ApiError && [409, 422].includes(error.status)) {
+        // Regelverstoss, kein Fehler - die API erklaert sich selbst.
+        showError(error.message);
+      } else {
+        showError(`Speichern fehlgeschlagen: ${error.message}`);
+      }
+      return null;
+    })
+    .finally(() => {
+      pendingWrites -= 1;
+      if (pendingWrites === 0) document.body.classList.remove('saving');
+    });
 }
 
 // ---------------------------------------------------------------- Daten ---
@@ -240,10 +266,24 @@ function pickCell(row, player) {
     </td>`;
 }
 
+/** Nur vollstaendig gefangene Reihen lassen sich ins Team nehmen.
+ *
+ * Bei allen anderen bleibt der Platz leer - ein ausgegrauter Stern sah zu sehr
+ * nach "anklickbar" aus. Der Platzhalter haelt die Ortsnamen in einer Flucht.
+ */
+function teamToggle(row) {
+  if (row.outcome !== 'caught') {
+    return '<span class="team-toggle-spacer" aria-hidden="true"></span>';
+  }
+  return `<button type="button" class="team-toggle${row.in_team ? ' is-active' : ''}" data-action="team"
+                  aria-pressed="${row.in_team}"
+                  title="${row.in_team ? 'Aus dem Team nehmen' : 'Ins Team nehmen'}">${row.in_team ? '★' : '☆'}</button>`;
+}
+
 function rowHtml(row) {
-  const classes = [];
-  if (row.outcome === 'dead') classes.push('row-dead');
-  if (row.outcome === 'pending') classes.push('row-pending');
+  // row-caught bleibt bewusst ungestylt: gefangen und in der Box ist der Normalfall.
+  const classes = [`row-${row.outcome}`];
+  if (row.in_team) classes.push('row-team');
 
   const outcomeOptions = Object.entries(OUTCOME_LABELS)
     .map(([value, label]) => `<option value="${value}"${row.outcome === value ? ' selected' : ''}>${label}</option>`)
@@ -261,7 +301,10 @@ function rowHtml(row) {
   return `
     <tr data-row="${esc(row.id)}" class="${classes.join(' ')}">
       <td class="location">
-        <strong>${esc(row.encounter)}${row.postgame ? '<span class="postgame-tag">Postgame</span>' : ''}</strong>
+        <div class="location-cell">
+          ${teamToggle(row)}
+          <strong>${esc(row.encounter)}${row.postgame ? '<span class="postgame-tag">Postgame</span>' : ''}</strong>
+        </div>
       </td>
       ${state.players.map((player) => pickCell(row, player)).join('')}
       <td class="col-meta"><select data-action="outcome" aria-label="Status">${outcomeOptions}</select></td>
@@ -275,11 +318,32 @@ function rowHtml(row) {
 
 function renderTable() {
   if (!state.run) return;
+  const sort = el.sortSelect.value;
+  const head = (key, label, cls) =>
+    `<th class="${cls} sortable${sort === key ? ' is-sorted' : ''}" data-sort="${key}"
+         role="button" tabindex="0" title="Nach ${label} sortieren">${label}${sort === key ? ' ▾' : ''}</th>`;
+
   el.tableHead.innerHTML =
-    '<th class="col-location">Ort</th>' +
+    head('order', 'Ort', 'col-location') +
     state.players.map((player) => `<th class="col-player">${esc(player.name)}</th>`).join('') +
-    '<th class="col-meta">Status</th><th class="col-meta">Schuldiger</th><th class="col-note">Notiz</th>';
-  el.rows.innerHTML = state.run.encounters.map(rowHtml).join('');
+    head('status', 'Status', 'col-meta') +
+    '<th class="col-meta">Schuldiger</th><th class="col-note">Notiz</th>';
+  el.rows.innerHTML = sortedRows().map(rowHtml).join('');
+  renderTeamCount();
+}
+
+/** Sortierte Kopie fuer die Anzeige - die Reihenfolge in state.run bleibt die der API. */
+function sortedRows() {
+  const rank = SORTERS[el.sortSelect.value] || SORTERS.order;
+  return [...state.run.encounters].sort(
+    (a, b) => rank(a) - rank(b) || a.order - b.order || a.id.localeCompare(b.id),
+  );
+}
+
+function renderTeamCount() {
+  const active = (state.run?.encounters || []).filter((row) => row.in_team).length;
+  el.teamCount.textContent = `Team ${active}/${TEAM_SIZE}`;
+  el.teamCount.classList.toggle('full', active >= TEAM_SIZE);
 }
 
 function replaceRow(row) {
@@ -292,6 +356,7 @@ function replaceRow(row) {
   // Aenderung durchginge.
   if (document.activeElement && tr.contains(document.activeElement)) document.activeElement.blur();
   tr.outerHTML = rowHtml(row);
+  renderTeamCount();
 }
 
 function renderCaps() {
@@ -567,6 +632,7 @@ el.rows.addEventListener('click', async (event) => {
   if (!row) return;
 
   if (target.dataset.action === 'kill') await handleKill(row, target.dataset.player);
+  else if (target.dataset.action === 'team') await patchRow(row.id, { in_team: !row.in_team });
 });
 
 el.gameSelect.addEventListener('change', async () => {
@@ -582,6 +648,28 @@ el.gameSelect.addEventListener('change', async () => {
 });
 
 el.runSelect.addEventListener('change', () => loadRun(el.runSelect.value));
+
+function setSort(key) {
+  if (!SORTERS[key]) return;
+  el.sortSelect.value = key;
+  window.localStorage.setItem(SORT_KEY, key);
+  renderTable();
+}
+
+el.sortSelect.addEventListener('change', () => setSort(el.sortSelect.value));
+
+el.tableHead.addEventListener('click', (event) => {
+  const header = event.target.closest('[data-sort]');
+  if (header) setSort(header.dataset.sort);
+});
+
+el.tableHead.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  const header = event.target.closest('[data-sort]');
+  if (!header) return;
+  event.preventDefault();
+  setSort(header.dataset.sort);
+});
 el.statScope.addEventListener('change', loadStats);
 
 document.querySelectorAll('.view-button').forEach((button) => {
@@ -695,7 +783,7 @@ function isEditing() {
 }
 
 async function poll() {
-  if (document.hidden || state.busy || isEditing()) return;
+  if (document.hidden || pendingWrites > 0 || isEditing()) return;
   try {
     const data = await api('/runs');
     if (data.updated_at === state.updatedAt) return;
@@ -713,6 +801,9 @@ async function poll() {
 
 async function init() {
   try {
+    const savedSort = window.localStorage.getItem(SORT_KEY);
+    if (savedSort && SORTERS[savedSort]) el.sortSelect.value = savedSort;
+
     state.games = await api('/games');
     await loadRuns();
 

@@ -35,6 +35,16 @@ from starlette.staticfiles import StaticFiles  # noqa: E402
 from app import app as api_app  # noqa: E402
 
 app = FastAPI(title="Encounter-Table Dev")
+
+
+@app.middleware("http")
+async def never_cache(request, call_next):
+    """Sonst liefert der Browser nach einer Aenderung weiter das alte app.js aus."""
+    response = await call_next(request)
+    response.headers["Cache-Control"] = "no-store, must-revalidate"
+    return response
+
+
 app.mount("/encounter-table/api", api_app)
 app.mount("/encounter-table", StaticFiles(directory=ROOT / "web", html=True), name="web")
 

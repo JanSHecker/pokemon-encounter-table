@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Projekt
 
-Gekoppelte Nuzlocke-Soullink-Tabelle für die drei Spieler **Marc**, **Nicolai** und **KNEV**,
+Gekoppelte Nuzlocke-Soullink-Tabelle für die drei Spieler **Marc**, **Nicolai** und **Knev**,
 über mehrere Editionen (Platin, Schwarz 2/Weiß 2) und Runs hinweg. Öffentlich unter
 `https://bronze-brawl.de/encounter-table/`.
 
@@ -72,11 +72,16 @@ Dict in-place ändern → `updated_at` setzen → atomar speichern, alles unter 
 `normalize_state` → `normalize_run` → `normalize_encounter` heben beim Laden alte Stände an und
 schreiben bei Abweichung sofort zurück. Sie tragen die komplette v2→v3-Migration:
 
-- `players` von Namensliste zu `{id, name}`, inklusive Umbenennung Mark→Marc, Nikolai→Nicolai
+- `players` von Namensliste zu `{id, name}`; `LEGACY_DISPLAY_NAMES` korrigiert die aus v2 geerbten
+  Schreibweisen (Mark→Marc, Nikolai→Nicolai, KNEV→Knev). Das greift auch auf bereits migrierte
+  v3-Daten – ein späteres Umbenennen bleibt trotzdem eine reine Datenänderung, solange niemand
+  exakt die alte Schreibweise wählt
 - die festen Zeilenfelder `mark`/`nikolai`/`knev` + `*_status` zur `picks`-Map
 - Species-Slugs werden über den **deutschen Namen aus dem Katalog** zurückgewonnen, damit alte
   Zeilen Artwork bekommen
 - alte Zeilen-IDs zu Katalog-Orten über `LEGACY_LOCATION_IDS` plus Regex für `route-NNN`
+- `order` wird für verknüpfte Zeilen aus dem Katalog nachgetragen; ohne das haben Alt-Zeilen alle
+  `order: 0` und jede Sortierung nach Spielreihenfolge fällt auf die ID-Sortierung zurück
 
 Neue Felder gehören als `setdefault` dort hinein – dann migrieren Bestandsdaten von selbst.
 
@@ -98,6 +103,10 @@ niemand etwas einträgt.
   ganzen Reihe. `?couple=false` ist der Ausweg – das Frontend nutzt ihn nur zum Wiederbeleben.
 - **Verlorene Encounter**: `couple_failure()` trägt bei `outcome: failed` bei allen Spielern
   „Encounter verloren“ ein. Ein Tod in der Reihe hat Vorrang und blockt das ab.
+- **Aktive Links**: `apply_team_rules()` hält `in_team` sauber – nur `caught`-Reihen dürfen rein,
+  maximal `TEAM_SIZE` (6) gleichzeitig, und wer stirbt oder den Encounter verliert, fliegt
+  automatisch raus. Ein Link belegt bei allen drei Spielern denselben Platz, daher genau ein Flag
+  pro Zeile statt eines pro Spieler.
 - **Species-Prüfung**: `validate_species()` lässt nur Pokémon zu, die laut Katalog an diesem Ort
   vorkommen. Geprüft wird **nur, was der Patch anfasst** – sonst würde ein per `?force=true`
   gespeicherter Sonderfall jede spätere Änderung derselben Zeile blockieren (dafür gibt es einen
@@ -115,6 +124,8 @@ Drei Dateien in `web/`, kein Build. `API_BASE` lässt sich per `?api=` oder loca
 - Geschrieben wird sofort bei `change`. Der Pfad ist bewusst idempotent (`patchPick()` vergleicht
   vorher) und nimmt vor dem Neuzeichnen den Fokus aus der Zeile – sonst erzeugen Re-Render und
   Event-Delegation Doppel-Schreibvorgänge.
+- `write()` reiht Schreibvorgänge über `writeChain` auf, statt bei laufendem Request auszusteigen.
+  Wer schnell mehrere Zeilen umschaltet, verliert sonst Klicks ohne jede Rückmeldung.
 - Kein Login und keine Identität – wer editiert, wird bewusst nicht erfasst. Die API kann per
   `X-Encounter-Author` trotzdem einen Autor mitschreiben; das Frontend nutzt das nicht.
 - Polling alle 10 s auf `updated_at`; pausiert, solange ein Feld der Tabelle den Fokus hat.
