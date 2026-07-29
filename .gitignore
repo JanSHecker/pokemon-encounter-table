@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Local runtime data / editor files
+*.log
+.DS_Store
+.vscode/
+.idea/
