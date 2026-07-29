@@ -352,6 +352,108 @@ td.location strong { display: block; font-weight: 650; color: var(--ink); }
 .dashboard-grid table { font-size: 14px; }
 .dashboard-grid th { position: static; }
 
+/* -------------------------------------------------------- Typenrechner -- */
+
+/* Eine Farbe je Typ, gesetzt als Variable: Auswahlflaeche und Ergebnis-Chip
+   greifen beide darauf zu, statt die Palette doppelt zu fuehren. */
+.type-normal { --type: #8a8371; }
+.type-fighting { --type: #9a3b2c; }
+.type-flying { --type: #5d6fa8; }
+.type-poison { --type: #7a3d84; }
+.type-ground { --type: #8a6a2f; }
+.type-rock { --type: #8a7a4a; }
+.type-bug { --type: #6b8a2f; }
+.type-ghost { --type: #5b4a7d; }
+.type-steel { --type: #6b7480; }
+.type-fire { --type: #b84a1f; }
+.type-water { --type: #2f6fb8; }
+.type-grass { --type: #3f7d3f; }
+.type-electric { --type: #a3821a; }
+.type-psychic { --type: #b04a72; }
+.type-ice { --type: #3f8a94; }
+.type-dragon { --type: #4a3fa8; }
+.type-dark { --type: #4a423a; }
+.type-fairy { --type: #a8407e; }
+
+.type-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+  gap: 26px;
+  align-items: start;
+}
+
+.type-controls { display: flex; flex-direction: column; gap: 12px; align-items: start; }
+/* Label ueber das Feld: die Generationsnamen sind zu lang, um daneben noch in
+   die schmale linke Spalte zu passen. */
+.type-controls .picker { width: 100%; flex-direction: column; align-items: stretch; gap: 5px; }
+.type-controls .picker select { width: 100%; }
+
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+}
+
+.type-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-color: var(--line);
+  font-size: 14px;
+  text-align: left;
+}
+
+/* Der Haken steht immer im Layout, auch unsichtbar - sonst springen die
+   Beschriftungen beim Anwaehlen um seine Breite zur Seite. */
+.type-mark { display: inline-block; width: 13px; flex: 0 0 13px; font-weight: 750; }
+
+.type-button::after {
+  content: '';
+  width: 11px;
+  height: 11px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--type);
+}
+
+.type-button:hover { background: var(--paper); color: var(--ink); border-color: var(--type); }
+.type-button.is-active { background: var(--type); color: var(--paper); border-color: var(--type); }
+.type-button.is-active::after { background: rgba(255, 253, 249, .85); }
+
+.defense-group { margin-bottom: 18px; }
+.defense-group:last-child { margin-bottom: 0; }
+
+.defense-group h3 {
+  margin-bottom: 8px;
+  font-size: 15px;
+  padding-left: 9px;
+  border-left: 4px solid var(--line);
+}
+
+.defense-group.worse h3 { border-color: var(--dead); }
+.defense-group.bad h3 { border-color: #c98a86; }
+.defense-group.good h3 { border-color: #9fc490; }
+.defense-group.better h3 { border-color: var(--team); }
+.defense-group.best h3 { border-color: var(--dark); }
+
+/* Neutral ist nur Beiwerk - es soll die Gruppen, auf die es ankommt, nicht ueberdecken. */
+.defense-group.plain h3 { color: var(--muted); }
+.defense-group.plain .type-chip { opacity: .45; }
+
+.type-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.type-chip {
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: var(--type, var(--muted));
+  color: var(--paper);
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
 /* -------------------------------------------------------------- Dialog -- */
 
 dialog {
@@ -394,4 +496,8 @@ dialog input, dialog select { width: 100%; }
   body { padding: 10px; }
   table { min-width: 1080px; }
   .toolbar-actions { margin-left: 0; }
+}
+
+@media (max-width: 860px) {
+  .type-layout { grid-template-columns: 1fr; gap: 18px; }
 }

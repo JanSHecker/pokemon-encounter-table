@@ -18,6 +18,10 @@ const API_BASE =
 const ARTWORK_BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
 const POLL_INTERVAL_MS = 10000;
 const SORT_KEY = 'encounter-sort';
+const GENERATION_KEY = 'encounter-type-generation';
+// Beide gefuehrten Editionen liegen in Generation 2-5 - danach richtet sich die Vorgabe.
+const DEFAULT_GENERATION = 'gen2';
+const MAX_TYPES = 2;
 
 // Vertragswerte der API (GET /runs -> rules). Der Platzhalter ist Protokoll: wir
 // schreiben ihn als Namen, die API leitet daraus 'failed' ab. Die Vorgaben hier
@@ -60,6 +64,8 @@ const state = {
   run: null,
   updatedAt: null,
   view: 'table',
+  generation: DEFAULT_GENERATION,
+  typeSelection: [],
 };
 
 const el = {
@@ -95,7 +101,13 @@ const el = {
   locationDialog: document.getElementById('location-dialog'),
   locationForm: document.getElementById('location-form'),
   locationSelect: document.getElementById('location-select'),
+  typeGeneration: document.getElementById('type-generation'),
+  typeGrid: document.getElementById('type-grid'),
+  typeReset: document.getElementById('type-reset'),
+  defenseResult: document.getElementById('defense-result'),
 };
+
+const VIEWS = ['table', 'dashboard', 'history', 'types'];
 
 // --------------------------------------------------------------- Helfer ---
 
@@ -583,9 +595,7 @@ function updateHash() {
 function setView(view) {
   state.view = view;
   document.querySelectorAll('.view-button').forEach((button) => button.classList.toggle('active', button.dataset.view === view));
-  document.getElementById('table-view').hidden = view !== 'table';
-  document.getElementById('dashboard-view').hidden = view !== 'dashboard';
-  document.getElementById('history-view').hidden = view !== 'history';
+  document.querySelectorAll('.view').forEach((section) => { section.hidden = section.id !== `${view}-view`; });
   if (view === 'dashboard') {
     renderScopeOptions();
     loadStats();
@@ -875,6 +885,168 @@ el.locationForm.addEventListener('submit', async () => {
   if (created) await loadRun(state.currentRunId);
 });
 
+// --------------------------------------------------------- Typenrechner ---
+
+// Reihenfolge wie im Spiel, nicht alphabetisch - so liegt das Raster so, wie man
+// es aus jedem Pokedex kennt.
+const TYPE_NAMES = {
+  normal: 'Normal', fighting: 'Kampf', flying: 'Flug',
+  poison: 'Gift', ground: 'Boden', rock: 'Gestein',
+  bug: 'Käfer', ghost: 'Geist', steel: 'Stahl',
+  fire: 'Feuer', water: 'Wasser', grass: 'Pflanze',
+  electric: 'Elektro', psychic: 'Psycho', ice: 'Eis',
+  dragon: 'Drache', dark: 'Unlicht', fairy: 'Fee',
+};
+
+const TYPE_ORDER = Object.keys(TYPE_NAMES);
+
+/** Heutige Tabelle (ab Generation 6): angreifender Typ -> Abweichungen von 1x. */
+const MODERN_CHART = {
+  normal: { rock: 0.5, ghost: 0, steel: 0.5 },
+  fighting: { normal: 2, flying: 0.5, poison: 0.5, rock: 2, bug: 0.5, ghost: 0, steel: 2, psychic: 0.5, ice: 2, dark: 2, fairy: 0.5 },
+  flying: { fighting: 2, rock: 0.5, bug: 2, steel: 0.5, grass: 2, electric: 0.5 },
+  poison: { poison: 0.5, ground: 0.5, rock: 0.5, ghost: 0.5, steel: 0, grass: 2, fairy: 2 },
+  ground: { flying: 0, poison: 2, rock: 2, bug: 0.5, steel: 2, fire: 2, grass: 0.5, electric: 2 },
+  rock: { fighting: 0.5, flying: 2, ground: 0.5, bug: 2, steel: 0.5, fire: 2, ice: 2 },
+  bug: { fighting: 0.5, flying: 0.5, poison: 0.5, ghost: 0.5, steel: 0.5, fire: 0.5, grass: 2, psychic: 2, dark: 2, fairy: 0.5 },
+  ghost: { normal: 0, ghost: 2, psychic: 2, dark: 0.5 },
+  steel: { rock: 2, steel: 0.5, fire: 0.5, water: 0.5, electric: 0.5, ice: 2, fairy: 2 },
+  fire: { rock: 0.5, bug: 2, steel: 2, fire: 0.5, water: 0.5, grass: 2, ice: 2, dragon: 0.5 },
+  water: { ground: 2, rock: 2, fire: 2, water: 0.5, grass: 0.5, dragon: 0.5 },
+  grass: { flying: 0.5, poison: 0.5, ground: 2, rock: 2, bug: 0.5, steel: 0.5, fire: 0.5, water: 2, grass: 0.5, dragon: 0.5 },
+  electric: { flying: 2, ground: 0, water: 2, grass: 0.5, electric: 0.5, dragon: 0.5 },
+  psychic: { fighting: 2, poison: 2, steel: 0.5, psychic: 0.5, dark: 0 },
+  ice: { flying: 2, ground: 2, steel: 0.5, fire: 0.5, water: 0.5, grass: 2, ice: 0.5, dragon: 2 },
+  dragon: { steel: 0.5, dragon: 2, fairy: 0 },
+  dark: { fighting: 0.5, ghost: 2, psychic: 2, dark: 0.5, fairy: 0.5 },
+  fairy: { fighting: 2, poison: 0.5, steel: 0.5, fire: 0.5, dragon: 2, dark: 2 },
+};
+
+/**
+ * Aeltere Generationen als Abweichung von der heutigen Tabelle. Beide Listen sind
+ * aus den past_damage_relations der PokeAPI abgeleitet und nicht aus dem Kopf: es
+ * sind genau vier Aenderungen bis Generation 1 und zwei bis Generation 5, alles
+ * andere ist seit jeher gleich. `without` haelt die Typen heraus, die es damals
+ * noch nicht gab - sie duerfen weder waehlbar sein noch im Ergebnis auftauchen.
+ */
+const GENERATIONS = [
+  {
+    id: 'gen1',
+    label: 'Generation 1 (Rot/Blau/Gelb)',
+    without: ['steel', 'dark', 'fairy'],
+    // Geist gegen Psycho ist der beruehmte Programmierfehler der ersten Spiele:
+    // gedacht war sehr effektiv, im Spiel passierte gar nichts.
+    changes: { poison: { bug: 2 }, bug: { poison: 2 }, ghost: { psychic: 0 }, ice: { fire: 1 } },
+  },
+  {
+    id: 'gen2',
+    label: 'Generationen 2–5 (bis Schwarz 2/Weiß 2)',
+    without: ['fairy'],
+    changes: { ghost: { steel: 0.5 }, dark: { steel: 0.5 } },
+  },
+  {
+    id: 'gen6',
+    label: 'Generation 6+ (ab X/Y)',
+    without: [],
+    changes: {},
+  },
+];
+
+// Alle Faktoren sind Zweierpotenzen und damit exakt vergleichbar - gerundet wird nichts.
+const DEFENSE_BUCKETS = [
+  { factor: 4, heading: 'Nimmt 4× Schaden von', tone: 'worse' },
+  { factor: 2, heading: 'Nimmt 2× Schaden von', tone: 'bad' },
+  { factor: 1, heading: 'Nimmt 1× Schaden von', tone: 'plain' },
+  { factor: 0.5, heading: 'Nimmt ½× Schaden von', tone: 'good' },
+  { factor: 0.25, heading: 'Nimmt ¼× Schaden von', tone: 'better' },
+  { factor: 0, heading: 'Nimmt 0× Schaden von', tone: 'best' },
+];
+
+function generation() {
+  return GENERATIONS.find((entry) => entry.id === state.generation) || GENERATIONS[1];
+}
+
+function generationTypes(gen) {
+  return TYPE_ORDER.filter((type) => !gen.without.includes(type));
+}
+
+/** Angreifender Typ -> Schaden gegen diese Typenkombination. */
+function defenseFactors(gen, types) {
+  const factors = {};
+  for (const attack of generationTypes(gen)) {
+    const row = { ...MODERN_CHART[attack], ...gen.changes[attack] };
+    factors[attack] = types.reduce((factor, type) => factor * (row[type] ?? 1), 1);
+  }
+  return factors;
+}
+
+function typeChip(type) {
+  return `<span class="type-chip type-${esc(type)}">${esc(TYPE_NAMES[type])}</span>`;
+}
+
+function defenseHtml(gen, types) {
+  if (!types.length) {
+    return '<p class="muted">Wähle links einen Typ – oder zwei für eine Kombination.</p>';
+  }
+  const factors = defenseFactors(gen, types);
+  const order = generationTypes(gen);
+  return DEFENSE_BUCKETS.map((bucket) => {
+    const hits = order.filter((type) => factors[type] === bucket.factor);
+    if (!hits.length) return '';
+    return `
+      <div class="defense-group ${esc(bucket.tone)}">
+        <h3>${esc(bucket.heading)}</h3>
+        <div class="type-chips">${hits.map(typeChip).join('')}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderTypeCalculator() {
+  const gen = generation();
+  const available = generationTypes(gen);
+  // Ein Generationswechsel kann die Auswahl ungueltig machen (Fee in Platin).
+  state.typeSelection = state.typeSelection.filter((type) => available.includes(type));
+
+  el.typeGeneration.innerHTML = GENERATIONS.map((entry) => option(entry.id, entry.label, entry.id === gen.id)).join('');
+  el.typeGrid.innerHTML = available.map((type) => {
+    const active = state.typeSelection.includes(type);
+    return `<button type="button" class="type-button type-${esc(type)}${active ? ' is-active' : ''}"
+      data-type="${esc(type)}" aria-pressed="${active ? 'true' : 'false'}"
+      ><span class="type-mark">${active ? '✓' : ''}</span>${esc(TYPE_NAMES[type])}</button>`;
+  }).join('');
+  el.typeReset.disabled = !state.typeSelection.length;
+  el.defenseResult.innerHTML = defenseHtml(gen, state.typeSelection);
+}
+
+/**
+ * Beim dritten Typ faellt der aelteste heraus, statt den Klick zu schlucken -
+ * eine tote Schaltflaeche liest sich sonst wie ein Fehler.
+ */
+function toggleType(type) {
+  const selection = state.typeSelection;
+  const at = selection.indexOf(type);
+  if (at >= 0) selection.splice(at, 1);
+  else selection.push(type);
+  while (selection.length > MAX_TYPES) selection.shift();
+  renderTypeCalculator();
+}
+
+el.typeGrid.addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-type]');
+  if (button) toggleType(button.dataset.type);
+});
+
+el.typeGeneration.addEventListener('change', () => {
+  state.generation = el.typeGeneration.value;
+  window.localStorage.setItem(GENERATION_KEY, state.generation);
+  renderTypeCalculator();
+});
+
+el.typeReset.addEventListener('click', () => {
+  state.typeSelection = [];
+  renderTypeCalculator();
+});
+
 // -------------------------------------------------------------- Polling ---
 
 function isEditing() {
@@ -919,7 +1091,7 @@ async function init() {
     await loadRun(state.currentRunId);
 
     const wantedView = hash.get('view');
-    if (wantedView === 'dashboard' || wantedView === 'history') setView(wantedView);
+    if (VIEWS.includes(wantedView)) setView(wantedView);
 
     window.setInterval(poll, POLL_INTERVAL_MS);
   } catch (error) {
@@ -927,4 +1099,8 @@ async function init() {
   }
 }
 
+// Der Rechner haengt an keinem Run und keinem Katalog - er steht deshalb auch
+// dann noch, wenn init() an der API scheitert.
+state.generation = window.localStorage.getItem(GENERATION_KEY) || DEFAULT_GENERATION;
+renderTypeCalculator();
 init();

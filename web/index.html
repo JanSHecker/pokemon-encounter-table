@@ -36,6 +36,7 @@
         <button type="button" class="view-button active" data-view="table">Encounter-Tabelle</button>
         <button type="button" class="view-button" data-view="dashboard">Dashboard</button>
         <button type="button" class="view-button" data-view="history">Historie</button>
+        <button type="button" class="view-button" data-view="types">Typenrechner</button>
       </nav>
     </header>
 
@@ -129,6 +130,26 @@
             <thead><tr><th>Wann</th><th>Was</th><th></th></tr></thead>
             <tbody id="history-rows"></tbody>
           </table>
+        </div>
+      </div>
+    </section>
+    <section id="types-view" class="view" hidden>
+      <div class="panel">
+        <h2>Typenrechner</h2>
+        <p class="muted">
+          Bis zu zwei Typen anklicken – rechts steht, was der Kombination wehtut. Voreingestellt
+          sind die Generationen 2–5: der Stand beider hier geführten Editionen.
+        </p>
+        <div class="type-layout">
+          <div class="type-controls">
+            <div class="picker">
+              <label for="type-generation">Generation</label>
+              <select id="type-generation" aria-label="Generation"></select>
+            </div>
+            <div id="type-grid" class="type-grid"></div>
+            <button type="button" id="type-reset">Auswahl entfernen</button>
+          </div>
+          <div id="defense-result" class="defense-result" aria-live="polite"></div>
         </div>
       </div>
     </section>
