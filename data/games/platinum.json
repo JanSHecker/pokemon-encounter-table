@@ -1,0 +1,7322 @@
+{
+  "id": "platinum",
+  "name": "Pokémon Platin",
+  "versions": [
+    "platinum"
+  ],
+  "locations": [
+    {
+      "id": "starter",
+      "order": 1,
+      "name": "Starter",
+      "encounters": [
+        {
+          "species": "turtwig",
+          "name": "Chelast",
+          "dex": 387,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "chimchar",
+          "name": "Panflam",
+          "dex": 390,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "piplup",
+          "name": "Plinfa",
+          "dex": 393,
+          "methods": [
+            "Geschenk"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-201",
+      "order": 2,
+      "name": "Route 201",
+      "encounters": [
+        {
+          "species": "nidoran-f",
+          "name": "Nidoran♀",
+          "dex": 29,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "nidoran-m",
+          "name": "Nidoran♂",
+          "dex": 32,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "growlithe",
+          "name": "Fukano",
+          "dex": 58,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "doduo",
+          "name": "Dodu",
+          "dex": 84,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "starly",
+          "name": "Staralili",
+          "dex": 396,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bidoof",
+          "name": "Bidiza",
+          "dex": 399,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kricketot",
+          "name": "Zirpurze",
+          "dex": 401,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lake-verity",
+      "order": 3,
+      "name": "See der Wahrheit",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wobbuffet",
+          "name": "Woingenau",
+          "dex": 202,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lunatone",
+          "name": "Lunastein",
+          "dex": 337,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solrock",
+          "name": "Sonnfel",
+          "dex": 338,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "starly",
+          "name": "Staralili",
+          "dex": 396,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bidoof",
+          "name": "Bidiza",
+          "dex": 399,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-202",
+      "order": 4,
+      "name": "Route 202",
+      "encounters": [
+        {
+          "species": "growlithe",
+          "name": "Fukano",
+          "dex": 58,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "sentret",
+          "name": "Wiesor",
+          "dex": 161,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zigzagoon",
+          "name": "Zigzachs",
+          "dex": 263,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "starly",
+          "name": "Staralili",
+          "dex": 396,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bidoof",
+          "name": "Bidiza",
+          "dex": 399,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kricketot",
+          "name": "Zirpurze",
+          "dex": 401,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shinx",
+          "name": "Sheinux",
+          "dex": 403,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-203",
+      "order": 5,
+      "name": "Route 203",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "abra",
+          "name": "Abra",
+          "dex": 63,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cubone",
+          "name": "Tragosso",
+          "dex": 104,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "pineco",
+          "name": "Tannza",
+          "dex": 204,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lotad",
+          "name": "Loturzel",
+          "dex": 270,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seedot",
+          "name": "Samurzel",
+          "dex": 273,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "starly",
+          "name": "Staralili",
+          "dex": 396,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bidoof",
+          "name": "Bidiza",
+          "dex": 399,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kricketot",
+          "name": "Zirpurze",
+          "dex": 401,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shinx",
+          "name": "Sheinux",
+          "dex": 403,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oreburgh-gate",
+      "order": 6,
+      "name": "Erzelinger Tunnel",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oreburgh-mine",
+      "order": 7,
+      "name": "Erzelingen-Mine",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "onix",
+          "name": "Onix",
+          "dex": 95,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-207",
+      "order": 8,
+      "name": "Route 207",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "machop",
+          "name": "Machollo",
+          "dex": 66,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ponyta",
+          "name": "Ponita",
+          "dex": 77,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "phanpy",
+          "name": "Phanpy",
+          "dex": 231,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "stantler",
+          "name": "Damhirplex",
+          "dex": 234,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "kricketot",
+          "name": "Zirpurze",
+          "dex": 401,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-204",
+      "order": 9,
+      "name": "Route 204",
+      "encounters": [
+        {
+          "species": "caterpie",
+          "name": "Raupy",
+          "dex": 10,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "weedle",
+          "name": "Hornliu",
+          "dex": 13,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "sunkern",
+          "name": "Sonnkern",
+          "dex": 191,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pineco",
+          "name": "Tannza",
+          "dex": 204,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lotad",
+          "name": "Loturzel",
+          "dex": 270,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seedot",
+          "name": "Samurzel",
+          "dex": 273,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "starly",
+          "name": "Staralili",
+          "dex": 396,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bidoof",
+          "name": "Bidiza",
+          "dex": 399,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kricketot",
+          "name": "Zirpurze",
+          "dex": 401,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shinx",
+          "name": "Sheinux",
+          "dex": 403,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "budew",
+          "name": "Knospi",
+          "dex": 406,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ravaged-path",
+      "order": 10,
+      "name": "Ruinental",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "valley-windworks",
+      "order": 11,
+      "name": "Windkraftwerk",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "shellder",
+          "name": "Muschas",
+          "dex": 90,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "mareep",
+          "name": "Voltilamm",
+          "dex": 179,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "electrike",
+          "name": "Frizelbliz",
+          "dex": 309,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shinx",
+          "name": "Sheinux",
+          "dex": 403,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "pachirisu",
+          "name": "Pachirisu",
+          "dex": 417,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "shellos",
+          "name": "Schalellos",
+          "dex": 422,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "gastrodon",
+          "name": "Gastrodon",
+          "dex": 423,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "drifloon",
+          "name": "Driftlon",
+          "dex": 425,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-205",
+      "order": 12,
+      "name": "Route 205",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "slowpoke",
+          "name": "Flegmon",
+          "dex": 79,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shellder",
+          "name": "Muschas",
+          "dex": 90,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "hoothoot",
+          "name": "Hoothoot",
+          "dex": 163,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "hoppip",
+          "name": "Hoppspross",
+          "dex": 187,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "Grasland",
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "silcoon",
+          "name": "Schaloko",
+          "dex": 266,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "beautifly",
+          "name": "Papinella",
+          "dex": 267,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cascoon",
+          "name": "Panekon",
+          "dex": 268,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dustox",
+          "name": "Pudox",
+          "dex": 269,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lotad",
+          "name": "Loturzel",
+          "dex": 270,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "bidoof",
+          "name": "Bidiza",
+          "dex": 399,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kricketot",
+          "name": "Zirpurze",
+          "dex": 401,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "budew",
+          "name": "Knospi",
+          "dex": 406,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "pachirisu",
+          "name": "Pachirisu",
+          "dex": 417,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "shellos",
+          "name": "Schalellos",
+          "dex": 422,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "gastrodon",
+          "name": "Gastrodon",
+          "dex": 423,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eterna-forest",
+      "order": 13,
+      "name": "Ewigwald",
+      "encounters": [
+        {
+          "species": "caterpie",
+          "name": "Raupy",
+          "dex": 10,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "metapod",
+          "name": "Safcon",
+          "dex": 11,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "weedle",
+          "name": "Hornliu",
+          "dex": 13,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kakuna",
+          "name": "Kokuna",
+          "dex": 14,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gastly",
+          "name": "Nebulak",
+          "dex": 92,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "hoothoot",
+          "name": "Hoothoot",
+          "dex": 163,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "pineco",
+          "name": "Tannza",
+          "dex": 204,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "Grasland",
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "silcoon",
+          "name": "Schaloko",
+          "dex": 266,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "beautifly",
+          "name": "Papinella",
+          "dex": 267,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cascoon",
+          "name": "Panekon",
+          "dex": 268,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dustox",
+          "name": "Pudox",
+          "dex": 269,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seedot",
+          "name": "Samurzel",
+          "dex": 273,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "slakoth",
+          "name": "Bummelz",
+          "dex": 287,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "nincada",
+          "name": "Nincada",
+          "dex": 290,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bidoof",
+          "name": "Bidiza",
+          "dex": 399,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kricketot",
+          "name": "Zirpurze",
+          "dex": 401,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "budew",
+          "name": "Knospi",
+          "dex": 406,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "buneary",
+          "name": "Haspiror",
+          "dex": 427,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "old-chateau",
+      "order": 14,
+      "name": "Alte Villa",
+      "encounters": [
+        {
+          "species": "gastly",
+          "name": "Nebulak",
+          "dex": 92,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gengar",
+          "name": "Gengar",
+          "dex": 94,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "rotom",
+          "name": "Rotom",
+          "dex": 479,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-211",
+      "order": 15,
+      "name": "Route 211",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "machop",
+          "name": "Machollo",
+          "dex": 66,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "machoke",
+          "name": "Maschock",
+          "dex": 67,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "hoothoot",
+          "name": "Hoothoot",
+          "dex": 163,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "noctowl",
+          "name": "Noctuh",
+          "dex": 164,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "teddiursa",
+          "name": "Teddiursa",
+          "dex": 216,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tyrogue",
+          "name": "Rabauz",
+          "dex": 236,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "meditite",
+          "name": "Meditie",
+          "dex": 307,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bidoof",
+          "name": "Bidiza",
+          "dex": 399,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "chingling",
+          "name": "Klingplim",
+          "dex": 433,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bronzor",
+          "name": "Bronzel",
+          "dex": 436,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-206",
+      "order": 16,
+      "name": "Route 206",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "machop",
+          "name": "Machollo",
+          "dex": 66,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ponyta",
+          "name": "Ponita",
+          "dex": 77,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "gligar",
+          "name": "Skorgla",
+          "dex": 207,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "larvitar",
+          "name": "Larvitar",
+          "dex": 246,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "baltoy",
+          "name": "Puppance",
+          "dex": 343,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kricketune",
+          "name": "Zirpeise",
+          "dex": 402,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wayward-cave",
+      "order": 17,
+      "name": "Bizarre Höhle",
+      "encounters": [
+        {
+          "species": "sandshrew",
+          "name": "Sandan",
+          "dex": 27,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "onix",
+          "name": "Onix",
+          "dex": 95,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bronzor",
+          "name": "Bronzel",
+          "dex": 436,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gible",
+          "name": "Kaumalat",
+          "dex": 443,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-208",
+      "order": 18,
+      "name": "Route 208",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "smeargle",
+          "name": "Farbeagle",
+          "dex": 235,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "ralts",
+          "name": "Trasla",
+          "dex": 280,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zangoose",
+          "name": "Sengo",
+          "dex": 335,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seviper",
+          "name": "Vipitis",
+          "dex": 336,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bidoof",
+          "name": "Bidiza",
+          "dex": 399,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bibarel",
+          "name": "Bidifas",
+          "dex": 400,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "budew",
+          "name": "Knospi",
+          "dex": 406,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-209",
+      "order": 19,
+      "name": "Route 209",
+      "encounters": [
+        {
+          "species": "vulpix",
+          "name": "Vulpix",
+          "dex": 37,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "chansey",
+          "name": "Chaneira",
+          "dex": 113,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "snubbull",
+          "name": "Snubbull",
+          "dex": 209,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "ralts",
+          "name": "Trasla",
+          "dex": 280,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kirlia",
+          "name": "Kirlia",
+          "dex": 281,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "duskull",
+          "name": "Zwirrlicht",
+          "dex": 355,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "staravia",
+          "name": "Staravia",
+          "dex": 397,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bibarel",
+          "name": "Bidifas",
+          "dex": 400,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "spiritomb",
+          "name": "Kryppuk",
+          "dex": 442,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lost-tower",
+      "order": 20,
+      "name": "Turm der Ruhenden",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gastly",
+          "name": "Nebulak",
+          "dex": 92,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "duskull",
+          "name": "Zwirrlicht",
+          "dex": 355,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solaceon-ruins",
+      "order": 21,
+      "name": "Trostu-Ruinen",
+      "encounters": [
+        {
+          "species": "unown",
+          "name": "Icognito",
+          "dex": 201,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-210",
+      "order": 22,
+      "name": "Route 210",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "machop",
+          "name": "Machollo",
+          "dex": 66,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "machoke",
+          "name": "Maschock",
+          "dex": 67,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ponyta",
+          "name": "Ponita",
+          "dex": 77,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "chansey",
+          "name": "Chaneira",
+          "dex": 113,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "scyther",
+          "name": "Sichlor",
+          "dex": 123,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tauros",
+          "name": "Tauros",
+          "dex": 128,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "hoothoot",
+          "name": "Hoothoot",
+          "dex": 163,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "noctowl",
+          "name": "Noctuh",
+          "dex": 164,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "pineco",
+          "name": "Tannza",
+          "dex": 204,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "miltank",
+          "name": "Miltank",
+          "dex": 241,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "seedot",
+          "name": "Samurzel",
+          "dex": 273,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "nuzleaf",
+          "name": "Blanas",
+          "dex": 274,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "meditite",
+          "name": "Meditie",
+          "dex": 307,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "swablu",
+          "name": "Wablu",
+          "dex": 333,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zangoose",
+          "name": "Sengo",
+          "dex": 335,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seviper",
+          "name": "Vipitis",
+          "dex": 336,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "bagon",
+          "name": "Kindwurm",
+          "dex": 371,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "staravia",
+          "name": "Staravia",
+          "dex": 397,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bibarel",
+          "name": "Bidifas",
+          "dex": 400,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-215",
+      "order": 23,
+      "name": "Route 215",
+      "encounters": [
+        {
+          "species": "abra",
+          "name": "Abra",
+          "dex": 63,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kadabra",
+          "name": "Kadabra",
+          "dex": 64,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "drowzee",
+          "name": "Traumato",
+          "dex": 96,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lickitung",
+          "name": "Schlurp",
+          "dex": 108,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "scyther",
+          "name": "Sichlor",
+          "dex": 123,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "staravia",
+          "name": "Staravia",
+          "dex": 397,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-214",
+      "order": 24,
+      "name": "Route 214",
+      "encounters": [
+        {
+          "species": "vulpix",
+          "name": "Vulpix",
+          "dex": 37,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "rhyhorn",
+          "name": "Rihorn",
+          "dex": 111,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "houndour",
+          "name": "Hunduster",
+          "dex": 228,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "poochyena",
+          "name": "Fiffyen",
+          "dex": 261,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "spoink",
+          "name": "Spoink",
+          "dex": 325,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "valor-lakefront",
+      "order": 25,
+      "name": "Kühnheitsufer",
+      "encounters": [
+        {
+          "species": "nidorina",
+          "name": "Nidorina",
+          "dex": 30,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "nidorino",
+          "name": "Nidorino",
+          "dex": 33,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "girafarig",
+          "name": "Girafarig",
+          "dex": 203,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "houndour",
+          "name": "Hunduster",
+          "dex": 228,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "staravia",
+          "name": "Staravia",
+          "dex": 397,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bibarel",
+          "name": "Bidifas",
+          "dex": 400,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kricketune",
+          "name": "Zirpeise",
+          "dex": 402,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-213",
+      "order": 26,
+      "name": "Route 213",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "swellow",
+          "name": "Schwalboss",
+          "dex": 277,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "shellos",
+          "name": "Schalellos",
+          "dex": 422,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "gastrodon",
+          "name": "Gastrodon",
+          "dex": 423,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "chatot",
+          "name": "Plaudagei",
+          "dex": 441,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "great-marsh",
+      "order": 27,
+      "name": "Großmoor",
+      "encounters": [
+        {
+          "species": "arbok",
+          "name": "Arbok",
+          "dex": 24,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "paras",
+          "name": "Paras",
+          "dex": 46,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "exeggcute",
+          "name": "Owei",
+          "dex": 102,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tangela",
+          "name": "Tangela",
+          "dex": 114,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kangaskhan",
+          "name": "Kangama",
+          "dex": 115,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "hoothoot",
+          "name": "Hoothoot",
+          "dex": 163,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "noctowl",
+          "name": "Noctuh",
+          "dex": 164,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "yanma",
+          "name": "Yanma",
+          "dex": 193,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wooper",
+          "name": "Felino",
+          "dex": 194,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "quagsire",
+          "name": "Morlord",
+          "dex": 195,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "shroomish",
+          "name": "Knilz",
+          "dex": 285,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gulpin",
+          "name": "Schluppuck",
+          "dex": 316,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "carvanha",
+          "name": "Kanivanha",
+          "dex": 318,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "kecleon",
+          "name": "Kecleon",
+          "dex": 352,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tropius",
+          "name": "Tropius",
+          "dex": 357,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bibarel",
+          "name": "Bidifas",
+          "dex": 400,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "skorupi",
+          "name": "Pionskora",
+          "dex": 451,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "drapion",
+          "name": "Piondragi",
+          "dex": 452,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "croagunk",
+          "name": "Glibunkel",
+          "dex": 453,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "toxicroak",
+          "name": "Toxiquak",
+          "dex": 454,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "carnivine",
+          "name": "Venuflibis",
+          "dex": 455,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-212",
+      "order": 28,
+      "name": "Route 212",
+      "encounters": [
+        {
+          "species": "ekans",
+          "name": "Rettan",
+          "dex": 23,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "grimer",
+          "name": "Sleima",
+          "dex": 88,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "quagsire",
+          "name": "Morlord",
+          "dex": 195,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "smeargle",
+          "name": "Farbeagle",
+          "dex": 235,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "lotad",
+          "name": "Loturzel",
+          "dex": 270,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lombre",
+          "name": "Lombrero",
+          "dex": 271,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ralts",
+          "name": "Trasla",
+          "dex": 280,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kirlia",
+          "name": "Kirlia",
+          "dex": 281,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "staravia",
+          "name": "Staravia",
+          "dex": 397,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "shellos",
+          "name": "Schalellos",
+          "dex": 422,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "gastrodon",
+          "name": "Gastrodon",
+          "dex": 423,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "croagunk",
+          "name": "Glibunkel",
+          "dex": 453,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fuego-ironworks",
+      "order": 29,
+      "name": "Feurio-Hütte",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magnemite",
+          "name": "Magnetilo",
+          "dex": 81,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shellder",
+          "name": "Muschas",
+          "dex": 90,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magmar",
+          "name": "Magmar",
+          "dex": 126,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "aron",
+          "name": "Stollunior",
+          "dex": 304,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "shellos",
+          "name": "Schalellos",
+          "dex": 422,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "gastrodon",
+          "name": "Gastrodon",
+          "dex": 423,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-218",
+      "order": 30,
+      "name": "Route 218",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "voltorb",
+          "name": "Voltobal",
+          "dex": 100,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "mr-mime",
+          "name": "Pantimos",
+          "dex": 122,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "shellos",
+          "name": "Schalellos",
+          "dex": 422,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "gastrodon",
+          "name": "Gastrodon",
+          "dex": 423,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "chatot",
+          "name": "Plaudagei",
+          "dex": 441,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-219",
+      "order": 31,
+      "name": "Route 219",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-sea-route-220",
+      "order": 32,
+      "name": "Route 220",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "chinchou",
+          "name": "Lampi",
+          "dex": 170,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-221",
+      "order": 33,
+      "name": "Route 221",
+      "encounters": [
+        {
+          "species": "nidorina",
+          "name": "Nidorina",
+          "dex": 30,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "nidorino",
+          "name": "Nidorino",
+          "dex": 33,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "farfetchd",
+          "name": "Porenta",
+          "dex": 83,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "sudowoodo",
+          "name": "Mogelbaum",
+          "dex": 185,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "girafarig",
+          "name": "Girafarig",
+          "dex": 203,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-222",
+      "order": 34,
+      "name": "Route 222",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magnemite",
+          "name": "Magnetilo",
+          "dex": 81,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magneton",
+          "name": "Magneton",
+          "dex": 82,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "electabuzz",
+          "name": "Elektek",
+          "dex": 125,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "flaaffy",
+          "name": "Waaty",
+          "dex": 180,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "skitty",
+          "name": "Eneco",
+          "dex": 300,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "luxio",
+          "name": "Luxio",
+          "dex": 404,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "chatot",
+          "name": "Plaudagei",
+          "dex": 441,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iron-island",
+      "order": 35,
+      "name": "Eiseninsel",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "onix",
+          "name": "Onix",
+          "dex": 95,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "steelix",
+          "name": "Stahlos",
+          "dex": 208,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "qwilfish",
+          "name": "Baldorfish",
+          "dex": 211,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "sableye",
+          "name": "Zobiris",
+          "dex": 302,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "mawile",
+          "name": "Flunkifer",
+          "dex": 303,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "riolu",
+          "name": "Riolu",
+          "dex": 447,
+          "methods": [
+            "Ei"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lake-valor",
+      "order": 36,
+      "name": "See der Kühnheit",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wobbuffet",
+          "name": "Woingenau",
+          "dex": 202,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lunatone",
+          "name": "Lunastein",
+          "dex": 337,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solrock",
+          "name": "Sonnfel",
+          "dex": 338,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "staravia",
+          "name": "Staravia",
+          "dex": 397,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bibarel",
+          "name": "Bidifas",
+          "dex": 400,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "azelf",
+          "name": "Tobutz",
+          "dex": 482,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-216",
+      "order": 37,
+      "name": "Route 216",
+      "encounters": [
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "sneasel",
+          "name": "Sniebel",
+          "dex": 215,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ursaring",
+          "name": "Ursaring",
+          "dex": 217,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "meditite",
+          "name": "Meditie",
+          "dex": 307,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "snorunt",
+          "name": "Schneppke",
+          "dex": 361,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "snover",
+          "name": "Shnebedeck",
+          "dex": 459,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-route-217",
+      "order": 38,
+      "name": "Route 217",
+      "encounters": [
+        {
+          "species": "sneasel",
+          "name": "Sniebel",
+          "dex": 215,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ursaring",
+          "name": "Ursaring",
+          "dex": 217,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "swinub",
+          "name": "Quiekel",
+          "dex": 220,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "piloswine",
+          "name": "Keifel",
+          "dex": 221,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "delibird",
+          "name": "Botogel",
+          "dex": 225,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "snorunt",
+          "name": "Schneppke",
+          "dex": 361,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "snover",
+          "name": "Shnebedeck",
+          "dex": 459,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acuity-lakefront",
+      "order": 39,
+      "name": "Stärkeufer",
+      "encounters": [
+        {
+          "species": "sneasel",
+          "name": "Sniebel",
+          "dex": 215,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ursaring",
+          "name": "Ursaring",
+          "dex": 217,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "swinub",
+          "name": "Quiekel",
+          "dex": 220,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "snorunt",
+          "name": "Schneppke",
+          "dex": 361,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "snover",
+          "name": "Shnebedeck",
+          "dex": 459,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lake-acuity",
+      "order": 40,
+      "name": "See der Stärke",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "sneasel",
+          "name": "Sniebel",
+          "dex": 215,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "teddiursa",
+          "name": "Teddiursa",
+          "dex": 216,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lunatone",
+          "name": "Lunastein",
+          "dex": 337,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solrock",
+          "name": "Sonnfel",
+          "dex": 338,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "snorunt",
+          "name": "Schneppke",
+          "dex": 361,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bibarel",
+          "name": "Bidifas",
+          "dex": 400,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "snover",
+          "name": "Shnebedeck",
+          "dex": 459,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "uxie",
+          "name": "Selfe",
+          "dex": 480,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mt-coronet",
+      "order": 41,
+      "name": "Kraterberg",
+      "encounters": [
+        {
+          "species": "clefairy",
+          "name": "Piepi",
+          "dex": 35,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "machop",
+          "name": "Machollo",
+          "dex": 66,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "machoke",
+          "name": "Maschock",
+          "dex": 67,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "dratini",
+          "name": "Dratini",
+          "dex": 147,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "dragonair",
+          "name": "Dragonir",
+          "dex": 148,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "noctowl",
+          "name": "Noctuh",
+          "dex": 164,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cleffa",
+          "name": "Pii",
+          "dex": 173,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "loudred",
+          "name": "Krakeelo",
+          "dex": 294,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "nosepass",
+          "name": "Nasgnet",
+          "dex": 299,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "meditite",
+          "name": "Meditie",
+          "dex": 307,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "medicham",
+          "name": "Meditalis",
+          "dex": 308,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lunatone",
+          "name": "Lunastein",
+          "dex": 337,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solrock",
+          "name": "Sonnfel",
+          "dex": 338,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "feebas",
+          "name": "Barschwa",
+          "dex": 349,
+          "methods": [
+            "feebas-tile-fishing"
+          ]
+        },
+        {
+          "species": "chimecho",
+          "name": "Palimpalim",
+          "dex": 358,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "absol",
+          "name": "Absol",
+          "dex": 359,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "chingling",
+          "name": "Klingplim",
+          "dex": 433,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bronzor",
+          "name": "Bronzel",
+          "dex": 436,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bronzong",
+          "name": "Bronzong",
+          "dex": 437,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "snover",
+          "name": "Shnebedeck",
+          "dex": 459,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "abomasnow",
+          "name": "Rexblisar",
+          "dex": 460,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "note": "Alle Abschnitte zusammengefasst"
+    },
+    {
+      "id": "spear-pillar",
+      "order": 42,
+      "name": "Speersäule",
+      "encounters": [
+        {
+          "species": "dialga",
+          "name": "Dialga",
+          "dex": 483,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "palkia",
+          "name": "Palkia",
+          "dex": 484,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distortion-world",
+      "order": 43,
+      "name": "Zerrwelt",
+      "encounters": [
+        {
+          "species": "giratina",
+          "name": "Giratina",
+          "dex": 487,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-victory-road",
+      "order": 44,
+      "name": "Siegesstraße",
+      "encounters": [
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magneton",
+          "name": "Magneton",
+          "dex": 82,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dewgong",
+          "name": "Jugong",
+          "dex": 87,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "onix",
+          "name": "Onix",
+          "dex": 95,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "rhyhorn",
+          "name": "Rihorn",
+          "dex": 111,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "rhydon",
+          "name": "Rizeros",
+          "dex": 112,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lapras",
+          "name": "Lapras",
+          "dex": 131,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "steelix",
+          "name": "Stahlos",
+          "dex": 208,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "gabite",
+          "name": "Knarksel",
+          "dex": 444,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sinnoh-sea-route-223",
+      "order": 45,
+      "name": "Route 223",
+      "encounters": [
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "wailmer",
+          "name": "Wailmer",
+          "dex": 320,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wailord",
+          "name": "Wailord",
+          "dex": 321,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "mantyke",
+          "name": "Mantirps",
+          "dex": 458,
+          "methods": [
+            "Surfen"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "sinnoh-route-224",
+      "order": 46,
+      "name": "Route 224",
+      "encounters": [
+        {
+          "species": "oddish",
+          "name": "Myrapla",
+          "dex": 43,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gloom",
+          "name": "Duflor",
+          "dex": 44,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bellsprout",
+          "name": "Knofensa",
+          "dex": 69,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "weepinbell",
+          "name": "Ultrigaria",
+          "dex": 70,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "natu",
+          "name": "Natu",
+          "dex": 177,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shuckle",
+          "name": "Pottrott",
+          "dex": 213,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "beautifly",
+          "name": "Papinella",
+          "dex": 267,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dustox",
+          "name": "Pudox",
+          "dex": 269,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "luvdisc",
+          "name": "Liebiskus",
+          "dex": 370,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gastrodon",
+          "name": "Gastrodon",
+          "dex": 423,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "sinnoh-route-225",
+      "order": 47,
+      "name": "Route 225",
+      "encounters": [
+        {
+          "species": "rattata",
+          "name": "Rattfratz",
+          "dex": 19,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "raticate",
+          "name": "Rattikarl",
+          "dex": 20,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "spearow",
+          "name": "Habitak",
+          "dex": 21,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "fearow",
+          "name": "Ibitak",
+          "dex": 22,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "mankey",
+          "name": "Menki",
+          "dex": 56,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "primeape",
+          "name": "Rasaff",
+          "dex": 57,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "machoke",
+          "name": "Maschock",
+          "dex": 67,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "makuhita",
+          "name": "Makuhita",
+          "dex": 296,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "banette",
+          "name": "Banette",
+          "dex": 354,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "sinnoh-sea-route-226",
+      "order": 48,
+      "name": "Route 226",
+      "encounters": [
+        {
+          "species": "rattata",
+          "name": "Rattfratz",
+          "dex": 19,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "raticate",
+          "name": "Rattikarl",
+          "dex": 20,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "fearow",
+          "name": "Ibitak",
+          "dex": 22,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "mankey",
+          "name": "Menki",
+          "dex": 56,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "primeape",
+          "name": "Rasaff",
+          "dex": 57,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "machoke",
+          "name": "Maschock",
+          "dex": 67,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "krabby",
+          "name": "Krabby",
+          "dex": 98,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "horsea",
+          "name": "Seeper",
+          "dex": 116,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seadra",
+          "name": "Seemon",
+          "dex": 117,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "banette",
+          "name": "Banette",
+          "dex": 354,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "relicanth",
+          "name": "Relicanth",
+          "dex": 369,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "sinnoh-route-227",
+      "order": 49,
+      "name": "Route 227",
+      "encounters": [
+        {
+          "species": "fearow",
+          "name": "Ibitak",
+          "dex": 22,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "weezing",
+          "name": "Smogmog",
+          "dex": 110,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "rhyhorn",
+          "name": "Rihorn",
+          "dex": 111,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "rhydon",
+          "name": "Rizeros",
+          "dex": 112,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "skarmory",
+          "name": "Panzaeron",
+          "dex": 227,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "numel",
+          "name": "Camaub",
+          "dex": 322,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "camerupt",
+          "name": "Camerupt",
+          "dex": 323,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "torkoal",
+          "name": "Qurtel",
+          "dex": 324,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "spinda",
+          "name": "Pandir",
+          "dex": 327,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "sinnoh-route-228",
+      "order": 50,
+      "name": "Route 228",
+      "encounters": [
+        {
+          "species": "sandslash",
+          "name": "Sandamer",
+          "dex": 28,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "diglett",
+          "name": "Digda",
+          "dex": 50,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dugtrio",
+          "name": "Digdri",
+          "dex": 51,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "rhydon",
+          "name": "Rizeros",
+          "dex": 112,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "cacnea",
+          "name": "Tuska",
+          "dex": 331,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cacturne",
+          "name": "Noktuska",
+          "dex": 332,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "beldum",
+          "name": "Tanhel",
+          "dex": 374,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "hippowdon",
+          "name": "Hippoterus",
+          "dex": 450,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "sinnoh-route-229",
+      "order": 51,
+      "name": "Route 229",
+      "encounters": [
+        {
+          "species": "pidgey",
+          "name": "Taubsi",
+          "dex": 16,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "venonat",
+          "name": "Bluzuk",
+          "dex": 48,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "venomoth",
+          "name": "Omot",
+          "dex": 49,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "pinsir",
+          "name": "Pinsir",
+          "dex": 127,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "ledian",
+          "name": "Ledian",
+          "dex": 166,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ariados",
+          "name": "Ariados",
+          "dex": 168,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pineco",
+          "name": "Tannza",
+          "dex": 204,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "beautifly",
+          "name": "Papinella",
+          "dex": 267,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dustox",
+          "name": "Pudox",
+          "dex": 269,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lombre",
+          "name": "Lombrero",
+          "dex": 271,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "nuzleaf",
+          "name": "Blanas",
+          "dex": 274,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "surskit",
+          "name": "Gehweiher",
+          "dex": 283,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "masquerain",
+          "name": "Maskeregen",
+          "dex": 284,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "volbeat",
+          "name": "Volbeat",
+          "dex": 313,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "illumise",
+          "name": "Illumise",
+          "dex": 314,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "sinnoh-sea-route-230",
+      "order": 52,
+      "name": "Route 230",
+      "encounters": [
+        {
+          "species": "oddish",
+          "name": "Myrapla",
+          "dex": 43,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gloom",
+          "name": "Duflor",
+          "dex": 44,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bellsprout",
+          "name": "Knofensa",
+          "dex": 69,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "weepinbell",
+          "name": "Ultrigaria",
+          "dex": 70,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "togepi",
+          "name": "Togepi",
+          "dex": 175,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "corsola",
+          "name": "Corasonn",
+          "dex": 222,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wailmer",
+          "name": "Wailmer",
+          "dex": 320,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wailord",
+          "name": "Wailord",
+          "dex": 321,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "sealeo",
+          "name": "Seejong",
+          "dex": 364,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "stark-mountain",
+      "order": 53,
+      "name": "Kahlberg",
+      "encounters": [
+        {
+          "species": "fearow",
+          "name": "Ibitak",
+          "dex": 22,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "koffing",
+          "name": "Smogon",
+          "dex": 109,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "weezing",
+          "name": "Smogmog",
+          "dex": 110,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "rhyhorn",
+          "name": "Rihorn",
+          "dex": 111,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "rhydon",
+          "name": "Rizeros",
+          "dex": 112,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "slugma",
+          "name": "Schneckmag",
+          "dex": 218,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magcargo",
+          "name": "Magcargo",
+          "dex": 219,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "skarmory",
+          "name": "Panzaeron",
+          "dex": 227,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "numel",
+          "name": "Camaub",
+          "dex": 322,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "camerupt",
+          "name": "Camerupt",
+          "dex": 323,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "torkoal",
+          "name": "Qurtel",
+          "dex": 324,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heatran",
+          "name": "Heatran",
+          "dex": 485,
+          "methods": [
+            "static"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "turnback-cave",
+      "order": 54,
+      "name": "Höhle der Umkehr",
+      "encounters": [
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gastly",
+          "name": "Nebulak",
+          "dex": 92,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "haunter",
+          "name": "Alpollo",
+          "dex": 93,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lunatone",
+          "name": "Lunastein",
+          "dex": 337,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solrock",
+          "name": "Sonnfel",
+          "dex": 338,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "duskull",
+          "name": "Zwirrlicht",
+          "dex": 355,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dusclops",
+          "name": "Zwirrklop",
+          "dex": 356,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "chimecho",
+          "name": "Palimpalim",
+          "dex": 358,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "chingling",
+          "name": "Klingplim",
+          "dex": 433,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bronzor",
+          "name": "Bronzel",
+          "dex": 436,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bronzong",
+          "name": "Bronzong",
+          "dex": 437,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "giratina",
+          "name": "Giratina",
+          "dex": 487,
+          "methods": [
+            "static"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "sendoff-spring",
+      "order": 55,
+      "name": "Scheidequelle",
+      "encounters": [
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "graveler",
+          "name": "Georok",
+          "dex": 75,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lunatone",
+          "name": "Lunastein",
+          "dex": 337,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solrock",
+          "name": "Sonnfel",
+          "dex": 338,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dusclops",
+          "name": "Zwirrklop",
+          "dex": 356,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "staravia",
+          "name": "Staravia",
+          "dex": 397,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bibarel",
+          "name": "Bidifas",
+          "dex": 400,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "chingling",
+          "name": "Klingplim",
+          "dex": 433,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "newmoon-island",
+      "order": 56,
+      "name": "Neumondinsel",
+      "encounters": [
+        {
+          "species": "darkrai",
+          "name": "Darkrai",
+          "dex": 491,
+          "methods": [
+            "static"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "snowpoint-temple",
+      "order": 57,
+      "name": "Blizzach-Tempel",
+      "encounters": [
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "jynx",
+          "name": "Rossana",
+          "dex": 124,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "sneasel",
+          "name": "Sniebel",
+          "dex": 215,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "smoochum",
+          "name": "Kussilla",
+          "dex": 238,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "regigigas",
+          "name": "Regigigas",
+          "dex": 486,
+          "methods": [
+            "static"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "ruin-maniac-cave",
+      "order": 58,
+      "name": "Maniac-Tunnel",
+      "encounters": [
+        {
+          "species": "geodude",
+          "name": "Kleinstein",
+          "dex": 74,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "hippopotas",
+          "name": "Hippopotas",
+          "dex": 449,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "trophy-garden",
+      "order": 59,
+      "name": "Pokémon-Landgut",
+      "encounters": [
+        {
+          "species": "pikachu",
+          "name": "Pikachu",
+          "dex": 25,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "clefairy",
+          "name": "Piepi",
+          "dex": 35,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "jigglypuff",
+          "name": "Pummeluff",
+          "dex": 39,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "meowth",
+          "name": "Mauzi",
+          "dex": 52,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "chansey",
+          "name": "Chaneira",
+          "dex": 113,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ditto",
+          "name": "Ditto",
+          "dex": 132,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "eevee",
+          "name": "Evoli",
+          "dex": 133,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pichu",
+          "name": "Pichu",
+          "dex": 172,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cleffa",
+          "name": "Pii",
+          "dex": 173,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "igglybuff",
+          "name": "Fluffeluff",
+          "dex": 174,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "azurill",
+          "name": "Azurill",
+          "dex": 298,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "plusle",
+          "name": "Plusle",
+          "dex": 311,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "minun",
+          "name": "Minun",
+          "dex": 312,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "castform",
+          "name": "Formeo",
+          "dex": 351,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "staravia",
+          "name": "Staravia",
+          "dex": 397,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kricketune",
+          "name": "Zirpeise",
+          "dex": 402,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bonsly",
+          "name": "Mobai",
+          "dex": 438,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "mime-jr",
+          "name": "Pantimimi",
+          "dex": 439,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "happiny",
+          "name": "Wonneira",
+          "dex": 440,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "floaroma-meadow",
+      "order": 60,
+      "name": "Auen von Flori",
+      "encounters": [
+        {
+          "species": "aipom",
+          "name": "Griffel",
+          "dex": 190,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "wurmple",
+          "name": "Waumpel",
+          "dex": 265,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "burmy",
+          "name": "Burmy",
+          "dex": 412,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "cherubi",
+          "name": "Kikugi",
+          "dex": 420,
+          "methods": [
+            "honey-tree"
+          ]
+        },
+        {
+          "species": "munchlax",
+          "name": "Mampfaxo",
+          "dex": 446,
+          "methods": [
+            "honey-tree"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "resort-area",
+      "order": 61,
+      "name": "Erholungsareal",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "flower-paradise",
+      "order": 62,
+      "name": "Blumenparadies",
+      "encounters": [
+        {
+          "species": "shaymin",
+          "name": "Shaymin",
+          "dex": 492,
+          "methods": [
+            "static"
+          ]
+        }
+      ],
+      "postgame": true
+    }
+  ],
+  "level_caps": [
+    {
+      "order": 1,
+      "kind": "gym",
+      "leader": "Veit",
+      "place": "Erzelingen",
+      "cap": 14
+    },
+    {
+      "order": 2,
+      "kind": "gym",
+      "leader": "Silvana",
+      "place": "Ewigenau",
+      "cap": 22
+    },
+    {
+      "order": 3,
+      "kind": "gym",
+      "leader": "Lamina",
+      "place": "Herzhofen",
+      "cap": 26
+    },
+    {
+      "order": 4,
+      "kind": "gym",
+      "leader": "Hilda",
+      "place": "Schleiede",
+      "cap": 32
+    },
+    {
+      "order": 5,
+      "kind": "gym",
+      "leader": "Marinus",
+      "place": "Weideburg",
+      "cap": 37
+    },
+    {
+      "order": 6,
+      "kind": "gym",
+      "leader": "Adam",
+      "place": "Fleetburg",
+      "cap": 41
+    },
+    {
+      "order": 7,
+      "kind": "gym",
+      "leader": "Frida",
+      "place": "Blizzach",
+      "cap": 42
+    },
+    {
+      "order": 8,
+      "kind": "gym",
+      "leader": "Volkner",
+      "place": "Sonnewik",
+      "cap": 50
+    },
+    {
+      "order": 9,
+      "kind": "elite",
+      "leader": "Herbaro",
+      "place": "Top Vier",
+      "cap": 53
+    },
+    {
+      "order": 10,
+      "kind": "elite",
+      "leader": "Teresa",
+      "place": "Top Vier",
+      "cap": 55
+    },
+    {
+      "order": 11,
+      "kind": "elite",
+      "leader": "Ignaz",
+      "place": "Top Vier",
+      "cap": 57
+    },
+    {
+      "order": 12,
+      "kind": "elite",
+      "leader": "Lucian",
+      "place": "Top Vier",
+      "cap": 59
+    },
+    {
+      "order": 13,
+      "kind": "champion",
+      "leader": "Cynthia",
+      "place": "Champion",
+      "cap": 62
+    }
+  ]
+}

@@ -4,316 +4,90 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pokémon Encounter</title>
-  <style>
-    :root {
-      color-scheme: light;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f4f1eb;
-      color: #24211d;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-width: 320px;
-      padding: 20px;
-    }
-
-    .page {
-      max-width: 1180px;
-      margin: 0 auto;
-    }
-
-    header {
-      margin-bottom: 16px;
-    }
-
-    h1, h2, h3, p { margin-top: 0; }
-    h1 { margin-bottom: 4px; }
-    h2 { margin-bottom: 6px; }
-    h3 { margin-bottom: 10px; }
-
-    .subtitle,
-    .muted,
-    .last-updated {
-      color: #6e665d;
-    }
-
-    .subtitle { margin-bottom: 16px; }
-
-    .toolbar,
-    .panel,
-    .table-wrap {
-      background: #fffdf9;
-      border: 1px solid #cfc7bb;
-      border-radius: 8px;
-    }
-
-    .toolbar {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .run-picker {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    label { font-weight: 650; }
-
-    select,
-    button {
-      border: 1px solid #aaa095;
-      border-radius: 6px;
-      padding: 8px 11px;
-      background: #fffdf9;
-      color: #24211d;
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-      font-weight: 650;
-    }
-
-    button:hover,
-    button.active {
-      background: #2d2a26;
-      color: #fffdf9;
-    }
-
-    .view-nav {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .view[hidden] { display: none; }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 15px;
-      line-height: 1.35;
-    }
-
-    th,
-    td {
-      padding: 11px 13px;
-      text-align: left;
-      vertical-align: top;
-      border-bottom: 1px solid #ded8cf;
-    }
-
-    th {
-      background: #2d2a26;
-      color: #fffdf9;
-      font-weight: 650;
-      white-space: nowrap;
-    }
-
-    th:first-child,
-    td:first-child {
-      min-width: 210px;
-      font-weight: 600;
-    }
-
-    tbody tr:last-child td { border-bottom: 0; }
-    tbody tr:hover { background: #f5f0e8; }
-
-    .dead {
-      color: #8c2f2f;
-      text-decoration: line-through;
-      text-decoration-thickness: 2px;
-    }
-
-    .pokemon-cell {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 48px;
-    }
-
-    .pokemon-image {
-      display: none;
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      flex: 0 0 48px;
-    }
-
-    .pokemon-image.loaded { display: block; }
-    .pokemon-name { display: inline-block; }
-
-    .note {
-      display: block;
-      margin-top: 4px;
-      color: #6e665d;
-      font-size: 12px;
-      font-weight: 400;
-    }
-
-    .run-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      margin: 0 0 10px;
-      flex-wrap: wrap;
-    }
-
-    .run-heading h2 { margin-bottom: 0; }
-
-    .panel {
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin: 14px 0 18px;
-    }
-
-    .stat-card {
-      padding: 14px;
-      border: 1px solid #ded8cf;
-      border-radius: 7px;
-      background: #f8f4ee;
-    }
-
-    .stat-label {
-      display: block;
-      color: #6e665d;
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
-
-    .stat-value {
-      display: block;
-      font-size: 28px;
-      font-weight: 750;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 16px;
-    }
-
-    .dashboard-grid table {
-      font-size: 14px;
-    }
-
-    .dashboard-grid th:first-child,
-    .dashboard-grid td:first-child {
-      min-width: 0;
-    }
-
-    .status-badge {
-      display: inline-block;
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: #e8e2d8;
-      font-size: 12px;
-    }
-
-    .status-badge.completed { background: #dcebdc; }
-    .error {
-      padding: 12px;
-      border-radius: 6px;
-      color: #7b2020;
-      background: #f7e1df;
-      border: 1px solid #d8a09b;
-    }
-
-    .attribution {
-      margin-top: 14px;
-      color: #817970;
-      font-size: 12px;
-    }
-
-    @media (max-width: 780px) {
-      .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .dashboard-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 620px) {
-      body { padding: 10px; }
-      table { min-width: 700px; }
-      th, td { padding: 10px; }
-      .stat-grid { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="page">
     <header>
-      <h1>Pokémon Encounter</h1>
-      <p class="subtitle">Gemeinsame Encounter-Historie für Mark, Nikolai und KNEV – über mehrere Runs hinweg.</p>
-      <div class="toolbar">
-        <div class="run-picker">
-          <label for="run-select">Run:</label>
-          <select id="run-select" aria-label="Run auswählen"></select>
-          <span id="run-meta" class="muted"></span>
-        </div>
-        <span id="last-updated" class="last-updated"></span>
+      <div class="title-row">
+        <h1>Pokémon Encounter</h1>
       </div>
+      <p class="subtitle">Gekoppelte Nuzlocke-Tabelle – ein Tod trifft die ganze Reihe.</p>
+
+      <div class="toolbar">
+        <div class="picker">
+          <label for="game-select">Spiel</label>
+          <select id="game-select" aria-label="Spiel auswählen"></select>
+        </div>
+        <div class="picker">
+          <label for="run-select">Run</label>
+          <select id="run-select" aria-label="Run auswählen"></select>
+          <span id="run-status" class="status-badge"></span>
+        </div>
+        <div class="toolbar-actions">
+          <button type="button" id="new-run-button">Neuer Run</button>
+          <button type="button" id="add-location-button">Ort hinzufügen</button>
+          <span id="last-updated" class="last-updated"></span>
+        </div>
+      </div>
+
       <nav class="view-nav" aria-label="Ansicht">
         <button type="button" class="view-button active" data-view="table">Encounter-Tabelle</button>
-        <button type="button" class="view-button" data-view="dashboard">All-time Dashboard</button>
+        <button type="button" class="view-button" data-view="dashboard">Dashboard</button>
+        <button type="button" class="view-button" data-view="history">Historie</button>
       </nav>
     </header>
 
+    <div id="global-error" class="error" hidden></div>
+
     <section id="table-view" class="view">
-      <div class="run-heading">
-        <h2 id="run-title">Encounter</h2>
-        <span id="run-status" class="status-badge"></span>
-      </div>
-      <div id="table-error" class="error" hidden></div>
+      <section class="caps" aria-label="Level-Caps">
+        <div class="caps-header">
+          <h2>Level-Caps</h2>
+          <div class="caps-progress">
+            <button type="button" id="progress-down" aria-label="Fortschritt zurück">−</button>
+            <span id="progress-label">–</span>
+            <button type="button" id="progress-up" aria-label="Fortschritt vor">+</button>
+          </div>
+        </div>
+        <div id="cap-list" class="cap-list"></div>
+      </section>
+
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>Encounter</th>
-              <th>Mark</th>
-              <th>Nikolai</th>
-              <th>KNEV</th>
-              <th>Schuldiger</th>
+            <tr id="table-head">
+              <th class="col-location">Ort</th>
+              <th class="col-meta">Status</th>
+              <th class="col-meta">Schuldiger</th>
             </tr>
           </thead>
           <tbody id="encounter-rows"></tbody>
         </table>
       </div>
-      <p class="attribution">Pokémon-Artwork wird über die <a href="https://pokeapi.co/" target="_blank" rel="noreferrer">PokeAPI</a> geladen.</p>
+      <p class="attribution">
+        Encounter-Listen und Artwork stammen aus Daten der
+        <a href="https://pokeapi.co/" target="_blank" rel="noreferrer">PokeAPI</a>.
+      </p>
     </section>
 
     <section id="dashboard-view" class="view" hidden>
       <div class="panel">
-        <h2>All-time Dashboard</h2>
-        <p class="muted">Zusammenfassung aller gespeicherten Runs. Gekoppelte Tode werden als ein toter Encounter gezählt; die Pokémon-Tode werden zusätzlich pro Spieler ausgewiesen.</p>
-        <div id="stats-error" class="error" hidden></div>
+        <h2>Dashboard</h2>
+        <p class="muted">
+          Gekoppelte Tode zählen als ein toter Encounter; die Pokémon-Tode stehen zusätzlich pro Spieler.
+        </p>
+        <div class="scope-picker">
+          <label for="stats-scope">Auswertung</label>
+          <select id="stats-scope" aria-label="Auswertungsbereich"></select>
+        </div>
         <div id="stat-grid" class="stat-grid"></div>
         <div class="dashboard-grid">
           <div>
-            <h3>Spieler-Statistik</h3>
+            <h3>Spieler</h3>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Spieler</th><th>Gefangen</th><th>Tote Pokémon</th><th>Fehlversuche</th><th>Verantwortlich</th></tr></thead>
+                <thead><tr><th>Spieler</th><th>Gefangen</th><th>Tote</th><th>Fehlversuche</th><th>Schuld</th></tr></thead>
                 <tbody id="player-stats"></tbody>
               </table>
             </div>
@@ -322,7 +96,7 @@
             <h3>Runs</h3>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Run</th><th>Encounter</th><th>Tode</th><th>Fehlversuche</th></tr></thead>
+                <thead><tr><th>Run</th><th>Offen</th><th>Gefangen</th><th>Tot</th><th>Verloren</th></tr></thead>
                 <tbody id="run-stats"></tbody>
               </table>
             </div>
@@ -330,221 +104,55 @@
         </div>
       </div>
     </section>
+
+    <section id="history-view" class="view" hidden>
+      <div class="panel">
+        <h2>Historie</h2>
+        <p class="muted">Jede Änderung lässt sich einzeln zurücknehmen.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Wann</th><th>Was</th><th></th></tr></thead>
+            <tbody id="history-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script>
-    const API_BASE = '/encounter-table/api';
-    const PLAYERS = ['Mark', 'Nikolai', 'KNEV'];
-    const rowsEl = document.getElementById('encounter-rows');
-    const runSelect = document.getElementById('run-select');
-    const runMeta = document.getElementById('run-meta');
-    const lastUpdated = document.getElementById('last-updated');
-    const runTitle = document.getElementById('run-title');
-    const runStatus = document.getElementById('run-status');
-    const tableError = document.getElementById('table-error');
-    const statsError = document.getElementById('stats-error');
-    const statGrid = document.getElementById('stat-grid');
-    const playerStats = document.getElementById('player-stats');
-    const runStats = document.getElementById('run-stats');
+  <dialog id="run-dialog">
+    <form method="dialog" id="run-form">
+      <h2>Neuer Run</h2>
+      <label for="run-name">Name</label>
+      <input id="run-name" name="name" required maxlength="120" placeholder="Run 3">
+      <label for="run-game">Spiel</label>
+      <select id="run-game" name="game_id"></select>
+      <label class="checkbox">
+        <input type="checkbox" id="run-prefill" checked>
+        Alle Orte des Spiels vorbefüllen
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" id="run-postgame">
+        Postgame-Orte mit aufnehmen
+      </label>
+      <div class="dialog-actions">
+        <button type="button" data-close>Abbrechen</button>
+        <button type="submit" class="primary">Anlegen</button>
+      </div>
+    </form>
+  </dialog>
 
-    const pokemonSlugs = {
-      Abra: 'abra',
-      Bamelin: 'buizel',
-      Bidiza: 'bidoof',
-      Bronzel: 'bronzor',
-      Chelast: 'turtwig',
-      Enton: 'psyduck',
-      Geodude: 'geodude',
-      Kleinstein: 'geodude',
-      Knospi: 'budew',
-      Karpador: 'magikarp',
-      Kaumalat: 'gible',
-      Hoothoot: 'hoothoot',
-      Burmy: 'burmy',
-      Machollo: 'machop',
-      Zirpurze: 'kricketot',
-      Meditie: 'meditite',
-      Onix: 'onix',
-      Panflam: 'chimchar',
-      Ponita: 'ponyta',
-      Rotom: 'rotom',
-      Schalellos: 'shellos',
-      Skunkapuh: 'stunky',
-      Sheinux: 'shinx',
-      Staralili: 'starly',
-      Wadribie: 'combee',
-      Zubat: 'zubat'
-    };
-    const imageCache = new Map();
+  <dialog id="location-dialog">
+    <form method="dialog" id="location-form">
+      <h2>Ort hinzufügen</h2>
+      <label for="location-select">Ort</label>
+      <select id="location-select" size="12"></select>
+      <div class="dialog-actions">
+        <button type="button" data-close>Abbrechen</button>
+        <button type="submit" class="primary">Hinzufügen</button>
+      </div>
+    </form>
+  </dialog>
 
-    function escapeHtml(value) {
-      return String(value ?? '')
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-    }
-
-    function formatDate(value) {
-      if (!value) return '';
-      return new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
-    }
-
-    function renderPokemon(name, status) {
-      const value = escapeHtml(name);
-      const slug = pokemonSlugs[name];
-      const image = slug
-        ? `<img class="pokemon-image" alt="" aria-hidden="true" loading="lazy" data-pokemon-slug="${slug}" title="${value}">`
-        : '';
-      const nameClass = status === 'dead' ? 'pokemon-name dead' : 'pokemon-name';
-      const label = status === 'dead' ? `☠ ${value}` : value;
-      return `<span class="pokemon-cell">${image}<span class="${nameClass}">${label}</span></span>`;
-    }
-
-    async function loadPokemonImage(slug) {
-      if (!imageCache.has(slug)) {
-        const request = fetch(`https://pokeapi.co/api/v2/pokemon/${slug}`)
-          .then((response) => response.ok ? response.json() : null)
-          .then((pokemon) => pokemon?.sprites?.other?.['official-artwork']?.front_default || null)
-          .catch(() => null);
-        imageCache.set(slug, request);
-      }
-      return imageCache.get(slug);
-    }
-
-    async function hydratePokemonImages() {
-      const images = [...document.querySelectorAll('img[data-pokemon-slug]')];
-      await Promise.all(images.map(async (image) => {
-        const url = await loadPokemonImage(image.dataset.pokemonSlug);
-        if (!url) return;
-        image.src = url;
-        image.classList.add('loaded');
-      }));
-    }
-
-    function showError(element, message) {
-      element.textContent = message;
-      element.hidden = false;
-    }
-
-    function clearError(element) {
-      element.hidden = true;
-      element.textContent = '';
-    }
-
-    async function getJson(path) {
-      const response = await fetch(`${API_BASE}${path}`, { cache: 'no-store' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return response.json();
-    }
-
-    function renderTable(data) {
-      runTitle.textContent = data.run_name;
-      runMeta.textContent = data.game || 'Spiel nicht angegeben';
-      lastUpdated.textContent = data.updated_at ? `Stand: ${formatDate(data.updated_at)}` : '';
-      rowsEl.innerHTML = data.encounters.map((row) => `
-        <tr>
-          <td>${escapeHtml(row.encounter)}${row.note ? `<span class="note">${escapeHtml(row.note)}</span>` : ''}</td>
-          <td>${renderPokemon(row.mark, row.mark_status)}</td>
-          <td>${renderPokemon(row.nikolai, row.nikolai_status)}</td>
-          <td>${renderPokemon(row.knev, row.knev_status)}</td>
-          <td>${escapeHtml(row.responsible_player || '')}</td>
-        </tr>
-      `).join('');
-      hydratePokemonImages();
-    }
-
-    function renderRunOptions(data) {
-      runSelect.innerHTML = data.runs.map((run) => {
-        const label = `${run.name}${run.game ? ` · ${run.game}` : ''}${run.status === 'completed' ? ' · abgeschlossen' : ''}`;
-        return `<option value="${escapeHtml(run.id)}">${escapeHtml(label)}</option>`;
-      }).join('');
-      const fromHash = new URLSearchParams(window.location.hash.slice(1)).get('run');
-      const selected = data.runs.some((run) => run.id === fromHash) ? fromHash : data.current_run_id;
-      runSelect.value = selected;
-      const selectedRun = data.runs.find((run) => run.id === selected);
-      runStatus.textContent = selectedRun?.status === 'completed' ? 'Abgeschlossen' : 'Aktiv';
-      runStatus.classList.toggle('completed', selectedRun?.status === 'completed');
-      return selected;
-    }
-
-    async function loadSelectedRun() {
-      clearError(tableError);
-      try {
-        const data = await getJson(`/runs/${encodeURIComponent(runSelect.value)}/encounters`);
-        renderTable(data);
-        const run = [...runSelect.options].find((option) => option.value === runSelect.value);
-        runStatus.textContent = run?.textContent.includes('Abgeschlossen') ? 'Abgeschlossen' : runStatus.textContent || 'Aktiv';
-      } catch (error) {
-        showError(tableError, `Der Run konnte nicht geladen werden (${error.message}).`);
-      }
-    }
-
-    function renderStats(data) {
-      const cards = [
-        ['Runs', data.total_runs],
-        ['Encounter-Reihen', data.total_encounter_rows],
-        ['Tote Encounter', data.total_death_rows],
-        ['Fehlversuche', data.total_failed_rows]
-      ];
-      statGrid.innerHTML = cards.map(([label, value]) => `<div class="stat-card"><span class="stat-label">${label}</span><span class="stat-value">${value}</span></div>`).join('');
-      playerStats.innerHTML = PLAYERS.map((player) => `<tr>
-        <td>${player}</td>
-        <td>${data.caught_pokemon_by_player[player] || 0}</td>
-        <td>${data.dead_pokemon_by_player[player] || 0}</td>
-        <td>${data.failed_encounters_by_player[player] || 0}</td>
-        <td>${data.responsibility_by_player[player] || 0}</td>
-      </tr>`).join('');
-      runStats.innerHTML = data.runs.map((run) => `<tr>
-        <td><strong>${escapeHtml(run.name)}</strong>${run.game ? `<span class="note">${escapeHtml(run.game)}</span>` : ''}</td>
-        <td>${run.encounter_count}</td>
-        <td>${run.death_count}</td>
-        <td>${run.failed_count}</td>
-      </tr>`).join('');
-    }
-
-    async function loadStats() {
-      clearError(statsError);
-      try {
-        renderStats(await getJson('/stats'));
-      } catch (error) {
-        showError(statsError, `Die Statistik konnte nicht geladen werden (${error.message}).`);
-      }
-    }
-
-    function setView(view) {
-      document.querySelectorAll('.view-button').forEach((button) => button.classList.toggle('active', button.dataset.view === view));
-      document.getElementById('table-view').hidden = view !== 'table';
-      document.getElementById('dashboard-view').hidden = view !== 'dashboard';
-      if (view === 'dashboard') loadStats();
-    }
-
-    async function init() {
-      try {
-        const runs = await getJson('/runs');
-        const selected = renderRunOptions(runs);
-        runSelect.value = selected;
-        await loadSelectedRun();
-        const initialHash = window.location.hash.slice(1);
-        if (initialHash === 'dashboard' || new URLSearchParams(initialHash).get('view') === 'dashboard') {
-          setView('dashboard');
-        }
-      } catch (error) {
-        showError(tableError, `Die Runs konnten nicht geladen werden (${error.message}).`);
-      }
-    }
-
-    runSelect.addEventListener('change', () => {
-      window.location.hash = `run=${encodeURIComponent(runSelect.value)}`;
-      loadSelectedRun();
-    });
-
-    document.querySelectorAll('.view-button').forEach((button) => {
-      button.addEventListener('click', () => setView(button.dataset.view));
-    });
-
-    init();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>

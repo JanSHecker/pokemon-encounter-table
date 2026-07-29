@@ -1,0 +1,7145 @@
+{
+  "id": "black-2-white-2",
+  "name": "Pokémon Schwarz 2 / Weiß 2",
+  "versions": [
+    "black-2",
+    "white-2"
+  ],
+  "locations": [
+    {
+      "id": "starter",
+      "order": 1,
+      "name": "Starter",
+      "encounters": [
+        {
+          "species": "snivy",
+          "name": "Serpifeu",
+          "dex": 495,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "tepig",
+          "name": "Floink",
+          "dex": 498,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "oshawott",
+          "name": "Ottaro",
+          "dex": 501,
+          "methods": [
+            "Geschenk"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aspertia-city",
+      "order": 2,
+      "name": "Eventura City",
+      "encounters": [
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "snivy",
+          "name": "Serpifeu",
+          "dex": 495,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "tepig",
+          "name": "Floink",
+          "dex": 498,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "oshawott",
+          "name": "Ottaro",
+          "dex": 501,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-19",
+      "order": 3,
+      "name": "Route 19",
+      "encounters": [
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "politoed",
+          "name": "Quaxo",
+          "dex": 186,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "patrat",
+          "name": "Nagelotz",
+          "dex": 504,
+          "methods": [
+            "Grasland",
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "purrloin",
+          "name": "Felilou",
+          "dex": 509,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "floccesy-town",
+      "order": 4,
+      "name": "Dausing",
+      "encounters": [
+        {
+          "species": "dratini",
+          "name": "Dratini",
+          "dex": 147,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "gible",
+          "name": "Kaumalat",
+          "dex": 443,
+          "methods": [
+            "Geschenk"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-20",
+      "order": 5,
+      "name": "Route 20",
+      "encounters": [
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "politoed",
+          "name": "Quaxo",
+          "dex": 186,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "sunkern",
+          "name": "Sonnkern",
+          "dex": 191,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "azurill",
+          "name": "Azurill",
+          "dex": 298,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "patrat",
+          "name": "Nagelotz",
+          "dex": 504,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "purrloin",
+          "name": "Felilou",
+          "dex": 509,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pidove",
+          "name": "Dusselgurr",
+          "dex": 519,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "sewaddle",
+          "name": "Strawickl",
+          "dex": 540,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "venipede",
+          "name": "Toxiped",
+          "dex": 543,
+          "methods": [
+            "Dunkles Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "floccesy-ranch",
+      "order": 6,
+      "name": "Dausing-Hof",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "mareep",
+          "name": "Voltilamm",
+          "dex": 179,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Wasserwirbel",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "politoed",
+          "name": "Quaxo",
+          "dex": 186,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "azurill",
+          "name": "Azurill",
+          "dex": 298,
+          "methods": [
+            "Grasland",
+            "Surfen"
+          ]
+        },
+        {
+          "species": "riolu",
+          "name": "Riolu",
+          "dex": 447,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "patrat",
+          "name": "Nagelotz",
+          "dex": 504,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lillipup",
+          "name": "Yorkleff",
+          "dex": 506,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "herdier",
+          "name": "Terribark",
+          "dex": 507,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "pidove",
+          "name": "Dusselgurr",
+          "dex": 519,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "virbank-city",
+      "order": 7,
+      "name": "Vapydro City",
+      "encounters": [
+        {
+          "species": "krabby",
+          "name": "Krabby",
+          "dex": 98,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "kingler",
+          "name": "Kingler",
+          "dex": 99,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "qwilfish",
+          "name": "Baldorfish",
+          "dex": 211,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "alomomola",
+          "name": "Mamolida",
+          "dex": 594,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "virbank-complex",
+      "order": 8,
+      "name": "Vapydro-Werke",
+      "encounters": [
+        {
+          "species": "growlithe",
+          "name": "Fukano",
+          "dex": 58,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magnemite",
+          "name": "Magnetilo",
+          "dex": 81,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "krabby",
+          "name": "Krabby",
+          "dex": 98,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "kingler",
+          "name": "Kingler",
+          "dex": 99,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "koffing",
+          "name": "Smogon",
+          "dex": 109,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "qwilfish",
+          "name": "Baldorfish",
+          "dex": 211,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "elekid",
+          "name": "Elekid",
+          "dex": 239,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magby",
+          "name": "Magby",
+          "dex": 240,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "patrat",
+          "name": "Nagelotz",
+          "dex": 504,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pidove",
+          "name": "Dusselgurr",
+          "dex": 519,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "alomomola",
+          "name": "Mamolida",
+          "dex": 594,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "castelia-city",
+      "order": 9,
+      "name": "Stratos City",
+      "encounters": [
+        {
+          "species": "rattata",
+          "name": "Rattfratz",
+          "dex": 19,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "eevee",
+          "name": "Evoli",
+          "dex": 133,
+          "methods": [
+            "Dunkles Gras",
+            "Geschenk",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "skitty",
+          "name": "Eneco",
+          "dex": 300,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "delcatty",
+          "name": "Enekoro",
+          "dex": 301,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "buneary",
+          "name": "Haspiror",
+          "dex": 427,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lopunny",
+          "name": "Schlapor",
+          "dex": 428,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "pidove",
+          "name": "Dusselgurr",
+          "dex": 519,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "cottonee",
+          "name": "Waumboll",
+          "dex": 546,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "whimsicott",
+          "name": "Elfun",
+          "dex": 547,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "petilil",
+          "name": "Lilminip",
+          "dex": 548,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lilligant",
+          "name": "Dressella",
+          "dex": 549,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "castelia-sewers",
+      "order": 10,
+      "name": "Stratos-Kanalisation",
+      "encounters": [
+        {
+          "species": "rattata",
+          "name": "Rattfratz",
+          "dex": 19,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zubat",
+          "name": "Zubat",
+          "dex": 41,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "grimer",
+          "name": "Sleima",
+          "dex": 88,
+          "methods": [
+            "Angel",
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "muk",
+          "name": "Sleimok",
+          "dex": 89,
+          "methods": [
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-4",
+      "order": 11,
+      "name": "Route 4",
+      "encounters": [
+        {
+          "species": "qwilfish",
+          "name": "Baldorfish",
+          "dex": 211,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "clamperl",
+          "name": "Perlu",
+          "dex": 366,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "huntail",
+          "name": "Aalabyss",
+          "dex": 367,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "gorebyss",
+          "name": "Saganabyss",
+          "dex": 368,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "relicanth",
+          "name": "Relicanth",
+          "dex": 369,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "cottonee",
+          "name": "Waumboll",
+          "dex": 546,
+          "methods": [
+            "npc-trade"
+          ]
+        },
+        {
+          "species": "petilil",
+          "name": "Lilminip",
+          "dex": 548,
+          "methods": [
+            "npc-trade"
+          ]
+        },
+        {
+          "species": "sandile",
+          "name": "Ganovil",
+          "dex": 551,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "darumaka",
+          "name": "Flampion",
+          "dex": 554,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "scraggy",
+          "name": "Zurrokex",
+          "dex": 559,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "trubbish",
+          "name": "Unratütox",
+          "dex": 568,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "minccino",
+          "name": "Picochilla",
+          "dex": 572,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "alomomola",
+          "name": "Mamolida",
+          "dex": 594,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "braviary",
+          "name": "Washakwil",
+          "dex": 628,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "mandibuzz",
+          "name": "Grypheldis",
+          "dex": 630,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "desert-resort",
+      "order": 12,
+      "name": "Wüstenresort",
+      "encounters": [
+        {
+          "species": "sandshrew",
+          "name": "Sandan",
+          "dex": 27,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "trapinch",
+          "name": "Knacklion",
+          "dex": 328,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "sandile",
+          "name": "Ganovil",
+          "dex": 551,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "darumaka",
+          "name": "Flampion",
+          "dex": 554,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "maractus",
+          "name": "Maracamba",
+          "dex": 556,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dwebble",
+          "name": "Lithomith",
+          "dex": 557,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "scraggy",
+          "name": "Zurrokex",
+          "dex": 559,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "sigilyph",
+          "name": "Symvolara",
+          "dex": 561,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "relic-castle",
+      "order": 13,
+      "name": "Alter Palast",
+      "encounters": [
+        {
+          "species": "sandshrew",
+          "name": "Sandan",
+          "dex": 27,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "sandslash",
+          "name": "Sandamer",
+          "dex": 28,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "baltoy",
+          "name": "Puppance",
+          "dex": 343,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "sandile",
+          "name": "Ganovil",
+          "dex": 551,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "krokorok",
+          "name": "Rokkaiman",
+          "dex": 552,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "yamask",
+          "name": "Makabaja",
+          "dex": 562,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "volcarona",
+          "name": "Ramoth",
+          "dex": 637,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-16",
+      "order": 14,
+      "name": "Route 16",
+      "encounters": [
+        {
+          "species": "liepard",
+          "name": "Kleoparda",
+          "dex": 510,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "trubbish",
+          "name": "Unratütox",
+          "dex": 568,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "minccino",
+          "name": "Picochilla",
+          "dex": 572,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cinccino",
+          "name": "Chillabell",
+          "dex": 573,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "gothita",
+          "name": "Mollimorba",
+          "dex": 574,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solosis",
+          "name": "Monozyto",
+          "dex": 577,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lostlorn-forest",
+      "order": 15,
+      "name": "Hain der Täuschung",
+      "encounters": [
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "pinsir",
+          "name": "Pinsir",
+          "dex": 127,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "politoed",
+          "name": "Quaxo",
+          "dex": 186,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roserade",
+          "name": "Roserade",
+          "dex": 407,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "vespiquen",
+          "name": "Honweisel",
+          "dex": 416,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "pansage",
+          "name": "Vegimak",
+          "dex": 511,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "pansear",
+          "name": "Grillmak",
+          "dex": 513,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "panpour",
+          "name": "Sodamak",
+          "dex": 515,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "swadloon",
+          "name": "Folikon",
+          "dex": 541,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "leavanny",
+          "name": "Matrifol",
+          "dex": 542,
+          "methods": [
+            "Raschelndes Gras",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "venipede",
+          "name": "Toxiped",
+          "dex": 543,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "whirlipede",
+          "name": "Rollum",
+          "dex": 544,
+          "methods": [
+            "Dunkles Gras"
+          ]
+        },
+        {
+          "species": "cottonee",
+          "name": "Waumboll",
+          "dex": 546,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "whimsicott",
+          "name": "Elfun",
+          "dex": 547,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "petilil",
+          "name": "Lilminip",
+          "dex": 548,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lilligant",
+          "name": "Dressella",
+          "dex": 549,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-5",
+      "order": 16,
+      "name": "Route 5",
+      "encounters": [
+        {
+          "species": "liepard",
+          "name": "Kleoparda",
+          "dex": 510,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "trubbish",
+          "name": "Unratütox",
+          "dex": 568,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "minccino",
+          "name": "Picochilla",
+          "dex": 572,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "cinccino",
+          "name": "Chillabell",
+          "dex": 573,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "gothita",
+          "name": "Mollimorba",
+          "dex": 574,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solosis",
+          "name": "Monozyto",
+          "dex": 577,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "foongus",
+          "name": "Tarnpignon",
+          "dex": 590,
+          "methods": [
+            "hidden-grotto"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "driftveil-drawbridge",
+      "order": 17,
+      "name": "Marea-Zugbrücke",
+      "encounters": [
+        {
+          "species": "ducklett",
+          "name": "Piccolente",
+          "dex": 580,
+          "methods": [
+            "Vogelschatten"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "driftveil-city",
+      "order": 18,
+      "name": "Marea City",
+      "encounters": [
+        {
+          "species": "zorua",
+          "name": "Zorua",
+          "dex": 570,
+          "methods": [
+            "Geschenk"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "relic-passage",
+      "order": 19,
+      "name": "Alter Fluchtweg",
+      "encounters": [
+        {
+          "species": "rattata",
+          "name": "Rattfratz",
+          "dex": 19,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "raticate",
+          "name": "Rattikarl",
+          "dex": 20,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "poliwrath",
+          "name": "Quappo",
+          "dex": 62,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "onix",
+          "name": "Onix",
+          "dex": 95,
+          "methods": [
+            "Grasland",
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "roggenrola",
+          "name": "Kiesling",
+          "dex": 524,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "woobat",
+          "name": "Fleknoil",
+          "dex": 527,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "drilbur",
+          "name": "Rotomurf",
+          "dex": 529,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "timburr",
+          "name": "Praktibalk",
+          "dex": 532,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gurdurr",
+          "name": "Strepoli",
+          "dex": 533,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-6",
+      "order": 20,
+      "name": "Route 6",
+      "encounters": [
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Raschelndes Gras",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "politoed",
+          "name": "Quaxo",
+          "dex": 186,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "nosepass",
+          "name": "Nasgnet",
+          "dex": 299,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "castform",
+          "name": "Formeo",
+          "dex": 351,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "tranquill",
+          "name": "Navitaub",
+          "dex": 520,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "unfezant",
+          "name": "Fasasnob",
+          "dex": 521,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "woobat",
+          "name": "Fleknoil",
+          "dex": 527,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "swadloon",
+          "name": "Folikon",
+          "dex": 541,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "leavanny",
+          "name": "Matrifol",
+          "dex": 542,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "deerling",
+          "name": "Sesokitz",
+          "dex": 585,
+          "methods": [
+            "Dunkles Gras",
+            "Geschenk",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "karrablast",
+          "name": "Laukaps",
+          "dex": 588,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "foongus",
+          "name": "Tarnpignon",
+          "dex": 590,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto",
+            "static"
+          ]
+        },
+        {
+          "species": "shelmet",
+          "name": "Schnuthelm",
+          "dex": 616,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mistralton-cave",
+      "order": 21,
+      "name": "Panaero-Höhle",
+      "encounters": [
+        {
+          "species": "aron",
+          "name": "Stollunior",
+          "dex": 304,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "woobat",
+          "name": "Fleknoil",
+          "dex": 527,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "drilbur",
+          "name": "Rotomurf",
+          "dex": 529,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "axew",
+          "name": "Milza",
+          "dex": 610,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chargestone-cave",
+      "order": 22,
+      "name": "Elektrolithhöhle",
+      "encounters": [
+        {
+          "species": "nosepass",
+          "name": "Nasgnet",
+          "dex": 299,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "drilbur",
+          "name": "Rotomurf",
+          "dex": 529,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "joltik",
+          "name": "Wattzapf",
+          "dex": 595,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ferroseed",
+          "name": "Kastadur",
+          "dex": 597,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "klink",
+          "name": "Klikk",
+          "dex": 599,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tynamo",
+          "name": "Zapplardin",
+          "dex": 602,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-7",
+      "order": 23,
+      "name": "Route 7",
+      "encounters": [
+        {
+          "species": "zangoose",
+          "name": "Sengo",
+          "dex": 335,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "seviper",
+          "name": "Vipitis",
+          "dex": 336,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "watchog",
+          "name": "Kukmarda",
+          "dex": 505,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "tranquill",
+          "name": "Navitaub",
+          "dex": 520,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "unfezant",
+          "name": "Fasasnob",
+          "dex": 521,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "zebstrika",
+          "name": "Zebritz",
+          "dex": 523,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gigalith",
+          "name": "Brockoloss",
+          "dex": 526,
+          "methods": [
+            "npc-trade"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "deerling",
+          "name": "Sesokitz",
+          "dex": 585,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "foongus",
+          "name": "Tarnpignon",
+          "dex": 590,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "static"
+          ]
+        },
+        {
+          "species": "cubchoo",
+          "name": "Petznief",
+          "dex": 613,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "celestial-tower",
+      "order": 24,
+      "name": "Turm des Himmels",
+      "encounters": [
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "mesprit",
+          "name": "Vesprit",
+          "dex": 481,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "elgyem",
+          "name": "Pygraulon",
+          "dex": 605,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "litwick",
+          "name": "Lichtel",
+          "dex": 607,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "strange-house",
+      "order": 25,
+      "name": "Bizarro-Haus",
+      "encounters": [
+        {
+          "species": "raticate",
+          "name": "Rattikarl",
+          "dex": 20,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "banette",
+          "name": "Banette",
+          "dex": 354,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gothita",
+          "name": "Mollimorba",
+          "dex": 574,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gothorita",
+          "name": "Hypnomorba",
+          "dex": 575,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solosis",
+          "name": "Monozyto",
+          "dex": 577,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "duosion",
+          "name": "Mitodos",
+          "dex": 578,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "litwick",
+          "name": "Lichtel",
+          "dex": 607,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reversal-mountain",
+      "order": 26,
+      "name": "Janusberg",
+      "encounters": [
+        {
+          "species": "skarmory",
+          "name": "Panzaeron",
+          "dex": 227,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "numel",
+          "name": "Camaub",
+          "dex": 322,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "camerupt",
+          "name": "Camerupt",
+          "dex": 323,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "spoink",
+          "name": "Spoink",
+          "dex": 325,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "grumpig",
+          "name": "Groink",
+          "dex": 326,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "trapinch",
+          "name": "Knacklion",
+          "dex": 328,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "vibrava",
+          "name": "Vibrava",
+          "dex": 329,
+          "methods": [
+            "Dunkles Gras"
+          ]
+        },
+        {
+          "species": "drifblim",
+          "name": "Drifzepeli",
+          "dex": 426,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "skorupi",
+          "name": "Pionskora",
+          "dex": 451,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heatran",
+          "name": "Heatran",
+          "dex": 485,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "woobat",
+          "name": "Fleknoil",
+          "dex": 527,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "excadrill",
+          "name": "Stalobor",
+          "dex": 530,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "undella-town",
+      "order": 27,
+      "name": "Ondula",
+      "encounters": [
+        {
+          "species": "shellder",
+          "name": "Muschas",
+          "dex": 90,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "cloyster",
+          "name": "Austos",
+          "dex": 91,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "staryu",
+          "name": "Sterndu",
+          "dex": 120,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "starmie",
+          "name": "Starmie",
+          "dex": 121,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "luvdisc",
+          "name": "Liebiskus",
+          "dex": 370,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "undella-bay",
+      "order": 28,
+      "name": "Bucht von Ondula",
+      "encounters": [
+        {
+          "species": "chinchou",
+          "name": "Lampi",
+          "dex": 170,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "lanturn",
+          "name": "Lanturn",
+          "dex": 171,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "mantine",
+          "name": "Mantax",
+          "dex": 226,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "wailmer",
+          "name": "Wailmer",
+          "dex": 320,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "wailord",
+          "name": "Wailord",
+          "dex": 321,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "spheal",
+          "name": "Seemops",
+          "dex": 363,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "sealeo",
+          "name": "Seejong",
+          "dex": 364,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "walrein",
+          "name": "Walraisa",
+          "dex": 365,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "mantyke",
+          "name": "Mantirps",
+          "dex": 458,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel",
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-13",
+      "order": 29,
+      "name": "Route 13",
+      "encounters": [
+        {
+          "species": "shellder",
+          "name": "Muschas",
+          "dex": 90,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "cloyster",
+          "name": "Austos",
+          "dex": 91,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "tangela",
+          "name": "Tangela",
+          "dex": 114,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "staryu",
+          "name": "Sterndu",
+          "dex": 120,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "starmie",
+          "name": "Starmie",
+          "dex": 121,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lunatone",
+          "name": "Lunastein",
+          "dex": 337,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solrock",
+          "name": "Sonnfel",
+          "dex": 338,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "absol",
+          "name": "Absol",
+          "dex": 359,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "spheal",
+          "name": "Seemops",
+          "dex": 363,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "luvdisc",
+          "name": "Liebiskus",
+          "dex": 370,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "drifloon",
+          "name": "Driftlon",
+          "dex": 425,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "drifblim",
+          "name": "Drifzepeli",
+          "dex": 426,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "skorupi",
+          "name": "Pionskora",
+          "dex": 451,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "tangrowth",
+          "name": "Tangoloss",
+          "dex": 465,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "foongus",
+          "name": "Tarnpignon",
+          "dex": 590,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "cobalion",
+          "name": "Kobalium",
+          "dex": 638,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-12",
+      "order": 30,
+      "name": "Route 12",
+      "encounters": [
+        {
+          "species": "pinsir",
+          "name": "Pinsir",
+          "dex": 127,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "heracross",
+          "name": "Skaraborn",
+          "dex": 214,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roserade",
+          "name": "Roserade",
+          "dex": 407,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "combee",
+          "name": "Wadribie",
+          "dex": 415,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "vespiquen",
+          "name": "Honweisel",
+          "dex": 416,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "tranquill",
+          "name": "Navitaub",
+          "dex": 520,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "unfezant",
+          "name": "Fasasnob",
+          "dex": 521,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "sewaddle",
+          "name": "Strawickl",
+          "dex": 540,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "leavanny",
+          "name": "Matrifol",
+          "dex": 542,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "village-bridge",
+      "order": 31,
+      "name": "Dorfbrücke",
+      "encounters": [
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lapras",
+          "name": "Lapras",
+          "dex": 131,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Raschelndes Gras",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "carvanha",
+          "name": "Kanivanha",
+          "dex": 318,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "sharpedo",
+          "name": "Tohaido",
+          "dex": 319,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "zangoose",
+          "name": "Sengo",
+          "dex": 335,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seviper",
+          "name": "Vipitis",
+          "dex": 336,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-11",
+      "order": 32,
+      "name": "Route 11",
+      "encounters": [
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "gligar",
+          "name": "Skorgla",
+          "dex": 207,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zangoose",
+          "name": "Sengo",
+          "dex": 335,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seviper",
+          "name": "Vipitis",
+          "dex": 336,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "gliscor",
+          "name": "Skorgro",
+          "dex": 472,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "karrablast",
+          "name": "Laukaps",
+          "dex": 588,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "amoonguss",
+          "name": "Hutsassa",
+          "dex": 591,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "static"
+          ]
+        },
+        {
+          "species": "shelmet",
+          "name": "Schnuthelm",
+          "dex": 616,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "virizion",
+          "name": "Viridium",
+          "dex": 640,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-9",
+      "order": 33,
+      "name": "Route 9",
+      "encounters": [
+        {
+          "species": "muk",
+          "name": "Sleimok",
+          "dex": 89,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "liepard",
+          "name": "Kleoparda",
+          "dex": 510,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "garbodor",
+          "name": "Deponitox",
+          "dex": 569,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "minccino",
+          "name": "Picochilla",
+          "dex": 572,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cinccino",
+          "name": "Chillabell",
+          "dex": 573,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "gothorita",
+          "name": "Hypnomorba",
+          "dex": 575,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gothitelle",
+          "name": "Morbitesse",
+          "dex": 576,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "duosion",
+          "name": "Mitodos",
+          "dex": 578,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "reuniclus",
+          "name": "Zytomega",
+          "dex": 579,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "pawniard",
+          "name": "Gladiantri",
+          "dex": 624,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bouffalant",
+          "name": "Bisofank",
+          "dex": 626,
+          "methods": [
+            "hidden-grotto"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "humilau-city",
+      "order": 34,
+      "name": "Abidaya City",
+      "encounters": [
+        {
+          "species": "shellder",
+          "name": "Muschas",
+          "dex": 90,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "cloyster",
+          "name": "Austos",
+          "dex": 91,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "staryu",
+          "name": "Sterndu",
+          "dex": 120,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "starmie",
+          "name": "Starmie",
+          "dex": 121,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "corsola",
+          "name": "Corasonn",
+          "dex": 222,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "luvdisc",
+          "name": "Liebiskus",
+          "dex": 370,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "tangrowth",
+          "name": "Tangoloss",
+          "dex": 465,
+          "methods": [
+            "npc-trade"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-22",
+      "order": 35,
+      "name": "Route 22",
+      "encounters": [
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Raschelndes Gras",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "delibird",
+          "name": "Botogel",
+          "dex": 225,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "lunatone",
+          "name": "Lunastein",
+          "dex": 337,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solrock",
+          "name": "Sonnfel",
+          "dex": 338,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "amoonguss",
+          "name": "Hutsassa",
+          "dex": 591,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto",
+            "static"
+          ]
+        },
+        {
+          "species": "mienfoo",
+          "name": "Lin-Fu",
+          "dex": 619,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "terrakion",
+          "name": "Terrakium",
+          "dex": 639,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-21",
+      "order": 36,
+      "name": "Route 21",
+      "encounters": [
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "mantine",
+          "name": "Mantax",
+          "dex": 226,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "luvdisc",
+          "name": "Liebiskus",
+          "dex": 370,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "mantyke",
+          "name": "Mantirps",
+          "dex": 458,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "alomomola",
+          "name": "Mamolida",
+          "dex": 594,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seaside-cave",
+      "order": 37,
+      "name": "Strandgrotte",
+      "encounters": [
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seel",
+          "name": "Jurob",
+          "dex": 86,
+          "methods": [
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "dewgong",
+          "name": "Jugong",
+          "dex": 87,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "shellder",
+          "name": "Muschas",
+          "dex": 90,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "cloyster",
+          "name": "Austos",
+          "dex": 91,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "shuckle",
+          "name": "Pottrott",
+          "dex": 213,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "luvdisc",
+          "name": "Liebiskus",
+          "dex": 370,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "woobat",
+          "name": "Fleknoil",
+          "dex": 527,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "excadrill",
+          "name": "Stalobor",
+          "dex": 530,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "crustle",
+          "name": "Castellith",
+          "dex": 558,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "tynamo",
+          "name": "Zapplardin",
+          "dex": 602,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "eelektrik",
+          "name": "Zapplalek",
+          "dex": 603,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "giant-chasm",
+      "order": 38,
+      "name": "Riesengrotte",
+      "encounters": [
+        {
+          "species": "clefairy",
+          "name": "Piepi",
+          "dex": 35,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "clefable",
+          "name": "Pixi",
+          "dex": 36,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "poliwrath",
+          "name": "Quappo",
+          "dex": 62,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seel",
+          "name": "Jurob",
+          "dex": 86,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "dewgong",
+          "name": "Jugong",
+          "dex": 87,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "tangela",
+          "name": "Tangela",
+          "dex": 114,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "ditto",
+          "name": "Ditto",
+          "dex": 132,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "sneasel",
+          "name": "Sniebel",
+          "dex": 215,
+          "methods": [
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "piloswine",
+          "name": "Keifel",
+          "dex": 221,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "delibird",
+          "name": "Botogel",
+          "dex": 225,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lunatone",
+          "name": "Lunastein",
+          "dex": 337,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "solrock",
+          "name": "Sonnfel",
+          "dex": 338,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "metang",
+          "name": "Metang",
+          "dex": 375,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "metagross",
+          "name": "Metagross",
+          "dex": 376,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "tangrowth",
+          "name": "Tangoloss",
+          "dex": 465,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "mamoswine",
+          "name": "Mamutel",
+          "dex": 473,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "excadrill",
+          "name": "Stalobor",
+          "dex": 530,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "vanillish",
+          "name": "Gelatroppo",
+          "dex": 583,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "vanilluxe",
+          "name": "Gelatwino",
+          "dex": 584,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "kyurem",
+          "name": "Kyurem",
+          "dex": 646,
+          "methods": [
+            "static"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-23",
+      "order": 39,
+      "name": "Route 23",
+      "encounters": [
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "poliwrath",
+          "name": "Quappo",
+          "dex": 62,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "gligar",
+          "name": "Skorgla",
+          "dex": 207,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "zangoose",
+          "name": "Sengo",
+          "dex": 335,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "seviper",
+          "name": "Vipitis",
+          "dex": 336,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "absol",
+          "name": "Absol",
+          "dex": 359,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "gliscor",
+          "name": "Skorgro",
+          "dex": 472,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "azelf",
+          "name": "Tobutz",
+          "dex": 482,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "throh",
+          "name": "Jiutesto",
+          "dex": 538,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "sawk",
+          "name": "Karadonis",
+          "dex": 539,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "amoonguss",
+          "name": "Hutsassa",
+          "dex": 591,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "static"
+          ]
+        },
+        {
+          "species": "mienfoo",
+          "name": "Lin-Fu",
+          "dex": 619,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "mienshao",
+          "name": "Wie-Shu",
+          "dex": 620,
+          "methods": [
+            "Dunkles Gras"
+          ]
+        },
+        {
+          "species": "bouffalant",
+          "name": "Bisofank",
+          "dex": 626,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "rufflet",
+          "name": "Geronimatz",
+          "dex": 627,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "vullaby",
+          "name": "Skallyk",
+          "dex": 629,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-victory-road-2",
+      "order": 40,
+      "name": "Siegesstraße",
+      "encounters": [
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "poliwrath",
+          "name": "Quappo",
+          "dex": 62,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "onix",
+          "name": "Onix",
+          "dex": 95,
+          "methods": [
+            "Grasland",
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "politoed",
+          "name": "Quaxo",
+          "dex": 186,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "roselia",
+          "name": "Roselia",
+          "dex": 315,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "altaria",
+          "name": "Altaria",
+          "dex": 334,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "banette",
+          "name": "Banette",
+          "dex": 354,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "roserade",
+          "name": "Roserade",
+          "dex": 407,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "tranquill",
+          "name": "Navitaub",
+          "dex": 520,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "unfezant",
+          "name": "Fasasnob",
+          "dex": 521,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "excadrill",
+          "name": "Stalobor",
+          "dex": 530,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "gurdurr",
+          "name": "Strepoli",
+          "dex": 533,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "throh",
+          "name": "Jiutesto",
+          "dex": 538,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "sawk",
+          "name": "Karadonis",
+          "dex": 539,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "cottonee",
+          "name": "Waumboll",
+          "dex": 546,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "whimsicott",
+          "name": "Elfun",
+          "dex": 547,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "petilil",
+          "name": "Lilminip",
+          "dex": 548,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lilligant",
+          "name": "Dressella",
+          "dex": 549,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "druddigon",
+          "name": "Shardrago",
+          "dex": 621,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "golurk",
+          "name": "Golgantes",
+          "dex": 623,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "zweilous",
+          "name": "Duodino",
+          "dex": 634,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unova-route-1",
+      "order": 41,
+      "name": "Route 1",
+      "encounters": [
+        {
+          "species": "jigglypuff",
+          "name": "Pummeluff",
+          "dex": 39,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wigglytuff",
+          "name": "Knuddeluff",
+          "dex": 40,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "feebas",
+          "name": "Barschwa",
+          "dex": 349,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "milotic",
+          "name": "Milotic",
+          "dex": 350,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "watchog",
+          "name": "Kukmarda",
+          "dex": 505,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "herdier",
+          "name": "Terribark",
+          "dex": 507,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "stoutland",
+          "name": "Bissbark",
+          "dex": 508,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "scrafty",
+          "name": "Irokex",
+          "dex": 560,
+          "methods": [
+            "Dunkles Gras"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "accumula-town",
+      "order": 42,
+      "name": "Gavina",
+      "encounters": [
+        {
+          "species": "alakazam",
+          "name": "Simsala",
+          "dex": 65,
+          "methods": [
+            "npc-trade"
+          ]
+        },
+        {
+          "species": "ambipom",
+          "name": "Ambidiffel",
+          "dex": 424,
+          "methods": [
+            "npc-trade"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "unova-route-2",
+      "order": 43,
+      "name": "Route 2",
+      "encounters": [
+        {
+          "species": "nidoran-f",
+          "name": "Nidoran♀",
+          "dex": 29,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "nidoran-m",
+          "name": "Nidoran♂",
+          "dex": 32,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "jigglypuff",
+          "name": "Pummeluff",
+          "dex": 39,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wigglytuff",
+          "name": "Knuddeluff",
+          "dex": 40,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "lickitung",
+          "name": "Schlurp",
+          "dex": 108,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "granbull",
+          "name": "Granbull",
+          "dex": 210,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "lickilicky",
+          "name": "Schlurplek",
+          "dex": 463,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "watchog",
+          "name": "Kukmarda",
+          "dex": 505,
+          "methods": [
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "herdier",
+          "name": "Terribark",
+          "dex": 507,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "stoutland",
+          "name": "Bissbark",
+          "dex": 508,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "liepard",
+          "name": "Kleoparda",
+          "dex": 510,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "striaton-city",
+      "order": 44,
+      "name": "Orion City",
+      "encounters": [
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "corphish",
+          "name": "Krebscorps",
+          "dex": 341,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "crawdaunt",
+          "name": "Krebutack",
+          "dex": 342,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "dreamyard",
+      "order": 45,
+      "name": "Traumbrache",
+      "encounters": [
+        {
+          "species": "raticate",
+          "name": "Rattikarl",
+          "dex": 20,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "jigglypuff",
+          "name": "Pummeluff",
+          "dex": 39,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "wigglytuff",
+          "name": "Knuddeluff",
+          "dex": 40,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "golbat",
+          "name": "Golbat",
+          "dex": 42,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "crobat",
+          "name": "Iksbat",
+          "dex": 169,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "latias",
+          "name": "Latias",
+          "dex": 380,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "latios",
+          "name": "Latios",
+          "dex": 381,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "watchog",
+          "name": "Kukmarda",
+          "dex": 505,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "liepard",
+          "name": "Kleoparda",
+          "dex": 510,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "munna",
+          "name": "Somniam",
+          "dex": 517,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "musharna",
+          "name": "Somnivora",
+          "dex": 518,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "unova-route-3",
+      "order": 46,
+      "name": "Route 3",
+      "encounters": [
+        {
+          "species": "venonat",
+          "name": "Bluzuk",
+          "dex": 48,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "yanma",
+          "name": "Yanma",
+          "dex": 193,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lombre",
+          "name": "Lombrero",
+          "dex": 271,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "manectric",
+          "name": "Voltenso",
+          "dex": 310,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "corphish",
+          "name": "Krebscorps",
+          "dex": 341,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "crawdaunt",
+          "name": "Krebutack",
+          "dex": 342,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "bibarel",
+          "name": "Bidifas",
+          "dex": 400,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "pachirisu",
+          "name": "Pachirisu",
+          "dex": 417,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "yanmega",
+          "name": "Yanmega",
+          "dex": 469,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "watchog",
+          "name": "Kukmarda",
+          "dex": 505,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "herdier",
+          "name": "Terribark",
+          "dex": 507,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "stoutland",
+          "name": "Bissbark",
+          "dex": 508,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "purrloin",
+          "name": "Felilou",
+          "dex": 509,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tranquill",
+          "name": "Navitaub",
+          "dex": 520,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "unfezant",
+          "name": "Fasasnob",
+          "dex": 521,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "zebstrika",
+          "name": "Zebritz",
+          "dex": 523,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "wellspring-cave",
+      "order": 47,
+      "name": "Grundwassersenke",
+      "encounters": [
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "poliwrath",
+          "name": "Quappo",
+          "dex": 62,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "woobat",
+          "name": "Fleknoil",
+          "dex": 527,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "excadrill",
+          "name": "Stalobor",
+          "dex": 530,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "nacrene-city",
+      "order": 48,
+      "name": "Septerna City",
+      "encounters": [
+        {
+          "species": "omanyte",
+          "name": "Amonitas",
+          "dex": 138,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "kabuto",
+          "name": "Kabuto",
+          "dex": 140,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "aerodactyl",
+          "name": "Aerodactyl",
+          "dex": 142,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "lileep",
+          "name": "Liliep",
+          "dex": 345,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "anorith",
+          "name": "Anorith",
+          "dex": 347,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "cranidos",
+          "name": "Koknodon",
+          "dex": 408,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "shieldon",
+          "name": "Schilterus",
+          "dex": 410,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "happiny",
+          "name": "Wonneira",
+          "dex": 440,
+          "methods": [
+            "Ei"
+          ]
+        },
+        {
+          "species": "uxie",
+          "name": "Selfe",
+          "dex": 480,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "tirtouga",
+          "name": "Galapaflos",
+          "dex": 564,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "archen",
+          "name": "Flapteryx",
+          "dex": 566,
+          "methods": [
+            "Geschenk"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "pinwheel-forest",
+      "order": 49,
+      "name": "Ewigenwald",
+      "encounters": [
+        {
+          "species": "butterfree",
+          "name": "Smettbo",
+          "dex": 12,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "beedrill",
+          "name": "Bibor",
+          "dex": 15,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "yanma",
+          "name": "Yanma",
+          "dex": 193,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "murkrow",
+          "name": "Kramurx",
+          "dex": 198,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "breloom",
+          "name": "Kapilz",
+          "dex": 286,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "vigoroth",
+          "name": "Muntier",
+          "dex": 288,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "slaking",
+          "name": "Letarking",
+          "dex": 289,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "hariyama",
+          "name": "Hariyama",
+          "dex": 297,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "medicham",
+          "name": "Meditalis",
+          "dex": 308,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "bagon",
+          "name": "Kindwurm",
+          "dex": 371,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "toxicroak",
+          "name": "Toxiquak",
+          "dex": 454,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "yanmega",
+          "name": "Yanmega",
+          "dex": 469,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "pansage",
+          "name": "Vegimak",
+          "dex": 511,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "pansear",
+          "name": "Grillmak",
+          "dex": 513,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "panpour",
+          "name": "Sodamak",
+          "dex": 515,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "gurdurr",
+          "name": "Strepoli",
+          "dex": 533,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "palpitoad",
+          "name": "Mebrana",
+          "dex": 536,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seismitoad",
+          "name": "Branawarz",
+          "dex": 537,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "throh",
+          "name": "Jiutesto",
+          "dex": 538,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "sawk",
+          "name": "Karadonis",
+          "dex": 539,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "swadloon",
+          "name": "Folikon",
+          "dex": 541,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "whirlipede",
+          "name": "Rollum",
+          "dex": 544,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "scolipede",
+          "name": "Cerapendra",
+          "dex": 545,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "cottonee",
+          "name": "Waumboll",
+          "dex": 546,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "whimsicott",
+          "name": "Elfun",
+          "dex": 547,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "petilil",
+          "name": "Lilminip",
+          "dex": 548,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lilligant",
+          "name": "Dressella",
+          "dex": 549,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "amoonguss",
+          "name": "Hutsassa",
+          "dex": 591,
+          "methods": [
+            "hidden-grotto"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "unova-route-18",
+      "order": 50,
+      "name": "Route 18",
+      "encounters": [
+        {
+          "species": "kingler",
+          "name": "Kingler",
+          "dex": 99,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "horsea",
+          "name": "Seeper",
+          "dex": 116,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seadra",
+          "name": "Seemon",
+          "dex": 117,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "dragonite",
+          "name": "Dragoran",
+          "dex": 149,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "corsola",
+          "name": "Corasonn",
+          "dex": 222,
+          "methods": [
+            "Angel",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "kingdra",
+          "name": "Seedraking",
+          "dex": 230,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "tropius",
+          "name": "Tropius",
+          "dex": 357,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "chatot",
+          "name": "Plaudagei",
+          "dex": 441,
+          "methods": [
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "carnivine",
+          "name": "Venuflibis",
+          "dex": 455,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "watchog",
+          "name": "Kukmarda",
+          "dex": 505,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "throh",
+          "name": "Jiutesto",
+          "dex": 538,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "sawk",
+          "name": "Karadonis",
+          "dex": 539,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "crustle",
+          "name": "Castellith",
+          "dex": 558,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "scrafty",
+          "name": "Irokex",
+          "dex": 560,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "alomomola",
+          "name": "Mamolida",
+          "dex": 594,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "p2-laboratory",
+      "order": 51,
+      "name": "P2-Labor",
+      "encounters": [
+        {
+          "species": "magneton",
+          "name": "Magneton",
+          "dex": 82,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "weezing",
+          "name": "Smogmog",
+          "dex": 110,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "horsea",
+          "name": "Seeper",
+          "dex": 116,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seadra",
+          "name": "Seemon",
+          "dex": 117,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "qwilfish",
+          "name": "Baldorfish",
+          "dex": 211,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "kingdra",
+          "name": "Seedraking",
+          "dex": 230,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "magnezone",
+          "name": "Magnezone",
+          "dex": 462,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "watchog",
+          "name": "Kukmarda",
+          "dex": 505,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "herdier",
+          "name": "Terribark",
+          "dex": 507,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "stoutland",
+          "name": "Bissbark",
+          "dex": 508,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "scrafty",
+          "name": "Irokex",
+          "dex": 560,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "alomomola",
+          "name": "Mamolida",
+          "dex": 594,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "klang",
+          "name": "Kliklak",
+          "dex": 600,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "klinklang",
+          "name": "Klikdiklak",
+          "dex": 601,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "unova-route-17",
+      "order": 52,
+      "name": "Route 17",
+      "encounters": [
+        {
+          "species": "horsea",
+          "name": "Seeper",
+          "dex": 116,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seadra",
+          "name": "Seemon",
+          "dex": 117,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "kingdra",
+          "name": "Seedraking",
+          "dex": 230,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "frillish",
+          "name": "Quabbel",
+          "dex": 592,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "jellicent",
+          "name": "Apoquallyp",
+          "dex": 593,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "alomomola",
+          "name": "Mamolida",
+          "dex": 594,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "unova-route-8",
+      "order": 53,
+      "name": "Route 8",
+      "encounters": [
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "croagunk",
+          "name": "Glibunkel",
+          "dex": 453,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "palpitoad",
+          "name": "Mebrana",
+          "dex": 536,
+          "methods": [
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "seismitoad",
+          "name": "Branawarz",
+          "dex": 537,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "karrablast",
+          "name": "Laukaps",
+          "dex": 588,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shelmet",
+          "name": "Schnuthelm",
+          "dex": 616,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "stunfisk",
+          "name": "Flunschlik",
+          "dex": 618,
+          "methods": [
+            "Angel",
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "moor-of-icirrus",
+      "order": 54,
+      "name": "Moor von Nevaio",
+      "encounters": [
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "croagunk",
+          "name": "Glibunkel",
+          "dex": 453,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "palpitoad",
+          "name": "Mebrana",
+          "dex": 536,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seismitoad",
+          "name": "Branawarz",
+          "dex": 537,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "karrablast",
+          "name": "Laukaps",
+          "dex": 588,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shelmet",
+          "name": "Schnuthelm",
+          "dex": 616,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "stunfisk",
+          "name": "Flunschlik",
+          "dex": 618,
+          "methods": [
+            "Angel",
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "icirrus-city",
+      "order": 55,
+      "name": "Nevaio City",
+      "encounters": [
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "croagunk",
+          "name": "Glibunkel",
+          "dex": 453,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "palpitoad",
+          "name": "Mebrana",
+          "dex": 536,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "seismitoad",
+          "name": "Branawarz",
+          "dex": 537,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "karrablast",
+          "name": "Laukaps",
+          "dex": 588,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shelmet",
+          "name": "Schnuthelm",
+          "dex": 616,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "stunfisk",
+          "name": "Flunschlik",
+          "dex": 618,
+          "methods": [
+            "Angel",
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "twist-mountain",
+      "order": 56,
+      "name": "Wendelberg",
+      "encounters": [
+        {
+          "species": "onix",
+          "name": "Onix",
+          "dex": 95,
+          "methods": [
+            "Grasland",
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "steelix",
+          "name": "Stahlos",
+          "dex": 208,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "regigigas",
+          "name": "Regigigas",
+          "dex": 486,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "woobat",
+          "name": "Fleknoil",
+          "dex": 527,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "excadrill",
+          "name": "Stalobor",
+          "dex": 530,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "gurdurr",
+          "name": "Strepoli",
+          "dex": 533,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "beartic",
+          "name": "Siberio",
+          "dex": 614,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "cryogonal",
+          "name": "Frigometri",
+          "dex": 615,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "heatmor",
+          "name": "Furnifraß",
+          "dex": 631,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "durant",
+          "name": "Fermicula",
+          "dex": 632,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "dragonspiral-tower",
+      "order": 57,
+      "name": "Drachenstiege",
+      "encounters": [
+        {
+          "species": "dratini",
+          "name": "Dratini",
+          "dex": 147,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "dragonair",
+          "name": "Dragonir",
+          "dex": 148,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "dragonite",
+          "name": "Dragoran",
+          "dex": 149,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "tranquill",
+          "name": "Navitaub",
+          "dex": 520,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "unfezant",
+          "name": "Fasasnob",
+          "dex": 521,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "vanillish",
+          "name": "Gelatroppo",
+          "dex": 583,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "vanilluxe",
+          "name": "Gelatwino",
+          "dex": 584,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "sawsbuck",
+          "name": "Kronjuwild",
+          "dex": 586,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "beartic",
+          "name": "Siberio",
+          "dex": 614,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "mienfoo",
+          "name": "Lin-Fu",
+          "dex": 619,
+          "methods": [
+            "Dunkles Gras"
+          ]
+        },
+        {
+          "species": "mienshao",
+          "name": "Wie-Shu",
+          "dex": 620,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "druddigon",
+          "name": "Shardrago",
+          "dex": 621,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "golurk",
+          "name": "Golgantes",
+          "dex": 623,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "reshiram",
+          "name": "Reshiram",
+          "dex": 643,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "zekrom",
+          "name": "Zekrom",
+          "dex": 644,
+          "methods": [
+            "static"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "unova-route-14",
+      "order": 58,
+      "name": "Route 14",
+      "encounters": [
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "swablu",
+          "name": "Wablu",
+          "dex": 333,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "altaria",
+          "name": "Altaria",
+          "dex": 334,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "absol",
+          "name": "Absol",
+          "dex": 359,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "drifblim",
+          "name": "Drifzepeli",
+          "dex": 426,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "mienfoo",
+          "name": "Lin-Fu",
+          "dex": 619,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "abundant-shrine",
+      "order": 59,
+      "name": "Schrein der Ernte",
+      "encounters": [
+        {
+          "species": "vulpix",
+          "name": "Vulpix",
+          "dex": 37,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "ninetales",
+          "name": "Vulnona",
+          "dex": 38,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "marill",
+          "name": "Marill",
+          "dex": 183,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "azumarill",
+          "name": "Azumarill",
+          "dex": 184,
+          "methods": [
+            "Raschelndes Gras",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "swablu",
+          "name": "Wablu",
+          "dex": 333,
+          "methods": [
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "altaria",
+          "name": "Altaria",
+          "dex": 334,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "bronzor",
+          "name": "Bronzel",
+          "dex": 436,
+          "methods": [
+            "Grasland",
+            "hidden-grotto"
+          ]
+        },
+        {
+          "species": "bronzong",
+          "name": "Bronzong",
+          "dex": 437,
+          "methods": [
+            "Dunkles Gras"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "cottonee",
+          "name": "Waumboll",
+          "dex": 546,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "whimsicott",
+          "name": "Elfun",
+          "dex": 547,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "petilil",
+          "name": "Lilminip",
+          "dex": 548,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lilligant",
+          "name": "Dressella",
+          "dex": 549,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "amoonguss",
+          "name": "Hutsassa",
+          "dex": 591,
+          "methods": [
+            "hidden-grotto"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "unova-route-15",
+      "order": 60,
+      "name": "Route 15",
+      "encounters": [
+        {
+          "species": "sandslash",
+          "name": "Sandamer",
+          "dex": 28,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "gligar",
+          "name": "Skorgla",
+          "dex": 207,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "pupitar",
+          "name": "Pupitar",
+          "dex": 247,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "tyranitar",
+          "name": "Despotar",
+          "dex": 248,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "gliscor",
+          "name": "Skorgro",
+          "dex": 472,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "rotom",
+          "name": "Rotom",
+          "dex": 479,
+          "methods": [
+            "npc-trade"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "throh",
+          "name": "Jiutesto",
+          "dex": 538,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "sawk",
+          "name": "Karadonis",
+          "dex": 539,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland",
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "scrafty",
+          "name": "Irokex",
+          "dex": 560,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "emolga",
+          "name": "Emolga",
+          "dex": 587,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "clay-tunnel",
+      "order": 61,
+      "name": "Turner-Pfad",
+      "encounters": [
+        {
+          "species": "poliwag",
+          "name": "Quapsel",
+          "dex": 60,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "poliwhirl",
+          "name": "Quaputzi",
+          "dex": 61,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "poliwrath",
+          "name": "Quappo",
+          "dex": 62,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "onix",
+          "name": "Onix",
+          "dex": 95,
+          "methods": [
+            "Grasland",
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "steelix",
+          "name": "Stahlos",
+          "dex": 208,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "nosepass",
+          "name": "Nasgnet",
+          "dex": 299,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lairon",
+          "name": "Stollrak",
+          "dex": 305,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "woobat",
+          "name": "Fleknoil",
+          "dex": 527,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "excadrill",
+          "name": "Stalobor",
+          "dex": 530,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "durant",
+          "name": "Fermicula",
+          "dex": 632,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "underground-ruins",
+      "order": 62,
+      "name": "Unterirdische Ruine",
+      "encounters": [
+        {
+          "species": "onix",
+          "name": "Onix",
+          "dex": 95,
+          "methods": [
+            "Grasland",
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "steelix",
+          "name": "Stahlos",
+          "dex": 208,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "nosepass",
+          "name": "Nasgnet",
+          "dex": 299,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "lairon",
+          "name": "Stollrak",
+          "dex": 305,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "regirock",
+          "name": "Regirock",
+          "dex": 377,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "regice",
+          "name": "Regice",
+          "dex": 378,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "registeel",
+          "name": "Registeel",
+          "dex": 379,
+          "methods": [
+            "static"
+          ]
+        },
+        {
+          "species": "boldore",
+          "name": "Sedimantur",
+          "dex": 525,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "woobat",
+          "name": "Fleknoil",
+          "dex": 527,
+          "methods": [
+            "Grasland"
+          ]
+        },
+        {
+          "species": "excadrill",
+          "name": "Stalobor",
+          "dex": 530,
+          "methods": [
+            "Staubwolke"
+          ]
+        },
+        {
+          "species": "durant",
+          "name": "Fermicula",
+          "dex": 632,
+          "methods": [
+            "Grasland"
+          ]
+        }
+      ],
+      "postgame": true
+    },
+    {
+      "id": "nature-sanctuary",
+      "order": 63,
+      "name": "Naturschutzgebiet",
+      "encounters": [
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "noctowl",
+          "name": "Noctuh",
+          "dex": 164,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "girafarig",
+          "name": "Girafarig",
+          "dex": 203,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "dunsparce",
+          "name": "Dummisel",
+          "dex": 206,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "nuzleaf",
+          "name": "Blanas",
+          "dex": 274,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "shiftry",
+          "name": "Tengulist",
+          "dex": 275,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "altaria",
+          "name": "Altaria",
+          "dex": 334,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "kecleon",
+          "name": "Kecleon",
+          "dex": 352,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "buizel",
+          "name": "Bamelin",
+          "dex": 418,
+          "methods": [
+            "Surfen",
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "floatzel",
+          "name": "Bojelin",
+          "dex": 419,
+          "methods": [
+            "Wasserwirbel"
+          ]
+        },
+        {
+          "species": "audino",
+          "name": "Ohrdoch",
+          "dex": 531,
+          "methods": [
+            "Raschelndes Gras"
+          ]
+        },
+        {
+          "species": "basculin",
+          "name": "Barschuft",
+          "dex": 550,
+          "methods": [
+            "Angel",
+            "Surfen",
+            "Wasserwirbel",
+            "Wasserwirbel (Angel)"
+          ]
+        },
+        {
+          "species": "fraxure",
+          "name": "Sharfax",
+          "dex": 611,
+          "methods": [
+            "Dunkles Gras",
+            "Grasland"
+          ]
+        },
+        {
+          "species": "haxorus",
+          "name": "Maxax",
+          "dex": 612,
+          "methods": [
+            "static"
+          ]
+        }
+      ],
+      "postgame": true
+    }
+  ],
+  "level_caps": [
+    {
+      "order": 1,
+      "kind": "gym",
+      "leader": "Cheren",
+      "place": "Eventura City",
+      "cap": 13
+    },
+    {
+      "order": 2,
+      "kind": "gym",
+      "leader": "Mica",
+      "place": "Vapydro City",
+      "cap": 18
+    },
+    {
+      "order": 3,
+      "kind": "gym",
+      "leader": "Artie",
+      "place": "Stratos City",
+      "cap": 24
+    },
+    {
+      "order": 4,
+      "kind": "gym",
+      "leader": "Kamilla",
+      "place": "Rayono City",
+      "cap": 30
+    },
+    {
+      "order": 5,
+      "kind": "gym",
+      "leader": "Turner",
+      "place": "Marea City",
+      "cap": 33
+    },
+    {
+      "order": 6,
+      "kind": "gym",
+      "leader": "Géraldine",
+      "place": "Panaero City",
+      "cap": 36
+    },
+    {
+      "order": 7,
+      "kind": "gym",
+      "leader": "Lysander",
+      "place": "Twindrake City",
+      "cap": 44
+    },
+    {
+      "order": 8,
+      "kind": "gym",
+      "leader": "Benson",
+      "place": "Abidaya City",
+      "cap": 51
+    },
+    {
+      "order": 9,
+      "kind": "elite",
+      "leader": "Top Vier",
+      "place": "Anissa · Eugen · Astor · Kattlea",
+      "cap": 58
+    },
+    {
+      "order": 10,
+      "kind": "champion",
+      "leader": "Lilia",
+      "place": "Champion",
+      "cap": 59
+    }
+  ]
+}

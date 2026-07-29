@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "encounter-table",
+      "runtimeExecutable": ".venv/Scripts/python.exe",
+      "runtimeArgs": ["-m", "uvicorn", "tools.dev_server:app", "--port", "8010", "--reload"],
+      "port": 8010,
+      "url": "http://localhost:8010"
+    }
+  ]
+}
