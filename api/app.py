@@ -4,6 +4,7 @@ import json
 import os
 import re
 import secrets
+import shutil
 import threading
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -60,11 +61,22 @@ LEGACY_LOCATION_IDS = {
 }
 LEGACY_SEA_ROUTES = {"220", "223", "226", "230"}
 
-HISTORY_LIMIT = 500
+# Die Historie ist bei offenen Schreibrechten das einzige Sicherheitsnetz. Sie
+# liegt deshalb in einer eigenen, nur angehaengten Datei - nicht im Datenstand,
+# wo ein paar hundert Requests sie verdraengen koennten.
+HISTORY_KEEP = 20000  # Eintraege, die in der Datei verbleiben
+HISTORY_REWRITE_SLACK = 500  # erst so viel darueber wird aufgeraeumt
+HISTORY_PAGE_MAX = 500  # groesste Seite, die /history ausliefert
+
+# Taegliche Kopie des Datenstandes, plus eine vor jeder Schema-Migration.
+BACKUP_KEEP = 30
 
 # Ein Link belegt bei allen drei Spielern denselben Teamplatz, also gilt schlicht
 # die Teamgroesse.
 TEAM_SIZE = 6
+
+# Ausdrueckliches "war niemand schuld" - unterscheidbar von "noch nicht eingetragen".
+NO_CULPRIT = "niemand"
 
 app = FastAPI(
     title="Pokémon Encounter API",
@@ -114,6 +126,7 @@ def load_games() -> dict[str, dict[str, Any]]:
 
 def reset_catalog_cache() -> None:
     _catalog_cache.clear()
+    _history_seq.clear()
 
 
 def find_game(game_id: str) -> dict[str, Any]:
@@ -439,21 +452,12 @@ def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
     if not any(run["id"] == current_run_id for run in runs):
         current_run_id = runs[0]["id"]
 
-    history = [entry for entry in raw.get("history", []) if isinstance(entry, dict)][-HISTORY_LIMIT:]
-    # Fortlaufende Nummer, damit Historien-IDs nach dem Kuerzen nicht kollidieren.
-    history_seq = int(raw.get("history_seq") or 0)
-    for entry in history:
-        match = re.fullmatch(r"h-(\d+)", str(entry.get("id", "")))
-        if match:
-            history_seq = max(history_seq, int(match.group(1)))
-
+    # history/history_seq wandern in die eigene Historiendatei und fliegen hier raus.
     return {
         "schema_version": SCHEMA_VERSION,
         "players": players,
         "current_run_id": current_run_id,
         "runs": runs,
-        "history": history,
-        "history_seq": history_seq,
         "updated_at": raw.get("updated_at") or now_iso(),
     }
 
@@ -504,10 +508,107 @@ def initial_state() -> dict[str, Any]:
                 "encounters": build_rows(game_id, include_postgame=False, player_ids=player_ids),
             }
         ],
-        "history": [],
-        "history_seq": 0,
         "updated_at": timestamp,
     }
+
+
+# --------------------------------------------------------------------------- #
+# Historie (eigene Datei, nur angehaengt)
+# --------------------------------------------------------------------------- #
+
+
+def history_path() -> Path:
+    configured = os.environ.get("ENCOUNTER_HISTORY_PATH")
+    if configured:
+        return Path(configured)
+    target = data_path()
+    return target.with_name(f"{target.stem}-history.jsonl")
+
+
+_history_seq: dict[str, int] = {}
+
+
+def read_history() -> list[dict[str, Any]]:
+    path = history_path()
+    if not path.exists():
+        return []
+    entries = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            entries.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue  # eine kaputte Zeile darf die Historie nicht unlesbar machen
+    return entries
+
+
+def append_history(records: list[dict[str, Any]]) -> None:
+    if not records:
+        return
+    path = history_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        for record in records:
+            handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+    # Nur gelegentlich aufraeumen, nicht bei jedem Schreibzugriff.
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if len(lines) > HISTORY_KEEP + HISTORY_REWRITE_SLACK:
+        path.write_text("\n".join(lines[-HISTORY_KEEP:]) + "\n", encoding="utf-8")
+
+
+def next_history_id() -> str:
+    """Fortlaufend, auch nachdem alte Zeilen weggeschnitten wurden."""
+    key = str(history_path())
+    if key not in _history_seq:
+        highest = 0
+        for entry in read_history():
+            match = re.fullmatch(r"h-(\d+)", str(entry.get("id", "")))
+            if match:
+                highest = max(highest, int(match.group(1)))
+        _history_seq[key] = highest
+    _history_seq[key] += 1
+    return f"h-{_history_seq[key]}"
+
+
+# --------------------------------------------------------------------------- #
+# Backups
+# --------------------------------------------------------------------------- #
+
+
+def backups_dir() -> Path:
+    configured = os.environ.get("ENCOUNTER_BACKUP_DIR")
+    return Path(configured) if configured else data_path().parent / "backups"
+
+
+def daily_backup(source: Path) -> None:
+    """Eine Kopie pro Tag, angelegt bevor der Tag zum ersten Mal ueberschrieben wird."""
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    directory = backups_dir()
+    target = directory / f"{source.stem}-{stamp}.json"
+    if target.exists():
+        return
+    try:
+        directory.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
+        existing = sorted(directory.glob(f"{source.stem}-????-??-??.json"))
+        for outdated in existing[:-BACKUP_KEEP]:
+            outdated.unlink(missing_ok=True)
+    except OSError:
+        pass  # ein fehlgeschlagenes Backup darf den Schreibzugriff nicht blockieren
+
+
+def migration_backup(source: Path, from_version: Any) -> None:
+    """Vor jeder Schema-Migration - die laeuft nur einmal und ist nicht umkehrbar."""
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    directory = backups_dir()
+    try:
+        directory.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, directory / f"migration-{source.stem}-v{from_version or 'unbekannt'}-{stamp}.json")
+    except OSError:
+        pass
 
 
 def serialize_state(state: dict[str, Any]) -> str:
@@ -517,6 +618,8 @@ def serialize_state(state: dict[str, Any]) -> str:
 def save_state(state: dict[str, Any]) -> None:
     target = data_path()
     target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        daily_backup(target)
     temporary = target.with_suffix(f"{target.suffix}.tmp")
     temporary.write_text(serialize_state(state), encoding="utf-8")
     os.replace(temporary, target)
@@ -530,11 +633,20 @@ def load_state() -> dict[str, Any]:
         return state
     try:
         stored = target.read_text(encoding="utf-8")
-        state = normalize_state(json.loads(stored))
+        raw = json.loads(stored)
+        state = normalize_state(raw)
+
+        # Historie aus aelteren Staenden in die eigene Datei ueberfuehren.
+        inherited = [entry for entry in raw.get("history", []) if isinstance(entry, dict)]
+        if inherited:
+            append_history(inherited)
+
         # Gegen den Dateitext vergleichen, nicht gegen das geparste Dict: die
         # normalize_*-Kette aendert verschachtelte Teile in-place, ein Vergleich
         # mit dem Eingabe-Dict wuerde Migrationen als "nichts geaendert" sehen.
         if serialize_state(state) != stored:
+            if raw.get("schema_version") != SCHEMA_VERSION:
+                migration_backup(target, raw.get("schema_version"))
             save_state(state)
         return state
     except (OSError, json.JSONDecodeError, ValueError, TypeError) as exc:
@@ -570,6 +682,12 @@ def author_from_header(x_encounter_author: str | None = Header(default=None)) ->
     return x_encounter_author.strip()[:80] or None
 
 
+# Waehrend einer Mutation gesammelt und erst nach erfolgreichem Speichern
+# geschrieben - sonst stuende in der Historie eine Aenderung, die es nie gab.
+# Zugriff nur unter write_lock.
+_history_buffer: list[dict[str, Any]] = []
+
+
 @contextmanager
 def mutate(if_match: str | None) -> Iterator[dict[str, Any]]:
     """Laden, pruefen, aendern, speichern - unter dem globalen Schreib-Lock."""
@@ -580,9 +698,12 @@ def mutate(if_match: str | None) -> Iterator[dict[str, Any]]:
                 status_code=status.HTTP_412_PRECONDITION_FAILED,
                 detail="Die Tabelle wurde zwischenzeitlich geändert. Neu laden und erneut versuchen.",
             )
+        _history_buffer.clear()
         yield state
         state["updated_at"] = now_iso()
         save_state(state)
+        append_history(_history_buffer)
+        _history_buffer.clear()
 
 
 def record_history(
@@ -595,10 +716,10 @@ def record_history(
     summary: str,
     before: Any = None,
     after: Any = None,
+    undo_of: str | None = None,
 ) -> dict[str, Any]:
-    state["history_seq"] = int(state.get("history_seq", 0)) + 1
     entry = {
-        "id": f"h-{state['history_seq']}",
+        "id": next_history_id(),
         "at": now_iso(),
         "author": author,
         "action": action,
@@ -607,10 +728,10 @@ def record_history(
         "summary": summary,
         "before": before,
         "after": after,
-        "undone": False,
     }
-    state["history"].append(entry)
-    del state["history"][:-HISTORY_LIMIT]
+    if undo_of:
+        entry["undo_of"] = undo_of
+    _history_buffer.append(entry)
     return entry
 
 
@@ -712,6 +833,26 @@ def validate_species(run: dict[str, Any], row: dict[str, Any], picks: dict[str, 
                     f"(Spieler '{player_id}'). Mit force=true trotzdem speichern."
                 ),
             )
+
+
+def validate_responsible(value: Any, player_ids: list[str]) -> None:
+    if value is None or value == NO_CULPRIT or value in player_ids:
+        return
+    erlaubt = ", ".join([*player_ids, NO_CULPRIT])
+    raise HTTPException(status_code=422, detail=f"'{value}' ist kein gültiger Schuldiger (erlaubt: {erlaubt}).")
+
+
+def require_culprit(row: dict[str, Any]) -> None:
+    """Ohne Schuldigen fehlt der Vorfall in der Statistik - also gleich einfordern."""
+    if row["outcome"] in ("dead", "failed") and not row.get("responsible_player"):
+        vorfall = "Tod" if row["outcome"] == "dead" else "verlorener Encounter"
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                f"Bei '{row['encounter']}' fehlt der Schuldige ({vorfall}). "
+                f"Spieler eintragen oder ausdrücklich '{NO_CULPRIT}', wenn niemand schuld war."
+            ),
+        )
 
 
 def require_team_slot(run: dict[str, Any], row: dict[str, Any]) -> None:
@@ -817,6 +958,9 @@ def apply_encounter_patch(
         row["outcome"] = derive_outcome(row["picks"], before.get("outcome"))
 
     apply_team_rules(run, row, updates.get("in_team"))
+    if "responsible_player" in updates:
+        validate_responsible(updates["responsible_player"], player_ids)
+    require_culprit(row)
 
     return EncounterRow.model_validate(row).model_dump(), before
 
@@ -894,14 +1038,20 @@ def get_run_encounters(run_id: str) -> dict[str, Any]:
     return collection_for(state, find_run(state, run_id))
 
 
-@app.get("/history", response_model=HistoryCollection, summary="Änderungshistorie")
-def get_history(limit: int = Query(default=50, ge=1, le=HISTORY_LIMIT)) -> dict[str, Any]:
-    state = load_state()
-    entries = [
-        {key: entry.get(key) for key in ("id", "at", "author", "action", "run_id", "row_id", "summary", "undone")}
-        for entry in reversed(state["history"][-limit:])
+def history_summary(entries: list[dict[str, Any]], limit: int) -> list[dict[str, Any]]:
+    """Neueste zuerst; 'undone' ergibt sich aus den spaeteren Undo-Eintraegen."""
+    undone = {entry["undo_of"] for entry in entries if entry.get("undo_of")}
+    return [
+        {key: entry.get(key) for key in ("id", "at", "author", "action", "run_id", "row_id", "summary")}
+        | {"undone": entry.get("id") in undone}
+        for entry in reversed(entries[-limit:])
     ]
-    return {"entries": entries, "updated_at": state["updated_at"]}
+
+
+@app.get("/history", response_model=HistoryCollection, summary="Änderungshistorie")
+def get_history(limit: int = Query(default=50, ge=1, le=HISTORY_PAGE_MAX)) -> dict[str, Any]:
+    state = load_state()
+    return {"entries": history_summary(read_history(), limit), "updated_at": state["updated_at"]}
 
 
 # --------------------------------------------------------------------------- #
@@ -1109,10 +1259,11 @@ def undo_history_entry(
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
     with mutate(if_match) as state:
-        entry = next((item for item in state["history"] if item["id"] == entry_id), None)
+        entries = read_history()
+        entry = next((item for item in entries if item.get("id") == entry_id), None)
         if entry is None:
             raise HTTPException(status_code=404, detail=f"Historieneintrag '{entry_id}' nicht gefunden.")
-        if entry["undone"]:
+        if any(item.get("undo_of") == entry_id for item in entries):
             raise HTTPException(status_code=409, detail="Dieser Eintrag wurde bereits zurückgenommen.")
         if entry["action"] not in ("row-create", "row-patch", "row-delete"):
             raise HTTPException(status_code=422, detail=f"'{entry['action']}' lässt sich nicht zurücknehmen.")
@@ -1128,7 +1279,8 @@ def undo_history_entry(
         else:
             replace_row(run, EncounterRow.model_validate(entry["before"]).model_dump())
 
-        entry["undone"] = True
+        # Die Historie wird nur angehaengt - die Ruecknahme ist ein eigener Eintrag,
+        # der den urspruenglichen als zurueckgenommen ausweist.
         record_history(
             state,
             author=author,
@@ -1136,8 +1288,11 @@ def undo_history_entry(
             run_id=entry["run_id"],
             row_id=row_id,
             summary=f"Zurückgenommen: {entry['summary']}",
+            undo_of=entry_id,
         )
-        return {key: entry.get(key) for key in ("id", "at", "author", "action", "run_id", "row_id", "summary", "undone")}
+        return {
+            key: entry.get(key) for key in ("id", "at", "author", "action", "run_id", "row_id", "summary")
+        } | {"undone": True}
 
 
 # --------------------------------------------------------------------------- #
@@ -1163,6 +1318,8 @@ def add_row(
     record["outcome"] = row.outcome if "outcome" in row.model_fields_set else derive_outcome(record["picks"])
     couple_deaths(record, record.get("responsible_player"))
     apply_team_rules(run, record, record["in_team"])
+    validate_responsible(record.get("responsible_player"), player_ids_of(state))
+    require_culprit(record)
 
     run["encounters"].append(record)
     record_history(
@@ -1244,11 +1401,20 @@ def describe_patch(before: dict[str, Any], after: dict[str, Any], players: list[
 # --------------------------------------------------------------------------- #
 
 
-@app.get("/stats", summary="Statistik über alle Runs oder einen Run")
+@app.get("/stats", summary="Negativstatistik über alle Runs oder einen Run")
 def get_stats(
     run_id: str | None = Query(default=None),
     game_id: str | None = Query(default=None),
 ) -> dict[str, Any]:
+    """Wer hat was verbockt.
+
+    Gezählt wird ausschließlich, was schiefgegangen ist, und zwar beim
+    Verursacher. Ein gekoppelter Tod kostet die Reihe zwar drei Pokémon, zählt
+    aber als **ein** Tod - nämlich der des Spielers, der ihn verschuldet hat.
+    Dasselbe gilt für einen vergeigten Encounter.
+
+    Schuld = verschuldete Tode + vergeigte Encounter.
+    """
     state = load_state()
     runs = state["runs"]
     if run_id is not None:
@@ -1257,15 +1423,30 @@ def get_stats(
         runs = [run for run in runs if run["game_id"] == game_id]
 
     player_ids = player_ids_of(state)
-    responsibility = {player_id: 0 for player_id in player_ids}
-    dead_pokemon = {player_id: 0 for player_id in player_ids}
-    caught_pokemon = {player_id: 0 for player_id in player_ids}
-    failed_encounters = {player_id: 0 for player_id in player_ids}
-    totals = {"encounter_count": 0, "pending_count": 0, "caught_count": 0, "failed_count": 0, "death_count": 0}
+    deaths = {player_id: 0 for player_id in player_ids}
+    failed = {player_id: 0 for player_id in player_ids}
+    unassigned_deaths = 0
+    unassigned_failed = 0
     per_run = []
 
     for run in runs:
-        counts = row_counts(run["encounters"])
+        run_deaths = 0
+        run_failed = 0
+        for row in run["encounters"]:
+            responsible = row.get("responsible_player")
+            if row["outcome"] == "dead":
+                run_deaths += 1
+                if responsible in deaths:
+                    deaths[responsible] += 1
+                else:
+                    unassigned_deaths += 1
+            elif row["outcome"] == "failed":
+                run_failed += 1
+                if responsible in failed:
+                    failed[responsible] += 1
+                else:
+                    unassigned_failed += 1
+
         per_run.append(
             {
                 "id": run["id"],
@@ -1273,38 +1454,28 @@ def get_stats(
                 "game_id": run["game_id"],
                 "game_name": game_name_of(run["game_id"]),
                 "status": run["status"],
-                **counts,
+                "deaths": run_deaths,
+                "failed_encounters": run_failed,
             }
         )
-        for key in totals:
-            totals[key] += counts[key]
 
-        for row in run["encounters"]:
-            responsible = row.get("responsible_player")
-            if responsible in responsibility:
-                responsibility[responsible] += 1
-                if row["outcome"] == "failed":
-                    failed_encounters[responsible] += 1
-            for player_id in player_ids:
-                pick = row["picks"].get(player_id) or {}
-                if pick.get("status") == "dead":
-                    dead_pokemon[player_id] += 1
-                elif row["outcome"] == "caught" and pick_is_filled(pick) and not is_placeholder(pick.get("name")):
-                    caught_pokemon[player_id] += 1
+    blame = {player_id: deaths[player_id] + failed[player_id] for player_id in player_ids}
+    total_deaths = sum(deaths.values()) + unassigned_deaths
+    total_failed = sum(failed.values()) + unassigned_failed
 
     return {
         "scope": run_id or game_id or "all-time",
         "players": state["players"],
         "total_runs": len(runs),
-        "total_encounter_rows": totals["encounter_count"],
-        "total_pending_rows": totals["pending_count"],
-        "total_caught_rows": totals["caught_count"],
-        "total_failed_rows": totals["failed_count"],
-        "total_death_rows": totals["death_count"],
-        "responsibility_by_player": responsibility,
-        "dead_pokemon_by_player": dead_pokemon,
-        "caught_pokemon_by_player": caught_pokemon,
-        "failed_encounters_by_player": failed_encounters,
+        "total_deaths": total_deaths,
+        "total_failed_encounters": total_failed,
+        "total_blame": total_deaths + total_failed,
+        "deaths_by_player": deaths,
+        "failed_encounters_by_player": failed,
+        "blame_by_player": blame,
+        # Zeilen, bei denen niemand als Schuldiger eingetragen ist.
+        "unassigned_deaths": unassigned_deaths,
+        "unassigned_failed_encounters": unassigned_failed,
         "runs": per_run,
         "updated_at": state["updated_at"],
     }

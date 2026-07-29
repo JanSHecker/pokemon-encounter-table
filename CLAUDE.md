@@ -64,8 +64,20 @@ die Variable pro Test umbiegen können, obwohl der `TestClient` global ist. Dass
 `reset_catalog_cache()`.
 
 Jeder Schreibzugriff läuft durch den Contextmanager `mutate()`: laden → `If-Match` prüfen →
-Dict in-place ändern → `updated_at` setzen → atomar speichern, alles unter dem globalen
-`write_lock`. **Neue Schreibpfade gehören in `mutate()`**, sonst fehlt Sperre oder Zeitstempel.
+Dict in-place ändern → `updated_at` setzen → atomar speichern → gepufferte Historie schreiben,
+alles unter dem globalen `write_lock`. **Neue Schreibpfade gehören in `mutate()`**, sonst fehlt
+Sperre, Zeitstempel oder Historieneintrag.
+
+Neben dem Datenstand liegen zwei weitere Dateien, beide gitignored:
+
+- `<datenstand>-history.jsonl` – die Historie, **nur angehängt**. Sie ist bei offenen
+  Schreibrechten das einzige Sicherheitsnetz und darf deshalb nicht im Datenstand stehen, wo ein
+  paar hundert Requests sie verdrängen könnten. `record_history()` puffert in `_history_buffer`,
+  geschrieben wird erst nach erfolgreichem `save_state()`. Eine Rücknahme ändert nichts, sondern
+  hängt einen `undo`-Eintrag mit `undo_of` an; `undone` wird beim Lesen daraus abgeleitet.
+- `backups/` – eine Kopie pro Tag (`daily_backup()`, die letzten 30) plus eine vor jeder
+  Schema-Migration (`migration_backup()`). Backups scheitern still: sie dürfen einen
+  Schreibzugriff nie blockieren.
 
 ### Migration läuft über die `normalize_*`-Kette
 
@@ -97,12 +109,24 @@ vom Client gepflegt: Tod schlägt alles, dann `PLACEHOLDER_PREFIXES` im Namen, d
 eingetragen“ = `caught`, sonst `pending`. Ein explizit gesetztes `failed` bleibt bestehen, solange
 niemand etwas einträgt.
 
+### Statistik ist reine Negativstatistik
+
+`get_stats()` zählt ausschließlich Tode und vergeigte Encounter, jeweils **eine Zeile = ein
+Vorfall**, zugeschrieben an `responsible_player`. Ein gekoppelter Tod kostet die Reihe drei
+Pokémon, zählt aber als ein Tod – nämlich der des Verursachers. Schuld = Tode + vergeigte
+Encounter. Fangzahlen gibt es bewusst nicht mehr. Zeilen ohne Schuldigen laufen in
+`unassigned_*`, damit sie nicht stillschweigend aus der Summe fallen.
+
 ### Regeln, die der Code durchsetzt
 
 - **Soullink**: `couple_deaths()` in `apply_encounter_patch()` macht aus einem Tod den Tod der
   ganzen Reihe. `?couple=false` ist der Ausweg – das Frontend nutzt ihn nur zum Wiederbeleben.
 - **Verlorene Encounter**: `couple_failure()` trägt bei `outcome: failed` bei allen Spielern
   „Encounter verloren“ ein. Ein Tod in der Reihe hat Vorrang und blockt das ab.
+- **Schuldiger ist Pflicht**: `require_culprit()` verlangt bei `dead` und `failed` einen Eintrag in
+  `responsible_player` – sonst fiele der Vorfall aus der Negativstatistik. `NO_CULPRIT`
+  (`"niemand"`) ist die ausdrückliche Variante für „war keiner schuld" und unterscheidbar von
+  „noch nicht eingetragen".
 - **Aktive Links**: `apply_team_rules()` hält `in_team` sauber – nur `caught`-Reihen dürfen rein,
   maximal `TEAM_SIZE` (6) gleichzeitig, und wer stirbt oder den Encounter verliert, fliegt
   automatisch raus. Ein Link belegt bei allen drei Spielern denselben Platz, daher genau ein Flag

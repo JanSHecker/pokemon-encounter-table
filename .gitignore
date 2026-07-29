@@ -18,6 +18,10 @@ tools/.cache/
 # Local runtime data / editor files
 *.log
 data/encounters.local.json
+
+# Laufzeitdaten neben dem Datenstand: Historie und automatische Backups
+data/*-history.jsonl
+data/backups/
 .DS_Store
 .vscode/
 .idea/

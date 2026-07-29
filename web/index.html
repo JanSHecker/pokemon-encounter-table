@@ -86,9 +86,11 @@
 
     <section id="dashboard-view" class="view" hidden>
       <div class="panel">
-        <h2>Dashboard</h2>
+        <h2>Negativstatistik</h2>
         <p class="muted">
-          Gekoppelte Tode zählen als ein toter Encounter; die Pokémon-Tode stehen zusätzlich pro Spieler.
+          Gezählt wird nur, was schiefgegangen ist – und immer beim Verursacher. Ein gekoppelter Tod
+          kostet die Reihe zwar drei Pokémon, zählt aber als <strong>ein</strong> Tod. Schuld =
+          verschuldete Tode + vergeigte Encounter.
         </p>
         <div class="scope-picker">
           <label for="stats-scope">Auswertung</label>
@@ -97,10 +99,10 @@
         <div id="stat-grid" class="stat-grid"></div>
         <div class="dashboard-grid">
           <div>
-            <h3>Spieler</h3>
+            <h3>Schuldtabelle</h3>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Spieler</th><th>Gefangen</th><th>Tote</th><th>Fehlversuche</th><th>Schuld</th></tr></thead>
+                <thead><tr><th>Spieler</th><th>Tode</th><th>Vergeigte Encounter</th><th>Schuld</th></tr></thead>
                 <tbody id="player-stats"></tbody>
               </table>
             </div>
@@ -109,7 +111,7 @@
             <h3>Runs</h3>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Run</th><th>Offen</th><th>Gefangen</th><th>Tot</th><th>Verloren</th></tr></thead>
+                <thead><tr><th>Run</th><th>Tode</th><th>Vergeigte Encounter</th></tr></thead>
                 <tbody id="run-stats"></tbody>
               </table>
             </div>
@@ -150,6 +152,18 @@
       <div class="dialog-actions">
         <button type="button" data-close>Abbrechen</button>
         <button type="submit" class="primary">Anlegen</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="culprit-dialog">
+    <form method="dialog" id="culprit-form">
+      <h2 id="culprit-question">Wer ist schuld?</h2>
+      <p class="muted">Ohne Schuldigen taucht der Vorfall in keiner Statistik auf.</p>
+      <select id="culprit-select" aria-label="Schuldiger"></select>
+      <div class="dialog-actions">
+        <button type="button" data-close>Abbrechen</button>
+        <button type="submit" class="primary" value="ok">Übernehmen</button>
       </div>
     </form>
   </dialog>

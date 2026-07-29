@@ -248,7 +248,11 @@ def test_a_single_death_kills_the_whole_row(client):
 
 
 def test_coupling_can_be_switched_off_to_revive(client):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"picks": {"marc": {"status": "dead"}}})
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
+    )
 
     response = client.patch(
         "/encounters/sinnoh-route-201?couple=false",
@@ -262,7 +266,11 @@ def test_coupling_can_be_switched_off_to_revive(client):
 
 
 def test_marking_a_row_lost_fills_every_player(client):
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"outcome": "failed"})
+    response = client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"outcome": "failed", "responsible_player": "marc"},
+    )
 
     picks = response.json()["picks"]
     assert [pick["name"] for pick in picks.values()] == ["Encounter verloren"] * 3
@@ -276,14 +284,22 @@ def test_a_lost_row_overwrites_an_existing_pick(client):
         json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
     )
 
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"outcome": "failed"})
+    response = client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"outcome": "failed", "responsible_player": "marc"},
+    )
 
     assert response.json()["picks"]["marc"]["name"] == "Encounter verloren"
     assert response.json()["picks"]["marc"]["species"] is None
 
 
 def test_a_death_wins_over_a_lost_encounter(client):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"picks": {"marc": {"status": "dead"}}})
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
+    )
 
     response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"outcome": "failed"})
 
@@ -305,7 +321,7 @@ def test_outcome_follows_the_picks(client):
     lost = client.patch(
         "/encounters/sinnoh-route-202",
         headers=AUTHOR,
-        json={"picks": {"knev": {"species": None, "name": "Encounter verloren"}}},
+        json={"picks": {"knev": {"species": None, "name": "Encounter verloren"}}, "responsible_player": "knev"},
     )
     assert lost.json()["outcome"] == "failed"
 
@@ -366,7 +382,7 @@ def test_a_death_takes_the_link_out_of_the_team(client):
     response = client.patch(
         "/encounters/sinnoh-route-201",
         headers=AUTHOR,
-        json={"picks": {"marc": {"status": "dead"}}},
+        json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
     )
 
     assert response.json()["outcome"] == "dead"
@@ -377,7 +393,11 @@ def test_a_lost_row_leaves_the_team_as_well(client):
     catch_row(client, "sinnoh-route-201")
     client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
 
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"outcome": "failed"})
+    response = client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"outcome": "failed", "responsible_player": "marc"},
+    )
 
     assert response.json()["in_team"] is False
 
@@ -427,7 +447,10 @@ def test_free_text_needs_no_species(client):
     response = client.patch(
         "/encounters/sinnoh-route-202",
         headers=AUTHOR,
-        json={"picks": {"marc": {"species": None, "name": "Kein Encounter – verpennt"}}},
+        json={
+            "picks": {"marc": {"species": None, "name": "Kein Encounter – verpennt"}},
+            "responsible_player": "marc",
+        },
     )
 
     assert response.status_code == 200
@@ -439,6 +462,68 @@ def test_unknown_player_is_rejected(client):
         "/encounters/sinnoh-route-201",
         headers=AUTHOR,
         json={"picks": {"kevin": {"name": "Zubat"}}},
+    )
+
+    assert response.status_code == 422
+
+
+# --------------------------------------------------------------- Schuldiger ---
+
+
+def test_a_death_without_a_culprit_is_refused(client):
+    catch_row(client, "sinnoh-route-201")
+
+    response = client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"picks": {"marc": {"status": "dead"}}},
+    )
+
+    assert response.status_code == 422
+    assert "Schuldige" in response.json()["detail"]
+    # Die Zeile darf davon unberuehrt bleiben.
+    assert client.get("/encounters/sinnoh-route-201").json()["outcome"] == "caught"
+
+
+def test_a_lost_encounter_without_a_culprit_is_refused(client):
+    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"outcome": "failed"})
+
+    assert response.status_code == 422
+
+
+def test_nobody_can_be_named_explicitly(client):
+    response = client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"outcome": "failed", "responsible_player": "niemand"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["responsible_player"] == "niemand"
+
+
+def test_an_unknown_culprit_is_rejected(client):
+    response = client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"outcome": "failed", "responsible_player": "kevin"},
+    )
+
+    assert response.status_code == 422
+
+
+def test_the_culprit_cannot_be_removed_from_a_death(client):
+    catch_row(client, "sinnoh-route-201")
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
+    )
+
+    response = client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"responsible_player": None},
     )
 
     assert response.status_code == 422
@@ -485,6 +570,67 @@ def test_deleted_row_can_be_restored(client):
     assert rows == ["sinnoh-route-201", "sinnoh-route-202"]
 
 
+def test_history_lives_beside_the_data_and_not_inside_it(client, data_file):
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "Test"})
+
+    stored = json.loads(data_file.read_text(encoding="utf-8"))
+    assert "history" not in stored
+
+    history_file = data_file.with_name(f"{data_file.stem}-history.jsonl")
+    assert history_file.exists()
+    lines = [line for line in history_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+    assert len(lines) == 1
+    assert json.loads(lines[0])["summary"].endswith("Notiz geändert")
+
+
+def test_history_is_only_appended_so_it_cannot_be_rewritten(client, data_file):
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "erste"})
+    entry_id = client.get("/history").json()["entries"][0]["id"]
+    client.post(f"/history/{entry_id}/undo", headers=AUTHOR)
+
+    history_file = data_file.with_name(f"{data_file.stem}-history.jsonl")
+    records = [json.loads(line) for line in history_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+    # Der urspruengliche Eintrag bleibt unveraendert stehen, die Ruecknahme kommt dazu.
+    assert [record["action"] for record in records] == ["row-patch", "undo"]
+    assert records[1]["undo_of"] == entry_id
+    assert client.get("/history").json()["entries"][-1]["undone"] is True
+
+
+def test_history_survives_a_history_carried_in_old_data(client, data_file):
+    client.get("/encounters")
+    stored = json.loads(data_file.read_text(encoding="utf-8"))
+    stored["history"] = [
+        {"id": "h-1", "at": "2026-01-01T00:00:00+00:00", "author": None, "action": "row-patch",
+         "run_id": "run-1", "row_id": "sinnoh-route-201", "summary": "aus dem alten Stand"}
+    ]
+    data_file.write_text(json.dumps(stored, ensure_ascii=False), encoding="utf-8")
+
+    entries = client.get("/history").json()["entries"]
+
+    assert entries[0]["summary"] == "aus dem alten Stand"
+    assert "history" not in json.loads(data_file.read_text(encoding="utf-8"))
+
+
+def test_a_daily_backup_is_kept_before_overwriting(client, data_file):
+    client.get("/encounters")  # legt den Store an
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "irgendwas"})
+
+    backups = list((data_file.parent / "backups").glob(f"{data_file.stem}-*.json"))
+
+    assert len(backups) == 1
+
+
+def test_a_schema_migration_backs_the_old_state_up_first(legacy_client, data_file):
+    legacy_client.get("/encounters")
+
+    migration = list((data_file.parent / "backups").glob("migration-*.json"))
+
+    assert len(migration) == 1
+    # Die Kopie muss den Stand VOR der Migration enthalten.
+    assert "mark" in json.loads(migration[0].read_text(encoding="utf-8"))["runs"][0]["encounters"][0]
+
+
 # ------------------------------------------------------------ Schreibrecht ---
 
 
@@ -529,18 +675,8 @@ def test_stale_if_match_is_rejected(client):
 # -------------------------------------------------------------- Statistik ---
 
 
-def test_stats_count_coupled_deaths_once_and_per_player(client):
-    client.patch(
-        "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
-        json={
-            "picks": {
-                "marc": {"species": "starly", "name": "Staralili"},
-                "nicolai": {"species": "bidoof", "name": "Bidiza"},
-                "knev": {"species": "starly", "name": "Staralili"},
-            }
-        },
-    )
+def test_a_coupled_death_counts_once_and_only_for_the_culprit(client):
+    catch_row(client, "sinnoh-route-201")
     client.patch(
         "/encounters/sinnoh-route-201",
         headers=AUTHOR,
@@ -549,10 +685,84 @@ def test_stats_count_coupled_deaths_once_and_per_player(client):
 
     stats = client.get("/stats").json()
 
-    assert stats["total_death_rows"] == 1
-    assert stats["dead_pokemon_by_player"] == {"marc": 1, "nicolai": 1, "knev": 1}
-    assert stats["responsibility_by_player"]["knev"] == 1
-    assert stats["total_pending_rows"] == 1
+    # Die Reihe verliert drei Pokémon, es zaehlt aber nur der Tod des Verursachers.
+    assert stats["total_deaths"] == 1
+    assert stats["deaths_by_player"] == {"marc": 0, "nicolai": 0, "knev": 1}
+    assert stats["blame_by_player"] == {"marc": 0, "nicolai": 0, "knev": 1}
+
+
+def test_a_botched_encounter_only_blames_its_culprit(client):
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"outcome": "failed", "responsible_player": "marc"},
+    )
+
+    stats = client.get("/stats").json()
+
+    assert stats["total_failed_encounters"] == 1
+    assert stats["failed_encounters_by_player"] == {"marc": 1, "nicolai": 0, "knev": 0}
+    assert stats["blame_by_player"]["marc"] == 1
+
+
+def test_blame_adds_deaths_and_botched_encounters_per_player(client):
+    catch_row(client, "sinnoh-route-201")
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
+    )
+    client.patch(
+        "/encounters/sinnoh-route-202",
+        headers=AUTHOR,
+        json={"outcome": "failed", "responsible_player": "marc"},
+    )
+
+    stats = client.get("/stats").json()
+
+    assert stats["deaths_by_player"]["marc"] == 1
+    assert stats["failed_encounters_by_player"]["marc"] == 1
+    assert stats["blame_by_player"]["marc"] == 2
+    assert stats["total_blame"] == 2
+
+
+def test_every_lost_pokemon_of_one_player_adds_blame(client):
+    for row_id in ("platz-1", "platz-2", "platz-3"):
+        client.post(
+            "/encounters",
+            headers=AUTHOR,
+            json={
+                "id": row_id,
+                "encounter": row_id,
+                "picks": {player: {"name": "Irgendwas"} for player in ("marc", "nicolai", "knev")},
+            },
+        )
+        client.patch(
+            f"/encounters/{row_id}",
+            headers=AUTHOR,
+            json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
+        )
+
+    stats = client.get("/stats").json()
+
+    assert stats["total_deaths"] == 3
+    assert stats["deaths_by_player"]["marc"] == 3
+    assert stats["blame_by_player"]["marc"] == 3
+
+
+def test_rows_without_a_culprit_are_reported_separately(client):
+    catch_row(client, "sinnoh-route-201")
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        headers=AUTHOR,
+        json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "niemand"},
+    )
+
+    stats = client.get("/stats").json()
+
+    assert stats["total_deaths"] == 1
+    assert stats["unassigned_deaths"] == 1
+    assert stats["blame_by_player"] == {"marc": 0, "nicolai": 0, "knev": 0}
 
 
 def test_stats_can_be_limited_to_one_game(client):

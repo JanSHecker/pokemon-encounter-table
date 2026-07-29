@@ -25,6 +25,8 @@ Unterstützte Spiele: **Pokémon Platin** und **Pokémon Schwarz 2 / Weiß 2**.
 - Arten, die ein Spieler im Run schon gefangen hat, sind in der Auswahl mit ⚠ markiert.
 - Ganz rechts steht pro Zeile ein freies **Notizfeld**.
 - Jede Änderung landet in der **Historie** und lässt sich einzeln zurücknehmen.
+- Bei einem Tod oder verlorenen Encounter wird **nach dem Schuldigen gefragt** – sonst fehlt der
+  Vorfall in der Statistik. „Niemand" ist eine gültige Antwort.
 - Alle Browser aktualisieren sich alle 10 Sekunden von selbst.
 
 ## Projektstruktur
@@ -91,10 +93,25 @@ ist – so gewollt, damit die Seite ohne Login funktioniert. Absichern lässt si
 ```bash
 export ENCOUNTER_API_TOKEN='<lokal setzen, nicht committen>'
 export ENCOUNTER_DATA_PATH='/var/lib/encounter-table-api/encounters.json'
-export ENCOUNTER_GAMES_PATH='/pfad/zu/data/games'   # optional
+export ENCOUNTER_GAMES_PATH='/pfad/zu/data/games'      # optional
+export ENCOUNTER_HISTORY_PATH='/pfad/zu/history.jsonl' # optional
+export ENCOUNTER_BACKUP_DIR='/pfad/zu/backups'         # optional
 ```
 
-Ist die Variable gesetzt, brauchen alle Schreibzugriffe wieder einen Bearer-Token.
+Ist `ENCOUNTER_API_TOKEN` gesetzt, brauchen alle Schreibzugriffe wieder einen Bearer-Token.
+
+### Datensicherung
+
+Neben dem Datenstand entstehen automatisch zwei Dinge:
+
+- `<datenstand>-history.jsonl` – die Änderungshistorie, nur angehängt. Sie liegt bewusst **nicht**
+  im Datenstand, damit sie sich nicht durch viele Schreibzugriffe verdrängen lässt.
+- `backups/` – eine Kopie pro Tag (die letzten 30) sowie eine zusätzliche direkt vor jeder
+  Schema-Migration.
+
+**Vor dem ersten Deploy dieser Version**: der Produktivstand wird beim ersten Request einmalig und
+unumkehrbar auf das neue Schema gehoben. Die Migrationskopie unter `backups/migration-*.json`
+entsteht automatisch – eine eigene Sicherung vorher schadet trotzdem nicht.
 
 | Endpunkt | Zweck |
 | --- | --- |
@@ -103,7 +120,7 @@ Ist die Variable gesetzt, brauchen alle Schreibzugriffe wieder einen Bearer-Toke
 | `GET /encounters` | Zeilen des aktuellen Runs |
 | `PATCH /encounters/{id}` | Zeile ändern (auch `/runs/{run}/encounters/{id}`) |
 | `POST /runs` | Run anlegen, standardmäßig aus dem Katalog vorbefüllt |
-| `GET /stats` | Statistik, optional `?run_id=` oder `?game_id=` |
+| `GET /stats` | Negativstatistik, optional `?run_id=` oder `?game_id=` |
 | `GET /history`, `POST /history/{id}/undo` | Historie und Rücknahme |
 
 Nützliche Parameter und Header:
@@ -122,6 +139,10 @@ Nützliche Parameter und Header:
   bestätigten Toden getrennt. Ist jemand in der Reihe tot, hat der Tod Vorrang.
 - `responsible_player` ist der Spieler, dessen Pokémon gestorben ist bzw. der den Encounter
   vergeigt hat.
+- Die Statistik zählt **nur Negatives**, und immer beim Verursacher: ein verschuldeter Tod oder ein
+  vergeigter Encounter ist je eine Schuld für genau den Spieler aus `responsible_player`. Ein
+  gekoppelter Tod kostet die Reihe drei Pokémon, zählt aber als **ein** Tod. Fangzahlen werden
+  nicht geführt.
 - `in_team` markiert die Links, die gerade gespielt werden. Höchstens sechs gleichzeitig, nur
   vollständig gefangene Reihen – stirbt oder verliert eine Reihe, fliegt sie automatisch raus.
 - Spieler werden intern als IDs geführt (`marc`, `nicolai`, `knev`); die Anzeigenamen stehen in

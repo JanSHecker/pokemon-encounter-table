@@ -17,6 +17,7 @@ const API_BASE =
 
 const ARTWORK_BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
 const LOST_LABEL = 'Encounter verloren';
+const NO_CULPRIT = 'niemand';
 const POLL_INTERVAL_MS = 10000;
 const TEAM_SIZE = 6;
 const SORT_KEY = 'encounter-sort';
@@ -75,6 +76,9 @@ const el = {
   runGame: document.getElementById('run-game'),
   runPrefill: document.getElementById('run-prefill'),
   runPostgame: document.getElementById('run-postgame'),
+  culpritDialog: document.getElementById('culprit-dialog'),
+  culpritQuestion: document.getElementById('culprit-question'),
+  culpritSelect: document.getElementById('culprit-select'),
   locationDialog: document.getElementById('location-dialog'),
   locationForm: document.getElementById('location-form'),
   locationSelect: document.getElementById('location-select'),
@@ -296,7 +300,8 @@ function rowHtml(row) {
         (player) =>
           `<option value="${esc(player.id)}"${row.responsible_player === player.id ? ' selected' : ''}>${esc(player.name)}</option>`,
       )
-      .join('');
+      .join('') +
+    `<option value="${NO_CULPRIT}"${row.responsible_player === NO_CULPRIT ? ' selected' : ''}>Niemand</option>`;
 
   return `
     <tr data-row="${esc(row.id)}" class="${classes.join(' ')}">
@@ -407,25 +412,32 @@ function renderRunPickers() {
 // ------------------------------------------------------------ Dashboard ---
 
 function renderStats(data) {
+  const unassigned = data.unassigned_deaths + data.unassigned_failed_encounters;
   const cards = [
-    ['Encounter', data.total_encounter_rows],
-    ['Offen', data.total_pending_rows],
-    ['Gefangen', data.total_caught_rows],
-    ['Tote Reihen', data.total_death_rows],
-    ['Verloren', data.total_failed_rows],
+    ['Tode', data.total_deaths],
+    ['Vergeigte Encounter', data.total_failed_encounters],
+    ['Schuld gesamt', data.total_blame],
+    ['Ohne Schuldigen', unassigned],
   ];
   el.statGrid.innerHTML = cards
-    .map(([label, value]) => `<div class="stat-card"><span class="stat-label">${label}</span><span class="stat-value">${value}</span></div>`)
+    .map(
+      ([label, value]) =>
+        `<div class="stat-card"><span class="stat-label">${label}</span><span class="stat-value">${value}</span></div>`,
+    )
     .join('');
 
-  el.playerStats.innerHTML = (data.players || [])
+  // Der Schuldigste steht oben - darum geht es hier ja.
+  const ranked = [...(data.players || [])].sort(
+    (a, b) => (data.blame_by_player[b.id] || 0) - (data.blame_by_player[a.id] || 0),
+  );
+
+  el.playerStats.innerHTML = ranked
     .map(
       (player) => `<tr>
         <td>${esc(player.name)}</td>
-        <td>${data.caught_pokemon_by_player[player.id] || 0}</td>
-        <td>${data.dead_pokemon_by_player[player.id] || 0}</td>
+        <td>${data.deaths_by_player[player.id] || 0}</td>
         <td>${data.failed_encounters_by_player[player.id] || 0}</td>
-        <td>${data.responsibility_by_player[player.id] || 0}</td>
+        <td><strong>${data.blame_by_player[player.id] || 0}</strong></td>
       </tr>`,
     )
     .join('');
@@ -434,10 +446,8 @@ function renderStats(data) {
     .map(
       (run) => `<tr>
         <td><strong>${esc(run.name)}</strong><span class="note">${esc(run.game_name || run.game_id)}</span></td>
-        <td>${run.pending_count}</td>
-        <td>${run.caught_count}</td>
-        <td>${run.death_count}</td>
-        <td>${run.failed_count}</td>
+        <td>${run.deaths}</td>
+        <td>${run.failed_encounters}</td>
       </tr>`,
     )
     .join('');
@@ -587,12 +597,49 @@ async function handleSpeciesChange(row, playerId, select) {
   }
 
   if (value === '__lost__') {
-    await patchPick(row, playerId, { species: null, name: LOST_LABEL });
+    // Wer den Encounter auf "verloren" setzt, hat ihn vergeigt - das ist der Schuldige.
+    const body = { picks: { [playerId]: { species: null, name: LOST_LABEL } } };
+    if (!row.responsible_player) body.responsible_player = playerId;
+    await patchRow(row.id, body);
     return;
   }
 
   const entry = (location?.encounters || []).find((candidate) => candidate.species === value);
   await patchPick(row, playerId, { species: value, name: entry ? entry.name : value });
+}
+
+// Die API verlangt bei Tod und verlorenem Encounter einen Schuldigen - sonst
+// faellt der Vorfall aus der Statistik. Also gleich hier abfragen.
+let culpritResolve = null;
+
+function askCulprit(row) {
+  el.culpritQuestion.textContent = `Wer ist schuld an „${row.encounter}“?`;
+  el.culpritSelect.innerHTML =
+    state.players.map((player) => `<option value="${esc(player.id)}">${esc(player.name)}</option>`).join('') +
+    `<option value="${NO_CULPRIT}">Niemand – keiner war schuld</option>`;
+  el.culpritDialog.showModal();
+  return new Promise((resolve) => {
+    culpritResolve = resolve;
+  });
+}
+
+el.culpritDialog.addEventListener('close', () => {
+  const resolve = culpritResolve;
+  culpritResolve = null;
+  if (resolve) resolve(el.culpritDialog.returnValue === 'ok' ? el.culpritSelect.value : null);
+});
+
+async function handleOutcomeChange(row, outcome) {
+  if ((outcome === 'failed' || outcome === 'dead') && !row.responsible_player) {
+    const culprit = await askCulprit(row);
+    if (culprit === null) {
+      replaceRow(row); // abgebrochen - Auswahl zuruecksetzen
+      return;
+    }
+    await patchRow(row.id, { outcome, responsible_player: culprit });
+    return;
+  }
+  await patchRow(row.id, { outcome });
 }
 
 async function handleKill(row, playerId) {
@@ -617,7 +664,7 @@ el.rows.addEventListener('change', async (event) => {
   const action = target.dataset.action;
 
   if (action === 'species') await handleSpeciesChange(row, target.dataset.player, target);
-  else if (action === 'outcome') await patchRow(row.id, { outcome: target.value });
+  else if (action === 'outcome') await handleOutcomeChange(row, target.value);
   else if (action === 'responsible') await patchRow(row.id, { responsible_player: target.value || null });
   else if (action === 'note') {
     const note = target.value.trim() || null;
