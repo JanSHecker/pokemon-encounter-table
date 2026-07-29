@@ -4,8 +4,6 @@
  * Read-write Frontend fuer die gekoppelte Encounter-Tabelle.
  *
  * Es gibt keinen Login und keine Identitaet - wer editiert, ist egal.
- * Abgesichert wird ueber die Historie, in der sich jede Aenderung einzeln
- * zuruecknehmen laesst.
  *
  * API-Basis ueberschreiben (lokale Entwicklung): ?api=http://127.0.0.1:8000
  */
@@ -29,14 +27,12 @@ const MAX_TYPES = 2;
 let LOST_LABEL = 'Encounter verloren';
 let NO_CULPRIT = 'niemand';
 let TEAM_SIZE = 6;
-let UNDOABLE_ACTIONS = ['row-create', 'row-patch', 'row-delete'];
 
 function applyRules(rules) {
   if (!rules) return;
   LOST_LABEL = rules.lost_label ?? LOST_LABEL;
   NO_CULPRIT = rules.no_culprit ?? NO_CULPRIT;
   TEAM_SIZE = rules.team_size ?? TEAM_SIZE;
-  UNDOABLE_ACTIONS = rules.undoable_actions ?? UNDOABLE_ACTIONS;
 }
 
 // Jede Sortierung gruppiert nur; innerhalb der Gruppe bleibt die Spielreihenfolge.
@@ -86,7 +82,6 @@ const el = {
   statGrid: document.getElementById('stat-grid'),
   playerStats: document.getElementById('player-stats'),
   runStats: document.getElementById('run-stats'),
-  historyRows: document.getElementById('history-rows'),
   newRunButton: document.getElementById('new-run-button'),
   addLocationButton: document.getElementById('add-location-button'),
   runDialog: document.getElementById('run-dialog'),
@@ -107,7 +102,7 @@ const el = {
   defenseResult: document.getElementById('defense-result'),
 };
 
-const VIEWS = ['table', 'dashboard', 'history', 'types'];
+const VIEWS = ['table', 'dashboard', 'types'];
 
 // --------------------------------------------------------------- Helfer ---
 
@@ -526,31 +521,6 @@ async function loadStats() {
   }
 }
 
-async function loadHistory() {
-  try {
-    const data = await api('/history?limit=60');
-    el.historyRows.innerHTML = data.entries
-      .map(
-        (entry) => `<tr>
-          <td>${formatDate(entry.at)}</td>
-          <td>${esc(entry.summary)}</td>
-          <td>${
-            entry.undone
-              ? '<span class="status-badge">zurückgenommen</span>'
-              : // Ob sich ein Eintrag zuruecknehmen laesst, entscheidet die API.
-                // Fehlt das Feld (aeltere API), gilt die Liste aus 'rules'.
-                (entry.undoable ?? UNDOABLE_ACTIONS.includes(entry.action))
-                ? `<button type="button" data-undo="${esc(entry.id)}">Rückgängig</button>`
-                : ''
-          }</td>
-        </tr>`,
-      )
-      .join('');
-  } catch (error) {
-    showError(`Historie konnte nicht geladen werden: ${error.message}`);
-  }
-}
-
 // --------------------------------------------------------------- Laden ----
 
 async function loadRuns() {
@@ -596,7 +566,6 @@ function setView(view) {
     renderScopeOptions();
     loadStats();
   }
-  if (view === 'history') loadHistory();
   updateHash();
 }
 
@@ -779,16 +748,6 @@ el.statScope.addEventListener('change', loadStats);
 
 document.querySelectorAll('.view-button').forEach((button) => {
   button.addEventListener('click', () => setView(button.dataset.view));
-});
-
-el.historyRows.addEventListener('click', async (event) => {
-  const button = event.target.closest('[data-undo]');
-  if (!button) return;
-  const done = await write(() => api(`/history/${encodeURIComponent(button.dataset.undo)}/undo`, { method: 'POST' }));
-  if (done) {
-    await loadRun(state.currentRunId);
-    await loadHistory();
-  }
 });
 
 async function changeProgress(delta) {
@@ -1059,7 +1018,6 @@ async function poll() {
     const selectedGame = el.gameSelect.value;
     if (current && (!selectedGame || current.game_id === selectedGame)) await loadRun(current.id);
     if (state.view === 'dashboard') await loadStats();
-    if (state.view === 'history') await loadHistory();
   } catch {
     // Ein verpasster Poll ist kein Fehler, der die Seite stoeren soll.
   }

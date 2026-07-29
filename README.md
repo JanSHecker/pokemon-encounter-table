@@ -26,7 +26,6 @@ Unterstützte Spiele: **Pokémon Platin** und **Pokémon Schwarz 2 / Weiß 2**.
 - Ein **Typenrechner** als eigene Ansicht: bis zu zwei Typen anklicken, rechts steht, was der
   Kombination wehtut. Die Generation ist umstellbar (1, 2–5, 6+) – beide Editionen liegen in 2–5,
   wo Stahl noch Geist und Unlicht resistiert und es keine Feen gibt.
-- Jede Änderung landet in der **Historie** und lässt sich einzeln zurücknehmen.
 - Bei einem Tod oder verlorenen Encounter wird **nach dem Schuldigen gefragt** – sonst fehlt der
   Vorfall in der Statistik. „Niemand" ist eine gültige Antwort.
 - Alle Browser aktualisieren sich alle 10 Sekunden von selbst.
@@ -36,7 +35,7 @@ Unterstützte Spiele: **Pokémon Platin** und **Pokémon Schwarz 2 / Weiß 2**.
 | Pfad | Inhalt |
 | --- | --- |
 | `web/` | Frontend: `index.html`, `app.js`, `styles.css` – kein Build-Schritt |
-| `api/app.py` | FastAPI-Backend: Runs, Encounter, Statistik, Historie |
+| `api/app.py` | FastAPI-Backend: Runs, Encounter, Statistik |
 | `api/test_app.py` | Tests |
 | `data/encounters.json` | Datenstand als versionierbarer Snapshot |
 | `data/games/*.json` | **Generierte** Spielkataloge (Orte, Pokémon, Level-Caps) |
@@ -96,7 +95,6 @@ ist – so gewollt, damit die Seite ohne Login funktioniert. Absichern lässt si
 export ENCOUNTER_API_TOKEN='<lokal setzen, nicht committen>'
 export ENCOUNTER_DATA_PATH='/var/lib/encounter-table-api/encounters.json'
 export ENCOUNTER_GAMES_PATH='/pfad/zu/data/games'      # optional
-export ENCOUNTER_HISTORY_PATH='/pfad/zu/history.jsonl' # optional
 export ENCOUNTER_BACKUP_DIR='/pfad/zu/backups'         # optional
 ```
 
@@ -104,12 +102,9 @@ Ist `ENCOUNTER_API_TOKEN` gesetzt, brauchen alle Schreibzugriffe wieder einen Be
 
 ### Datensicherung
 
-Neben dem Datenstand entstehen automatisch zwei Dinge:
-
-- `<datenstand>-history.jsonl` – die Änderungshistorie, nur angehängt. Sie liegt bewusst **nicht**
-  im Datenstand, damit sie sich nicht durch viele Schreibzugriffe verdrängen lässt.
-- `backups/` – eine Kopie pro Tag (die letzten 30) sowie eine zusätzliche direkt vor jeder
-  Schema-Migration.
+Neben dem Datenstand entsteht automatisch `backups/`: eine Kopie pro Tag (die letzten 30) sowie
+eine zusätzliche direkt vor jeder Schema-Migration. Das ist der einzige Rückholpfad – eine
+Änderungshistorie mit Rücknahme gab es bis v4, sie ist bewusst entfallen.
 
 **Vor dem ersten Deploy dieser Version**: der Produktivstand wird beim ersten Request einmalig und
 unumkehrbar auf das neue Schema gehoben. Die Migrationskopie unter `backups/migration-*.json`
@@ -123,12 +118,9 @@ entsteht automatisch – eine eigene Sicherung vorher schadet trotzdem nicht.
 | `PATCH /encounters/{id}` | Zeile ändern (auch `/runs/{run}/encounters/{id}`) |
 | `POST /runs` | Run anlegen, standardmäßig aus dem Katalog vorbefüllt |
 | `GET /stats` | Negativstatistik, optional `?run_id=` oder `?game_id=` |
-| `GET /history`, `POST /history/{id}/undo` | Historie und Rücknahme |
 
 Nützliche Parameter und Header:
 
-- `X-Encounter-Author: marc` – optional; landet in der Historie. Die Weboberfläche schickt das
-  nicht, weil es egal ist, wer editiert – für eigene Skripte ist es aber praktisch.
 - `?couple=false` – Soullink-Kopplung für diesen Aufruf aussetzen (z. B. Wiederbeleben).
 - `?force=true` – Pokémon speichern, das laut Katalog dort nicht vorkommt.
 - `If-Match: <updated_at>` – schützt Skripte vor dem Überschreiben fremder Änderungen (412).

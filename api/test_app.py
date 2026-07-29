@@ -83,8 +83,6 @@ LEGACY_STATE = {
     "updated_at": "2026-01-01T00:00:00+00:00",
 }
 
-AUTHOR = {"X-Encounter-Author": "marc"}
-
 
 @pytest.fixture
 def data_file(tmp_path, monkeypatch):
@@ -199,7 +197,7 @@ def test_the_note_field_is_removed_from_stored_rows(legacy_client, data_file):
 
 
 def test_a_note_can_no_longer_be_written(client):
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "doch nicht"})
+    response = client.patch("/encounters/sinnoh-route-201", json={"note": "doch nicht"})
 
     assert response.status_code == 422
 
@@ -226,6 +224,19 @@ def test_unknown_legacy_game_name_falls_back_instead_of_stranding_the_run(data_f
     assert response.json()["game_id"] == "platinum"
 
 
+def test_a_history_block_in_an_old_state_is_dropped(client, data_file):
+    # Bis v4 lag in alten Staenden eine 'history'-Liste. Die Historie gibt es
+    # nicht mehr; der Block darf das Laden trotzdem nicht stoeren.
+    client.get("/encounters")
+    stored = json.loads(data_file.read_text(encoding="utf-8"))
+    stored["history"] = [{"id": "h-1", "summary": "aus dem alten Stand"}]
+    data_file.write_text(json.dumps(stored, ensure_ascii=False), encoding="utf-8")
+
+    assert client.get("/encounters").status_code == 200
+    client.patch("/encounters/sinnoh-route-201", json={"encounter": "Route 201 (neu)"})
+    assert "history" not in json.loads(data_file.read_text(encoding="utf-8"))
+
+
 def test_a_long_legacy_culprit_does_not_brick_the_store(data_file):
     # v2 erlaubte hier Freitext; eine engere Grenze wuerde beim Laden jeden
     # Endpoint mit 500 beantworten statt nur diese eine Zeile zu betreffen.
@@ -243,7 +254,6 @@ def test_a_long_legacy_culprit_does_not_brick_the_store(data_file):
 def test_run_can_be_created_with_prefilled_locations(client):
     created = client.post(
         "/runs",
-        headers=AUTHOR,
         json={"id": "run-2", "name": "Run 2", "game_id": "platinum"},
     )
 
@@ -255,7 +265,6 @@ def test_run_can_be_created_with_prefilled_locations(client):
 def test_postgame_locations_are_optional(client):
     created = client.post(
         "/runs",
-        headers=AUTHOR,
         json={"id": "run-2", "name": "Run 2", "game_id": "platinum", "include_postgame": True},
     )
 
@@ -263,13 +272,13 @@ def test_postgame_locations_are_optional(client):
 
 
 def test_run_for_unknown_game_is_rejected(client):
-    response = client.post("/runs", headers=AUTHOR, json={"name": "Run X", "game_id": "smaragd"})
+    response = client.post("/runs", json={"name": "Run X", "game_id": "smaragd"})
 
     assert response.status_code == 404
 
 
 def test_progress_drives_the_level_cap(client):
-    updated = client.patch("/runs/run-1", headers=AUTHOR, json={"progress": 1})
+    updated = client.patch("/runs/run-1", json={"progress": 1})
 
     assert updated.status_code == 200
     assert updated.json()["progress"] == 1
@@ -281,13 +290,11 @@ def test_progress_drives_the_level_cap(client):
 def test_a_single_death_kills_the_whole_row(client):
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
     )
 
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
     )
 
@@ -300,13 +307,11 @@ def test_a_single_death_kills_the_whole_row(client):
 def test_coupling_can_be_switched_off_to_revive(client):
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
     )
 
     response = client.patch(
         "/encounters/sinnoh-route-201?couple=false",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "alive"}}},
     )
 
@@ -318,7 +323,6 @@ def test_coupling_can_be_switched_off_to_revive(client):
 def test_marking_a_row_lost_fills_every_player(client):
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"outcome": "failed", "responsible_player": "marc"},
     )
 
@@ -330,13 +334,11 @@ def test_marking_a_row_lost_fills_every_player(client):
 def test_a_lost_row_overwrites_an_existing_pick(client):
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
     )
 
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"outcome": "failed", "responsible_player": "marc"},
     )
 
@@ -351,7 +353,6 @@ def test_setting_the_row_dead_kills_every_pick(client):
 
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"outcome": "dead", "responsible_player": "marc"},
     )
 
@@ -363,11 +364,10 @@ def test_a_death_survives_an_unrelated_edit(client):
     catch_row(client, "sinnoh-route-201")
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"outcome": "dead", "responsible_player": "marc"},
     )
 
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (Nordausgang)"})
+    response = client.patch("/encounters/sinnoh-route-201", json={"encounter": "Route 201 (Nordausgang)"})
 
     assert response.json()["outcome"] == "dead"
     assert client.get("/stats").json()["total_deaths"] == 1
@@ -378,7 +378,6 @@ def test_a_death_without_coupling_needs_a_dead_pick(client):
 
     response = client.patch(
         "/encounters/sinnoh-route-201?couple=false",
-        headers=AUTHOR,
         json={"outcome": "dead", "responsible_player": "marc"},
     )
 
@@ -388,11 +387,10 @@ def test_a_death_without_coupling_needs_a_dead_pick(client):
 def test_a_death_wins_over_a_lost_encounter(client):
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
     )
 
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"outcome": "failed"})
+    response = client.patch("/encounters/sinnoh-route-201", json={"outcome": "failed"})
 
     # Tote Reihe bleibt tot - der Platzhalter wuerde den Tod ueberschreiben.
     assert all(pick["name"] != "Encounter verloren" for pick in response.json()["picks"].values())
@@ -404,14 +402,12 @@ def test_outcome_follows_the_picks(client):
 
     filled = client.patch(
         "/encounters/sinnoh-route-202",
-        headers=AUTHOR,
         json={"picks": {"knev": {"species": "shinx", "name": "Sheinux"}}},
     )
     assert filled.json()["outcome"] == "caught"
 
     lost = client.patch(
         "/encounters/sinnoh-route-202",
-        headers=AUTHOR,
         json={"picks": {"knev": {"species": None, "name": "Encounter verloren"}}, "responsible_player": "knev"},
     )
     assert lost.json()["outcome"] == "failed"
@@ -424,7 +420,6 @@ def catch_row(client, row_id, species="starly", name="Staralili"):
     """Reihe vollstaendig fuellen, damit sie ins Team darf."""
     return client.patch(
         f"/encounters/{row_id}?force=true",
-        headers=AUTHOR,
         json={"picks": {player: {"species": species, "name": name} for player in ("marc", "nicolai", "knev")}},
     )
 
@@ -432,7 +427,7 @@ def catch_row(client, row_id, species="starly", name="Staralili"):
 def test_a_caught_row_can_join_the_team(client):
     catch_row(client, "sinnoh-route-201")
 
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
+    response = client.patch("/encounters/sinnoh-route-201", json={"in_team": True})
 
     assert response.status_code == 200
     assert response.json()["in_team"] is True
@@ -440,7 +435,7 @@ def test_a_caught_row_can_join_the_team(client):
 
 
 def test_an_unfinished_row_cannot_join_the_team(client):
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
+    response = client.patch("/encounters/sinnoh-route-201", json={"in_team": True})
 
     assert response.status_code == 422
 
@@ -451,14 +446,13 @@ def test_the_team_holds_at_most_six_links(client):
         row_id = f"platz-{index}"
         client.post(
             "/encounters",
-            headers=AUTHOR,
-            json={
+                json={
                 "id": row_id,
                 "encounter": f"Platz {index}",
                 "picks": {player: {"name": "Irgendwas"} for player in ("marc", "nicolai", "knev")},
             },
         )
-        response = client.patch(f"/encounters/{row_id}", headers=AUTHOR, json={"in_team": True})
+        response = client.patch(f"/encounters/{row_id}", json={"in_team": True})
         expected = 200 if index < 6 else 409
         assert response.status_code == expected, f"Platz {index}: {response.json()}"
 
@@ -471,22 +465,20 @@ def test_a_row_with_only_one_pick_cannot_join_the_team(client):
     # allen drei Spielern einen Platz.
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
     )
 
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
+    response = client.patch("/encounters/sinnoh-route-201", json={"in_team": True})
 
     assert response.status_code == 422
 
 
 def test_a_death_takes_the_link_out_of_the_team(client):
     catch_row(client, "sinnoh-route-201")
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
+    client.patch("/encounters/sinnoh-route-201", json={"in_team": True})
 
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
     )
 
@@ -496,11 +488,10 @@ def test_a_death_takes_the_link_out_of_the_team(client):
 
 def test_a_lost_row_leaves_the_team_as_well(client):
     catch_row(client, "sinnoh-route-201")
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
+    client.patch("/encounters/sinnoh-route-201", json={"in_team": True})
 
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"outcome": "failed", "responsible_player": "marc"},
     )
 
@@ -513,7 +504,6 @@ def test_a_lost_row_leaves_the_team_as_well(client):
 def test_species_must_be_catchable_at_that_location(client):
     response = client.patch(
         "/encounters/sinnoh-route-202",
-        headers=AUTHOR,
         json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
     )
 
@@ -524,7 +514,6 @@ def test_species_must_be_catchable_at_that_location(client):
 def test_force_overrides_the_species_check(client):
     response = client.patch(
         "/encounters/sinnoh-route-202?force=true",
-        headers=AUTHOR,
         json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
     )
 
@@ -535,13 +524,11 @@ def test_force_overrides_the_species_check(client):
 def test_a_forced_entry_does_not_block_later_edits(client):
     client.patch(
         "/encounters/sinnoh-route-202?force=true",
-        headers=AUTHOR,
         json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
     )
 
     response = client.patch(
         "/encounters/sinnoh-route-202",
-        headers=AUTHOR,
         json={"picks": {"knev": {"species": "shinx", "name": "Sheinux"}}},
     )
 
@@ -553,13 +540,11 @@ def test_a_forced_entry_does_not_block_the_kill_button(client):
     # darf die Artpruefung hier auch nicht zuschlagen.
     client.patch(
         "/encounters/sinnoh-route-202?force=true",
-        headers=AUTHOR,
         json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
     )
 
     response = client.patch(
         "/encounters/sinnoh-route-202",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
     )
 
@@ -571,14 +556,14 @@ def test_null_for_a_required_field_is_a_client_error(client):
     # Ohne Pruefung landet das None in der Zeile und erst die Modellpruefung am
     # Ende schlaegt fehl - der Aufrufer saehe einen 500er.
     for body in ({"outcome": None}, {"encounter": None}, {"in_team": None}):
-        response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json=body)
+        response = client.patch("/encounters/sinnoh-route-201", json=body)
         assert response.status_code == 422, body
 
 
 def test_null_clears_the_fields_that_may_be_empty(client):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"responsible_player": "marc"})
+    client.patch("/encounters/sinnoh-route-201", json={"responsible_player": "marc"})
 
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"responsible_player": None})
+    response = client.patch("/encounters/sinnoh-route-201", json={"responsible_player": None})
 
     assert response.status_code == 200
     assert response.json()["responsible_player"] is None
@@ -586,7 +571,7 @@ def test_null_clears_the_fields_that_may_be_empty(client):
 
 def test_progress_cannot_run_past_the_level_caps(client):
     # Der Mini-Katalog kennt genau einen Cap.
-    response = client.patch("/runs/run-1", headers=AUTHOR, json={"progress": 99})
+    response = client.patch("/runs/run-1", json={"progress": 99})
 
     assert response.status_code == 200
     assert response.json()["progress"] == 1
@@ -595,7 +580,6 @@ def test_progress_cannot_run_past_the_level_caps(client):
 def test_unknown_player_is_rejected_when_creating_a_row(client):
     response = client.post(
         "/encounters",
-        headers=AUTHOR,
         json={"id": "extra", "encounter": "Extra", "picks": {"kevin": {"name": "Bidiza"}}},
     )
 
@@ -605,7 +589,6 @@ def test_unknown_player_is_rejected_when_creating_a_row(client):
 def test_free_text_needs_no_species(client):
     response = client.patch(
         "/encounters/sinnoh-route-202",
-        headers=AUTHOR,
         json={
             "picks": {"marc": {"species": None, "name": "Kein Encounter – verpennt"}},
             "responsible_player": "marc",
@@ -619,7 +602,6 @@ def test_free_text_needs_no_species(client):
 def test_unknown_player_is_rejected(client):
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"kevin": {"name": "Zubat"}}},
     )
 
@@ -634,7 +616,6 @@ def test_a_death_without_a_culprit_is_refused(client):
 
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "dead"}}},
     )
 
@@ -645,7 +626,7 @@ def test_a_death_without_a_culprit_is_refused(client):
 
 
 def test_a_lost_encounter_without_a_culprit_is_refused(client):
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"outcome": "failed"})
+    response = client.patch("/encounters/sinnoh-route-201", json={"outcome": "failed"})
 
     assert response.status_code == 422
 
@@ -653,7 +634,6 @@ def test_a_lost_encounter_without_a_culprit_is_refused(client):
 def test_nobody_can_be_named_explicitly(client):
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"outcome": "failed", "responsible_player": "niemand"},
     )
 
@@ -664,7 +644,6 @@ def test_nobody_can_be_named_explicitly(client):
 def test_an_unknown_culprit_is_rejected(client):
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"outcome": "failed", "responsible_player": "kevin"},
     )
 
@@ -675,226 +654,23 @@ def test_the_culprit_cannot_be_removed_from_a_death(client):
     catch_row(client, "sinnoh-route-201")
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
     )
 
     response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"responsible_player": None},
     )
 
     assert response.status_code == 422
 
 
-# --------------------------------------------------------------- Historie ---
-
-
-def test_history_records_author_and_can_be_undone(client):
-    client.patch(
-        "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
-        json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
-    )
-
-    entries = client.get("/history").json()["entries"]
-    assert entries[0]["author"] == "marc"
-    assert entries[0]["action"] == "row-patch"
-
-    undone = client.post(f"/history/{entries[0]['id']}/undo", headers=AUTHOR)
-    assert undone.status_code == 200
-
-    row = client.get("/encounters/sinnoh-route-201").json()
-    assert row["picks"]["marc"]["name"] == ""
-    assert row["outcome"] == "pending"
-
-
-def test_undo_is_refused_twice(client):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (erste Fassung)"})
-    entry_id = client.get("/history").json()["entries"][0]["id"]
-
-    assert client.post(f"/history/{entry_id}/undo", headers=AUTHOR).status_code == 200
-    assert client.post(f"/history/{entry_id}/undo", headers=AUTHOR).status_code == 409
-
-
-def test_deleted_row_can_be_restored(client):
-    assert client.delete("/encounters/sinnoh-route-202", headers=AUTHOR).status_code == 204
-    assert len(client.get("/encounters").json()["encounters"]) == 1
-
-    entry_id = client.get("/history").json()["entries"][0]["id"]
-    assert client.post(f"/history/{entry_id}/undo", headers=AUTHOR).status_code == 200
-
-    rows = [row["id"] for row in client.get("/encounters").json()["encounters"]]
-    assert rows == ["sinnoh-route-201", "sinnoh-route-202"]
-
-
-def test_restoring_a_recreated_row_is_refused_instead_of_duplicating_it(client):
-    client.delete("/encounters/sinnoh-route-202", headers=AUTHOR)
-    client.post("/encounters", headers=AUTHOR, json={"id": "sinnoh-route-202", "encounter": "Route 202 neu"})
-
-    entry_id = next(
-        entry["id"] for entry in client.get("/history").json()["entries"] if entry["action"] == "row-delete"
-    )
-    response = client.post(f"/history/{entry_id}/undo", headers=AUTHOR)
-
-    assert response.status_code == 409
-    rows = [row["id"] for row in client.get("/encounters").json()["encounters"]]
-    assert rows.count("sinnoh-route-202") == 1
-
-
-def test_undo_cannot_push_the_team_over_its_limit(client):
-    catch_row(client, "sinnoh-route-201")
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": True})
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"in_team": False})
-    entry_id = client.get("/history").json()["entries"][0]["id"]
-
-    # Waehrend die Zeile draussen war, sind alle sechs Plaetze belegt worden.
-    for index in range(6):
-        row_id = f"platz-{index}"
-        client.post(
-            "/encounters",
-            headers=AUTHOR,
-            json={
-                "id": row_id,
-                "encounter": f"Platz {index}",
-                "picks": {player: {"name": "Irgendwas"} for player in ("marc", "nicolai", "knev")},
-            },
-        )
-        client.patch(f"/encounters/{row_id}", headers=AUTHOR, json={"in_team": True})
-
-    response = client.post(f"/history/{entry_id}/undo", headers=AUTHOR)
-
-    assert response.status_code == 409
-    assert client.get("/runs").json()["runs"][0]["team_count"] == 6
-
-
-def test_undo_without_a_stored_snapshot_is_a_client_error(client, data_file):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (Test)"})
-    history_file = data_file.with_name(f"{data_file.stem}-history.jsonl")
-    records = [json.loads(line) for line in history_file.read_text(encoding="utf-8").splitlines() if line.strip()]
-    records[0].pop("before")
-    history_file.write_text(
-        "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n", encoding="utf-8"
-    )
-
-    response = client.post(f"/history/{records[0]['id']}/undo", headers=AUTHOR)
-
-    assert response.status_code == 422
-
-
-def test_an_incomplete_history_entry_does_not_break_the_listing(client, data_file):
-    # Die Historiendatei ist von Hand editierbar - ein Eintrag ohne Pflichtfeld
-    # darf nicht die ganze Liste mit einem Serverfehler beantworten.
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (Test)"})
-    history_file = data_file.with_name(f"{data_file.stem}-history.jsonl")
-    history_file.write_text(
-        json.dumps({"id": "h-99", "at": "2026-01-01T00:00:00+00:00", "summary": "ohne action"}) + "\n",
-        encoding="utf-8",
-    )
-
-    response = client.get("/history")
-
-    assert response.status_code == 200
-    assert response.json()["entries"][0]["undoable"] is False
-
-
-def test_inherited_history_is_adopted_only_once(client, data_file):
-    client.get("/encounters")
-    stored = json.loads(data_file.read_text(encoding="utf-8"))
-    stored["history"] = [
-        {"id": "h-1", "at": "2026-01-01T00:00:00+00:00", "action": "row-patch", "run_id": "run-1", "summary": "alt"}
-    ]
-    data_file.write_text(json.dumps(stored, ensure_ascii=False), encoding="utf-8")
-
-    for _ in range(3):
-        app_module._state_cache.clear()  # jeder Aufruf sieht die Datei wie beim ersten Mal
-        client.get("/runs")
-
-    history_file = data_file.with_name(f"{data_file.stem}-history.jsonl")
-    lines = [line for line in history_file.read_text(encoding="utf-8").splitlines() if line.strip()]
-    assert [json.loads(line)["id"] for line in lines] == ["h-1"]
-
-
-def test_writes_in_the_same_second_get_different_stamps(client):
-    stamps = []
-    for index in range(5):
-        client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": f"Route 201 ({index})"})
-        stamps.append(client.get("/encounters").json()["updated_at"])
-
-    # Gleiche Zeitstempel hiessen: If-Match winkt fremde Aenderungen durch und
-    # das Polling haelt die zweite Aenderung fuer "nichts passiert".
-    assert len(set(stamps)) == len(stamps)
-    assert stamps == sorted(stamps)
-
-
-def test_stale_if_match_within_the_same_second_is_rejected(client):
-    before = client.get("/encounters").json()["updated_at"]
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (fremd)"})
-
-    response = client.patch(
-        "/encounters/sinnoh-route-201",
-        headers={**AUTHOR, "If-Match": before},
-        json={"encounter": "Route 201 (meine)"},
-    )
-
-    assert response.status_code == 412
-
-
-def test_the_rules_the_frontend_needs_come_from_the_api(client):
-    rules = client.get("/runs").json()["rules"]
-
-    assert rules["lost_label"] == app_module.LOST_LABEL
-    assert rules["no_culprit"] == app_module.NO_CULPRIT
-    assert rules["team_size"] == app_module.TEAM_SIZE
-    assert "row-patch" in rules["undoable_actions"]
-
-
-def test_history_lives_beside_the_data_and_not_inside_it(client, data_file):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (Test)"})
-
-    stored = json.loads(data_file.read_text(encoding="utf-8"))
-    assert "history" not in stored
-
-    history_file = data_file.with_name(f"{data_file.stem}-history.jsonl")
-    assert history_file.exists()
-    lines = [line for line in history_file.read_text(encoding="utf-8").splitlines() if line.strip()]
-    assert len(lines) == 1
-    assert json.loads(lines[0])["summary"].startswith("'Route 201 (Test)'")
-
-
-def test_history_is_only_appended_so_it_cannot_be_rewritten(client, data_file):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (erste)"})
-    entry_id = client.get("/history").json()["entries"][0]["id"]
-    client.post(f"/history/{entry_id}/undo", headers=AUTHOR)
-
-    history_file = data_file.with_name(f"{data_file.stem}-history.jsonl")
-    records = [json.loads(line) for line in history_file.read_text(encoding="utf-8").splitlines() if line.strip()]
-
-    # Der urspruengliche Eintrag bleibt unveraendert stehen, die Ruecknahme kommt dazu.
-    assert [record["action"] for record in records] == ["row-patch", "undo"]
-    assert records[1]["undo_of"] == entry_id
-    assert client.get("/history").json()["entries"][-1]["undone"] is True
-
-
-def test_history_survives_a_history_carried_in_old_data(client, data_file):
-    client.get("/encounters")
-    stored = json.loads(data_file.read_text(encoding="utf-8"))
-    stored["history"] = [
-        {"id": "h-1", "at": "2026-01-01T00:00:00+00:00", "author": None, "action": "row-patch",
-         "run_id": "run-1", "row_id": "sinnoh-route-201", "summary": "aus dem alten Stand"}
-    ]
-    data_file.write_text(json.dumps(stored, ensure_ascii=False), encoding="utf-8")
-
-    entries = client.get("/history").json()["entries"]
-
-    assert entries[0]["summary"] == "aus dem alten Stand"
-    assert "history" not in json.loads(data_file.read_text(encoding="utf-8"))
+# --------------------------------------------------------------- Backups ---
 
 
 def test_a_daily_backup_is_kept_before_overwriting(client, data_file):
     client.get("/encounters")  # legt den Store an
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (irgendwas)"})
+    client.patch("/encounters/sinnoh-route-201", json={"encounter": "Route 201 (irgendwas)"})
 
     backups = list((data_file.parent / "backups").glob(f"{data_file.stem}-*.json"))
 
@@ -938,7 +714,7 @@ def test_configured_token_makes_writes_private(client, monkeypatch):
 def test_stale_if_match_is_rejected(client):
     stale = client.patch(
         "/encounters/sinnoh-route-201",
-        headers={**AUTHOR, "If-Match": "2020-01-01T00:00:00+00:00"},
+        headers={"If-Match": "2020-01-01T00:00:00+00:00"},
         json={"encounter": "Route 201 (veraltet)"},
     )
     assert stale.status_code == 412
@@ -946,7 +722,7 @@ def test_stale_if_match_is_rejected(client):
     current = client.get("/encounters").json()["updated_at"]
     fresh = client.patch(
         "/encounters/sinnoh-route-201",
-        headers={**AUTHOR, "If-Match": current},
+        headers={"If-Match": current},
         json={"encounter": "Route 201 (aktuell)"},
     )
     assert fresh.status_code == 200
@@ -959,7 +735,6 @@ def test_a_coupled_death_counts_once_and_only_for_the_culprit(client):
     catch_row(client, "sinnoh-route-201")
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"knev": {"status": "dead"}}, "responsible_player": "knev"},
     )
 
@@ -974,7 +749,6 @@ def test_a_coupled_death_counts_once_and_only_for_the_culprit(client):
 def test_a_botched_encounter_only_blames_its_culprit(client):
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"outcome": "failed", "responsible_player": "marc"},
     )
 
@@ -989,12 +763,10 @@ def test_blame_adds_deaths_and_botched_encounters_per_player(client):
     catch_row(client, "sinnoh-route-201")
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
     )
     client.patch(
         "/encounters/sinnoh-route-202",
-        headers=AUTHOR,
         json={"outcome": "failed", "responsible_player": "marc"},
     )
 
@@ -1010,8 +782,7 @@ def test_every_lost_pokemon_of_one_player_adds_blame(client):
     for row_id in ("platz-1", "platz-2", "platz-3"):
         client.post(
             "/encounters",
-            headers=AUTHOR,
-            json={
+                json={
                 "id": row_id,
                 "encounter": row_id,
                 "picks": {player: {"name": "Irgendwas"} for player in ("marc", "nicolai", "knev")},
@@ -1019,8 +790,7 @@ def test_every_lost_pokemon_of_one_player_adds_blame(client):
         )
         client.patch(
             f"/encounters/{row_id}",
-            headers=AUTHOR,
-            json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
+                json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
         )
 
     stats = client.get("/stats").json()
@@ -1034,7 +804,6 @@ def test_rows_without_a_culprit_are_reported_separately(client):
     catch_row(client, "sinnoh-route-201")
     client.patch(
         "/encounters/sinnoh-route-201",
-        headers=AUTHOR,
         json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "niemand"},
     )
 

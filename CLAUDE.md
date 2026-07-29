@@ -68,9 +68,9 @@ Request Parsen, Modellprüfung und Serialisieren, nur um festzustellen, dass sic
 hat. `save_state()` frischt den Cache selbst auf.
 
 Jeder Schreibzugriff läuft durch den Contextmanager `mutate()`: laden → **tiefe Kopie** →
-`If-Match` prüfen → ändern → `updated_at` setzen → atomar speichern → gepufferte Historie
-schreiben, alles unter dem globalen `write_lock`. **Neue Schreibpfade gehören in `mutate()`**,
-sonst fehlt Sperre, Zeitstempel oder Historieneintrag. Die Kopie ist nicht optional: bricht eine
+`If-Match` prüfen → ändern → `updated_at` setzen → atomar speichern, alles unter dem globalen
+`write_lock`. **Neue Schreibpfade gehören in `mutate()`**, sonst fehlt Sperre oder Zeitstempel.
+Die Kopie ist nicht optional: bricht eine
 Regel den Vorgang mit 4xx ab, stünde sonst der halb geänderte Stand im Cache. Endpunkte, die auf
 einem Run arbeiten, nehmen `write_to_run()` – dieselbe Klammer, plus Auflösung von „benannter Run“
 oder „aktueller Run“.
@@ -79,20 +79,10 @@ oder „aktueller Run“.
 reichten nicht: zwei Schreibzugriffe in derselben Sekunde ergäben denselben Wert, womit `If-Match`
 eine fremde Änderung durchwinkt und das Polling sie für „nichts passiert“ hält.
 
-Neben dem Datenstand liegen zwei weitere Dateien, beide gitignored:
-
-- `<datenstand>-history.jsonl` – die Historie. Sie ist bei offenen Schreibrechten das
-  Sicherheitsnetz und darf deshalb nicht im Datenstand stehen, wo ein paar hundert Requests sie
-  verdrängen könnten. `record_history()` puffert in `_history_buffer`, geschrieben wird erst nach
-  erfolgreichem `save_state()`. Eine Rücknahme ändert nichts, sondern hängt einen `undo`-Eintrag
-  mit `undo_of` an; `undone` wird beim Lesen daraus abgeleitet. Angehängt wird unter
-  `history_lock` – der Lesepfad schreibt hier ebenfalls (geerbte Historie aus Alt-Ständen, über
-  `adopt_history()` und gegen bekannte IDs abgeglichen, sonst verdoppeln zwei gleichzeitige erste
-  Requests alles). Ab `HISTORY_KEEP` (20 000) schneidet `trim_history()` vorne ab; **nur deshalb
-  liegt die Historie mit im Tagesbackup**.
-- `backups/` – eine Kopie pro Tag von Datenstand **und** Historie (`daily_backup()`, die letzten
-  30) plus eine vor jeder Schema-Migration (`migration_backup()`). Backups scheitern still: sie
-  dürfen einen Schreibzugriff nie blockieren.
+Neben dem Datenstand liegt `backups/`, gitignored: eine Kopie pro Tag (`daily_backup()`, die
+letzten 30) plus eine vor jeder Schema-Migration (`migration_backup()`). Backups scheitern still:
+sie dürfen einen Schreibzugriff nie blockieren. Bei offenen Schreibrechten sind sie der einzige
+Rückholpfad – eine Änderungshistorie mit Undo gab es bis v4, sie ist bewusst entfallen.
 
 ### Migration läuft über die `normalize_*`-Kette
 
@@ -172,8 +162,7 @@ Encounter. Fangzahlen gibt es bewusst nicht mehr. Zeilen ohne Schuldigen laufen 
   bejaht: alle Spieler haben ein lebendes Pokémon. Das Outcome allein genügt als Kriterium nicht,
   `caught` steht schon bei einem einzigen Eintrag. Maximal `TEAM_SIZE` (6) gleichzeitig, und wer
   stirbt oder den Encounter verliert, fliegt automatisch raus. Ein Link belegt bei allen drei
-  Spielern denselben Platz, daher genau ein Flag pro Zeile statt eines pro Spieler. Auch der
-  Undo-Pfad läuft durch diese Prüfung – sonst ließe sich die Grenze rückwärts umgehen.
+  Spielern denselben Platz, daher genau ein Flag pro Zeile statt eines pro Spieler.
 - **Species-Prüfung**: `validate_species()` lässt nur Pokémon zu, die laut Katalog an diesem Ort
   vorkommen. Geprüft wird **nur, wo der Patch `species` anfasst** – nicht jeder Pick, den er
   berührt. Sonst blockiert ein per `?force=true` gespeicherter Sonderfall jede spätere Änderung an
@@ -183,8 +172,8 @@ Encounter. Fangzahlen gibt es bewusst nicht mehr. Zeilen ohne Schuldigen laufen 
   Felder ab, die eine Zeile braucht. Ohne das landet `None` im Datensatz und erst die
   Modellprüfung am Ende schlägt fehl – der Aufrufer sähe einen 500er statt eines Hinweises.
 - **Offene Writes**: `require_write_token()` verlangt nur dann einen Bearer-Token, wenn
-  `ENCOUNTER_API_TOKEN` gesetzt ist. Default ist offen – bewusste Entscheidung; abgesichert wird
-  über die Historie mit Undo, nicht über Auth.
+  `ENCOUNTER_API_TOKEN` gesetzt ist. Default ist offen – bewusste Entscheidung. Ein Undo gibt es
+  seit v4 nicht mehr; wer etwas zerschießt, holt es aus `backups/` zurück.
 
 ### Frontend
 
@@ -195,10 +184,10 @@ Drei Dateien in `web/`, kein Build. `API_BASE` lässt sich per `?api=` oder loca
   auch für Zahlen aus der API: `?api=` ist per URL überschreibbar, ein geteilter Link kann die
   Antworten also fremdbestimmen. Für Auswahlfelder gibt es `option(value, label, selected)` –
   handgebaute `<option>`-Strings sind genau der Ort, an dem das `esc()` bisher fehlte.
-- Werte, die zum API-Vertrag gehören (`LOST_LABEL`, `NO_CULPRIT`, `TEAM_SIZE`, ob ein
-  Historieneintrag rücknehmbar ist), kommen aus `GET /runs` → `rules` bzw. `entry.undoable`. Der
-  Platzhalter ist Protokoll: das Frontend schreibt ihn als Namen, die API leitet daraus `failed`
-  ab. Eine zweite Kopie im Frontend fiele beim Umbenennen still auseinander.
+- Werte, die zum API-Vertrag gehören (`LOST_LABEL`, `NO_CULPRIT`, `TEAM_SIZE`), kommen aus
+  `GET /runs` → `rules`. Der Platzhalter ist Protokoll: das Frontend schreibt ihn als Namen, die
+  API leitet daraus `failed` ab. Eine zweite Kopie im Frontend fiele beim Umbenennen still
+  auseinander.
 - `teamReady()` spiegelt `team_ready()` der API – zeigten wir den Stern großzügiger, liefe der
   Klick in ein 422.
 - Kataloge werden beim Laden **indiziert** (`catalog.index`), Dupe-Zähler einmal pro
@@ -211,8 +200,7 @@ Drei Dateien in `web/`, kein Build. `API_BASE` lässt sich per `?api=` oder loca
   Event-Delegation Doppel-Schreibvorgänge.
 - `write()` reiht Schreibvorgänge über `writeChain` auf, statt bei laufendem Request auszusteigen.
   Wer schnell mehrere Zeilen umschaltet, verliert sonst Klicks ohne jede Rückmeldung.
-- Kein Login und keine Identität – wer editiert, wird bewusst nicht erfasst. Die API kann per
-  `X-Encounter-Author` trotzdem einen Autor mitschreiben; das Frontend nutzt das nicht.
+- Kein Login und keine Identität – wer editiert, wird bewusst nicht erfasst.
 - Polling alle 10 s auf `updated_at`; pausiert, solange ein Feld der Tabelle den Fokus hat.
 - Artwork kommt deterministisch aus der Dex-Nummer des Katalogs – es gibt **keine** gepflegte
   Namensliste mehr und keinen PokeAPI-Request zur Laufzeit.

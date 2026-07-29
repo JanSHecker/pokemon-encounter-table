@@ -14,7 +14,7 @@ from typing import Any, Iterator, Literal, get_args
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Response, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field
 
 SCHEMA_VERSION = 4
 SLUG_PATTERN = r"^[a-z0-9]+(?:-[a-z0-9]+)*$"
@@ -79,14 +79,6 @@ LEGACY_LOCATION_IDS = {
     "eiseninsel": "iron-island",
 }
 LEGACY_SEA_ROUTES = {"220", "223", "226", "230"}
-
-# Die Historie ist bei offenen Schreibrechten das einzige Sicherheitsnetz. Sie
-# liegt deshalb in einer eigenen, nur angehaengten Datei - nicht im Datenstand,
-# wo ein paar hundert Requests sie verdraengen koennten.
-HISTORY_KEEP = 20000  # Eintraege, die in der Datei verbleiben
-HISTORY_REWRITE_SLACK = 500  # erst so viel darueber wird aufgeraeumt
-HISTORY_PAGE_MAX = 500  # groesste Seite, die /history ausliefert
-UNDOABLE_ACTIONS = ("row-create", "row-patch", "row-delete")
 
 # Felder, die sich per PATCH ausdruecklich auf null setzen (also leeren) lassen.
 NULLABLE_ROW_FIELDS = {"responsible_player", "picks"}
@@ -161,7 +153,6 @@ def load_games() -> dict[str, dict[str, Any]]:
 def reset_catalog_cache() -> None:
     _catalog_cache.clear()
     _derived_cache.clear()
-    _history_seq.clear()
     _state_cache.clear()
 
 
@@ -363,7 +354,6 @@ class Rules(BaseModel):
     lost_label: str
     no_culprit: str
     team_size: int
-    undoable_actions: list[str]
 
 
 class RunsCollection(BaseModel):
@@ -378,24 +368,6 @@ class GameSummary(BaseModel):
     id: str
     name: str
     location_count: int
-
-
-class HistoryEntry(BaseModel):
-    id: str
-    at: str
-    author: str | None
-    action: str
-    run_id: str
-    row_id: str | None
-    summary: str
-    undone: bool
-    # Damit das Frontend die Liste der ruecknehmbaren Aktionen nicht doppelt fuehrt.
-    undoable: bool = False
-
-
-class HistoryCollection(BaseModel):
-    entries: list[HistoryEntry]
-    updated_at: str
 
 
 # --------------------------------------------------------------------------- #
@@ -573,7 +545,8 @@ def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
     if not any(run["id"] == current_run_id for run in runs):
         current_run_id = runs[0]["id"]
 
-    # history/history_seq wandern in die eigene Historiendatei und fliegen hier raus.
+    # Ein 'history'-Block aus alten Staenden faellt hier weg: die Auflistung ist
+    # abschliessend, unbekannte Schluessel werden nicht uebernommen.
     return {
         "schema_version": SCHEMA_VERSION,
         "players": players,
@@ -630,109 +603,6 @@ def initial_state() -> dict[str, Any]:
 
 
 # --------------------------------------------------------------------------- #
-# Historie (eigene Datei, nur angehaengt)
-# --------------------------------------------------------------------------- #
-
-
-def history_path() -> Path:
-    configured = os.environ.get("ENCOUNTER_HISTORY_PATH")
-    if configured:
-        return Path(configured)
-    target = data_path()
-    return target.with_name(f"{target.stem}-history.jsonl")
-
-
-_history_seq: dict[str, int] = {}
-
-# Die Historie wird auch vom Lesepfad beschrieben (geerbte Eintraege aus Alt-
-# Staenden), der das Schreib-Lock nicht halten darf. Deshalb ein eigenes Lock;
-# die Reihenfolge ist immer write_lock -> history_lock.
-history_lock = threading.Lock()
-
-# Groesse, ab der sich ein Blick in die Datei zum Aufraeumen ueberhaupt lohnt.
-HISTORY_TRIM_PROBE_BYTES = HISTORY_KEEP * 200
-
-
-def read_history() -> list[dict[str, Any]]:
-    path = history_path()
-    if not path.exists():
-        return []
-    entries = []
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            entries.append(json.loads(line))
-        except json.JSONDecodeError:
-            continue  # eine kaputte Zeile darf die Historie nicht unlesbar machen
-    return entries
-
-
-def append_history(records: list[dict[str, Any]]) -> None:
-    if not records:
-        return
-    path = history_path()
-    with history_lock:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with path.open("a", encoding="utf-8") as handle:
-            for record in records:
-                handle.write(json.dumps(record, ensure_ascii=False) + "\n")
-        trim_history(path)
-
-
-def trim_history(path: Path) -> None:
-    """Die Datei waechst unbegrenzt - irgendwann muss vorne etwas weg.
-
-    Erst die Dateigroesse pruefen: sie einzulesen, nur um Zeilen zu zaehlen,
-    kostet bei jedem Schreibzugriff mehr als die Ersparnis wert ist.
-    """
-    try:
-        if path.stat().st_size < HISTORY_TRIM_PROBE_BYTES:
-            return
-    except OSError:
-        return
-    lines = path.read_text(encoding="utf-8").splitlines()
-    if len(lines) > HISTORY_KEEP + HISTORY_REWRITE_SLACK:
-        path.write_text("\n".join(lines[-HISTORY_KEEP:]) + "\n", encoding="utf-8")
-
-
-def adopt_history(records: list[dict[str, Any]]) -> None:
-    """Historie aus einem Alt-Stand einmalig in die eigene Datei ueberfuehren.
-
-    Laeuft auf dem Lesepfad und damit ohne Schreib-Lock: ohne den Abgleich gegen
-    die bereits bekannten IDs verdoppeln zwei gleichzeitige erste Requests die
-    komplette geerbte Historie.
-    """
-    if not records:
-        return
-    with history_lock:
-        known = {entry.get("id") for entry in read_history()}
-        fresh = [record for record in records if record.get("id") not in known]
-        if not fresh:
-            return
-        path = history_path()
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with path.open("a", encoding="utf-8") as handle:
-            for record in fresh:
-                handle.write(json.dumps(record, ensure_ascii=False) + "\n")
-
-
-def next_history_id() -> str:
-    """Fortlaufend, auch nachdem alte Zeilen weggeschnitten wurden."""
-    key = str(history_path())
-    if key not in _history_seq:
-        highest = 0
-        for entry in read_history():
-            match = re.fullmatch(r"h-(\d+)", str(entry.get("id", "")))
-            if match:
-                highest = max(highest, int(match.group(1)))
-        _history_seq[key] = highest
-    _history_seq[key] += 1
-    return f"h-{_history_seq[key]}"
-
-
-# --------------------------------------------------------------------------- #
 # Backups
 # --------------------------------------------------------------------------- #
 
@@ -753,15 +623,8 @@ def daily_backup(source: Path) -> None:
         directory.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, target)
 
-        # Die Historie gehoert mit ins Backup: sie ist das Sicherheitsnetz, wird
-        # aber ab HISTORY_KEEP vorne beschnitten.
-        history = history_path()
-        if history.exists():
-            shutil.copyfile(history, directory / f"{history.stem}-{stamp}.jsonl")
-
-        for pattern in (f"{source.stem}-????-??-??.json", f"{history.stem}-????-??-??.jsonl"):
-            for outdated in sorted(directory.glob(pattern))[:-BACKUP_KEEP]:
-                outdated.unlink(missing_ok=True)
+        for outdated in sorted(directory.glob(f"{source.stem}-????-??-??.json"))[:-BACKUP_KEEP]:
+            outdated.unlink(missing_ok=True)
     except OSError:
         pass  # ein fehlgeschlagenes Backup darf den Schreibzugriff nicht blockieren
 
@@ -822,9 +685,6 @@ def load_state() -> dict[str, Any]:
         raw = json.loads(stored)
         state = normalize_state(raw)
 
-        # Historie aus aelteren Staenden in die eigene Datei ueberfuehren.
-        adopt_history([entry for entry in raw.get("history", []) if isinstance(entry, dict)])
-
         # Gegen den Dateitext vergleichen, nicht gegen das geparste Dict: die
         # normalize_*-Kette aendert verschachtelte Teile in-place, ein Vergleich
         # mit dem Eingabe-Dict wuerde Migrationen als "nichts geaendert" sehen.
@@ -864,18 +724,6 @@ def require_write_token(credentials: HTTPAuthorizationCredentials | None = Depen
         )
 
 
-def author_from_header(x_encounter_author: str | None = Header(default=None)) -> str | None:
-    if not x_encounter_author:
-        return None
-    return x_encounter_author.strip()[:80] or None
-
-
-# Waehrend einer Mutation gesammelt und erst nach erfolgreichem Speichern
-# geschrieben - sonst stuende in der Historie eine Aenderung, die es nie gab.
-# Zugriff nur unter write_lock.
-_history_buffer: list[dict[str, Any]] = []
-
-
 @contextmanager
 def mutate(if_match: str | None) -> Iterator[dict[str, Any]]:
     """Laden, pruefen, aendern, speichern - unter dem globalen Schreib-Lock."""
@@ -888,12 +736,9 @@ def mutate(if_match: str | None) -> Iterator[dict[str, Any]]:
                 status_code=status.HTTP_412_PRECONDITION_FAILED,
                 detail="Die Tabelle wurde zwischenzeitlich geändert. Neu laden und erneut versuchen.",
             )
-        _history_buffer.clear()
         yield state
         state["updated_at"] = next_updated_at(state.get("updated_at"))
         save_state(state)
-        append_history(_history_buffer)
-        _history_buffer.clear()
 
 
 @contextmanager
@@ -906,35 +751,6 @@ def write_to_run(if_match: str | None, run_id: str | None) -> Iterator[tuple[dic
     """
     with mutate(if_match) as state:
         yield state, find_run(state, run_id) if run_id is not None else current_run(state)
-
-
-def record_history(
-    state: dict[str, Any],
-    *,
-    author: str | None,
-    action: str,
-    run_id: str,
-    row_id: str | None,
-    summary: str,
-    before: Any = None,
-    after: Any = None,
-    undo_of: str | None = None,
-) -> dict[str, Any]:
-    entry = {
-        "id": next_history_id(),
-        "at": now_iso(),
-        "author": author,
-        "action": action,
-        "run_id": run_id,
-        "row_id": row_id,
-        "summary": summary,
-        "before": before,
-        "after": after,
-    }
-    if undo_of:
-        entry["undo_of"] = undo_of
-    _history_buffer.append(entry)
-    return entry
 
 
 # --------------------------------------------------------------------------- #
@@ -1261,9 +1077,8 @@ def api_overview() -> dict[str, Any]:
     return {
         "name": "Pokémon Encounter API",
         "schema_version": SCHEMA_VERSION,
-        "read": "GET /games, GET /runs, GET /encounters, GET /stats, GET /history",
+        "read": "GET /games, GET /runs, GET /encounters, GET /stats",
         "write": "POST/PATCH/DELETE; Bearer-Token nur nötig, wenn ENCOUNTER_API_TOKEN gesetzt ist",
-        "author_header": "X-Encounter-Author",
         "openapi": "/openapi.json",
     }
 
@@ -1304,7 +1119,6 @@ def get_runs() -> dict[str, Any]:
             "lost_label": LOST_LABEL,
             "no_culprit": NO_CULPRIT,
             "team_size": TEAM_SIZE,
-            "undoable_actions": list(UNDOABLE_ACTIONS),
         },
         "updated_at": state["updated_at"],
     }
@@ -1321,38 +1135,6 @@ def get_run_encounters(run_id: str) -> dict[str, Any]:
     return collection_for(state, find_run(state, run_id))
 
 
-def history_entry_view(entry: dict[str, Any], *, undone: bool) -> dict[str, Any]:
-    """Ein Historieneintrag, wie ihn die API ausliefert.
-
-    Die Datei ist von Hand editierbar und traegt Eintraege aelterer Staende, in
-    denen Felder fehlen koennen. Pflichtfelder bekommen deshalb einen leeren
-    Ersatzwert - ein unvollstaendiger Eintrag darf die ganze Liste nicht mit
-    einem Serverfehler beantworten, gerade weil sie das Sicherheitsnetz ist.
-    """
-    view = {key: entry.get(key) or "" for key in ("id", "at", "action", "run_id", "summary")}
-    view["author"] = entry.get("author")
-    view["row_id"] = entry.get("row_id")
-    view["undone"] = undone
-    view["undoable"] = view["action"] in UNDOABLE_ACTIONS and not undone
-    return view
-
-
-def undone_entry_ids(entries: list[dict[str, Any]]) -> set[str]:
-    return {entry["undo_of"] for entry in entries if entry.get("undo_of")}
-
-
-def history_summary(entries: list[dict[str, Any]], limit: int) -> list[dict[str, Any]]:
-    """Neueste zuerst; 'undone' ergibt sich aus den spaeteren Undo-Eintraegen."""
-    undone = undone_entry_ids(entries)
-    return [history_entry_view(entry, undone=entry.get("id") in undone) for entry in reversed(entries[-limit:])]
-
-
-@app.get("/history", response_model=HistoryCollection, summary="Änderungshistorie")
-def get_history(limit: int = Query(default=50, ge=1, le=HISTORY_PAGE_MAX)) -> dict[str, Any]:
-    state = load_state()
-    return {"entries": history_summary(read_history(), limit), "updated_at": state["updated_at"]}
-
-
 # --------------------------------------------------------------------------- #
 # Schreiben
 # --------------------------------------------------------------------------- #
@@ -1367,7 +1149,6 @@ def get_history(limit: int = Query(default=50, ge=1, le=HISTORY_PAGE_MAX)) -> di
 )
 def create_run(
     run: RunCreate,
-    author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
     find_game(run.game_id)
@@ -1388,15 +1169,6 @@ def create_run(
         state["runs"].append(created)
         if run.make_current:
             state["current_run_id"] = run_id
-        record_history(
-            state,
-            author=author,
-            action="run-create",
-            run_id=run_id,
-            row_id=None,
-            summary=f"Run '{run.name}' angelegt ({len(rows)} Orte)",
-            after={"id": run_id, "name": run.name, "game_id": run.game_id},
-        )
         return created
 
 
@@ -1409,7 +1181,6 @@ def create_run(
 def patch_run(
     run_id: str,
     changes: RunPatch,
-    author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
     updates = changes.model_dump(exclude_unset=True)
@@ -1429,15 +1200,6 @@ def patch_run(
         elif updates.get("status") == "active":
             run["completed_at"] = None
         run.update(updates)
-        record_history(
-            state,
-            author=author,
-            action="run-patch",
-            run_id=run_id,
-            row_id=None,
-            summary=f"Run '{run['name']}' geändert: {', '.join(sorted(updates)) or 'aktiv gesetzt'}",
-            after=updates,
-        )
         return run
 
 
@@ -1452,11 +1214,10 @@ def create_run_encounter(
     run_id: str,
     row: EncounterRow,
     force: bool = Query(default=False),
-    author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
     with write_to_run(if_match, run_id) as (state, run):
-        return add_row(state, run, row, force=force, author=author)
+        return add_row(state, run, row, force=force)
 
 
 @app.patch(
@@ -1471,11 +1232,10 @@ def patch_run_encounter(
     changes: EncounterPatch,
     couple: bool = Query(default=True, description="Soullink-Kopplung anwenden"),
     force: bool = Query(default=False, description="Species-Prüfung übergehen"),
-    author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
     with write_to_run(if_match, run_id) as (state, run):
-        return patch_row(state, run, row_id, changes, couple=couple, force=force, author=author)
+        return patch_row(state, run, row_id, changes, couple=couple, force=force)
 
 
 @app.delete(
@@ -1487,11 +1247,10 @@ def patch_run_encounter(
 def delete_run_encounter(
     run_id: str,
     row_id: str,
-    author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> Response:
     with write_to_run(if_match, run_id) as (state, run):
-        remove_row(state, run, row_id, author=author)
+        remove_row(run, row_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
@@ -1505,11 +1264,10 @@ def delete_run_encounter(
 def create_encounter(
     row: EncounterRow,
     force: bool = Query(default=False),
-    author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
     with write_to_run(if_match, None) as (state, run):
-        return add_row(state, run, row, force=force, author=author)
+        return add_row(state, run, row, force=force)
 
 
 @app.patch(
@@ -1523,11 +1281,10 @@ def patch_encounter(
     changes: EncounterPatch,
     couple: bool = Query(default=True, description="Soullink-Kopplung anwenden"),
     force: bool = Query(default=False, description="Species-Prüfung übergehen"),
-    author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
     with write_to_run(if_match, None) as (state, run):
-        return patch_row(state, run, row_id, changes, couple=couple, force=force, author=author)
+        return patch_row(state, run, row_id, changes, couple=couple, force=force)
 
 
 @app.delete(
@@ -1538,93 +1295,12 @@ def patch_encounter(
 )
 def delete_encounter(
     row_id: str,
-    author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> Response:
     with write_to_run(if_match, None) as (state, run):
-        remove_row(state, run, row_id, author=author)
+        remove_row(run, row_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-
-def restore_row(entry: dict[str, Any]) -> dict[str, Any]:
-    """Den Zustand vor einer Aenderung aus der Historie zurueckholen.
-
-    Die Historiendatei ist von Hand editierbar und traegt Eintraege aus aelteren
-    Schemata - ein unbrauchbarer Snapshot ist deshalb ein Eingabefehler und kein
-    Serverfehler.
-    """
-    snapshot = entry.get("before")
-    if not isinstance(snapshot, dict):
-        raise HTTPException(
-            status_code=422,
-            detail=f"Zu '{entry.get('id')}' ist kein Zustand vor der Änderung gespeichert.",
-        )
-    try:
-        return EncounterRow.model_validate(snapshot).model_dump()
-    except ValidationError as exc:
-        raise HTTPException(
-            status_code=422,
-            detail=f"Der gespeicherte Zustand zu '{entry.get('id')}' passt nicht zum aktuellen Schema.",
-        ) from exc
-
-
-@app.post(
-    "/history/{entry_id}/undo",
-    response_model=HistoryEntry,
-    dependencies=[Depends(require_write_token)],
-    summary="Eine Änderung zurücknehmen",
-)
-def undo_history_entry(
-    entry_id: str,
-    author: str | None = Depends(author_from_header),
-    if_match: str | None = Header(default=None, alias="If-Match"),
-) -> dict[str, Any]:
-    with mutate(if_match) as state:
-        entries = read_history()
-        entry = next((item for item in entries if item.get("id") == entry_id), None)
-        if entry is None:
-            raise HTTPException(status_code=404, detail=f"Historieneintrag '{entry_id}' nicht gefunden.")
-        if entry_id in undone_entry_ids(entries):
-            raise HTTPException(status_code=409, detail="Dieser Eintrag wurde bereits zurückgenommen.")
-        action = entry.get("action")
-        if action not in UNDOABLE_ACTIONS:
-            raise HTTPException(status_code=422, detail=f"'{action}' lässt sich nicht zurücknehmen.")
-
-        run = find_run(state, entry.get("run_id"))
-        row_id = entry.get("row_id")
-        if action == "row-create":
-            run["encounters"] = [row for row in run["encounters"] if row["id"] != row_id]
-        else:
-            restored = restore_row(entry)
-            if action == "row-delete":
-                if any(row["id"] == restored["id"] for row in run["encounters"]):
-                    raise HTTPException(
-                        status_code=409,
-                        detail=(
-                            f"'{restored['id']}' wurde zwischenzeitlich neu angelegt. "
-                            "Erst die neue Zeile löschen, dann zurücknehmen."
-                        ),
-                    )
-                run["encounters"].append(restored)
-                run["encounters"].sort(key=lambda row: (row["order"], row["id"]))
-            else:
-                replace_row(run, restored)
-            # Der Snapshot stammt aus einer anderen Team-Lage - die Regeln gelten
-            # hier genauso wie auf jedem anderen Schreibpfad.
-            apply_team_rules(run, restored, restored["in_team"])
-
-        # Die Historie wird nur angehaengt - die Ruecknahme ist ein eigener Eintrag,
-        # der den urspruenglichen als zurueckgenommen ausweist.
-        record_history(
-            state,
-            author=author,
-            action="undo",
-            run_id=entry["run_id"],
-            row_id=row_id,
-            summary=f"Zurückgenommen: {entry['summary']}",
-            undo_of=entry_id,
-        )
-        return history_entry_view(entry, undone=True)
 
 
 # --------------------------------------------------------------------------- #
@@ -1638,7 +1314,6 @@ def add_row(
     row: EncounterRow,
     *,
     force: bool,
-    author: str | None,
 ) -> dict[str, Any]:
     if any(existing["id"] == row.id for existing in run["encounters"]):
         raise HTTPException(status_code=409, detail=f"Encounter '{row.id}' existiert in Run '{run['id']}' bereits.")
@@ -1661,15 +1336,6 @@ def add_row(
     require_culprit(record)
 
     run["encounters"].append(record)
-    record_history(
-        state,
-        author=author,
-        action="row-create",
-        run_id=run["id"],
-        row_id=record["id"],
-        summary=f"'{record['encounter']}' angelegt",
-        after=record,
-    )
     return record
 
 
@@ -1681,56 +1347,17 @@ def patch_row(
     *,
     couple: bool,
     force: bool,
-    author: str | None,
 ) -> dict[str, Any]:
-    updated, before = apply_encounter_patch(
+    updated, _ = apply_encounter_patch(
         run, row_id, changes, couple=couple, force=force, player_ids=player_ids_of(state)
     )
     replace_row(run, updated)
-    record_history(
-        state,
-        author=author,
-        action="row-patch",
-        run_id=run["id"],
-        row_id=row_id,
-        summary=describe_patch(before, updated, state["players"]),
-        before=before,
-        after=updated,
-    )
     return updated
 
 
-def remove_row(state: dict[str, Any], run: dict[str, Any], row_id: str, *, author: str | None) -> None:
-    row = find_row(run, row_id)
-    before = json.loads(json.dumps(row))
+def remove_row(run: dict[str, Any], row_id: str) -> None:
+    find_row(run, row_id)  # nur wegen des 404, wenn es die Zeile gar nicht gibt
     run["encounters"] = [entry for entry in run["encounters"] if entry["id"] != row_id]
-    record_history(
-        state,
-        author=author,
-        action="row-delete",
-        run_id=run["id"],
-        row_id=row_id,
-        summary=f"'{row['encounter']}' gelöscht",
-        before=before,
-    )
-
-
-def describe_patch(before: dict[str, Any], after: dict[str, Any], players: list[dict[str, Any]]) -> str:
-    """Kurzer, lesbarer Text fuer die Historie."""
-    names = {player["id"]: player["name"] for player in players}
-    parts: list[str] = []
-    for player_id, pick in after["picks"].items():
-        old = before["picks"].get(player_id, {})
-        label = names.get(player_id, player_id)
-        if pick.get("name") != old.get("name"):
-            parts.append(f"{label}: {old.get('name') or '–'} → {pick.get('name') or '–'}")
-        elif pick.get("status") != old.get("status"):
-            parts.append(f"{label}: {pick['status']}")
-    if after.get("in_team") != before.get("in_team"):
-        parts.append("ins Team" if after.get("in_team") else "aus dem Team")
-    if after["outcome"] != before["outcome"]:
-        parts.append(f"Status {before['outcome']} → {after['outcome']}")
-    return f"'{after['encounter']}': " + ("; ".join(parts) if parts else "aktualisiert")
 
 
 # --------------------------------------------------------------------------- #

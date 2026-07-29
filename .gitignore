@@ -19,8 +19,7 @@ tools/.cache/
 *.log
 data/encounters.local.json
 
-# Laufzeitdaten neben dem Datenstand: Historie und automatische Backups
-data/*-history.jsonl
+# Automatische Backups neben dem Datenstand
 data/backups/
 .DS_Store
 .vscode/
