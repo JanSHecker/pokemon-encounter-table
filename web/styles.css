@@ -214,18 +214,6 @@ tbody tr.row-team td:first-child strong { font-weight: 750; }
 .col-location { min-width: 160px; }
 .col-player { min-width: 196px; }
 .col-meta { min-width: 108px; }
-.col-note { min-width: 190px; }
-
-.note-input {
-  width: 100%;
-  padding: 5px 8px;
-  font-size: 14px;
-  border-color: var(--line-soft);
-  background: transparent;
-}
-
-.note-input:hover { border-color: #aaa095; }
-.note-input:focus { background: var(--paper); }
 
 td.location strong { display: block; font-weight: 650; color: var(--ink); }
 
@@ -263,7 +251,8 @@ td.location strong { display: block; font-weight: 650; color: var(--ink); }
 
 .team-badge.full { background: var(--team); color: var(--paper); }
 
-.note {
+/* Zweite, leisere Zeile in einer Zelle - etwa der Spielname unter einem Run. */
+.subline {
   display: block;
   margin-top: 3px;
   color: var(--muted);

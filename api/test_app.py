@@ -54,7 +54,7 @@ LEGACY_STATE = {
                 {
                     "id": "route-201",
                     "encounter": "Route 201",
-                    "note": None,
+                    "note": "Bidiza war knapp - Altlast aus v3",
                     "responsible_player": "Mark",
                     "mark": "Staralili",
                     "nikolai": "Bidiza",
@@ -183,8 +183,25 @@ def test_migration_is_written_back_once(legacy_client, data_file):
     legacy_client.get("/encounters")
     stored = json.loads(data_file.read_text(encoding="utf-8"))
 
-    assert stored["schema_version"] == 3
+    assert stored["schema_version"] == 4
     assert "mark" not in stored["runs"][0]["encounters"][0]
+
+
+def test_the_note_field_is_removed_from_stored_rows(legacy_client, data_file):
+    # v4 kennt kein Notizfeld mehr. Es genuegt nicht, es zu ignorieren: EncounterRow
+    # verbietet unbekannte Felder, ein stehengebliebenes 'note' wuerde das Laden
+    # jedes Endpoints mit 500 beantworten.
+    legacy_client.get("/encounters")
+    stored = json.loads(data_file.read_text(encoding="utf-8"))
+
+    assert all("note" not in row for row in stored["runs"][0]["encounters"])
+    assert "note" not in legacy_client.get("/encounters").json()["encounters"][0]
+
+
+def test_a_note_can_no_longer_be_written(client):
+    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "doch nicht"})
+
+    assert response.status_code == 422
 
 
 def test_legacy_game_name_becomes_a_catalog_id(data_file):
@@ -350,7 +367,7 @@ def test_a_death_survives_an_unrelated_edit(client):
         json={"outcome": "dead", "responsible_player": "marc"},
     )
 
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "war knapp"})
+    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (Nordausgang)"})
 
     assert response.json()["outcome"] == "dead"
     assert client.get("/stats").json()["total_deaths"] == 1
@@ -559,12 +576,12 @@ def test_null_for_a_required_field_is_a_client_error(client):
 
 
 def test_null_clears_the_fields_that_may_be_empty(client):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "weg damit"})
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"responsible_player": "marc"})
 
-    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": None})
+    response = client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"responsible_player": None})
 
     assert response.status_code == 200
-    assert response.json()["note"] is None
+    assert response.json()["responsible_player"] is None
 
 
 def test_progress_cannot_run_past_the_level_caps(client):
@@ -694,7 +711,7 @@ def test_history_records_author_and_can_be_undone(client):
 
 
 def test_undo_is_refused_twice(client):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "erste Notiz"})
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (erste Fassung)"})
     entry_id = client.get("/history").json()["entries"][0]["id"]
 
     assert client.post(f"/history/{entry_id}/undo", headers=AUTHOR).status_code == 200
@@ -753,7 +770,7 @@ def test_undo_cannot_push_the_team_over_its_limit(client):
 
 
 def test_undo_without_a_stored_snapshot_is_a_client_error(client, data_file):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "Test"})
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (Test)"})
     history_file = data_file.with_name(f"{data_file.stem}-history.jsonl")
     records = [json.loads(line) for line in history_file.read_text(encoding="utf-8").splitlines() if line.strip()]
     records[0].pop("before")
@@ -769,7 +786,7 @@ def test_undo_without_a_stored_snapshot_is_a_client_error(client, data_file):
 def test_an_incomplete_history_entry_does_not_break_the_listing(client, data_file):
     # Die Historiendatei ist von Hand editierbar - ein Eintrag ohne Pflichtfeld
     # darf nicht die ganze Liste mit einem Serverfehler beantworten.
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "Test"})
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (Test)"})
     history_file = data_file.with_name(f"{data_file.stem}-history.jsonl")
     history_file.write_text(
         json.dumps({"id": "h-99", "at": "2026-01-01T00:00:00+00:00", "summary": "ohne action"}) + "\n",
@@ -802,7 +819,7 @@ def test_inherited_history_is_adopted_only_once(client, data_file):
 def test_writes_in_the_same_second_get_different_stamps(client):
     stamps = []
     for index in range(5):
-        client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": f"Notiz {index}"})
+        client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": f"Route 201 ({index})"})
         stamps.append(client.get("/encounters").json()["updated_at"])
 
     # Gleiche Zeitstempel hiessen: If-Match winkt fremde Aenderungen durch und
@@ -813,12 +830,12 @@ def test_writes_in_the_same_second_get_different_stamps(client):
 
 def test_stale_if_match_within_the_same_second_is_rejected(client):
     before = client.get("/encounters").json()["updated_at"]
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "fremde Änderung"})
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (fremd)"})
 
     response = client.patch(
         "/encounters/sinnoh-route-201",
         headers={**AUTHOR, "If-Match": before},
-        json={"note": "meine Änderung"},
+        json={"encounter": "Route 201 (meine)"},
     )
 
     assert response.status_code == 412
@@ -834,7 +851,7 @@ def test_the_rules_the_frontend_needs_come_from_the_api(client):
 
 
 def test_history_lives_beside_the_data_and_not_inside_it(client, data_file):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "Test"})
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (Test)"})
 
     stored = json.loads(data_file.read_text(encoding="utf-8"))
     assert "history" not in stored
@@ -843,11 +860,11 @@ def test_history_lives_beside_the_data_and_not_inside_it(client, data_file):
     assert history_file.exists()
     lines = [line for line in history_file.read_text(encoding="utf-8").splitlines() if line.strip()]
     assert len(lines) == 1
-    assert json.loads(lines[0])["summary"].endswith("Notiz geändert")
+    assert json.loads(lines[0])["summary"].startswith("'Route 201 (Test)'")
 
 
 def test_history_is_only_appended_so_it_cannot_be_rewritten(client, data_file):
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "erste"})
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (erste)"})
     entry_id = client.get("/history").json()["entries"][0]["id"]
     client.post(f"/history/{entry_id}/undo", headers=AUTHOR)
 
@@ -877,7 +894,7 @@ def test_history_survives_a_history_carried_in_old_data(client, data_file):
 
 def test_a_daily_backup_is_kept_before_overwriting(client, data_file):
     client.get("/encounters")  # legt den Store an
-    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"note": "irgendwas"})
+    client.patch("/encounters/sinnoh-route-201", headers=AUTHOR, json={"encounter": "Route 201 (irgendwas)"})
 
     backups = list((data_file.parent / "backups").glob(f"{data_file.stem}-*.json"))
 
@@ -898,7 +915,7 @@ def test_a_schema_migration_backs_the_old_state_up_first(legacy_client, data_fil
 
 
 def test_writes_are_open_when_no_token_is_configured(client):
-    response = client.patch("/encounters/sinnoh-route-201", json={"note": "ohne Token"})
+    response = client.patch("/encounters/sinnoh-route-201", json={"encounter": "Route 201 (ohne Token)"})
 
     assert response.status_code == 200
 
@@ -906,14 +923,14 @@ def test_writes_are_open_when_no_token_is_configured(client):
 def test_configured_token_makes_writes_private(client, monkeypatch):
     monkeypatch.setenv("ENCOUNTER_API_TOKEN", "geheim")
 
-    denied = client.patch("/encounters/sinnoh-route-201", json={"note": "nope"})
+    denied = client.patch("/encounters/sinnoh-route-201", json={"encounter": "Route 201 (nope)"})
     assert denied.status_code == 401
     assert denied.headers["www-authenticate"] == "Bearer"
 
     allowed = client.patch(
         "/encounters/sinnoh-route-201",
         headers={"Authorization": "Bearer geheim"},
-        json={"note": "ok"},
+        json={"encounter": "Route 201 (ok)"},
     )
     assert allowed.status_code == 200
 
@@ -922,7 +939,7 @@ def test_stale_if_match_is_rejected(client):
     stale = client.patch(
         "/encounters/sinnoh-route-201",
         headers={**AUTHOR, "If-Match": "2020-01-01T00:00:00+00:00"},
-        json={"note": "veraltet"},
+        json={"encounter": "Route 201 (veraltet)"},
     )
     assert stale.status_code == 412
 
@@ -930,7 +947,7 @@ def test_stale_if_match_is_rejected(client):
     fresh = client.patch(
         "/encounters/sinnoh-route-201",
         headers={**AUTHOR, "If-Match": current},
-        json={"note": "aktuell"},
+        json={"encounter": "Route 201 (aktuell)"},
     )
     assert fresh.status_code == 200
 

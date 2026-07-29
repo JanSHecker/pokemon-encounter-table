@@ -97,7 +97,8 @@ Neben dem Datenstand liegen zwei weitere Dateien, beide gitignored:
 ### Migration läuft über die `normalize_*`-Kette
 
 `normalize_state` → `normalize_run` → `normalize_encounter` heben beim Laden alte Stände an und
-schreiben bei Abweichung sofort zurück. Sie tragen die komplette v2→v3-Migration:
+schreiben bei Abweichung sofort zurück. Sie tragen die komplette v2→v3-Migration und den
+v3→v4-Schritt:
 
 - `players` von Namensliste zu `{id, name}`; `LEGACY_DISPLAY_NAMES` korrigiert die aus v2 geerbten
   Schreibweisen (Mark→Marc, Nikolai→Nicolai, KNEV→Knev). Das greift auch auf bereits migrierte
@@ -114,13 +115,19 @@ schreiben bei Abweichung sofort zurück. Sie tragen die komplette v2→v3-Migrat
   auch wenn ihr Katalog gerade fehlt – sie zu überschreiben wäre Datenverlust. Freitext, der
   nirgends passt, fällt auf `DEFAULT_GAME_ID`: eine game_id ohne Katalog macht den Run unerreichbar,
   weil das Frontend zu jeder game_id einen Katalog lädt und bei 404 abbricht
+- v4 entfernt das Zeilenfeld `note` ersatzlos. `normalize_encounter` **poppt** es, statt es zu
+  ignorieren: `EncounterRow` verbietet unbekannte Felder, ein stehengebliebenes `note` aus
+  Altdaten ließe das Laden scheitern. Genau dieser Pop löscht die Texte auch aus dem Datenstand –
+  die Kopie davor liefert `migration_backup()`, das nur beim Sprung von `SCHEMA_VERSION` greift.
+  **Ein Feld zu entfernen ist deshalb immer auch ein Versionssprung**, sonst verschwinden Daten
+  ohne Sicherung
 
 Grenzen dürfen hier nur **weiter** werden: `normalize_*` prüft Bestandsdaten gegen die aktuellen
 Modelle, ein engeres Feld legt beim Laden die ganze API lahm statt nur die betroffene Zeile
 (`responsible_player` steht deshalb auf 80 Zeichen wie in v2, überlange Werte werden gekürzt).
 
-Neue Felder gehören als `setdefault` dort hinein – dann migrieren Bestandsdaten von selbst. Was
-das Modell ohnehin per Default füllt, gehört **nicht** hierher.
+Neue Felder gehören als `setdefault` dort hinein – dann migrieren Bestandsdaten von selbst,
+entfallene als `pop`. Was das Modell ohnehin per Default füllt, gehört **nicht** hierher.
 
 ### Datenmodell
 

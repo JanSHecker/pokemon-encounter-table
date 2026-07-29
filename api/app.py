@@ -16,7 +16,7 @@ from fastapi import Depends, FastAPI, Header, HTTPException, Query, Response, st
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 SLUG_PATTERN = r"^[a-z0-9]+(?:-[a-z0-9]+)*$"
 
 Outcome = Literal["pending", "caught", "dead", "failed"]
@@ -89,7 +89,7 @@ HISTORY_PAGE_MAX = 500  # groesste Seite, die /history ausliefert
 UNDOABLE_ACTIONS = ("row-create", "row-patch", "row-delete")
 
 # Felder, die sich per PATCH ausdruecklich auf null setzen (also leeren) lassen.
-NULLABLE_ROW_FIELDS = {"note", "responsible_player", "picks"}
+NULLABLE_ROW_FIELDS = {"responsible_player", "picks"}
 NULLABLE_RUN_FIELDS: set[str] = set()
 
 # Taegliche Kopie des Datenstandes, plus eine vor jeder Schema-Migration.
@@ -104,7 +104,7 @@ NO_CULPRIT = "niemand"
 
 app = FastAPI(
     title="Pokémon Encounter API",
-    version="3.0.0",
+    version="4.0.0",
     description="Gekoppelte Nuzlocke-Encounter-Tabellen über mehrere Spiele und Runs.",
     root_path="/encounter-table/api",
 )
@@ -272,7 +272,6 @@ class EncounterRow(BaseModel):
     location_id: str | None = Field(default=None, max_length=80)
     order: int = Field(default=0, ge=0)
     encounter: str = Field(min_length=1, max_length=200)
-    note: str | None = Field(default=None, max_length=500)
     # 80 Zeichen, weil v2 hier Freitext zuliess - engere Grenzen kippen Bestandsdaten
     # beim Laden. Was beim Schreiben erlaubt ist, klaert validate_responsible().
     responsible_player: str | None = Field(default=None, max_length=80)
@@ -286,7 +285,6 @@ class EncounterPatch(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     encounter: str | None = Field(default=None, min_length=1, max_length=200)
-    note: str | None = Field(default=None, max_length=500)
     responsible_player: str | None = Field(default=None, max_length=80)
     outcome: Outcome | None = None
     in_team: bool | None = None
@@ -469,7 +467,12 @@ def legacy_location_id(row_id: str) -> str | None:
 
 def normalize_encounter(raw: dict[str, Any], player_ids: list[str], game_id: str) -> dict[str, Any]:
     row = dict(raw)
-    row.setdefault("note", None)
+    # v3 -> v4: das Notizfeld ist ersatzlos weg. Der Wert muss hier verschwinden,
+    # nicht nur unbeachtet bleiben: EncounterRow verbietet unbekannte Felder, ein
+    # stehengebliebenes 'note' aus Altdaten liesse das Laden scheitern. Damit ist
+    # das die Stelle, die den Text tatsaechlich loescht - vorher greift wegen des
+    # Versionssprungs migration_backup().
+    row.pop("note", None)
     row.setdefault("order", 0)
     row.setdefault("postgame", False)
     row.setdefault("in_team", False)
@@ -592,7 +595,6 @@ def build_rows(game_id: str, include_postgame: bool, player_ids: list[str]) -> l
                 location_id=location["id"],
                 order=location["order"],
                 encounter=location["name"],
-                note=location.get("note"),
                 outcome="pending",
                 postgame=bool(location.get("postgame")),
                 picks={player_id: Pick() for player_id in player_ids},
@@ -1728,8 +1730,6 @@ def describe_patch(before: dict[str, Any], after: dict[str, Any], players: list[
         parts.append("ins Team" if after.get("in_team") else "aus dem Team")
     if after["outcome"] != before["outcome"]:
         parts.append(f"Status {before['outcome']} → {after['outcome']}")
-    if after.get("note") != before.get("note"):
-        parts.append("Notiz geändert")
     return f"'{after['encounter']}': " + ("; ".join(parts) if parts else "aktualisiert")
 
 

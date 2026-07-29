@@ -13,7 +13,6 @@ Eintraege sind entweder ein PokeAPI-Slug oder ein Dict:
     "name"      Anzeigename statt des PokeAPI-Namens
     "species"   Pokemon-Liste manuell setzen (fuer Orte ohne Wild-Encounter)
     "postgame"  erst nach der Liga erreichbar
-    "note"      Hinweis, der in der Tabelle mitlaeuft
 
 Staedte sind bewusst nicht enthalten: dort gibt es nur Surf- und Angel-Encounter,
 die in unseren Regeln nicht als eigener Routen-Encounter zaehlen. Wer sie doch
@@ -68,7 +67,7 @@ GAME = {
         "sinnoh-route-217",
         "acuity-lakefront",
         "lake-acuity",
-        {"id": "mt-coronet", "name": "Kraterberg", "note": "Alle Abschnitte zusammengefasst"},
+        {"id": "mt-coronet", "name": "Kraterberg"},
         "spear-pillar",
         "distortion-world",
         "sinnoh-victory-road",

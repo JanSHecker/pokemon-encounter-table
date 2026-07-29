@@ -367,10 +367,6 @@ function rowHtml(row, counts = speciesCounts()) {
       ${state.players.map((player) => pickCell(row, player, cell)).join('')}
       <td class="col-meta"><select data-action="outcome" aria-label="Status">${outcomeOptions}</select></td>
       <td class="col-meta"><select data-action="responsible" aria-label="Schuldiger">${responsibleOptions}</select></td>
-      <td class="col-note">
-        <input type="text" class="note-input" data-action="note" maxlength="500"
-               value="${esc(row.note ?? '')}" placeholder="…" aria-label="Notiz zu ${esc(row.encounter)}">
-      </td>
     </tr>`;
 }
 
@@ -385,7 +381,7 @@ function renderTable() {
     head('order', 'Ort', 'col-location') +
     state.players.map((player) => `<th class="col-player">${esc(player.name)}</th>`).join('') +
     head('status', 'Status', 'col-meta') +
-    '<th class="col-meta">Schuldiger</th><th class="col-note">Notiz</th>';
+    '<th class="col-meta">Schuldiger</th>';
   const counts = speciesCounts();
   el.rows.innerHTML = sortedRows()
     .map((row) => rowHtml(row, counts))
@@ -501,7 +497,7 @@ function renderStats(data) {
   el.runStats.innerHTML = data.runs
     .map(
       (run) => `<tr>
-        <td><strong>${esc(run.name)}</strong><span class="note">${esc(run.game_name || run.game_id)}</span></td>
+        <td><strong>${esc(run.name)}</strong><span class="subline">${esc(run.game_name || run.game_id)}</span></td>
         <td>${esc(run.deaths)}</td>
         <td>${esc(run.failed_encounters)}</td>
       </tr>`,
@@ -641,7 +637,7 @@ async function handleSpeciesChange(row, playerId, select) {
   if (value === '__keep__') return;
 
   if (value === '__custom__') {
-    const entered = window.prompt('Pokémon oder Notiz eintragen:', row.picks[playerId]?.name || '');
+    const entered = window.prompt('Pokémon eintragen:', row.picks[playerId]?.name || '');
     if (entered === null) {
       replaceRow(row);
       return;
@@ -729,10 +725,6 @@ el.rows.addEventListener('change', async (event) => {
   if (action === 'species') await handleSpeciesChange(row, target.dataset.player, target);
   else if (action === 'outcome') await handleOutcomeChange(row, target.value);
   else if (action === 'responsible') await patchRow(row.id, { responsible_player: target.value || null });
-  else if (action === 'note') {
-    const note = target.value.trim() || null;
-    if ((row.note ?? null) !== note) await patchRow(row.id, { note });
-  }
 });
 
 el.rows.addEventListener('click', async (event) => {
@@ -876,7 +868,6 @@ el.locationForm.addEventListener('submit', async () => {
         location_id: location.id,
         order: location.order,
         encounter: location.name,
-        note: location.note || null,
         postgame: Boolean(location.postgame),
         picks: Object.fromEntries(state.players.map((player) => [player.id, { species: null, name: '' }])),
       },

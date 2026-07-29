@@ -168,8 +168,6 @@ def build_location(raw: str | dict[str, Any], versions: set[str]) -> dict[str, A
     location = {"id": location_id, "order": 0, "name": name, "encounters": encounters}
     if spec.get("postgame"):
         location["postgame"] = True
-    if spec.get("note"):
-        location["note"] = spec["note"]
     return location
 
 

@@ -23,7 +23,9 @@ Unterstützte Spiele: **Pokémon Platin** und **Pokémon Schwarz 2 / Weiß 2**.
 - Wird eine Zeile auf **Verloren** gesetzt, tragen alle drei „Encounter verloren“.
 - Die **Level-Caps** des Spiels stehen über der Tabelle, das jeweils nächste ist hervorgehoben.
 - Arten, die ein Spieler im Run schon gefangen hat, sind in der Auswahl mit ⚠ markiert.
-- Ganz rechts steht pro Zeile ein freies **Notizfeld**.
+- Ein **Typenrechner** als eigene Ansicht: bis zu zwei Typen anklicken, rechts steht, was der
+  Kombination wehtut. Die Generation ist umstellbar (1, 2–5, 6+) – beide Editionen liegen in 2–5,
+  wo Stahl noch Geist und Unlicht resistiert und es keine Feen gibt.
 - Jede Änderung landet in der **Historie** und lässt sich einzeln zurücknehmen.
 - Bei einem Tod oder verlorenen Encounter wird **nach dem Schuldigen gefragt** – sonst fehlt der
   Vorfall in der Statistik. „Niemand" ist eine gültige Antwort.
