@@ -35,13 +35,26 @@ function applyRules(rules) {
   TEAM_SIZE = rules.team_size ?? TEAM_SIZE;
 }
 
-// Jede Sortierung gruppiert nur; innerhalb der Gruppe bleibt die Spielreihenfolge.
+// Jede Sortierung gruppiert nur; die Reihenfolge innerhalb einer Gruppe klaert
+// WITHIN_GROUP.
 const SORTERS = {
   order: () => 0,
+  location: () => 0,
   open: (row) => (row.outcome === 'pending' ? 0 : 1),
   caught: (row) => (row.outcome === 'caught' ? 0 : 1),
   team: (row) => (row.in_team ? 0 : 1),
   status: (row) => (row.in_team ? 0 : { caught: 1, pending: 2, failed: 3, dead: 4 }[row.outcome] ?? 5),
+};
+
+// numeric, sonst steht "Route 10" vor "Route 9": ein reiner Zeichenvergleich
+// sieht die 1 vor der 9 und die Ortsliste besteht fast nur aus Nummern.
+const NAME_COLLATOR = new Intl.Collator('de', { numeric: true, sensitivity: 'base' });
+
+// Innerhalb einer Gruppe gilt die Spielreihenfolge aus dem Katalog - genau
+// dafuer traegt jede Zeile 'order'. Alphabetisch ist die Ausnahme, nicht die
+// Regel: fuer einen Nuzlocke zaehlt, was als Naechstes drankommt.
+const WITHIN_GROUP = {
+  location: (a, b) => NAME_COLLATOR.compare(a.encounter, b.encounter),
 };
 
 const OUTCOME_LABELS = {
@@ -96,6 +109,10 @@ const el = {
   locationDialog: document.getElementById('location-dialog'),
   locationForm: document.getElementById('location-form'),
   locationSelect: document.getElementById('location-select'),
+  speciesDialog: document.getElementById('species-dialog'),
+  speciesTitle: document.getElementById('species-title'),
+  speciesSearch: document.getElementById('species-search'),
+  speciesList: document.getElementById('species-list'),
   typeGeneration: document.getElementById('type-generation'),
   typeGrid: document.getElementById('type-grid'),
   typeReset: document.getElementById('type-reset'),
@@ -210,8 +227,22 @@ function catalogLocation(locationId) {
   return (locationId && catalog()?.index.locations.get(locationId)) || null;
 }
 
+function speciesInfo(species) {
+  return (species && catalog()?.index.species.get(species)) || null;
+}
+
 function speciesDex(species) {
-  return (species && catalog()?.index.dex.get(species)) || null;
+  return speciesInfo(species)?.dex ?? null;
+}
+
+/** Entwicklungslinie einer Art - die Einheit, in der die Dupes-Clause zaehlt.
+ *
+ * Ohne Katalogeintrag bleibt die Art ihre eigene Familie: lieber die alte
+ * Artenpruefung als gar keine.
+ */
+function familyOf(species) {
+  if (!species) return null;
+  return speciesInfo(species)?.family ?? species;
 }
 
 async function ensureCatalog(gameId) {
@@ -219,60 +250,73 @@ async function ensureCatalog(gameId) {
   const fetched = await api(`/games/${encodeURIComponent(gameId)}`);
   // Indizes einmal bauen statt pro Zelle: der Katalog aendert sich zur Laufzeit
   // nicht, die Tabelle schlaegt aber fuer jede Zelle darin nach.
+  //
+  // Die Ortslisten kommen zuerst und der Pokedex danach: er ist die
+  // vollstaendigere Quelle (er allein kennt die Familie) und soll gewinnen.
+  // Faellt er weg - alter Katalog, noch nicht neu generiert -, bleibt wenigstens
+  // das Artwork stehen.
   fetched.index = {
     locations: new Map(fetched.locations.map((location) => [location.id, location])),
-    dex: new Map(
-      fetched.locations.flatMap((location) => location.encounters.map((entry) => [entry.species, entry.dex])),
-    ),
+    species: new Map([
+      ...fetched.locations.flatMap((location) => location.encounters.map((entry) => [entry.species, entry])),
+      ...(fetched.pokedex || []).map((entry) => [entry.species, entry]),
+    ]),
   };
   state.catalogs[gameId] = fetched;
 }
 
-/** Wie oft jeder Spieler eine Art im Run schon eingetragen hat (Dupes-Clause).
+/** Was jeder Spieler im Run schon belegt hat - Arten und Entwicklungslinien.
+ *
+ * Die Dupes-Clause gilt fuer die ganze Linie: wer ein Karpador eingetragen hat,
+ * darf kein Garados mehr nehmen. Der Status spielt dabei keine Rolle - ein totes
+ * Karpador gibt die Linie nicht wieder frei.
  *
  * Einmal pro Zeichenvorgang statt einmal pro Zelle - sonst waechst der Aufwand
  * quadratisch mit der Zeilenzahl.
  */
-function speciesCounts() {
+function pickCounts() {
   const counts = new Map();
+  const bump = (map, key) => map.set(key, (map.get(key) || 0) + 1);
+
   for (const row of state.run?.encounters || []) {
     for (const [playerId, pick] of Object.entries(row.picks || {})) {
       if (!pick.species) continue;
       let perPlayer = counts.get(playerId);
-      if (!perPlayer) counts.set(playerId, (perPlayer = new Map()));
-      perPlayer.set(pick.species, (perPlayer.get(pick.species) || 0) + 1);
+      if (!perPlayer) counts.set(playerId, (perPlayer = { species: new Map(), families: new Map() }));
+      bump(perPlayer.species, pick.species);
+      bump(perPlayer.families, familyOf(pick.species));
     }
   }
   return counts;
 }
 
+const NO_PICKS = { species: new Map(), families: new Map() };
+
+/** Warum eine Art fuer diesen Spieler schon vergeben ist - oder null.
+ *
+ * Die eigene Zeile zaehlt nicht gegen sich selbst, sonst waere jeder Eintrag
+ * sofort sein eigenes Duplikat.
+ */
+function dupeReason(counts, playerId, ownSpecies, species) {
+  if (!species) return null;
+  const mine = counts.get(playerId) || NO_PICKS;
+  const own = ownSpecies === species ? 1 : 0;
+  if ((mine.species.get(species) || 0) - own > 0) return 'Art schon gefangen';
+  if ((mine.families.get(familyOf(species)) || 0) - own > 0) return 'Entwicklungslinie schon vergeben';
+  return null;
+}
+
 // -------------------------------------------------------------- Rendern ---
 
-function pickCell(row, player, cell) {
+/** Die Zelle zeigt nur den Stand; gewaehlt wird im Auswahldialog.
+ *
+ * Frueher stand hier ein <select> mit der kompletten Ortsliste - bei 44 Zeilen
+ * und drei Spielern schon ueber tausend <option>. Mit dem ganzen Pokedex zur
+ * Auswahl waeren es zehntausende, und suchen liesse sich darin trotzdem nicht.
+ */
+function pickCell(row, player, counts) {
   const pick = row.picks[player.id] || { species: null, name: '', status: 'alive' };
-  const counts = cell.counts.get(player.id) || new Map();
-  // Diese Zeile zaehlt nicht gegen sich selbst.
-  const usedElsewhere = (species) => (counts.get(species) || 0) - (pick.species === species ? 1 : 0) > 0;
-
-  const selected = pick.species || (pick.name ? '__custom__' : '');
-  let options = option('', '– leer –', selected === '');
-  options += option('__lost__', LOST_LABEL, pick.name === LOST_LABEL);
-
-  for (const [method, entries] of cell.byMethod) {
-    options += `<optgroup label="${esc(method)}">`;
-    for (const entry of entries) {
-      const dupe = usedElsewhere(entry.species) ? ' ⚠' : '';
-      options += option(entry.species, `${entry.name}${dupe}`, pick.species === entry.species);
-    }
-    options += '</optgroup>';
-  }
-
-  // Freitext oder ein per force gespeicherter Sonderfall, der nicht in der Liste steht.
-  if (pick.name && pick.name !== LOST_LABEL && !cell.known.has(pick.species)) {
-    options += option('__keep__', pick.name, true);
-  }
-  options += option('__custom__', 'Anderes …', false);
-
+  const dupe = dupeReason(counts, player.id, pick.species, pick.species);
   const dex = speciesDex(pick.species);
   const isDead = pick.status === 'dead';
 
@@ -283,12 +327,13 @@ function pickCell(row, player, cell) {
              ${dex ? `src="${ARTWORK_BASE}/${esc(dex)}.png" onload="this.classList.add('loaded')"` : ''}>
         <div class="pick-controls">
           <div class="pick-row">
-            <select class="pick-select${isDead ? ' dead' : ''}" data-action="species" data-player="${esc(player.id)}"
-                    aria-label="Pokémon von ${esc(player.name)}">${options}</select>
+            <button type="button" class="pick-button${isDead ? ' dead' : ''}${pick.name ? '' : ' is-empty'}"
+                    data-action="species" data-player="${esc(player.id)}"
+                    aria-label="Pokémon von ${esc(player.name)} wählen">${esc(pick.name || '– leer –')}</button>
             <button type="button" class="kill-button${isDead ? ' is-dead' : ''}" data-action="kill"
                     data-player="${esc(player.id)}" title="${isDead ? 'Wiederbeleben (entkoppelt)' : 'Als tot melden – koppelt die ganze Reihe'}">☠</button>
           </div>
-          ${usedElsewhere(pick.species) ? '<span class="dupe-hint">⚠ Art schon gefangen</span>' : ''}
+          ${dupe ? `<span class="dupe-hint">⚠ ${esc(dupe)}</span>` : ''}
         </div>
       </div>
     </td>`;
@@ -319,19 +364,6 @@ function teamToggle(row) {
                   title="${row.in_team ? 'Aus dem Team nehmen' : 'Ins Team nehmen'}">${row.in_team ? '★' : '☆'}</button>`;
 }
 
-/** Was alle Zellen einer Zeile gemeinsam brauchen - einmal statt je Spieler. */
-function rowContext(row, counts) {
-  const location = catalogLocation(row.location_id);
-  const encounters = location?.encounters || [];
-  const byMethod = new Map();
-  for (const entry of encounters) {
-    const key = entry.methods.join(' / ');
-    if (!byMethod.has(key)) byMethod.set(key, []);
-    byMethod.get(key).push(entry);
-  }
-  return { counts, byMethod, known: new Set(encounters.map((entry) => entry.species)) };
-}
-
 function culpritOptions(selected) {
   return (
     option('', '–', !selected) +
@@ -340,12 +372,11 @@ function culpritOptions(selected) {
   );
 }
 
-function rowHtml(row, counts = speciesCounts()) {
+function rowHtml(row, counts = pickCounts()) {
   // row-caught bleibt bewusst ungestylt: gefangen und in der Box ist der Normalfall.
   const classes = [`row-${row.outcome}`];
   if (row.in_team) classes.push('row-team');
 
-  const cell = rowContext(row, counts);
   const outcomeOptions = Object.entries(OUTCOME_LABELS)
     .map(([value, label]) => option(value, label, row.outcome === value))
     .join('');
@@ -359,7 +390,7 @@ function rowHtml(row, counts = speciesCounts()) {
           <strong>${esc(row.encounter)}${row.postgame ? '<span class="postgame-tag">Postgame</span>' : ''}</strong>
         </div>
       </td>
-      ${state.players.map((player) => pickCell(row, player, cell)).join('')}
+      ${state.players.map((player) => pickCell(row, player, counts)).join('')}
       <td class="col-meta"><select data-action="outcome" aria-label="Status">${outcomeOptions}</select></td>
       <td class="col-meta"><select data-action="responsible" aria-label="Schuldiger">${responsibleOptions}</select></td>
     </tr>`;
@@ -368,16 +399,19 @@ function rowHtml(row, counts = speciesCounts()) {
 function renderTable() {
   if (!state.run) return;
   const sort = el.sortSelect.value;
+  // 'Ort (A-Z)' sortiert dieselbe Spalte wie die Spielreihenfolge - ohne diese
+  // Zuordnung zeigte keine Ueberschrift an, wonach gerade sortiert wird.
+  const sortedColumn = sort === 'location' ? 'order' : sort;
   const head = (key, label, cls) =>
-    `<th class="${cls} sortable${sort === key ? ' is-sorted' : ''}" data-sort="${key}"
-         role="button" tabindex="0" title="Nach ${label} sortieren">${label}${sort === key ? ' ▾' : ''}</th>`;
+    `<th class="${cls} sortable${sortedColumn === key ? ' is-sorted' : ''}" data-sort="${key}"
+         role="button" tabindex="0" title="Nach ${label} sortieren">${label}${sortedColumn === key ? ' ▾' : ''}</th>`;
 
   el.tableHead.innerHTML =
     head('order', 'Ort', 'col-location') +
     state.players.map((player) => `<th class="col-player">${esc(player.name)}</th>`).join('') +
     head('status', 'Status', 'col-meta') +
     '<th class="col-meta">Schuldiger</th>';
-  const counts = speciesCounts();
+  const counts = pickCounts();
   el.rows.innerHTML = sortedRows()
     .map((row) => rowHtml(row, counts))
     .join('');
@@ -386,9 +420,11 @@ function renderTable() {
 
 /** Sortierte Kopie fuer die Anzeige - die Reihenfolge in state.run bleibt die der API. */
 function sortedRows() {
-  const rank = SORTERS[el.sortSelect.value] || SORTERS.order;
+  const key = el.sortSelect.value;
+  const rank = SORTERS[key] || SORTERS.order;
+  const within = WITHIN_GROUP[key] || ((a, b) => a.order - b.order);
   return [...state.run.encounters].sort(
-    (a, b) => rank(a) - rank(b) || a.order - b.order || a.id.localeCompare(b.id),
+    (a, b) => rank(a) - rank(b) || within(a, b) || a.id.localeCompare(b.id),
   );
 }
 
@@ -400,6 +436,7 @@ function renderTeamCount() {
 
 function replaceRow(row) {
   const index = state.run.encounters.findIndex((entry) => entry.id === row.id);
+  const previous = index >= 0 ? state.run.encounters[index] : null;
   if (index >= 0) state.run.encounters[index] = row;
   const tr = el.rows.querySelector(`tr[data-row="${row.id}"]`);
   if (!tr) return;
@@ -407,6 +444,18 @@ function replaceRow(row) {
   // feuert beim Zerstoeren sonst noch ein change-Event, das als weitere
   // Aenderung durchginge.
   if (document.activeElement && tr.contains(document.activeElement)) document.activeElement.blur();
+
+  // Wechselt die Zeile die Sortiergruppe, muss die ganze Tabelle neu. Sonst
+  // bleibt sie an ihrem alten Platz stehen, bis der naechste Poll sie verschiebt
+  // - bis zu zehn Sekunden spaeter, was wie ein Ruckler aussieht und nicht wie
+  // eine Sortierung. Aendert sich die Gruppe nicht, bleibt es beim Austausch der
+  // einen Zeile: ein Neuzeichnen fuer jedes eingetragene Pokemon waere unruhig.
+  const rank = SORTERS[el.sortSelect.value] || SORTERS.order;
+  if (previous && rank(previous) !== rank(row)) {
+    renderTable();
+    return;
+  }
+
   tr.outerHTML = rowHtml(row);
   renderTeamCount();
 }
@@ -599,18 +648,12 @@ async function patchPick(row, playerId, changes, query = '') {
   return patchRow(row.id, { picks: { [playerId]: changes } }, query);
 }
 
-async function handleSpeciesChange(row, playerId, select) {
-  const value = select.value;
-  const location = catalogLocation(row.location_id);
-
-  if (value === '__keep__') return;
+async function handleSpeciesChange(row, playerId, value) {
+  if (value === null) return; // Dialog abgebrochen
 
   if (value === '__custom__') {
     const entered = window.prompt('Pokémon eintragen:', row.picks[playerId]?.name || '');
-    if (entered === null) {
-      replaceRow(row);
-      return;
-    }
+    if (entered === null) return;
     await patchPick(row, playerId, { species: null, name: entered.trim() }, '?force=true');
     return;
   }
@@ -628,9 +671,140 @@ async function handleSpeciesChange(row, playerId, select) {
     return;
   }
 
-  const entry = (location?.encounters || []).find((candidate) => candidate.species === value);
-  await patchPick(row, playerId, { species: value, name: entry ? entry.name : value });
+  // Die API laesst nur durch, was der Katalog fuer diesen Ort kennt. Zur Auswahl
+  // steht jetzt aber der ganze Pokedex, also traegt der Aufrufer die Entscheidung
+  // und schickt force mit - geprueft wird sichtbar im Dialog, nicht per 422.
+  const local = (catalogLocation(row.location_id)?.encounters || []).some((entry) => entry.species === value);
+  const info = speciesInfo(value);
+  await patchPick(row, playerId, { species: value, name: info?.name || value }, local ? '' : '?force=true');
 }
+
+// ------------------------------------------------------ Pokémon-Auswahl ---
+
+// Was gerade gewaehlt wird. Der Dialog ist einer fuer die ganze Tabelle: 132
+// Zellen mit je einer eigenen Liste waeren sonst zehntausende DOM-Knoten.
+let picker = null;
+
+/** Die Auswahlliste: erst der Ort, dann der Rest des Pokedex.
+ *
+ * Die Gruppen sind der eigentliche Punkt - was an diesem Ort vorkommt, steht
+ * oben und ist die Regel; alles andere ist der begruendete Sonderfall.
+ */
+function pickerGroups(row) {
+  const encounters = catalogLocation(row.location_id)?.encounters || [];
+  const groups = new Map();
+  for (const entry of encounters) {
+    const key = entry.methods.join(' / ');
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(entry);
+  }
+
+  const atLocation = new Set(encounters.map((entry) => entry.species));
+  const rest = (catalog()?.pokedex || []).filter((entry) => !atLocation.has(entry.species));
+  if (rest.length) groups.set('Kommt hier nicht vor', rest);
+  return groups;
+}
+
+function normalize(value) {
+  return String(value ?? '').toLocaleLowerCase('de');
+}
+
+function renderPickerList() {
+  if (!picker) return;
+  const { row, playerId, groups, counts } = picker;
+  const term = normalize(el.speciesSearch.value.trim());
+  const own = row.picks[playerId]?.species || null;
+
+  let html = '';
+  let matches = 0;
+  for (const [label, entries] of groups) {
+    const hits = term
+      ? entries.filter((entry) => normalize(entry.name).includes(term) || entry.species.includes(term))
+      : entries;
+    if (!hits.length) continue;
+    matches += hits.length;
+
+    html += `<h3 class="species-group">${esc(label)}</h3><div class="species-options">`;
+    for (const entry of hits) {
+      const dupe = dupeReason(counts, playerId, own, entry.species);
+      html += `<button type="button" class="species-option${entry.species === own ? ' is-current' : ''}"
+                       data-species="${esc(entry.species)}">
+          <span class="species-dex">#${esc(entry.dex)}</span>
+          <span class="species-name">${esc(entry.name)}</span>
+          ${dupe ? `<span class="species-warn" title="${esc(dupe)}">⚠</span>` : ''}
+        </button>`;
+    }
+    html += '</div>';
+  }
+
+  if (!matches) html = `<p class="muted">Nichts gefunden zu „${esc(el.speciesSearch.value.trim())}“.</p>`;
+  el.speciesList.innerHTML = html;
+}
+
+function openSpeciesPicker(row, playerId) {
+  const player = state.players.find((entry) => entry.id === playerId);
+  picker = { row, playerId, groups: pickerGroups(row), counts: pickCounts(), resolve: null };
+
+  el.speciesTitle.textContent = `${player ? player.name : playerId} – ${row.encounter}`;
+  el.speciesSearch.value = '';
+  renderPickerList();
+  el.speciesDialog.returnValue = '';
+  el.speciesDialog.showModal();
+  el.speciesSearch.focus();
+
+  return new Promise((resolve) => {
+    picker.resolve = resolve;
+  });
+}
+
+/** Genau ein Ausgang: der Dialog schliesst, das Promise loest sich auf. */
+function closePicker(value) {
+  if (!picker) return;
+  picker.choice = value;
+  el.speciesDialog.close();
+}
+
+el.speciesDialog.addEventListener('close', () => {
+  const pending = picker;
+  picker = null;
+  // 'choice' fehlt, wenn der Dialog ueber Escape oder Abbrechen zuging.
+  if (pending?.resolve) pending.resolve(pending.choice ?? null);
+});
+
+el.speciesSearch.addEventListener('input', renderPickerList);
+
+// Enter in der Suche nimmt den ersten Treffer - sonst muesste man nach dem
+// Tippen doch wieder zur Maus greifen.
+el.speciesSearch.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter') return;
+  event.preventDefault();
+  const first = el.speciesList.querySelector('.species-option');
+  if (first) closePicker(first.dataset.species);
+});
+
+el.speciesList.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-species]');
+  if (button) closePicker(button.dataset.species);
+});
+
+el.speciesDialog.querySelectorAll('[data-choice]').forEach((button) => {
+  button.addEventListener('click', () => closePicker(button.dataset.choice));
+});
+
+// Klick daneben schliesst wie Abbrechen. Zwei Bedingungen, weil beides fuer sich
+// zu viel faengt: der Dialog ist das Klickziel auch in seinem eigenen Rand, und
+// ein per Tastatur ausgeloester Klick meldet die Koordinaten 0/0 - also
+// scheinbar ausserhalb.
+el.speciesDialog.addEventListener('click', (event) => {
+  if (event.target !== el.speciesDialog) return;
+  const box = el.speciesDialog.getBoundingClientRect();
+  const inside =
+    event.clientX >= box.left &&
+    event.clientX <= box.right &&
+    event.clientY >= box.top &&
+    event.clientY <= box.bottom;
+  if (!inside) closePicker(null);
+});
 
 // Die API verlangt bei Tod und verlorenem Encounter einen Schuldigen - sonst
 // faellt der Vorfall aus der Statistik. Also gleich hier abfragen.
@@ -691,8 +865,7 @@ el.rows.addEventListener('change', async (event) => {
   if (!row) return;
   const action = target.dataset.action;
 
-  if (action === 'species') await handleSpeciesChange(row, target.dataset.player, target);
-  else if (action === 'outcome') await handleOutcomeChange(row, target.value);
+  if (action === 'outcome') await handleOutcomeChange(row, target.value);
   else if (action === 'responsible') await patchRow(row.id, { responsible_player: target.value || null });
 });
 
@@ -704,6 +877,10 @@ el.rows.addEventListener('click', async (event) => {
 
   if (target.dataset.action === 'kill') await handleKill(row, target.dataset.player);
   else if (target.dataset.action === 'team') await patchRow(row.id, { in_team: !row.in_team });
+  else if (target.dataset.action === 'species') {
+    const playerId = target.dataset.player;
+    await handleSpeciesChange(row, playerId, await openSpeciesPicker(row, playerId));
+  }
 });
 
 el.gameSelect.addEventListener('change', async () => {

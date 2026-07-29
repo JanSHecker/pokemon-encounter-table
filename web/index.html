@@ -12,8 +12,6 @@
       <div class="title-row">
         <h1>Pokémon Encounter</h1>
       </div>
-      <p class="subtitle">Gekoppelte Nuzlocke-Tabelle – ein Tod trifft die ganze Reihe.</p>
-
       <div class="toolbar">
         <div class="picker">
           <label for="game-select">Spiel</label>
@@ -58,6 +56,7 @@
         <label for="sort-select">Sortierung</label>
         <select id="sort-select" aria-label="Tabelle sortieren">
           <option value="order">Spielreihenfolge</option>
+          <option value="location">Ort (A–Z)</option>
           <option value="open">Offene zuerst</option>
           <option value="caught">Gefangene zuerst</option>
           <option value="team">Team zuerst</option>
@@ -175,6 +174,21 @@
         <button type="submit" class="primary" value="ok">Übernehmen</button>
       </div>
     </form>
+  </dialog>
+
+  <dialog id="species-dialog" class="wide-dialog">
+    <h2 id="species-title">Pokémon wählen</h2>
+    <input type="search" id="species-search" placeholder="Suchen – Enter nimmt den ersten Treffer"
+           autocomplete="off" aria-label="Pokémon suchen">
+    <div class="species-quick">
+      <button type="button" data-choice="">– leer –</button>
+      <button type="button" data-choice="__lost__">Encounter verloren</button>
+      <button type="button" data-choice="__custom__">Anderes …</button>
+    </div>
+    <div id="species-list" class="species-list"></div>
+    <div class="dialog-actions">
+      <button type="button" data-close>Abbrechen</button>
+    </div>
   </dialog>
 
   <dialog id="location-dialog">

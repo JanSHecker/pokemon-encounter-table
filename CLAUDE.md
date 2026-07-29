@@ -44,14 +44,21 @@ Kein Linter, kein Build-Schritt, keine Deploy-Skripte im Repo.
 
 ### Kuratiert vs. generiert – die zentrale Trennung
 
-`tools/games/<spiel>.py` ist **Handarbeit**: Orte in Spielreihenfolge, Anzeigenamen und Level-Caps.
-Nichts davon liefert PokeAPI (die API kennt nur ungeordnete Ortslisten voller Shops und
-Battle-Facilities, und keine Trainer-Level).
+`tools/games/<spiel>.py` ist **Handarbeit**: Orte in Spielreihenfolge, Anzeigenamen, Level-Caps und
+`dex_max`. Nichts davon liefert PokeAPI (die API kennt nur ungeordnete Ortslisten voller Shops und
+Battle-Facilities, keine Trainer-Level und keinen National-Dex-Schnitt pro Edition).
 
 `data/games/<spiel>.json` ist **generiert** und committed: dieselben Orte, angereichert um die
 versionsgefilterten Pokémon-Listen, deutsche Namen und Dex-Nummern. Zur Laufzeit hängt nichts an
 PokeAPI. Wer Ortslisten oder Caps ändert, muss den Generator laufen lassen und das Ergebnis
 mitcommitten.
+
+Dazu kommt `pokedex`: der National-Dex von 1 bis `dex_max` (Platin 493, Schwarz 2/Weiß 2 649), je
+Eintrag Slug, deutscher Name, Nummer und **`family`**. Die Familie ist die ID der
+`evolution-chain` – sie steht schon in der Species-Antwort, `/evolution-chain/` selbst wird nie
+abgefragt. Alle Arten einer Kette teilen sich die Nummer, und genau das ist die Dupes-Clause:
+Karpador und Garados sind dieselbe Familie. Der Generator bricht ab, wenn `dex_max` eine Art
+auslässt, die an einem Ort vorkommt – sonst hätte ausgerechnet ein fangbares Pokémon keine Familie.
 
 Ein neues Spiel kostet genau eine Definitionsdatei plus Generatorlauf – API und Frontend sind
 spielunabhängig.
@@ -167,7 +174,15 @@ Encounter. Fangzahlen gibt es bewusst nicht mehr. Zeilen ohne Schuldigen laufen 
   vorkommen. Geprüft wird **nur, wo der Patch `species` anfasst** – nicht jeder Pick, den er
   berührt. Sonst blockiert ein per `?force=true` gespeicherter Sonderfall jede spätere Änderung an
   genau diesem Pick, bis hin zum Kill-Button, der nur den Status setzt (dafür gibt es zwei Tests:
-  anderer Spieler und derselbe Spieler).
+  anderer Spieler und derselbe Spieler). Das Frontend stellt inzwischen den ganzen Pokedex zur
+  Auswahl und schickt für alles außerhalb der Ortsliste `force=true` mit – die Regel schützt damit
+  noch fremde Clients und Tippfehler in der API, nicht mehr den Klickweg.
+- **Dupes-Clause ist Anzeige, keine Regel**: dass ein Spieler dieselbe Entwicklungslinie kein
+  zweites Mal fangen darf, steht **nur** im Frontend als ⚠. Bewusst so entschieden – während einer
+  Session ist ein 422 mitten im Eintragen lästiger als ein übersehener Doppeleintrag, und Alt-Zeilen
+  mit Freitext statt `species` könnte die API ohnehin nicht prüfen. Wer das umdreht, braucht eine
+  Regelfunktion in derselben Kette wie `require_culprit()` **und** einen Weg vorbei, sonst sind
+  Sonderfälle wie ein geschenktes Pokémon nicht mehr eintragbar.
 - **Kein `null` für Pflichtfelder**: `reject_null_fields()` weist ausdrückliche Nullwerte für
   Felder ab, die eine Zeile braucht. Ohne das landet `None` im Datensatz und erst die
   Modellprüfung am Ende schlägt fehl – der Aufrufer sähe einen 500er statt eines Hinweises.
@@ -190,8 +205,29 @@ Drei Dateien in `web/`, kein Build. `API_BASE` lässt sich per `?api=` oder loca
   auseinander.
 - `teamReady()` spiegelt `team_ready()` der API – zeigten wir den Stern großzügiger, liefe der
   Klick in ein 422.
+- Sortiert wird nur für die Anzeige (`sortedRows()`); `state.run.encounters` behält die Reihenfolge
+  der API. Jede Sortierung **gruppiert** über `SORTERS` nur, innerhalb der Gruppe gilt die
+  Spielreihenfolge (`order`) – das ist die Vorgabe, weil für einen Nuzlocke zählt, was als Nächstes
+  drankommt. „Ort (A–Z)“ ist die Ausnahme und hängt über `WITHIN_GROUP` einen `Intl.Collator` mit
+  `numeric: true` davor; ohne das stünde Route 10 vor Route 9.
+- `replaceRow()` zeichnet die **ganze** Tabelle neu, sobald eine Änderung die Sortiergruppe wechselt
+  (Stern gesetzt, Zeile gestorben). Sonst bleibt die Zeile an ihrem alten Platz stehen, bis der
+  nächste Poll sie verschiebt – bis zu zehn Sekunden später, was sich wie ein Ruckler liest und
+  nicht wie Sortierung. Bleibt die Gruppe gleich, wird weiterhin nur die eine Zeile getauscht: für
+  jedes eingetragene Pokémon neu zu zeichnen wäre unruhig und nähme den Fokus aus der Nachbarzelle.
 - Kataloge werden beim Laden **indiziert** (`catalog.index`), Dupe-Zähler einmal pro
-  Zeichenvorgang (`speciesCounts()`). Vorher scannte jede Zelle Tabelle und Katalog komplett.
+  Zeichenvorgang (`pickCounts()`). Vorher scannte jede Zelle Tabelle und Katalog komplett.
+  `index.species` führt Ortslisten und `pokedex` zusammen, der Pokedex gewinnt – er allein kennt
+  die `family`. Fehlt er (Katalog noch nicht neu generiert), fällt `familyOf()` auf den Slug
+  zurück: lieber die alte Artenprüfung als gar keine.
+- Die Zelle zeigt nur den Stand; gewählt wird im **Auswahldialog** (`openSpeciesPicker()`), einem
+  einzigen für die ganze Tabelle. Oben stehen die Arten des Ortes nach Methode gruppiert, darunter
+  „Kommt hier nicht vor“ mit dem Rest des Pokedex, und ein Suchfeld filtert beides (Enter nimmt den
+  ersten Treffer). Als `<select>` je Zelle ginge das nicht: 44 Zeilen × 3 Spieler × 500 Einträge
+  wären zehntausende `<option>`, und suchen ließe sich darin trotzdem nicht.
+- Das ⚠ an einem Eintrag meint die **Entwicklungslinie**, nicht die Art: wer ein Karpador hat,
+  bekommt es auch an Garados. Der Status zählt dabei nicht – ein totes Karpador gibt die Linie
+  nicht wieder frei.
 - `poll()` lädt über `loadRuns()`, nicht mit eigenem Fetch: nur so greift der Rückfall auf den
   aktuellen Run des Servers, wenn der eigene gelöscht wurde. Geladen wird nur, was zum gewählten
   Spiel gehört – sonst zieht der Poll die Ansicht auf ein anderes Spiel zurück.

@@ -36,10 +36,11 @@ h3 { margin-bottom: 10px; }
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+  /* Den Abstand zur Toolbar hielt bis hierher der Untertitel. */
+  margin-bottom: 16px;
 }
 
-.subtitle { margin: 4px 0 16px; }
-.subtitle, .muted, .last-updated { color: var(--muted); }
+.muted, .last-updated { color: var(--muted); }
 
 .toolbar, .panel, .table-wrap, .caps {
   background: var(--paper);
@@ -287,8 +288,26 @@ td.location strong { display: block; font-weight: 650; color: var(--ink); }
 .pick-image.loaded { visibility: visible; }
 .pick-controls { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
 .pick-row { display: flex; gap: 4px; align-items: center; }
-.pick-select { flex: 1; min-width: 0; padding: 5px 7px; font-size: 14px; }
-.pick-select.dead { color: var(--dead); text-decoration: line-through; }
+/* Sieht aus wie das <select>, das hier bis zur Pokedex-Auswahl stand - nur dass
+   der Klick jetzt den Suchdialog oeffnet. */
+.pick-button {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 7px;
+  font-size: 14px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pick-button.is-empty { color: var(--muted); }
+.pick-button.dead { color: var(--dead); text-decoration: line-through; }
+
+/* button:hover faerbt den Knopf dunkel, verliert hier aber gegen die beiden
+   Zeilen darueber - die sind spezifischer. Ohne diese Regel steht Grau auf
+   Dunkelgrau, und ein leerer Pick ist beim Draufzeigen nicht mehr zu lesen. */
+.pick-button:hover { color: var(--paper); }
 
 .kill-button {
   padding: 4px 8px;
@@ -299,16 +318,42 @@ td.location strong { display: block; font-weight: 650; color: var(--ink); }
 .kill-button.is-dead { background: var(--dead); color: var(--paper); border-color: var(--dead); }
 .dupe-hint { color: var(--warn); font-size: 11px; }
 
+/* Der Punkt traegt die Aussage, die Farbe bestaetigt sie nur - "laeuft gerade"
+   liest sich als gruener Punkt schneller als als graue Pille. Vorher war es
+   andersherum: der aktive Run war das unauffaelligere der beiden Abzeichen. */
 .status-badge {
-  display: inline-block;
-  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid var(--team);
   border-radius: 999px;
-  background: #e8e2d8;
+  background: #e7f0e4;
+  color: #2f5f2f;
   font-size: 12px;
+  font-weight: 650;
   white-space: nowrap;
 }
 
-.status-badge.completed { background: #dcebdc; }
+.status-badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--team);
+}
+
+.status-badge.completed {
+  border-color: var(--line);
+  background: #ece7df;
+  color: var(--muted);
+}
+
+.status-badge.completed::before { background: var(--muted); }
+
+/* Bis der erste Run geladen ist, steht hier nichts - dann soll auch kein
+   leeres Abzeichen mit Punkt blinken. */
+.status-badge:empty { display: none; }
 
 /* ----------------------------------------------------------- Dashboard -- */
 
@@ -461,6 +506,57 @@ dialog input, dialog select { width: 100%; }
 .checkbox { display: flex; align-items: center; gap: 8px; font-weight: 400; }
 .checkbox input { width: auto; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+
+/* ------------------------------------------------------ Pokemon-Auswahl -- */
+
+.wide-dialog {
+  display: none;
+  width: min(560px, 94vw);
+  max-height: 86vh;
+}
+
+/* Der Dialog scrollt nicht als Ganzes - nur die Liste. Suchfeld und Abbrechen
+   bleiben stehen, sonst tippt man und der Knopf ist weg. */
+.wide-dialog[open] { display: flex; flex-direction: column; gap: 8px; }
+
+.species-quick { display: flex; flex-wrap: wrap; gap: 6px; }
+.species-quick button { font-size: 13px; padding: 4px 9px; }
+
+.species-list { overflow-y: auto; flex: 1; min-height: 0; }
+
+.species-group {
+  position: sticky;
+  top: 0;
+  margin: 10px 0 4px;
+  padding: 3px 0;
+  background: var(--paper);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+}
+
+.species-group:first-child { margin-top: 0; }
+
+.species-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 4px;
+}
+
+.species-option {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 8px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.species-option.is-current { border-color: var(--ink); font-weight: 600; }
+.species-option .species-dex { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.species-option .species-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.species-option .species-warn { color: var(--warn); }
 
 /* --------------------------------------------------------------- Misc  -- */
 
