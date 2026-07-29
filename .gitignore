@@ -12,8 +12,15 @@ venv/
 .env.*
 !.env.example
 
+# PokeAPI-Antworten des Katalog-Generators
+tools/.cache/
+
 # Local runtime data / editor files
 *.log
+data/encounters.local.json
+
+# Automatische Backups neben dem Datenstand
+data/backups/
 .DS_Store
 .vscode/
 .idea/

@@ -1,447 +1,1717 @@
 {
+  "schema_version": 5,
   "players": [
-    "Mark",
-    "Nikolai",
-    "KNEV"
+    {
+      "id": "marc",
+      "name": "Marc"
+    },
+    {
+      "id": "nicolai",
+      "name": "Nicolai"
+    },
+    {
+      "id": "knev",
+      "name": "Knev"
+    }
   ],
   "current_run_id": "run-2",
   "runs": [
     {
       "id": "run-1",
       "name": "Run 1",
-      "game": null,
+      "game_id": "platinum",
       "status": "completed",
       "created_at": "2026-07-26T19:13:51+00:00",
       "completed_at": "2026-07-28T19:46:48+00:00",
+      "progress": 0,
       "encounters": [
         {
-          "id": "starter",
-          "encounter": "Starter",
-          "note": "KNEV hat seinen Starter verloren – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "KNEV",
-          "mark": "Panflam",
-          "nikolai": "Chelast",
-          "knev": "Panflam",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "id": "sinnoh-route-201",
+          "location_id": "sinnoh-route-201",
+          "order": 1,
+          "encounter": "Route 201",
+          "responsible_player": "knev",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "chimchar",
+              "name": "Panflam",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "turtwig",
+              "name": "Chelast",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "chimchar",
+              "name": "Panflam",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "route-202",
+          "location_id": "sinnoh-route-202",
+          "order": 3,
           "encounter": "Route 202",
-          "note": "Mark hat sein Sheinux getötet – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "Mark",
-          "mark": "Sheinux",
-          "nikolai": "Bidiza",
-          "knev": "Sheinux",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "marc",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "shinx",
+              "name": "Sheinux",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "bidoof",
+              "name": "Bidiza",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "shinx",
+              "name": "Sheinux",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "lake-verity",
+          "location_id": "lake-verity",
+          "order": 2,
           "encounter": "See der Wahrheit",
-          "note": "Nikolai hat sein Staralili verloren – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "Nikolai",
-          "mark": "Bidiza",
-          "nikolai": "Staralili",
-          "knev": "Staralili",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "nicolai",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "bidoof",
+              "name": "Bidiza",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "starly",
+              "name": "Staralili",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "starly",
+              "name": "Staralili",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "route-204",
+          "location_id": "sinnoh-route-204",
+          "order": 8,
           "encounter": "Route 204",
-          "note": "Nikolai hat sein Knospi getötet – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "Nikolai",
-          "mark": "Zubat",
-          "nikolai": "Knospi",
-          "knev": "Knospi",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "nicolai",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "zubat",
+              "name": "Zubat",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "budew",
+              "name": "Knospi",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "budew",
+              "name": "Knospi",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "ruinental",
+          "location_id": "ravaged-path",
+          "order": 9,
           "encounter": "Ruinental",
-          "note": "Als Tunnel bei Route 204 interpretiert. KNEV hat sein Enton getötet – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "KNEV",
-          "mark": "Enton",
-          "nikolai": "Zubat",
-          "knev": "Enton",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "knev",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "psyduck",
+              "name": "Enton",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "zubat",
+              "name": "Zubat",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "psyduck",
+              "name": "Enton",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "route-203",
+          "location_id": "sinnoh-route-203",
+          "order": 4,
           "encounter": "Route 203",
-          "note": "Encounter verloren – von Mark verkackt.",
-          "responsible_player": "Mark",
-          "mark": "Encounter verloren",
-          "nikolai": "Encounter verloren",
-          "knev": "Encounter verloren",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "failed"
+          "responsible_player": "marc",
+          "outcome": "failed",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            }
+          }
         },
         {
           "id": "erzelinger-tunnel",
+          "location_id": "oreburgh-gate",
+          "order": 5,
           "encounter": "Erzelinger Tunnel",
-          "note": "Mark hat sein Kleinstein verloren – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "Mark",
-          "mark": "Kleinstein",
-          "nikolai": "Kleinstein",
-          "knev": "Zubat",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "marc",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "geodude",
+              "name": "Kleinstein",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "geodude",
+              "name": "Kleinstein",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "zubat",
+              "name": "Zubat",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "erzelingen-mine",
+          "location_id": "oreburgh-mine",
+          "order": 6,
           "encounter": "Erzelingen-Mine",
-          "note": "Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
-          "responsible_player": "KNEV",
-          "mark": "Onix",
-          "nikolai": "Onix",
-          "knev": "Onix",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "knev",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "onix",
+              "name": "Onix",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "onix",
+              "name": "Onix",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "onix",
+              "name": "Onix",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "route-207",
+          "location_id": "sinnoh-route-207",
+          "order": 7,
           "encounter": "Route 207",
-          "note": "Als Route über Erzelingen interpretiert. Nikolai hat sein Machollo getötet – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "Nikolai",
-          "mark": "Ponita",
-          "nikolai": "Machollo",
-          "knev": "Kleinstein",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "nicolai",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "ponyta",
+              "name": "Ponita",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "machop",
+              "name": "Machollo",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "geodude",
+              "name": "Kleinstein",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "windkraftwerk",
+          "location_id": "valley-windworks",
+          "order": 10,
           "encounter": "Windkraftwerk",
-          "note": "Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
-          "responsible_player": "KNEV",
-          "mark": "Bamelin",
-          "nikolai": "Bamelin",
-          "knev": "Schalellos",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "knev",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "buizel",
+              "name": "Bamelin",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "buizel",
+              "name": "Bamelin",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "shellos",
+              "name": "Schalellos",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "route-205",
+          "location_id": "sinnoh-route-205",
+          "order": 11,
           "encounter": "Route 205",
-          "note": "Encounter verloren – von Mark verkackt.",
-          "responsible_player": "Mark",
-          "mark": "Encounter verloren",
-          "nikolai": "Encounter verloren",
-          "knev": "Encounter verloren",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "failed"
+          "responsible_player": "marc",
+          "outcome": "failed",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            }
+          }
         },
         {
           "id": "route-218",
+          "location_id": "sinnoh-route-218",
+          "order": 29,
           "encounter": "Route 218",
-          "note": "Mark hat sein Garados (aus dem Karpador-Encounter) getötet – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "Mark",
-          "mark": "Karpador",
-          "nikolai": "Karpador",
-          "knev": "Karpador",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "marc",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "magikarp",
+              "name": "Karpador",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "magikarp",
+              "name": "Karpador",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "magikarp",
+              "name": "Karpador",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "ewigwald",
+          "location_id": "eterna-forest",
+          "order": 12,
           "encounter": "Ewigwald",
-          "note": "Als Ewigwald interpretiert; „Cricketot“ als Zirpurze eingetragen. Nikolai hat sein Burmy verloren – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "Nikolai",
-          "mark": "Zirpurze",
-          "nikolai": "Burmy",
-          "knev": "Hoothoot",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "nicolai",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "kricketot",
+              "name": "Zirpurze",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "burmy",
+              "name": "Burmy",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "hoothoot",
+              "name": "Hoothoot",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "route-211",
+          "location_id": "sinnoh-route-211",
+          "order": 14,
           "encounter": "Route 211",
-          "note": "Pokémon-Namen aus der Sprachnachricht normalisiert: „Mascholo“ → Machollo, „Medite“ → Meditie. Mark hat sein Meditie verloren – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "Mark",
-          "mark": "Meditie",
-          "nikolai": "Meditie",
-          "knev": "Machollo",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "marc",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "meditite",
+              "name": "Meditie",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "meditite",
+              "name": "Meditie",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "machop",
+              "name": "Machollo",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "kraterberg",
+          "location_id": "mt-coronet",
+          "order": 40,
           "encounter": "Kraterberg",
-          "note": "Als Kraterberg interpretiert; „Bronzill“ als Bronzel eingetragen. Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
-          "responsible_player": "KNEV",
-          "mark": "Bronzel",
-          "nikolai": "Bronzel",
-          "knev": "Bronzel",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "knev",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "bronzor",
+              "name": "Bronzel",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "bronzor",
+              "name": "Bronzel",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "bronzor",
+              "name": "Bronzel",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "route-206",
+          "location_id": "sinnoh-route-206",
+          "order": 15,
           "encounter": "Route 206",
-          "note": "Pokémon-Namen normalisiert: „Stankie“ → Skunkapuh, „Mascholo“ → Machollo, „Punita“ → Ponita. Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
-          "responsible_player": "KNEV",
-          "mark": "Machollo",
-          "nikolai": "Skunkapuh",
-          "knev": "Ponita",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "knev",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "machop",
+              "name": "Machollo",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "Skunkapuh",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "ponyta",
+              "name": "Ponita",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "bizarre-hoehle",
+          "location_id": "wayward-cave",
+          "order": 16,
           "encounter": "Bizarre Höhle",
-          "note": "Mark hat sein Kaumalat getötet – die gesamte Encounter-Reihe ist tot.",
-          "responsible_player": "Mark",
-          "mark": "Kaumalat",
-          "nikolai": "Kaumalat",
-          "knev": "Kaumalat",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "marc",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "gible",
+              "name": "Kaumalat",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "gible",
+              "name": "Kaumalat",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "gible",
+              "name": "Kaumalat",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "alte-villa",
+          "location_id": "old-chateau",
+          "order": 13,
           "encounter": "Alte Villa",
-          "note": "Pokémon-Namen normalisiert: „Roturm“ → Rotom. Run beendet – KNEV hat diesen Encounter getötet – der Run war damit beendet.",
-          "responsible_player": "KNEV",
-          "mark": "Rotom",
-          "nikolai": "Rotom",
-          "knev": "Rotom",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "knev",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "rotom",
+              "name": "Rotom",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "rotom",
+              "name": "Rotom",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "rotom",
+              "name": "Rotom",
+              "status": "dead"
+            }
+          }
         },
         {
           "id": "route-208",
+          "location_id": "sinnoh-route-208",
+          "order": 17,
           "encounter": "Route 208",
-          "note": "Neue Encounter verloren – von Nikolai verkackt. Pokémonname noch nicht genannt; nicht mit Route 206 verknüpft.",
-          "responsible_player": "Nikolai",
-          "mark": "Encounter verloren",
-          "nikolai": "Encounter verloren",
-          "knev": "Encounter verloren",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "failed"
+          "responsible_player": "nicolai",
+          "outcome": "failed",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            }
+          }
         }
       ]
     },
     {
       "id": "run-2",
       "name": "Run 2",
-      "game": null,
+      "game_id": "platinum",
       "status": "active",
       "created_at": "2026-07-28T19:57:41+00:00",
       "completed_at": null,
+      "progress": 0,
       "encounters": [
         {
-          "id": "starter",
-          "encounter": "Starter",
-          "note": "Run 2 gestartet – dieselben Starter wie in Run 1; Starter bei Route 201.",
+          "id": "sinnoh-route-201",
+          "location_id": "sinnoh-route-201",
+          "order": 1,
+          "encounter": "Route 201",
           "responsible_player": null,
-          "mark": "Panflam",
-          "nikolai": "Chelast",
-          "knev": "Panflam",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "caught"
-        },
-        {
-          "id": "route-202",
-          "encounter": "Route 202",
-          "note": null,
-          "responsible_player": null,
-          "mark": "Bidiza",
-          "nikolai": "Bidiza",
-          "knev": "Sheinux",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "caught"
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "chimchar",
+              "name": "Panflam",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "turtwig",
+              "name": "Chelast",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "chimchar",
+              "name": "Panflam",
+              "status": "alive"
+            }
+          }
         },
         {
           "id": "lake-verity",
+          "location_id": "lake-verity",
+          "order": 2,
           "encounter": "See der Wahrheit",
-          "note": "Als Lake Verity interpretiert.",
           "responsible_player": null,
-          "mark": "Staralili",
-          "nikolai": "Staralili",
-          "knev": "Staralili",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "caught"
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "starly",
+              "name": "Staralili",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "starly",
+              "name": "Staralili",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "starly",
+              "name": "Staralili",
+              "status": "alive"
+            }
+          }
         },
         {
-          "id": "route-208",
-          "encounter": "Route 208",
-          "note": "Alle drei haben Karpador.",
+          "id": "route-202",
+          "location_id": "sinnoh-route-202",
+          "order": 3,
+          "encounter": "Route 202",
           "responsible_player": null,
-          "mark": "Karpador",
-          "nikolai": "Karpador",
-          "knev": "Karpador",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "caught"
-        },
-        {
-          "id": "route-204",
-          "encounter": "Route 204",
-          "note": "„Kricketot“ als Zirpurze eingetragen; „Chings“ als Sheinux interpretiert.",
-          "responsible_player": null,
-          "mark": "Sheinux",
-          "nikolai": "Knospi",
-          "knev": "Zirpurze",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "caught"
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "bidoof",
+              "name": "Bidiza",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "bidoof",
+              "name": "Bidiza",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "shinx",
+              "name": "Sheinux",
+              "status": "alive"
+            }
+          }
         },
         {
           "id": "route-203",
+          "location_id": "sinnoh-route-203",
+          "order": 4,
           "encounter": "Route 203",
-          "note": "Encounter verloren – von Mark verkackt.",
-          "responsible_player": "Mark",
-          "mark": "Encounter verloren",
-          "nikolai": "Encounter verloren",
-          "knev": "Encounter verloren",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "failed"
+          "responsible_player": "marc",
+          "outcome": "failed",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            }
+          }
         },
         {
           "id": "erzelinger-tunnel",
+          "location_id": "oreburgh-gate",
+          "order": 5,
           "encounter": "Erzelinger Tunnel",
-          "note": "Encounter verloren – von Mark verkackt.",
-          "responsible_player": "Mark",
-          "mark": "Encounter verloren",
-          "nikolai": "Encounter verloren",
-          "knev": "Encounter verloren",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "failed"
-        },
-        {
-          "id": "ruinental",
-          "encounter": "Ruinental",
-          "note": "Als Ravaged Path interpretiert.",
-          "responsible_player": null,
-          "mark": "Zubat",
-          "nikolai": "Enton",
-          "knev": "Enton",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "caught"
-        },
-        {
-          "id": "route-207",
-          "encounter": "Route 207",
-          "note": null,
-          "responsible_player": null,
-          "mark": "Machollo",
-          "nikolai": "Machollo",
-          "knev": "Kleinstein",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "caught"
+          "responsible_player": "marc",
+          "outcome": "failed",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            }
+          }
         },
         {
           "id": "erzelingen-mine",
+          "location_id": "oreburgh-mine",
+          "order": 6,
           "encounter": "Erzelingen-Mine",
-          "note": "Encounter verloren – von KNEV verkackt.",
-          "responsible_player": "KNEV",
-          "mark": "Encounter verloren",
-          "nikolai": "Encounter verloren",
-          "knev": "Encounter verloren",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "failed"
+          "responsible_player": "knev",
+          "outcome": "failed",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "Encounter verloren",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "route-207",
+          "location_id": "sinnoh-route-207",
+          "order": 7,
+          "encounter": "Route 207",
+          "responsible_player": null,
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "machop",
+              "name": "Machollo",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "machop",
+              "name": "Machollo",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "geodude",
+              "name": "Kleinstein",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "route-204",
+          "location_id": "sinnoh-route-204",
+          "order": 8,
+          "encounter": "Route 204",
+          "responsible_player": null,
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "shinx",
+              "name": "Sheinux",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "budew",
+              "name": "Knospi",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "kricketot",
+              "name": "Zirpurze",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "ruinental",
+          "location_id": "ravaged-path",
+          "order": 9,
+          "encounter": "Ruinental",
+          "responsible_player": null,
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "zubat",
+              "name": "Zubat",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "psyduck",
+              "name": "Enton",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "psyduck",
+              "name": "Enton",
+              "status": "alive"
+            }
+          }
         },
         {
           "id": "windkraftwerk",
+          "location_id": "valley-windworks",
+          "order": 10,
           "encounter": "Windkraftwerk",
-          "note": "„Bammelin“ als Bamelin, „paar Chirizo“ als Pachirisu und „Kombi“ korrigiert zu Wadribie (dreiteilige Biene).",
           "responsible_player": null,
-          "mark": "Pachirisu",
-          "nikolai": "Wadribie",
-          "knev": "Bamelin",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "caught"
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "pachirisu",
+              "name": "Pachirisu",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "combee",
+              "name": "Wadribie",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "buizel",
+              "name": "Bamelin",
+              "status": "alive"
+            }
+          }
         },
         {
           "id": "route-205",
+          "location_id": "sinnoh-route-205",
+          "order": 11,
           "encounter": "Route 205",
-          "note": "„Scheider aus“ als Schalellos und „Wartrebi“ als Wadribie eingetragen.",
           "responsible_player": null,
-          "mark": "Wadribie",
-          "nikolai": "Schalellos",
-          "knev": "Schalellos",
-          "mark_status": "alive",
-          "nikolai_status": "alive",
-          "knev_status": "alive",
-          "outcome": "caught"
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "combee",
+              "name": "Wadribie",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "shellos",
+              "name": "Schalellos",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "shellos",
+              "name": "Schalellos",
+              "status": "alive"
+            }
+          }
         },
         {
           "id": "ewigwald",
+          "location_id": "eterna-forest",
+          "order": 12,
           "encounter": "Ewigwald",
-          "note": "Nikolai hat sein Kricketot/Zirpurze getötet – damit ist die gesamte Encounter-Reihe tot; auch Marks Zirpurze und KNEVs Haspiror. Ruhe in Frieden.",
-          "responsible_player": "Nikolai",
-          "mark": "Zirpurze",
-          "nikolai": "Zirpurze",
-          "knev": "Haspiror",
-          "mark_status": "dead",
-          "nikolai_status": "dead",
-          "knev_status": "dead",
-          "outcome": "dead"
+          "responsible_player": "nicolai",
+          "outcome": "dead",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "kricketot",
+              "name": "Zirpurze",
+              "status": "dead"
+            },
+            "nicolai": {
+              "species": "kricketot",
+              "name": "Zirpurze",
+              "status": "dead"
+            },
+            "knev": {
+              "species": "buneary",
+              "name": "Haspiror",
+              "status": "dead"
+            }
+          }
+        },
+        {
+          "id": "old-chateau",
+          "location_id": "old-chateau",
+          "order": 13,
+          "encounter": "Alte Villa",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-211",
+          "location_id": "sinnoh-route-211",
+          "order": 14,
+          "encounter": "Route 211",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-206",
+          "location_id": "sinnoh-route-206",
+          "order": 15,
+          "encounter": "Route 206",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "wayward-cave",
+          "location_id": "wayward-cave",
+          "order": 16,
+          "encounter": "Bizarre Höhle",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "route-208",
+          "location_id": "sinnoh-route-208",
+          "order": 17,
+          "encounter": "Route 208",
+          "responsible_player": null,
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "magikarp",
+              "name": "Karpador",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "magikarp",
+              "name": "Karpador",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "magikarp",
+              "name": "Karpador",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-209",
+          "location_id": "sinnoh-route-209",
+          "order": 18,
+          "encounter": "Route 209",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "lost-tower",
+          "location_id": "lost-tower",
+          "order": 19,
+          "encounter": "Turm der Ruhenden",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "solaceon-ruins",
+          "location_id": "solaceon-ruins",
+          "order": 20,
+          "encounter": "Trostu-Ruinen",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-210",
+          "location_id": "sinnoh-route-210",
+          "order": 21,
+          "encounter": "Route 210",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-215",
+          "location_id": "sinnoh-route-215",
+          "order": 22,
+          "encounter": "Route 215",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-214",
+          "location_id": "sinnoh-route-214",
+          "order": 23,
+          "encounter": "Route 214",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "valor-lakefront",
+          "location_id": "valor-lakefront",
+          "order": 24,
+          "encounter": "Kühnheitsufer",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-213",
+          "location_id": "sinnoh-route-213",
+          "order": 25,
+          "encounter": "Route 213",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "great-marsh",
+          "location_id": "great-marsh",
+          "order": 26,
+          "encounter": "Großmoor",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-212",
+          "location_id": "sinnoh-route-212",
+          "order": 27,
+          "encounter": "Route 212",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "fuego-ironworks",
+          "location_id": "fuego-ironworks",
+          "order": 28,
+          "encounter": "Feurio-Hütte",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-218",
+          "location_id": "sinnoh-route-218",
+          "order": 29,
+          "encounter": "Route 218",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-219",
+          "location_id": "sinnoh-route-219",
+          "order": 30,
+          "encounter": "Route 219",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-sea-route-220",
+          "location_id": "sinnoh-sea-route-220",
+          "order": 31,
+          "encounter": "Route 220",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-221",
+          "location_id": "sinnoh-route-221",
+          "order": 32,
+          "encounter": "Route 221",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-222",
+          "location_id": "sinnoh-route-222",
+          "order": 33,
+          "encounter": "Route 222",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "iron-island",
+          "location_id": "iron-island",
+          "order": 34,
+          "encounter": "Eiseninsel",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "lake-valor",
+          "location_id": "lake-valor",
+          "order": 35,
+          "encounter": "See der Kühnheit",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-216",
+          "location_id": "sinnoh-route-216",
+          "order": 36,
+          "encounter": "Route 216",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-217",
+          "location_id": "sinnoh-route-217",
+          "order": 37,
+          "encounter": "Route 217",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "acuity-lakefront",
+          "location_id": "acuity-lakefront",
+          "order": 38,
+          "encounter": "Stärkeufer",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "lake-acuity",
+          "location_id": "lake-acuity",
+          "order": 39,
+          "encounter": "See der Stärke",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "mt-coronet",
+          "location_id": "mt-coronet",
+          "order": 40,
+          "encounter": "Kraterberg",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "spear-pillar",
+          "location_id": "spear-pillar",
+          "order": 41,
+          "encounter": "Speersäule",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "distortion-world",
+          "location_id": "distortion-world",
+          "order": 42,
+          "encounter": "Zerrwelt",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-victory-road",
+          "location_id": "sinnoh-victory-road",
+          "order": 43,
+          "encounter": "Siegesstraße",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
         }
       ]
     }
   ],
-  "updated_at": "2026-07-28T21:21:11+00:00"
+  "updated_at": "2026-07-29T15:33:43.588315+00:00"
 }
