@@ -23,6 +23,8 @@ GAME = {
     "id": "platinum",
     "name": "Pokémon Platin",
     "versions": ["platinum"],
+    # National-Dex bis Generation 4 - so weit reicht die Auswahlliste im Frontend.
+    "dex_max": 493,
     "locations": [
         # PokeAPI fuehrt die Starter als "gift" auf Route 201; als eigene Zeile ist
         # das naeher an unserer Tabelle.

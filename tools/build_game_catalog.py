@@ -51,6 +51,11 @@ METHOD_NAMES = {
     "gift": "Geschenk",
     "gift-egg": "Ei",
     "only-one": "Einzelbegegnung",
+    "static": "Feste Begegnung",
+    "honey-tree": "Honigbaum",
+    "feebas-tile-fishing": "Angel (Barschwa-Feld)",
+    "hidden-grotto": "Verborgene Lichtung",
+    "npc-trade": "Tausch (NPC)",
 }
 
 
@@ -105,6 +110,39 @@ def species_entry(pokemon_slug: str) -> dict[str, Any]:
         "name": german_name(species, species_slug),
         "dex": species["id"],
     }
+
+
+def evolution_family(species: dict[str, Any]) -> int:
+    """ID der Entwicklungskette, an der diese Art haengt.
+
+    Die steht schon in der Species-Antwort - /evolution-chain/ selbst muss dafuer
+    nicht abgefragt werden. Alle Arten einer Kette teilen sich die Nummer, und
+    genau das ist die Dupes-Clause: Karpador und Garados sind dieselbe Familie.
+    """
+    url = species["evolution_chain"]["url"]
+    return int(url.rstrip("/").rsplit("/", 1)[-1])
+
+
+def build_pokedex(dex_max: int) -> list[dict[str, Any]]:
+    """National-Dex von 1 bis dex_max, mit deutschem Namen und Familie.
+
+    Das Frontend braucht die ganze Liste, damit sich auch Pokémon eintragen
+    lassen, die an keinem Ort der Edition wild vorkommen - und die Familie, um
+    vor einer schon vergebenen Entwicklungslinie zu warnen.
+    """
+    print(f"  Pokedex #1-{dex_max} ...", file=sys.stderr)
+    pokedex = []
+    for dex in range(1, dex_max + 1):
+        species = fetch(f"pokemon-species/{dex}")
+        pokedex.append(
+            {
+                "species": species["name"],
+                "name": german_name(species, species["name"]),
+                "dex": species["id"],
+                "family": evolution_family(species),
+            }
+        )
+    return pokedex
 
 
 def collect_encounters(location_slug: str, versions: set[str]) -> list[dict[str, Any]]:
@@ -190,6 +228,9 @@ def load_game_definitions() -> dict[str, dict[str, Any]]:
 
 def build_catalog(game: dict[str, Any]) -> dict[str, Any]:
     versions = set(game["versions"])
+    dex_max = game.get("dex_max")
+    if not dex_max:
+        raise CatalogError(f"'{game['id']}' hat kein 'dex_max' - ohne das gibt es keinen Pokedex.")
     print(f"Baue Katalog '{game['id']}' ({len(game['locations'])} kuratierte Orte)...", file=sys.stderr)
 
     locations = [
@@ -200,12 +241,25 @@ def build_catalog(game: dict[str, Any]) -> dict[str, Any]:
     for index, location in enumerate(locations, start=1):
         location["order"] = index
 
+    pokedex = build_pokedex(dex_max)
+
+    # Der Pokedex muss jede Art abdecken, die an einem Ort vorkommt - sonst haette
+    # ausgerechnet ein wild fangbares Pokemon keine Familie und fiele aus der
+    # Dupes-Pruefung. Ein zu kleines dex_max faellt hier auf, nicht erst im Browser.
+    known = {entry["species"] for entry in pokedex}
+    missing = sorted(
+        {entry["species"] for location in locations for entry in location["encounters"]} - known
+    )
+    if missing:
+        raise CatalogError(f"dex_max={dex_max} laesst Arten aus, die vorkommen: {', '.join(missing)}")
+
     return {
         "id": game["id"],
         "name": game["name"],
         "versions": game["versions"],
         "locations": locations,
         "level_caps": game.get("level_caps", []),
+        "pokedex": pokedex,
     }
 
 
@@ -227,7 +281,7 @@ def write_catalog(catalog: dict[str, Any], check_only: bool) -> bool:
     species = sum(len(location["encounters"]) for location in catalog["locations"])
     print(
         f"  {target.name}: {len(catalog['locations'])} Orte, {species} Encounter-Eintraege, "
-        f"{len(catalog['level_caps'])} Level-Caps",
+        f"{len(catalog['level_caps'])} Level-Caps, {len(catalog['pokedex'])} Pokedex-Eintraege",
         file=sys.stderr,
     )
     return True

@@ -547,7 +547,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -555,7 +555,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -579,7 +579,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -595,7 +595,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -603,7 +603,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -611,7 +611,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -619,7 +619,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -914,7 +914,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -922,7 +922,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -930,7 +930,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -954,7 +954,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -962,7 +962,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -986,7 +986,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1011,7 +1011,7 @@
           "name": "Driftlon",
           "dex": 425,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         },
         {
@@ -1019,7 +1019,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1130,7 +1130,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1138,7 +1138,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1147,7 +1147,7 @@
           "dex": 265,
           "methods": [
             "Grasland",
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1235,7 +1235,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1243,7 +1243,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1267,7 +1267,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1292,7 +1292,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1371,7 +1371,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1387,7 +1387,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1396,7 +1396,7 @@
           "dex": 265,
           "methods": [
             "Grasland",
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1484,7 +1484,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1492,7 +1492,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1500,7 +1500,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1516,7 +1516,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -1547,7 +1547,7 @@
           "name": "Rotom",
           "dex": 479,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ]
@@ -1610,7 +1610,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1618,7 +1618,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1642,7 +1642,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1666,7 +1666,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1674,7 +1674,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1682,7 +1682,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1706,7 +1706,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -1753,7 +1753,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1769,7 +1769,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1785,7 +1785,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1809,7 +1809,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1817,7 +1817,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1825,7 +1825,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1833,7 +1833,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -1959,7 +1959,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1975,7 +1975,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -1991,7 +1991,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2055,7 +2055,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2063,7 +2063,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2071,7 +2071,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2079,7 +2079,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -2166,7 +2166,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2182,7 +2182,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2190,7 +2190,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2246,7 +2246,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2254,7 +2254,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2262,7 +2262,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2270,7 +2270,7 @@
           "name": "Kryppuk",
           "dex": 442,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         },
         {
@@ -2278,7 +2278,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -2451,7 +2451,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2467,7 +2467,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2483,7 +2483,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2587,7 +2587,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2595,7 +2595,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2603,7 +2603,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2611,7 +2611,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -2674,7 +2674,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2682,7 +2682,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2690,7 +2690,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2706,7 +2706,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2714,7 +2714,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2722,7 +2722,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2730,7 +2730,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -2833,7 +2833,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2841,7 +2841,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2865,7 +2865,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2881,7 +2881,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2889,7 +2889,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2897,7 +2897,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -2905,7 +2905,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -3015,7 +3015,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3023,7 +3023,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3047,7 +3047,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3072,7 +3072,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3080,7 +3080,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3096,7 +3096,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3129,7 +3129,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -3441,7 +3441,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3457,7 +3457,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3489,7 +3489,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3545,7 +3545,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3553,7 +3553,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3569,7 +3569,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3594,7 +3594,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3673,7 +3673,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3681,7 +3681,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3689,7 +3689,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3705,7 +3705,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3713,7 +3713,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3729,7 +3729,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3754,7 +3754,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3833,7 +3833,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3841,7 +3841,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3849,7 +3849,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3857,7 +3857,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3865,7 +3865,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3881,7 +3881,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -3914,7 +3914,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4159,7 +4159,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4175,7 +4175,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4183,7 +4183,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4215,7 +4215,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4223,7 +4223,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4239,7 +4239,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4247,7 +4247,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4342,7 +4342,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4350,7 +4350,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4374,7 +4374,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4416,7 +4416,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4424,7 +4424,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4440,7 +4440,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -4456,7 +4456,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ]
@@ -4712,7 +4712,7 @@
           "name": "Tobutz",
           "dex": 482,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ]
@@ -5006,7 +5006,7 @@
           "name": "Selfe",
           "dex": 480,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ]
@@ -5191,7 +5191,7 @@
           "name": "Barschwa",
           "dex": 349,
           "methods": [
-            "feebas-tile-fishing"
+            "Angel (Barschwa-Feld)"
           ]
         },
         {
@@ -5262,7 +5262,7 @@
           "name": "Dialga",
           "dex": 483,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         },
         {
@@ -5270,7 +5270,7 @@
           "name": "Palkia",
           "dex": 484,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ]
@@ -5285,7 +5285,7 @@
           "name": "Giratina",
           "dex": 487,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ]
@@ -6626,7 +6626,7 @@
           "name": "Heatran",
           "dex": 485,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ],
@@ -6730,7 +6730,7 @@
           "name": "Giratina",
           "dex": 487,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ],
@@ -6858,7 +6858,7 @@
           "name": "Darkrai",
           "dex": 491,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ],
@@ -6906,7 +6906,7 @@
           "name": "Regigigas",
           "dex": 486,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ],
@@ -7122,7 +7122,7 @@
           "name": "Griffel",
           "dex": 190,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -7130,7 +7130,7 @@
           "name": "Skaraborn",
           "dex": 214,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -7138,7 +7138,7 @@
           "name": "Waumpel",
           "dex": 265,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -7146,7 +7146,7 @@
           "name": "Burmy",
           "dex": 412,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -7154,7 +7154,7 @@
           "name": "Wadribie",
           "dex": 415,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -7162,7 +7162,7 @@
           "name": "Kikugi",
           "dex": 420,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         },
         {
@@ -7170,7 +7170,7 @@
           "name": "Mampfaxo",
           "dex": 446,
           "methods": [
-            "honey-tree"
+            "Honigbaum"
           ]
         }
       ],
@@ -7218,7 +7218,7 @@
           "name": "Shaymin",
           "dex": 492,
           "methods": [
-            "static"
+            "Feste Begegnung"
           ]
         }
       ],
@@ -7316,6 +7316,2966 @@
       "leader": "Cynthia",
       "place": "Champion",
       "cap": 62
+    }
+  ],
+  "pokedex": [
+    {
+      "species": "bulbasaur",
+      "name": "Bisasam",
+      "dex": 1,
+      "family": 1
+    },
+    {
+      "species": "ivysaur",
+      "name": "Bisaknosp",
+      "dex": 2,
+      "family": 1
+    },
+    {
+      "species": "venusaur",
+      "name": "Bisaflor",
+      "dex": 3,
+      "family": 1
+    },
+    {
+      "species": "charmander",
+      "name": "Glumanda",
+      "dex": 4,
+      "family": 2
+    },
+    {
+      "species": "charmeleon",
+      "name": "Glutexo",
+      "dex": 5,
+      "family": 2
+    },
+    {
+      "species": "charizard",
+      "name": "Glurak",
+      "dex": 6,
+      "family": 2
+    },
+    {
+      "species": "squirtle",
+      "name": "Schiggy",
+      "dex": 7,
+      "family": 3
+    },
+    {
+      "species": "wartortle",
+      "name": "Schillok",
+      "dex": 8,
+      "family": 3
+    },
+    {
+      "species": "blastoise",
+      "name": "Turtok",
+      "dex": 9,
+      "family": 3
+    },
+    {
+      "species": "caterpie",
+      "name": "Raupy",
+      "dex": 10,
+      "family": 4
+    },
+    {
+      "species": "metapod",
+      "name": "Safcon",
+      "dex": 11,
+      "family": 4
+    },
+    {
+      "species": "butterfree",
+      "name": "Smettbo",
+      "dex": 12,
+      "family": 4
+    },
+    {
+      "species": "weedle",
+      "name": "Hornliu",
+      "dex": 13,
+      "family": 5
+    },
+    {
+      "species": "kakuna",
+      "name": "Kokuna",
+      "dex": 14,
+      "family": 5
+    },
+    {
+      "species": "beedrill",
+      "name": "Bibor",
+      "dex": 15,
+      "family": 5
+    },
+    {
+      "species": "pidgey",
+      "name": "Taubsi",
+      "dex": 16,
+      "family": 6
+    },
+    {
+      "species": "pidgeotto",
+      "name": "Tauboga",
+      "dex": 17,
+      "family": 6
+    },
+    {
+      "species": "pidgeot",
+      "name": "Tauboss",
+      "dex": 18,
+      "family": 6
+    },
+    {
+      "species": "rattata",
+      "name": "Rattfratz",
+      "dex": 19,
+      "family": 7
+    },
+    {
+      "species": "raticate",
+      "name": "Rattikarl",
+      "dex": 20,
+      "family": 7
+    },
+    {
+      "species": "spearow",
+      "name": "Habitak",
+      "dex": 21,
+      "family": 8
+    },
+    {
+      "species": "fearow",
+      "name": "Ibitak",
+      "dex": 22,
+      "family": 8
+    },
+    {
+      "species": "ekans",
+      "name": "Rettan",
+      "dex": 23,
+      "family": 9
+    },
+    {
+      "species": "arbok",
+      "name": "Arbok",
+      "dex": 24,
+      "family": 9
+    },
+    {
+      "species": "pikachu",
+      "name": "Pikachu",
+      "dex": 25,
+      "family": 10
+    },
+    {
+      "species": "raichu",
+      "name": "Raichu",
+      "dex": 26,
+      "family": 10
+    },
+    {
+      "species": "sandshrew",
+      "name": "Sandan",
+      "dex": 27,
+      "family": 11
+    },
+    {
+      "species": "sandslash",
+      "name": "Sandamer",
+      "dex": 28,
+      "family": 11
+    },
+    {
+      "species": "nidoran-f",
+      "name": "Nidoran♀",
+      "dex": 29,
+      "family": 12
+    },
+    {
+      "species": "nidorina",
+      "name": "Nidorina",
+      "dex": 30,
+      "family": 12
+    },
+    {
+      "species": "nidoqueen",
+      "name": "Nidoqueen",
+      "dex": 31,
+      "family": 12
+    },
+    {
+      "species": "nidoran-m",
+      "name": "Nidoran♂",
+      "dex": 32,
+      "family": 13
+    },
+    {
+      "species": "nidorino",
+      "name": "Nidorino",
+      "dex": 33,
+      "family": 13
+    },
+    {
+      "species": "nidoking",
+      "name": "Nidoking",
+      "dex": 34,
+      "family": 13
+    },
+    {
+      "species": "clefairy",
+      "name": "Piepi",
+      "dex": 35,
+      "family": 14
+    },
+    {
+      "species": "clefable",
+      "name": "Pixi",
+      "dex": 36,
+      "family": 14
+    },
+    {
+      "species": "vulpix",
+      "name": "Vulpix",
+      "dex": 37,
+      "family": 15
+    },
+    {
+      "species": "ninetales",
+      "name": "Vulnona",
+      "dex": 38,
+      "family": 15
+    },
+    {
+      "species": "jigglypuff",
+      "name": "Pummeluff",
+      "dex": 39,
+      "family": 16
+    },
+    {
+      "species": "wigglytuff",
+      "name": "Knuddeluff",
+      "dex": 40,
+      "family": 16
+    },
+    {
+      "species": "zubat",
+      "name": "Zubat",
+      "dex": 41,
+      "family": 17
+    },
+    {
+      "species": "golbat",
+      "name": "Golbat",
+      "dex": 42,
+      "family": 17
+    },
+    {
+      "species": "oddish",
+      "name": "Myrapla",
+      "dex": 43,
+      "family": 18
+    },
+    {
+      "species": "gloom",
+      "name": "Duflor",
+      "dex": 44,
+      "family": 18
+    },
+    {
+      "species": "vileplume",
+      "name": "Giflor",
+      "dex": 45,
+      "family": 18
+    },
+    {
+      "species": "paras",
+      "name": "Paras",
+      "dex": 46,
+      "family": 19
+    },
+    {
+      "species": "parasect",
+      "name": "Parasek",
+      "dex": 47,
+      "family": 19
+    },
+    {
+      "species": "venonat",
+      "name": "Bluzuk",
+      "dex": 48,
+      "family": 20
+    },
+    {
+      "species": "venomoth",
+      "name": "Omot",
+      "dex": 49,
+      "family": 20
+    },
+    {
+      "species": "diglett",
+      "name": "Digda",
+      "dex": 50,
+      "family": 21
+    },
+    {
+      "species": "dugtrio",
+      "name": "Digdri",
+      "dex": 51,
+      "family": 21
+    },
+    {
+      "species": "meowth",
+      "name": "Mauzi",
+      "dex": 52,
+      "family": 22
+    },
+    {
+      "species": "persian",
+      "name": "Snobilikat",
+      "dex": 53,
+      "family": 22
+    },
+    {
+      "species": "psyduck",
+      "name": "Enton",
+      "dex": 54,
+      "family": 23
+    },
+    {
+      "species": "golduck",
+      "name": "Entoron",
+      "dex": 55,
+      "family": 23
+    },
+    {
+      "species": "mankey",
+      "name": "Menki",
+      "dex": 56,
+      "family": 24
+    },
+    {
+      "species": "primeape",
+      "name": "Rasaff",
+      "dex": 57,
+      "family": 24
+    },
+    {
+      "species": "growlithe",
+      "name": "Fukano",
+      "dex": 58,
+      "family": 25
+    },
+    {
+      "species": "arcanine",
+      "name": "Arkani",
+      "dex": 59,
+      "family": 25
+    },
+    {
+      "species": "poliwag",
+      "name": "Quapsel",
+      "dex": 60,
+      "family": 26
+    },
+    {
+      "species": "poliwhirl",
+      "name": "Quaputzi",
+      "dex": 61,
+      "family": 26
+    },
+    {
+      "species": "poliwrath",
+      "name": "Quappo",
+      "dex": 62,
+      "family": 26
+    },
+    {
+      "species": "abra",
+      "name": "Abra",
+      "dex": 63,
+      "family": 27
+    },
+    {
+      "species": "kadabra",
+      "name": "Kadabra",
+      "dex": 64,
+      "family": 27
+    },
+    {
+      "species": "alakazam",
+      "name": "Simsala",
+      "dex": 65,
+      "family": 27
+    },
+    {
+      "species": "machop",
+      "name": "Machollo",
+      "dex": 66,
+      "family": 28
+    },
+    {
+      "species": "machoke",
+      "name": "Maschock",
+      "dex": 67,
+      "family": 28
+    },
+    {
+      "species": "machamp",
+      "name": "Machomei",
+      "dex": 68,
+      "family": 28
+    },
+    {
+      "species": "bellsprout",
+      "name": "Knofensa",
+      "dex": 69,
+      "family": 29
+    },
+    {
+      "species": "weepinbell",
+      "name": "Ultrigaria",
+      "dex": 70,
+      "family": 29
+    },
+    {
+      "species": "victreebel",
+      "name": "Sarzenia",
+      "dex": 71,
+      "family": 29
+    },
+    {
+      "species": "tentacool",
+      "name": "Tentacha",
+      "dex": 72,
+      "family": 30
+    },
+    {
+      "species": "tentacruel",
+      "name": "Tentoxa",
+      "dex": 73,
+      "family": 30
+    },
+    {
+      "species": "geodude",
+      "name": "Kleinstein",
+      "dex": 74,
+      "family": 31
+    },
+    {
+      "species": "graveler",
+      "name": "Georok",
+      "dex": 75,
+      "family": 31
+    },
+    {
+      "species": "golem",
+      "name": "Geowaz",
+      "dex": 76,
+      "family": 31
+    },
+    {
+      "species": "ponyta",
+      "name": "Ponita",
+      "dex": 77,
+      "family": 32
+    },
+    {
+      "species": "rapidash",
+      "name": "Gallopa",
+      "dex": 78,
+      "family": 32
+    },
+    {
+      "species": "slowpoke",
+      "name": "Flegmon",
+      "dex": 79,
+      "family": 33
+    },
+    {
+      "species": "slowbro",
+      "name": "Lahmus",
+      "dex": 80,
+      "family": 33
+    },
+    {
+      "species": "magnemite",
+      "name": "Magnetilo",
+      "dex": 81,
+      "family": 34
+    },
+    {
+      "species": "magneton",
+      "name": "Magneton",
+      "dex": 82,
+      "family": 34
+    },
+    {
+      "species": "farfetchd",
+      "name": "Porenta",
+      "dex": 83,
+      "family": 35
+    },
+    {
+      "species": "doduo",
+      "name": "Dodu",
+      "dex": 84,
+      "family": 36
+    },
+    {
+      "species": "dodrio",
+      "name": "Dodri",
+      "dex": 85,
+      "family": 36
+    },
+    {
+      "species": "seel",
+      "name": "Jurob",
+      "dex": 86,
+      "family": 37
+    },
+    {
+      "species": "dewgong",
+      "name": "Jugong",
+      "dex": 87,
+      "family": 37
+    },
+    {
+      "species": "grimer",
+      "name": "Sleima",
+      "dex": 88,
+      "family": 38
+    },
+    {
+      "species": "muk",
+      "name": "Sleimok",
+      "dex": 89,
+      "family": 38
+    },
+    {
+      "species": "shellder",
+      "name": "Muschas",
+      "dex": 90,
+      "family": 39
+    },
+    {
+      "species": "cloyster",
+      "name": "Austos",
+      "dex": 91,
+      "family": 39
+    },
+    {
+      "species": "gastly",
+      "name": "Nebulak",
+      "dex": 92,
+      "family": 40
+    },
+    {
+      "species": "haunter",
+      "name": "Alpollo",
+      "dex": 93,
+      "family": 40
+    },
+    {
+      "species": "gengar",
+      "name": "Gengar",
+      "dex": 94,
+      "family": 40
+    },
+    {
+      "species": "onix",
+      "name": "Onix",
+      "dex": 95,
+      "family": 41
+    },
+    {
+      "species": "drowzee",
+      "name": "Traumato",
+      "dex": 96,
+      "family": 42
+    },
+    {
+      "species": "hypno",
+      "name": "Hypno",
+      "dex": 97,
+      "family": 42
+    },
+    {
+      "species": "krabby",
+      "name": "Krabby",
+      "dex": 98,
+      "family": 43
+    },
+    {
+      "species": "kingler",
+      "name": "Kingler",
+      "dex": 99,
+      "family": 43
+    },
+    {
+      "species": "voltorb",
+      "name": "Voltobal",
+      "dex": 100,
+      "family": 44
+    },
+    {
+      "species": "electrode",
+      "name": "Lektrobal",
+      "dex": 101,
+      "family": 44
+    },
+    {
+      "species": "exeggcute",
+      "name": "Owei",
+      "dex": 102,
+      "family": 45
+    },
+    {
+      "species": "exeggutor",
+      "name": "Kokowei",
+      "dex": 103,
+      "family": 45
+    },
+    {
+      "species": "cubone",
+      "name": "Tragosso",
+      "dex": 104,
+      "family": 46
+    },
+    {
+      "species": "marowak",
+      "name": "Knogga",
+      "dex": 105,
+      "family": 46
+    },
+    {
+      "species": "hitmonlee",
+      "name": "Kicklee",
+      "dex": 106,
+      "family": 47
+    },
+    {
+      "species": "hitmonchan",
+      "name": "Nockchan",
+      "dex": 107,
+      "family": 47
+    },
+    {
+      "species": "lickitung",
+      "name": "Schlurp",
+      "dex": 108,
+      "family": 48
+    },
+    {
+      "species": "koffing",
+      "name": "Smogon",
+      "dex": 109,
+      "family": 49
+    },
+    {
+      "species": "weezing",
+      "name": "Smogmog",
+      "dex": 110,
+      "family": 49
+    },
+    {
+      "species": "rhyhorn",
+      "name": "Rihorn",
+      "dex": 111,
+      "family": 50
+    },
+    {
+      "species": "rhydon",
+      "name": "Rizeros",
+      "dex": 112,
+      "family": 50
+    },
+    {
+      "species": "chansey",
+      "name": "Chaneira",
+      "dex": 113,
+      "family": 51
+    },
+    {
+      "species": "tangela",
+      "name": "Tangela",
+      "dex": 114,
+      "family": 52
+    },
+    {
+      "species": "kangaskhan",
+      "name": "Kangama",
+      "dex": 115,
+      "family": 53
+    },
+    {
+      "species": "horsea",
+      "name": "Seeper",
+      "dex": 116,
+      "family": 54
+    },
+    {
+      "species": "seadra",
+      "name": "Seemon",
+      "dex": 117,
+      "family": 54
+    },
+    {
+      "species": "goldeen",
+      "name": "Goldini",
+      "dex": 118,
+      "family": 55
+    },
+    {
+      "species": "seaking",
+      "name": "Golking",
+      "dex": 119,
+      "family": 55
+    },
+    {
+      "species": "staryu",
+      "name": "Sterndu",
+      "dex": 120,
+      "family": 56
+    },
+    {
+      "species": "starmie",
+      "name": "Starmie",
+      "dex": 121,
+      "family": 56
+    },
+    {
+      "species": "mr-mime",
+      "name": "Pantimos",
+      "dex": 122,
+      "family": 57
+    },
+    {
+      "species": "scyther",
+      "name": "Sichlor",
+      "dex": 123,
+      "family": 58
+    },
+    {
+      "species": "jynx",
+      "name": "Rossana",
+      "dex": 124,
+      "family": 59
+    },
+    {
+      "species": "electabuzz",
+      "name": "Elektek",
+      "dex": 125,
+      "family": 60
+    },
+    {
+      "species": "magmar",
+      "name": "Magmar",
+      "dex": 126,
+      "family": 61
+    },
+    {
+      "species": "pinsir",
+      "name": "Pinsir",
+      "dex": 127,
+      "family": 62
+    },
+    {
+      "species": "tauros",
+      "name": "Tauros",
+      "dex": 128,
+      "family": 63
+    },
+    {
+      "species": "magikarp",
+      "name": "Karpador",
+      "dex": 129,
+      "family": 64
+    },
+    {
+      "species": "gyarados",
+      "name": "Garados",
+      "dex": 130,
+      "family": 64
+    },
+    {
+      "species": "lapras",
+      "name": "Lapras",
+      "dex": 131,
+      "family": 65
+    },
+    {
+      "species": "ditto",
+      "name": "Ditto",
+      "dex": 132,
+      "family": 66
+    },
+    {
+      "species": "eevee",
+      "name": "Evoli",
+      "dex": 133,
+      "family": 67
+    },
+    {
+      "species": "vaporeon",
+      "name": "Aquana",
+      "dex": 134,
+      "family": 67
+    },
+    {
+      "species": "jolteon",
+      "name": "Blitza",
+      "dex": 135,
+      "family": 67
+    },
+    {
+      "species": "flareon",
+      "name": "Flamara",
+      "dex": 136,
+      "family": 67
+    },
+    {
+      "species": "porygon",
+      "name": "Porygon",
+      "dex": 137,
+      "family": 68
+    },
+    {
+      "species": "omanyte",
+      "name": "Amonitas",
+      "dex": 138,
+      "family": 69
+    },
+    {
+      "species": "omastar",
+      "name": "Amoroso",
+      "dex": 139,
+      "family": 69
+    },
+    {
+      "species": "kabuto",
+      "name": "Kabuto",
+      "dex": 140,
+      "family": 70
+    },
+    {
+      "species": "kabutops",
+      "name": "Kabutops",
+      "dex": 141,
+      "family": 70
+    },
+    {
+      "species": "aerodactyl",
+      "name": "Aerodactyl",
+      "dex": 142,
+      "family": 71
+    },
+    {
+      "species": "snorlax",
+      "name": "Relaxo",
+      "dex": 143,
+      "family": 72
+    },
+    {
+      "species": "articuno",
+      "name": "Arktos",
+      "dex": 144,
+      "family": 73
+    },
+    {
+      "species": "zapdos",
+      "name": "Zapdos",
+      "dex": 145,
+      "family": 74
+    },
+    {
+      "species": "moltres",
+      "name": "Lavados",
+      "dex": 146,
+      "family": 75
+    },
+    {
+      "species": "dratini",
+      "name": "Dratini",
+      "dex": 147,
+      "family": 76
+    },
+    {
+      "species": "dragonair",
+      "name": "Dragonir",
+      "dex": 148,
+      "family": 76
+    },
+    {
+      "species": "dragonite",
+      "name": "Dragoran",
+      "dex": 149,
+      "family": 76
+    },
+    {
+      "species": "mewtwo",
+      "name": "Mewtu",
+      "dex": 150,
+      "family": 77
+    },
+    {
+      "species": "mew",
+      "name": "Mew",
+      "dex": 151,
+      "family": 78
+    },
+    {
+      "species": "chikorita",
+      "name": "Endivie",
+      "dex": 152,
+      "family": 79
+    },
+    {
+      "species": "bayleef",
+      "name": "Lorblatt",
+      "dex": 153,
+      "family": 79
+    },
+    {
+      "species": "meganium",
+      "name": "Meganie",
+      "dex": 154,
+      "family": 79
+    },
+    {
+      "species": "cyndaquil",
+      "name": "Feurigel",
+      "dex": 155,
+      "family": 80
+    },
+    {
+      "species": "quilava",
+      "name": "Igelavar",
+      "dex": 156,
+      "family": 80
+    },
+    {
+      "species": "typhlosion",
+      "name": "Tornupto",
+      "dex": 157,
+      "family": 80
+    },
+    {
+      "species": "totodile",
+      "name": "Karnimani",
+      "dex": 158,
+      "family": 81
+    },
+    {
+      "species": "croconaw",
+      "name": "Tyracroc",
+      "dex": 159,
+      "family": 81
+    },
+    {
+      "species": "feraligatr",
+      "name": "Impergator",
+      "dex": 160,
+      "family": 81
+    },
+    {
+      "species": "sentret",
+      "name": "Wiesor",
+      "dex": 161,
+      "family": 82
+    },
+    {
+      "species": "furret",
+      "name": "Wiesenior",
+      "dex": 162,
+      "family": 82
+    },
+    {
+      "species": "hoothoot",
+      "name": "Hoothoot",
+      "dex": 163,
+      "family": 83
+    },
+    {
+      "species": "noctowl",
+      "name": "Noctuh",
+      "dex": 164,
+      "family": 83
+    },
+    {
+      "species": "ledyba",
+      "name": "Ledyba",
+      "dex": 165,
+      "family": 84
+    },
+    {
+      "species": "ledian",
+      "name": "Ledian",
+      "dex": 166,
+      "family": 84
+    },
+    {
+      "species": "spinarak",
+      "name": "Webarak",
+      "dex": 167,
+      "family": 85
+    },
+    {
+      "species": "ariados",
+      "name": "Ariados",
+      "dex": 168,
+      "family": 85
+    },
+    {
+      "species": "crobat",
+      "name": "Iksbat",
+      "dex": 169,
+      "family": 17
+    },
+    {
+      "species": "chinchou",
+      "name": "Lampi",
+      "dex": 170,
+      "family": 86
+    },
+    {
+      "species": "lanturn",
+      "name": "Lanturn",
+      "dex": 171,
+      "family": 86
+    },
+    {
+      "species": "pichu",
+      "name": "Pichu",
+      "dex": 172,
+      "family": 10
+    },
+    {
+      "species": "cleffa",
+      "name": "Pii",
+      "dex": 173,
+      "family": 14
+    },
+    {
+      "species": "igglybuff",
+      "name": "Fluffeluff",
+      "dex": 174,
+      "family": 16
+    },
+    {
+      "species": "togepi",
+      "name": "Togepi",
+      "dex": 175,
+      "family": 87
+    },
+    {
+      "species": "togetic",
+      "name": "Togetic",
+      "dex": 176,
+      "family": 87
+    },
+    {
+      "species": "natu",
+      "name": "Natu",
+      "dex": 177,
+      "family": 88
+    },
+    {
+      "species": "xatu",
+      "name": "Xatu",
+      "dex": 178,
+      "family": 88
+    },
+    {
+      "species": "mareep",
+      "name": "Voltilamm",
+      "dex": 179,
+      "family": 89
+    },
+    {
+      "species": "flaaffy",
+      "name": "Waaty",
+      "dex": 180,
+      "family": 89
+    },
+    {
+      "species": "ampharos",
+      "name": "Ampharos",
+      "dex": 181,
+      "family": 89
+    },
+    {
+      "species": "bellossom",
+      "name": "Blubella",
+      "dex": 182,
+      "family": 18
+    },
+    {
+      "species": "marill",
+      "name": "Marill",
+      "dex": 183,
+      "family": 90
+    },
+    {
+      "species": "azumarill",
+      "name": "Azumarill",
+      "dex": 184,
+      "family": 90
+    },
+    {
+      "species": "sudowoodo",
+      "name": "Mogelbaum",
+      "dex": 185,
+      "family": 91
+    },
+    {
+      "species": "politoed",
+      "name": "Quaxo",
+      "dex": 186,
+      "family": 26
+    },
+    {
+      "species": "hoppip",
+      "name": "Hoppspross",
+      "dex": 187,
+      "family": 92
+    },
+    {
+      "species": "skiploom",
+      "name": "Hubelupf",
+      "dex": 188,
+      "family": 92
+    },
+    {
+      "species": "jumpluff",
+      "name": "Papungha",
+      "dex": 189,
+      "family": 92
+    },
+    {
+      "species": "aipom",
+      "name": "Griffel",
+      "dex": 190,
+      "family": 93
+    },
+    {
+      "species": "sunkern",
+      "name": "Sonnkern",
+      "dex": 191,
+      "family": 94
+    },
+    {
+      "species": "sunflora",
+      "name": "Sonnflora",
+      "dex": 192,
+      "family": 94
+    },
+    {
+      "species": "yanma",
+      "name": "Yanma",
+      "dex": 193,
+      "family": 95
+    },
+    {
+      "species": "wooper",
+      "name": "Felino",
+      "dex": 194,
+      "family": 96
+    },
+    {
+      "species": "quagsire",
+      "name": "Morlord",
+      "dex": 195,
+      "family": 96
+    },
+    {
+      "species": "espeon",
+      "name": "Psiana",
+      "dex": 196,
+      "family": 67
+    },
+    {
+      "species": "umbreon",
+      "name": "Nachtara",
+      "dex": 197,
+      "family": 67
+    },
+    {
+      "species": "murkrow",
+      "name": "Kramurx",
+      "dex": 198,
+      "family": 97
+    },
+    {
+      "species": "slowking",
+      "name": "Laschoking",
+      "dex": 199,
+      "family": 33
+    },
+    {
+      "species": "misdreavus",
+      "name": "Traunfugil",
+      "dex": 200,
+      "family": 98
+    },
+    {
+      "species": "unown",
+      "name": "Icognito",
+      "dex": 201,
+      "family": 99
+    },
+    {
+      "species": "wobbuffet",
+      "name": "Woingenau",
+      "dex": 202,
+      "family": 100
+    },
+    {
+      "species": "girafarig",
+      "name": "Girafarig",
+      "dex": 203,
+      "family": 101
+    },
+    {
+      "species": "pineco",
+      "name": "Tannza",
+      "dex": 204,
+      "family": 102
+    },
+    {
+      "species": "forretress",
+      "name": "Forstellka",
+      "dex": 205,
+      "family": 102
+    },
+    {
+      "species": "dunsparce",
+      "name": "Dummisel",
+      "dex": 206,
+      "family": 103
+    },
+    {
+      "species": "gligar",
+      "name": "Skorgla",
+      "dex": 207,
+      "family": 104
+    },
+    {
+      "species": "steelix",
+      "name": "Stahlos",
+      "dex": 208,
+      "family": 41
+    },
+    {
+      "species": "snubbull",
+      "name": "Snubbull",
+      "dex": 209,
+      "family": 105
+    },
+    {
+      "species": "granbull",
+      "name": "Granbull",
+      "dex": 210,
+      "family": 105
+    },
+    {
+      "species": "qwilfish",
+      "name": "Baldorfish",
+      "dex": 211,
+      "family": 106
+    },
+    {
+      "species": "scizor",
+      "name": "Scherox",
+      "dex": 212,
+      "family": 58
+    },
+    {
+      "species": "shuckle",
+      "name": "Pottrott",
+      "dex": 213,
+      "family": 107
+    },
+    {
+      "species": "heracross",
+      "name": "Skaraborn",
+      "dex": 214,
+      "family": 108
+    },
+    {
+      "species": "sneasel",
+      "name": "Sniebel",
+      "dex": 215,
+      "family": 109
+    },
+    {
+      "species": "teddiursa",
+      "name": "Teddiursa",
+      "dex": 216,
+      "family": 110
+    },
+    {
+      "species": "ursaring",
+      "name": "Ursaring",
+      "dex": 217,
+      "family": 110
+    },
+    {
+      "species": "slugma",
+      "name": "Schneckmag",
+      "dex": 218,
+      "family": 111
+    },
+    {
+      "species": "magcargo",
+      "name": "Magcargo",
+      "dex": 219,
+      "family": 111
+    },
+    {
+      "species": "swinub",
+      "name": "Quiekel",
+      "dex": 220,
+      "family": 112
+    },
+    {
+      "species": "piloswine",
+      "name": "Keifel",
+      "dex": 221,
+      "family": 112
+    },
+    {
+      "species": "corsola",
+      "name": "Corasonn",
+      "dex": 222,
+      "family": 113
+    },
+    {
+      "species": "remoraid",
+      "name": "Remoraid",
+      "dex": 223,
+      "family": 114
+    },
+    {
+      "species": "octillery",
+      "name": "Octillery",
+      "dex": 224,
+      "family": 114
+    },
+    {
+      "species": "delibird",
+      "name": "Botogel",
+      "dex": 225,
+      "family": 115
+    },
+    {
+      "species": "mantine",
+      "name": "Mantax",
+      "dex": 226,
+      "family": 116
+    },
+    {
+      "species": "skarmory",
+      "name": "Panzaeron",
+      "dex": 227,
+      "family": 117
+    },
+    {
+      "species": "houndour",
+      "name": "Hunduster",
+      "dex": 228,
+      "family": 118
+    },
+    {
+      "species": "houndoom",
+      "name": "Hundemon",
+      "dex": 229,
+      "family": 118
+    },
+    {
+      "species": "kingdra",
+      "name": "Seedraking",
+      "dex": 230,
+      "family": 54
+    },
+    {
+      "species": "phanpy",
+      "name": "Phanpy",
+      "dex": 231,
+      "family": 119
+    },
+    {
+      "species": "donphan",
+      "name": "Donphan",
+      "dex": 232,
+      "family": 119
+    },
+    {
+      "species": "porygon2",
+      "name": "Porygon2",
+      "dex": 233,
+      "family": 68
+    },
+    {
+      "species": "stantler",
+      "name": "Damhirplex",
+      "dex": 234,
+      "family": 120
+    },
+    {
+      "species": "smeargle",
+      "name": "Farbeagle",
+      "dex": 235,
+      "family": 121
+    },
+    {
+      "species": "tyrogue",
+      "name": "Rabauz",
+      "dex": 236,
+      "family": 47
+    },
+    {
+      "species": "hitmontop",
+      "name": "Kapoera",
+      "dex": 237,
+      "family": 47
+    },
+    {
+      "species": "smoochum",
+      "name": "Kussilla",
+      "dex": 238,
+      "family": 59
+    },
+    {
+      "species": "elekid",
+      "name": "Elekid",
+      "dex": 239,
+      "family": 60
+    },
+    {
+      "species": "magby",
+      "name": "Magby",
+      "dex": 240,
+      "family": 61
+    },
+    {
+      "species": "miltank",
+      "name": "Miltank",
+      "dex": 241,
+      "family": 122
+    },
+    {
+      "species": "blissey",
+      "name": "Heiteira",
+      "dex": 242,
+      "family": 51
+    },
+    {
+      "species": "raikou",
+      "name": "Raikou",
+      "dex": 243,
+      "family": 123
+    },
+    {
+      "species": "entei",
+      "name": "Entei",
+      "dex": 244,
+      "family": 124
+    },
+    {
+      "species": "suicune",
+      "name": "Suicune",
+      "dex": 245,
+      "family": 125
+    },
+    {
+      "species": "larvitar",
+      "name": "Larvitar",
+      "dex": 246,
+      "family": 126
+    },
+    {
+      "species": "pupitar",
+      "name": "Pupitar",
+      "dex": 247,
+      "family": 126
+    },
+    {
+      "species": "tyranitar",
+      "name": "Despotar",
+      "dex": 248,
+      "family": 126
+    },
+    {
+      "species": "lugia",
+      "name": "Lugia",
+      "dex": 249,
+      "family": 127
+    },
+    {
+      "species": "ho-oh",
+      "name": "Ho-Oh",
+      "dex": 250,
+      "family": 128
+    },
+    {
+      "species": "celebi",
+      "name": "Celebi",
+      "dex": 251,
+      "family": 129
+    },
+    {
+      "species": "treecko",
+      "name": "Geckarbor",
+      "dex": 252,
+      "family": 130
+    },
+    {
+      "species": "grovyle",
+      "name": "Reptain",
+      "dex": 253,
+      "family": 130
+    },
+    {
+      "species": "sceptile",
+      "name": "Gewaldro",
+      "dex": 254,
+      "family": 130
+    },
+    {
+      "species": "torchic",
+      "name": "Flemmli",
+      "dex": 255,
+      "family": 131
+    },
+    {
+      "species": "combusken",
+      "name": "Jungglut",
+      "dex": 256,
+      "family": 131
+    },
+    {
+      "species": "blaziken",
+      "name": "Lohgock",
+      "dex": 257,
+      "family": 131
+    },
+    {
+      "species": "mudkip",
+      "name": "Hydropi",
+      "dex": 258,
+      "family": 132
+    },
+    {
+      "species": "marshtomp",
+      "name": "Moorabbel",
+      "dex": 259,
+      "family": 132
+    },
+    {
+      "species": "swampert",
+      "name": "Sumpex",
+      "dex": 260,
+      "family": 132
+    },
+    {
+      "species": "poochyena",
+      "name": "Fiffyen",
+      "dex": 261,
+      "family": 133
+    },
+    {
+      "species": "mightyena",
+      "name": "Magnayen",
+      "dex": 262,
+      "family": 133
+    },
+    {
+      "species": "zigzagoon",
+      "name": "Zigzachs",
+      "dex": 263,
+      "family": 134
+    },
+    {
+      "species": "linoone",
+      "name": "Geradaks",
+      "dex": 264,
+      "family": 134
+    },
+    {
+      "species": "wurmple",
+      "name": "Waumpel",
+      "dex": 265,
+      "family": 135
+    },
+    {
+      "species": "silcoon",
+      "name": "Schaloko",
+      "dex": 266,
+      "family": 135
+    },
+    {
+      "species": "beautifly",
+      "name": "Papinella",
+      "dex": 267,
+      "family": 135
+    },
+    {
+      "species": "cascoon",
+      "name": "Panekon",
+      "dex": 268,
+      "family": 135
+    },
+    {
+      "species": "dustox",
+      "name": "Pudox",
+      "dex": 269,
+      "family": 135
+    },
+    {
+      "species": "lotad",
+      "name": "Loturzel",
+      "dex": 270,
+      "family": 136
+    },
+    {
+      "species": "lombre",
+      "name": "Lombrero",
+      "dex": 271,
+      "family": 136
+    },
+    {
+      "species": "ludicolo",
+      "name": "Kappalores",
+      "dex": 272,
+      "family": 136
+    },
+    {
+      "species": "seedot",
+      "name": "Samurzel",
+      "dex": 273,
+      "family": 137
+    },
+    {
+      "species": "nuzleaf",
+      "name": "Blanas",
+      "dex": 274,
+      "family": 137
+    },
+    {
+      "species": "shiftry",
+      "name": "Tengulist",
+      "dex": 275,
+      "family": 137
+    },
+    {
+      "species": "taillow",
+      "name": "Schwalbini",
+      "dex": 276,
+      "family": 138
+    },
+    {
+      "species": "swellow",
+      "name": "Schwalboss",
+      "dex": 277,
+      "family": 138
+    },
+    {
+      "species": "wingull",
+      "name": "Wingull",
+      "dex": 278,
+      "family": 139
+    },
+    {
+      "species": "pelipper",
+      "name": "Pelipper",
+      "dex": 279,
+      "family": 139
+    },
+    {
+      "species": "ralts",
+      "name": "Trasla",
+      "dex": 280,
+      "family": 140
+    },
+    {
+      "species": "kirlia",
+      "name": "Kirlia",
+      "dex": 281,
+      "family": 140
+    },
+    {
+      "species": "gardevoir",
+      "name": "Guardevoir",
+      "dex": 282,
+      "family": 140
+    },
+    {
+      "species": "surskit",
+      "name": "Gehweiher",
+      "dex": 283,
+      "family": 141
+    },
+    {
+      "species": "masquerain",
+      "name": "Maskeregen",
+      "dex": 284,
+      "family": 141
+    },
+    {
+      "species": "shroomish",
+      "name": "Knilz",
+      "dex": 285,
+      "family": 142
+    },
+    {
+      "species": "breloom",
+      "name": "Kapilz",
+      "dex": 286,
+      "family": 142
+    },
+    {
+      "species": "slakoth",
+      "name": "Bummelz",
+      "dex": 287,
+      "family": 143
+    },
+    {
+      "species": "vigoroth",
+      "name": "Muntier",
+      "dex": 288,
+      "family": 143
+    },
+    {
+      "species": "slaking",
+      "name": "Letarking",
+      "dex": 289,
+      "family": 143
+    },
+    {
+      "species": "nincada",
+      "name": "Nincada",
+      "dex": 290,
+      "family": 144
+    },
+    {
+      "species": "ninjask",
+      "name": "Ninjask",
+      "dex": 291,
+      "family": 144
+    },
+    {
+      "species": "shedinja",
+      "name": "Ninjatom",
+      "dex": 292,
+      "family": 144
+    },
+    {
+      "species": "whismur",
+      "name": "Flurmel",
+      "dex": 293,
+      "family": 145
+    },
+    {
+      "species": "loudred",
+      "name": "Krakeelo",
+      "dex": 294,
+      "family": 145
+    },
+    {
+      "species": "exploud",
+      "name": "Krawumms",
+      "dex": 295,
+      "family": 145
+    },
+    {
+      "species": "makuhita",
+      "name": "Makuhita",
+      "dex": 296,
+      "family": 146
+    },
+    {
+      "species": "hariyama",
+      "name": "Hariyama",
+      "dex": 297,
+      "family": 146
+    },
+    {
+      "species": "azurill",
+      "name": "Azurill",
+      "dex": 298,
+      "family": 90
+    },
+    {
+      "species": "nosepass",
+      "name": "Nasgnet",
+      "dex": 299,
+      "family": 147
+    },
+    {
+      "species": "skitty",
+      "name": "Eneco",
+      "dex": 300,
+      "family": 148
+    },
+    {
+      "species": "delcatty",
+      "name": "Enekoro",
+      "dex": 301,
+      "family": 148
+    },
+    {
+      "species": "sableye",
+      "name": "Zobiris",
+      "dex": 302,
+      "family": 149
+    },
+    {
+      "species": "mawile",
+      "name": "Flunkifer",
+      "dex": 303,
+      "family": 150
+    },
+    {
+      "species": "aron",
+      "name": "Stollunior",
+      "dex": 304,
+      "family": 151
+    },
+    {
+      "species": "lairon",
+      "name": "Stollrak",
+      "dex": 305,
+      "family": 151
+    },
+    {
+      "species": "aggron",
+      "name": "Stolloss",
+      "dex": 306,
+      "family": 151
+    },
+    {
+      "species": "meditite",
+      "name": "Meditie",
+      "dex": 307,
+      "family": 152
+    },
+    {
+      "species": "medicham",
+      "name": "Meditalis",
+      "dex": 308,
+      "family": 152
+    },
+    {
+      "species": "electrike",
+      "name": "Frizelbliz",
+      "dex": 309,
+      "family": 153
+    },
+    {
+      "species": "manectric",
+      "name": "Voltenso",
+      "dex": 310,
+      "family": 153
+    },
+    {
+      "species": "plusle",
+      "name": "Plusle",
+      "dex": 311,
+      "family": 154
+    },
+    {
+      "species": "minun",
+      "name": "Minun",
+      "dex": 312,
+      "family": 155
+    },
+    {
+      "species": "volbeat",
+      "name": "Volbeat",
+      "dex": 313,
+      "family": 156
+    },
+    {
+      "species": "illumise",
+      "name": "Illumise",
+      "dex": 314,
+      "family": 157
+    },
+    {
+      "species": "roselia",
+      "name": "Roselia",
+      "dex": 315,
+      "family": 158
+    },
+    {
+      "species": "gulpin",
+      "name": "Schluppuck",
+      "dex": 316,
+      "family": 159
+    },
+    {
+      "species": "swalot",
+      "name": "Schlukwech",
+      "dex": 317,
+      "family": 159
+    },
+    {
+      "species": "carvanha",
+      "name": "Kanivanha",
+      "dex": 318,
+      "family": 160
+    },
+    {
+      "species": "sharpedo",
+      "name": "Tohaido",
+      "dex": 319,
+      "family": 160
+    },
+    {
+      "species": "wailmer",
+      "name": "Wailmer",
+      "dex": 320,
+      "family": 161
+    },
+    {
+      "species": "wailord",
+      "name": "Wailord",
+      "dex": 321,
+      "family": 161
+    },
+    {
+      "species": "numel",
+      "name": "Camaub",
+      "dex": 322,
+      "family": 162
+    },
+    {
+      "species": "camerupt",
+      "name": "Camerupt",
+      "dex": 323,
+      "family": 162
+    },
+    {
+      "species": "torkoal",
+      "name": "Qurtel",
+      "dex": 324,
+      "family": 163
+    },
+    {
+      "species": "spoink",
+      "name": "Spoink",
+      "dex": 325,
+      "family": 164
+    },
+    {
+      "species": "grumpig",
+      "name": "Groink",
+      "dex": 326,
+      "family": 164
+    },
+    {
+      "species": "spinda",
+      "name": "Pandir",
+      "dex": 327,
+      "family": 165
+    },
+    {
+      "species": "trapinch",
+      "name": "Knacklion",
+      "dex": 328,
+      "family": 166
+    },
+    {
+      "species": "vibrava",
+      "name": "Vibrava",
+      "dex": 329,
+      "family": 166
+    },
+    {
+      "species": "flygon",
+      "name": "Libelldra",
+      "dex": 330,
+      "family": 166
+    },
+    {
+      "species": "cacnea",
+      "name": "Tuska",
+      "dex": 331,
+      "family": 167
+    },
+    {
+      "species": "cacturne",
+      "name": "Noktuska",
+      "dex": 332,
+      "family": 167
+    },
+    {
+      "species": "swablu",
+      "name": "Wablu",
+      "dex": 333,
+      "family": 168
+    },
+    {
+      "species": "altaria",
+      "name": "Altaria",
+      "dex": 334,
+      "family": 168
+    },
+    {
+      "species": "zangoose",
+      "name": "Sengo",
+      "dex": 335,
+      "family": 169
+    },
+    {
+      "species": "seviper",
+      "name": "Vipitis",
+      "dex": 336,
+      "family": 170
+    },
+    {
+      "species": "lunatone",
+      "name": "Lunastein",
+      "dex": 337,
+      "family": 171
+    },
+    {
+      "species": "solrock",
+      "name": "Sonnfel",
+      "dex": 338,
+      "family": 172
+    },
+    {
+      "species": "barboach",
+      "name": "Schmerbe",
+      "dex": 339,
+      "family": 173
+    },
+    {
+      "species": "whiscash",
+      "name": "Welsar",
+      "dex": 340,
+      "family": 173
+    },
+    {
+      "species": "corphish",
+      "name": "Krebscorps",
+      "dex": 341,
+      "family": 174
+    },
+    {
+      "species": "crawdaunt",
+      "name": "Krebutack",
+      "dex": 342,
+      "family": 174
+    },
+    {
+      "species": "baltoy",
+      "name": "Puppance",
+      "dex": 343,
+      "family": 175
+    },
+    {
+      "species": "claydol",
+      "name": "Lepumentas",
+      "dex": 344,
+      "family": 175
+    },
+    {
+      "species": "lileep",
+      "name": "Liliep",
+      "dex": 345,
+      "family": 176
+    },
+    {
+      "species": "cradily",
+      "name": "Wielie",
+      "dex": 346,
+      "family": 176
+    },
+    {
+      "species": "anorith",
+      "name": "Anorith",
+      "dex": 347,
+      "family": 177
+    },
+    {
+      "species": "armaldo",
+      "name": "Armaldo",
+      "dex": 348,
+      "family": 177
+    },
+    {
+      "species": "feebas",
+      "name": "Barschwa",
+      "dex": 349,
+      "family": 178
+    },
+    {
+      "species": "milotic",
+      "name": "Milotic",
+      "dex": 350,
+      "family": 178
+    },
+    {
+      "species": "castform",
+      "name": "Formeo",
+      "dex": 351,
+      "family": 179
+    },
+    {
+      "species": "kecleon",
+      "name": "Kecleon",
+      "dex": 352,
+      "family": 180
+    },
+    {
+      "species": "shuppet",
+      "name": "Shuppet",
+      "dex": 353,
+      "family": 181
+    },
+    {
+      "species": "banette",
+      "name": "Banette",
+      "dex": 354,
+      "family": 181
+    },
+    {
+      "species": "duskull",
+      "name": "Zwirrlicht",
+      "dex": 355,
+      "family": 182
+    },
+    {
+      "species": "dusclops",
+      "name": "Zwirrklop",
+      "dex": 356,
+      "family": 182
+    },
+    {
+      "species": "tropius",
+      "name": "Tropius",
+      "dex": 357,
+      "family": 183
+    },
+    {
+      "species": "chimecho",
+      "name": "Palimpalim",
+      "dex": 358,
+      "family": 184
+    },
+    {
+      "species": "absol",
+      "name": "Absol",
+      "dex": 359,
+      "family": 185
+    },
+    {
+      "species": "wynaut",
+      "name": "Isso",
+      "dex": 360,
+      "family": 100
+    },
+    {
+      "species": "snorunt",
+      "name": "Schneppke",
+      "dex": 361,
+      "family": 186
+    },
+    {
+      "species": "glalie",
+      "name": "Firnontor",
+      "dex": 362,
+      "family": 186
+    },
+    {
+      "species": "spheal",
+      "name": "Seemops",
+      "dex": 363,
+      "family": 187
+    },
+    {
+      "species": "sealeo",
+      "name": "Seejong",
+      "dex": 364,
+      "family": 187
+    },
+    {
+      "species": "walrein",
+      "name": "Walraisa",
+      "dex": 365,
+      "family": 187
+    },
+    {
+      "species": "clamperl",
+      "name": "Perlu",
+      "dex": 366,
+      "family": 188
+    },
+    {
+      "species": "huntail",
+      "name": "Aalabyss",
+      "dex": 367,
+      "family": 188
+    },
+    {
+      "species": "gorebyss",
+      "name": "Saganabyss",
+      "dex": 368,
+      "family": 188
+    },
+    {
+      "species": "relicanth",
+      "name": "Relicanth",
+      "dex": 369,
+      "family": 189
+    },
+    {
+      "species": "luvdisc",
+      "name": "Liebiskus",
+      "dex": 370,
+      "family": 190
+    },
+    {
+      "species": "bagon",
+      "name": "Kindwurm",
+      "dex": 371,
+      "family": 191
+    },
+    {
+      "species": "shelgon",
+      "name": "Draschel",
+      "dex": 372,
+      "family": 191
+    },
+    {
+      "species": "salamence",
+      "name": "Brutalanda",
+      "dex": 373,
+      "family": 191
+    },
+    {
+      "species": "beldum",
+      "name": "Tanhel",
+      "dex": 374,
+      "family": 192
+    },
+    {
+      "species": "metang",
+      "name": "Metang",
+      "dex": 375,
+      "family": 192
+    },
+    {
+      "species": "metagross",
+      "name": "Metagross",
+      "dex": 376,
+      "family": 192
+    },
+    {
+      "species": "regirock",
+      "name": "Regirock",
+      "dex": 377,
+      "family": 193
+    },
+    {
+      "species": "regice",
+      "name": "Regice",
+      "dex": 378,
+      "family": 194
+    },
+    {
+      "species": "registeel",
+      "name": "Registeel",
+      "dex": 379,
+      "family": 195
+    },
+    {
+      "species": "latias",
+      "name": "Latias",
+      "dex": 380,
+      "family": 196
+    },
+    {
+      "species": "latios",
+      "name": "Latios",
+      "dex": 381,
+      "family": 197
+    },
+    {
+      "species": "kyogre",
+      "name": "Kyogre",
+      "dex": 382,
+      "family": 198
+    },
+    {
+      "species": "groudon",
+      "name": "Groudon",
+      "dex": 383,
+      "family": 199
+    },
+    {
+      "species": "rayquaza",
+      "name": "Rayquaza",
+      "dex": 384,
+      "family": 200
+    },
+    {
+      "species": "jirachi",
+      "name": "Jirachi",
+      "dex": 385,
+      "family": 201
+    },
+    {
+      "species": "deoxys",
+      "name": "Deoxys",
+      "dex": 386,
+      "family": 202
+    },
+    {
+      "species": "turtwig",
+      "name": "Chelast",
+      "dex": 387,
+      "family": 203
+    },
+    {
+      "species": "grotle",
+      "name": "Chelcarain",
+      "dex": 388,
+      "family": 203
+    },
+    {
+      "species": "torterra",
+      "name": "Chelterrar",
+      "dex": 389,
+      "family": 203
+    },
+    {
+      "species": "chimchar",
+      "name": "Panflam",
+      "dex": 390,
+      "family": 204
+    },
+    {
+      "species": "monferno",
+      "name": "Panpyro",
+      "dex": 391,
+      "family": 204
+    },
+    {
+      "species": "infernape",
+      "name": "Panferno",
+      "dex": 392,
+      "family": 204
+    },
+    {
+      "species": "piplup",
+      "name": "Plinfa",
+      "dex": 393,
+      "family": 205
+    },
+    {
+      "species": "prinplup",
+      "name": "Pliprin",
+      "dex": 394,
+      "family": 205
+    },
+    {
+      "species": "empoleon",
+      "name": "Impoleon",
+      "dex": 395,
+      "family": 205
+    },
+    {
+      "species": "starly",
+      "name": "Staralili",
+      "dex": 396,
+      "family": 206
+    },
+    {
+      "species": "staravia",
+      "name": "Staravia",
+      "dex": 397,
+      "family": 206
+    },
+    {
+      "species": "staraptor",
+      "name": "Staraptor",
+      "dex": 398,
+      "family": 206
+    },
+    {
+      "species": "bidoof",
+      "name": "Bidiza",
+      "dex": 399,
+      "family": 207
+    },
+    {
+      "species": "bibarel",
+      "name": "Bidifas",
+      "dex": 400,
+      "family": 207
+    },
+    {
+      "species": "kricketot",
+      "name": "Zirpurze",
+      "dex": 401,
+      "family": 208
+    },
+    {
+      "species": "kricketune",
+      "name": "Zirpeise",
+      "dex": 402,
+      "family": 208
+    },
+    {
+      "species": "shinx",
+      "name": "Sheinux",
+      "dex": 403,
+      "family": 209
+    },
+    {
+      "species": "luxio",
+      "name": "Luxio",
+      "dex": 404,
+      "family": 209
+    },
+    {
+      "species": "luxray",
+      "name": "Luxtra",
+      "dex": 405,
+      "family": 209
+    },
+    {
+      "species": "budew",
+      "name": "Knospi",
+      "dex": 406,
+      "family": 158
+    },
+    {
+      "species": "roserade",
+      "name": "Roserade",
+      "dex": 407,
+      "family": 158
+    },
+    {
+      "species": "cranidos",
+      "name": "Koknodon",
+      "dex": 408,
+      "family": 211
+    },
+    {
+      "species": "rampardos",
+      "name": "Rameidon",
+      "dex": 409,
+      "family": 211
+    },
+    {
+      "species": "shieldon",
+      "name": "Schilterus",
+      "dex": 410,
+      "family": 212
+    },
+    {
+      "species": "bastiodon",
+      "name": "Bollterus",
+      "dex": 411,
+      "family": 212
+    },
+    {
+      "species": "burmy",
+      "name": "Burmy",
+      "dex": 412,
+      "family": 213
+    },
+    {
+      "species": "wormadam",
+      "name": "Burmadame",
+      "dex": 413,
+      "family": 213
+    },
+    {
+      "species": "mothim",
+      "name": "Moterpel",
+      "dex": 414,
+      "family": 213
+    },
+    {
+      "species": "combee",
+      "name": "Wadribie",
+      "dex": 415,
+      "family": 214
+    },
+    {
+      "species": "vespiquen",
+      "name": "Honweisel",
+      "dex": 416,
+      "family": 214
+    },
+    {
+      "species": "pachirisu",
+      "name": "Pachirisu",
+      "dex": 417,
+      "family": 215
+    },
+    {
+      "species": "buizel",
+      "name": "Bamelin",
+      "dex": 418,
+      "family": 216
+    },
+    {
+      "species": "floatzel",
+      "name": "Bojelin",
+      "dex": 419,
+      "family": 216
+    },
+    {
+      "species": "cherubi",
+      "name": "Kikugi",
+      "dex": 420,
+      "family": 217
+    },
+    {
+      "species": "cherrim",
+      "name": "Kinoso",
+      "dex": 421,
+      "family": 217
+    },
+    {
+      "species": "shellos",
+      "name": "Schalellos",
+      "dex": 422,
+      "family": 218
+    },
+    {
+      "species": "gastrodon",
+      "name": "Gastrodon",
+      "dex": 423,
+      "family": 218
+    },
+    {
+      "species": "ambipom",
+      "name": "Ambidiffel",
+      "dex": 424,
+      "family": 93
+    },
+    {
+      "species": "drifloon",
+      "name": "Driftlon",
+      "dex": 425,
+      "family": 219
+    },
+    {
+      "species": "drifblim",
+      "name": "Drifzepeli",
+      "dex": 426,
+      "family": 219
+    },
+    {
+      "species": "buneary",
+      "name": "Haspiror",
+      "dex": 427,
+      "family": 220
+    },
+    {
+      "species": "lopunny",
+      "name": "Schlapor",
+      "dex": 428,
+      "family": 220
+    },
+    {
+      "species": "mismagius",
+      "name": "Traunmagil",
+      "dex": 429,
+      "family": 98
+    },
+    {
+      "species": "honchkrow",
+      "name": "Kramshef",
+      "dex": 430,
+      "family": 97
+    },
+    {
+      "species": "glameow",
+      "name": "Charmian",
+      "dex": 431,
+      "family": 221
+    },
+    {
+      "species": "purugly",
+      "name": "Shnurgarst",
+      "dex": 432,
+      "family": 221
+    },
+    {
+      "species": "chingling",
+      "name": "Klingplim",
+      "dex": 433,
+      "family": 184
+    },
+    {
+      "species": "stunky",
+      "name": "Skunkapuh",
+      "dex": 434,
+      "family": 223
+    },
+    {
+      "species": "skuntank",
+      "name": "Skuntank",
+      "dex": 435,
+      "family": 223
+    },
+    {
+      "species": "bronzor",
+      "name": "Bronzel",
+      "dex": 436,
+      "family": 224
+    },
+    {
+      "species": "bronzong",
+      "name": "Bronzong",
+      "dex": 437,
+      "family": 224
+    },
+    {
+      "species": "bonsly",
+      "name": "Mobai",
+      "dex": 438,
+      "family": 91
+    },
+    {
+      "species": "mime-jr",
+      "name": "Pantimimi",
+      "dex": 439,
+      "family": 57
+    },
+    {
+      "species": "happiny",
+      "name": "Wonneira",
+      "dex": 440,
+      "family": 51
+    },
+    {
+      "species": "chatot",
+      "name": "Plaudagei",
+      "dex": 441,
+      "family": 228
+    },
+    {
+      "species": "spiritomb",
+      "name": "Kryppuk",
+      "dex": 442,
+      "family": 229
+    },
+    {
+      "species": "gible",
+      "name": "Kaumalat",
+      "dex": 443,
+      "family": 230
+    },
+    {
+      "species": "gabite",
+      "name": "Knarksel",
+      "dex": 444,
+      "family": 230
+    },
+    {
+      "species": "garchomp",
+      "name": "Knakrack",
+      "dex": 445,
+      "family": 230
+    },
+    {
+      "species": "munchlax",
+      "name": "Mampfaxo",
+      "dex": 446,
+      "family": 72
+    },
+    {
+      "species": "riolu",
+      "name": "Riolu",
+      "dex": 447,
+      "family": 232
+    },
+    {
+      "species": "lucario",
+      "name": "Lucario",
+      "dex": 448,
+      "family": 232
+    },
+    {
+      "species": "hippopotas",
+      "name": "Hippopotas",
+      "dex": 449,
+      "family": 233
+    },
+    {
+      "species": "hippowdon",
+      "name": "Hippoterus",
+      "dex": 450,
+      "family": 233
+    },
+    {
+      "species": "skorupi",
+      "name": "Pionskora",
+      "dex": 451,
+      "family": 234
+    },
+    {
+      "species": "drapion",
+      "name": "Piondragi",
+      "dex": 452,
+      "family": 234
+    },
+    {
+      "species": "croagunk",
+      "name": "Glibunkel",
+      "dex": 453,
+      "family": 235
+    },
+    {
+      "species": "toxicroak",
+      "name": "Toxiquak",
+      "dex": 454,
+      "family": 235
+    },
+    {
+      "species": "carnivine",
+      "name": "Venuflibis",
+      "dex": 455,
+      "family": 236
+    },
+    {
+      "species": "finneon",
+      "name": "Finneon",
+      "dex": 456,
+      "family": 237
+    },
+    {
+      "species": "lumineon",
+      "name": "Lumineon",
+      "dex": 457,
+      "family": 237
+    },
+    {
+      "species": "mantyke",
+      "name": "Mantirps",
+      "dex": 458,
+      "family": 116
+    },
+    {
+      "species": "snover",
+      "name": "Shnebedeck",
+      "dex": 459,
+      "family": 239
+    },
+    {
+      "species": "abomasnow",
+      "name": "Rexblisar",
+      "dex": 460,
+      "family": 239
+    },
+    {
+      "species": "weavile",
+      "name": "Snibunna",
+      "dex": 461,
+      "family": 109
+    },
+    {
+      "species": "magnezone",
+      "name": "Magnezone",
+      "dex": 462,
+      "family": 34
+    },
+    {
+      "species": "lickilicky",
+      "name": "Schlurplek",
+      "dex": 463,
+      "family": 48
+    },
+    {
+      "species": "rhyperior",
+      "name": "Rihornior",
+      "dex": 464,
+      "family": 50
+    },
+    {
+      "species": "tangrowth",
+      "name": "Tangoloss",
+      "dex": 465,
+      "family": 52
+    },
+    {
+      "species": "electivire",
+      "name": "Elevoltek",
+      "dex": 466,
+      "family": 60
+    },
+    {
+      "species": "magmortar",
+      "name": "Magbrant",
+      "dex": 467,
+      "family": 61
+    },
+    {
+      "species": "togekiss",
+      "name": "Togekiss",
+      "dex": 468,
+      "family": 87
+    },
+    {
+      "species": "yanmega",
+      "name": "Yanmega",
+      "dex": 469,
+      "family": 95
+    },
+    {
+      "species": "leafeon",
+      "name": "Folipurba",
+      "dex": 470,
+      "family": 67
+    },
+    {
+      "species": "glaceon",
+      "name": "Glaziola",
+      "dex": 471,
+      "family": 67
+    },
+    {
+      "species": "gliscor",
+      "name": "Skorgro",
+      "dex": 472,
+      "family": 104
+    },
+    {
+      "species": "mamoswine",
+      "name": "Mamutel",
+      "dex": 473,
+      "family": 112
+    },
+    {
+      "species": "porygon-z",
+      "name": "Porygon-Z",
+      "dex": 474,
+      "family": 68
+    },
+    {
+      "species": "gallade",
+      "name": "Galagladi",
+      "dex": 475,
+      "family": 140
+    },
+    {
+      "species": "probopass",
+      "name": "Voluminas",
+      "dex": 476,
+      "family": 147
+    },
+    {
+      "species": "dusknoir",
+      "name": "Zwirrfinst",
+      "dex": 477,
+      "family": 182
+    },
+    {
+      "species": "froslass",
+      "name": "Frosdedje",
+      "dex": 478,
+      "family": 186
+    },
+    {
+      "species": "rotom",
+      "name": "Rotom",
+      "dex": 479,
+      "family": 240
+    },
+    {
+      "species": "uxie",
+      "name": "Selfe",
+      "dex": 480,
+      "family": 241
+    },
+    {
+      "species": "mesprit",
+      "name": "Vesprit",
+      "dex": 481,
+      "family": 242
+    },
+    {
+      "species": "azelf",
+      "name": "Tobutz",
+      "dex": 482,
+      "family": 243
+    },
+    {
+      "species": "dialga",
+      "name": "Dialga",
+      "dex": 483,
+      "family": 244
+    },
+    {
+      "species": "palkia",
+      "name": "Palkia",
+      "dex": 484,
+      "family": 245
+    },
+    {
+      "species": "heatran",
+      "name": "Heatran",
+      "dex": 485,
+      "family": 246
+    },
+    {
+      "species": "regigigas",
+      "name": "Regigigas",
+      "dex": 486,
+      "family": 247
+    },
+    {
+      "species": "giratina",
+      "name": "Giratina",
+      "dex": 487,
+      "family": 248
+    },
+    {
+      "species": "cresselia",
+      "name": "Cresselia",
+      "dex": 488,
+      "family": 249
+    },
+    {
+      "species": "phione",
+      "name": "Phione",
+      "dex": 489,
+      "family": 250
+    },
+    {
+      "species": "manaphy",
+      "name": "Manaphy",
+      "dex": 490,
+      "family": 250
+    },
+    {
+      "species": "darkrai",
+      "name": "Darkrai",
+      "dex": 491,
+      "family": 252
+    },
+    {
+      "species": "shaymin",
+      "name": "Shaymin",
+      "dex": 492,
+      "family": 253
+    },
+    {
+      "species": "arceus",
+      "name": "Arceus",
+      "dex": 493,
+      "family": 254
     }
   ]
 }

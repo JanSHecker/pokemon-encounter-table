@@ -18,6 +18,8 @@ GAME = {
     "id": "black-2-white-2",
     "name": "Pokémon Schwarz 2 / Weiß 2",
     "versions": ["black-2", "white-2"],
+    # National-Dex bis Generation 5 - so weit reicht die Auswahlliste im Frontend.
+    "dex_max": 649,
     "locations": [
         {"id": "starter", "name": "Starter", "species": ["snivy", "tepig", "oshawott"]},
         "aspertia-city",
