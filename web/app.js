@@ -16,11 +16,24 @@ const API_BASE =
   '/encounter-table/api';
 
 const ARTWORK_BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
-const LOST_LABEL = 'Encounter verloren';
-const NO_CULPRIT = 'niemand';
 const POLL_INTERVAL_MS = 10000;
-const TEAM_SIZE = 6;
 const SORT_KEY = 'encounter-sort';
+
+// Vertragswerte der API (GET /runs -> rules). Der Platzhalter ist Protokoll: wir
+// schreiben ihn als Namen, die API leitet daraus 'failed' ab. Die Vorgaben hier
+// gelten nur, bis die erste Antwort da ist - gepflegt wird das im Backend.
+let LOST_LABEL = 'Encounter verloren';
+let NO_CULPRIT = 'niemand';
+let TEAM_SIZE = 6;
+let UNDOABLE_ACTIONS = ['row-create', 'row-patch', 'row-delete'];
+
+function applyRules(rules) {
+  if (!rules) return;
+  LOST_LABEL = rules.lost_label ?? LOST_LABEL;
+  NO_CULPRIT = rules.no_culprit ?? NO_CULPRIT;
+  TEAM_SIZE = rules.team_size ?? TEAM_SIZE;
+  UNDOABLE_ACTIONS = rules.undoable_actions ?? UNDOABLE_ACTIONS;
+}
 
 // Jede Sortierung gruppiert nur; innerhalb der Gruppe bleibt die Spielreihenfolge.
 const SORTERS = {
@@ -93,6 +106,11 @@ function esc(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+/** Eine <option> - jeder ausgegebene Wert geht durch esc(). */
+function option(value, label, selected) {
+  return `<option value="${esc(value)}"${selected ? ' selected' : ''}>${esc(label)}</option>`;
 }
 
 function formatDate(value) {
@@ -182,72 +200,71 @@ function catalog() {
 }
 
 function catalogLocation(locationId) {
-  const current = catalog();
-  if (!current || !locationId) return null;
-  return current.locations.find((location) => location.id === locationId) || null;
+  return (locationId && catalog()?.index.locations.get(locationId)) || null;
 }
 
 function speciesDex(species) {
-  const current = catalog();
-  if (!current || !species) return null;
-  for (const location of current.locations) {
-    const entry = location.encounters.find((candidate) => candidate.species === species);
-    if (entry) return entry.dex;
-  }
-  return null;
+  return (species && catalog()?.index.dex.get(species)) || null;
 }
 
 async function ensureCatalog(gameId) {
   if (!gameId || state.catalogs[gameId]) return;
-  state.catalogs[gameId] = await api(`/games/${encodeURIComponent(gameId)}`);
+  const fetched = await api(`/games/${encodeURIComponent(gameId)}`);
+  // Indizes einmal bauen statt pro Zelle: der Katalog aendert sich zur Laufzeit
+  // nicht, die Tabelle schlaegt aber fuer jede Zelle darin nach.
+  fetched.index = {
+    locations: new Map(fetched.locations.map((location) => [location.id, location])),
+    dex: new Map(
+      fetched.locations.flatMap((location) => location.encounters.map((entry) => [entry.species, entry.dex])),
+    ),
+  };
+  state.catalogs[gameId] = fetched;
 }
 
-/** Species, die dieser Spieler in diesem Run schon gefangen hat (Dupes-Clause). */
-function usedSpecies(playerId, exceptRowId) {
-  const used = new Set();
+/** Wie oft jeder Spieler eine Art im Run schon eingetragen hat (Dupes-Clause).
+ *
+ * Einmal pro Zeichenvorgang statt einmal pro Zelle - sonst waechst der Aufwand
+ * quadratisch mit der Zeilenzahl.
+ */
+function speciesCounts() {
+  const counts = new Map();
   for (const row of state.run?.encounters || []) {
-    if (row.id === exceptRowId) continue;
-    const pick = row.picks[playerId];
-    if (pick && pick.species) used.add(pick.species);
+    for (const [playerId, pick] of Object.entries(row.picks || {})) {
+      if (!pick.species) continue;
+      let perPlayer = counts.get(playerId);
+      if (!perPlayer) counts.set(playerId, (perPlayer = new Map()));
+      perPlayer.set(pick.species, (perPlayer.get(pick.species) || 0) + 1);
+    }
   }
-  return used;
+  return counts;
 }
 
 // -------------------------------------------------------------- Rendern ---
 
-function pickCell(row, player) {
+function pickCell(row, player, cell) {
   const pick = row.picks[player.id] || { species: null, name: '', status: 'alive' };
-  const location = catalogLocation(row.location_id);
-  const used = usedSpecies(player.id, row.id);
+  const counts = cell.counts.get(player.id) || new Map();
+  // Diese Zeile zaehlt nicht gegen sich selbst.
+  const usedElsewhere = (species) => (counts.get(species) || 0) - (pick.species === species ? 1 : 0) > 0;
 
-  const byMethod = new Map();
-  for (const entry of location?.encounters || []) {
-    const key = entry.methods.join(' / ');
-    if (!byMethod.has(key)) byMethod.set(key, []);
-    byMethod.get(key).push(entry);
-  }
-
-  const known = new Set((location?.encounters || []).map((entry) => entry.species));
   const selected = pick.species || (pick.name ? '__custom__' : '');
+  let options = option('', '– leer –', selected === '');
+  options += option('__lost__', LOST_LABEL, pick.name === LOST_LABEL);
 
-  let options = `<option value=""${selected === '' ? ' selected' : ''}>– leer –</option>`;
-  options += `<option value="__lost__"${pick.name === LOST_LABEL ? ' selected' : ''}>${LOST_LABEL}</option>`;
-
-  for (const [method, entries] of byMethod) {
+  for (const [method, entries] of cell.byMethod) {
     options += `<optgroup label="${esc(method)}">`;
     for (const entry of entries) {
-      const dupe = used.has(entry.species) ? ' ⚠' : '';
-      const isSelected = pick.species === entry.species ? ' selected' : '';
-      options += `<option value="${esc(entry.species)}"${isSelected}>${esc(entry.name)}${dupe}</option>`;
+      const dupe = usedElsewhere(entry.species) ? ' ⚠' : '';
+      options += option(entry.species, `${entry.name}${dupe}`, pick.species === entry.species);
     }
     options += '</optgroup>';
   }
 
   // Freitext oder ein per force gespeicherter Sonderfall, der nicht in der Liste steht.
-  if (pick.name && pick.name !== LOST_LABEL && !known.has(pick.species)) {
-    options += `<option value="__keep__" selected>${esc(pick.name)}</option>`;
+  if (pick.name && pick.name !== LOST_LABEL && !cell.known.has(pick.species)) {
+    options += option('__keep__', pick.name, true);
   }
-  options += '<option value="__custom__">Anderes …</option>';
+  options += option('__custom__', 'Anderes …', false);
 
   const dex = speciesDex(pick.species);
   const isDead = pick.status === 'dead';
@@ -256,7 +273,7 @@ function pickCell(row, player) {
     <td class="col-player">
       <div class="pick">
         <img class="pick-image" alt="" aria-hidden="true" loading="lazy"
-             ${dex ? `src="${ARTWORK_BASE}/${dex}.png" onload="this.classList.add('loaded')"` : ''}>
+             ${dex ? `src="${ARTWORK_BASE}/${esc(dex)}.png" onload="this.classList.add('loaded')"` : ''}>
         <div class="pick-controls">
           <div class="pick-row">
             <select class="pick-select${isDead ? ' dead' : ''}" data-action="species" data-player="${esc(player.id)}"
@@ -264,10 +281,21 @@ function pickCell(row, player) {
             <button type="button" class="kill-button${isDead ? ' is-dead' : ''}" data-action="kill"
                     data-player="${esc(player.id)}" title="${isDead ? 'Wiederbeleben (entkoppelt)' : 'Als tot melden – koppelt die ganze Reihe'}">☠</button>
           </div>
-          ${used.has(pick.species) ? '<span class="dupe-hint">⚠ Art schon gefangen</span>' : ''}
+          ${usedElsewhere(pick.species) ? '<span class="dupe-hint">⚠ Art schon gefangen</span>' : ''}
         </div>
       </div>
     </td>`;
+}
+
+/** Spiegelt team_ready() der API: ein Link braucht bei allen ein lebendes Pokémon.
+ *
+ * 'caught' allein reicht nicht - das steht schon, sobald einer etwas eingetragen
+ * hat. Ohne diese Pruefung zeigten wir einen Stern, den die API mit 422 ablehnt.
+ */
+function teamReady(row) {
+  const picks = Object.values(row.picks || {});
+  if (row.outcome !== 'caught' || !picks.length) return false;
+  return picks.every((pick) => (pick.species || (pick.name || '').trim()) && pick.status !== 'dead');
 }
 
 /** Nur vollstaendig gefangene Reihen lassen sich ins Team nehmen.
@@ -276,7 +304,7 @@ function pickCell(row, player) {
  * nach "anklickbar" aus. Der Platzhalter haelt die Ortsnamen in einer Flucht.
  */
 function teamToggle(row) {
-  if (row.outcome !== 'caught') {
+  if (!teamReady(row)) {
     return '<span class="team-toggle-spacer" aria-hidden="true"></span>';
   }
   return `<button type="button" class="team-toggle${row.in_team ? ' is-active' : ''}" data-action="team"
@@ -284,24 +312,37 @@ function teamToggle(row) {
                   title="${row.in_team ? 'Aus dem Team nehmen' : 'Ins Team nehmen'}">${row.in_team ? '★' : '☆'}</button>`;
 }
 
-function rowHtml(row) {
+/** Was alle Zellen einer Zeile gemeinsam brauchen - einmal statt je Spieler. */
+function rowContext(row, counts) {
+  const location = catalogLocation(row.location_id);
+  const encounters = location?.encounters || [];
+  const byMethod = new Map();
+  for (const entry of encounters) {
+    const key = entry.methods.join(' / ');
+    if (!byMethod.has(key)) byMethod.set(key, []);
+    byMethod.get(key).push(entry);
+  }
+  return { counts, byMethod, known: new Set(encounters.map((entry) => entry.species)) };
+}
+
+function culpritOptions(selected) {
+  return (
+    option('', '–', !selected) +
+    state.players.map((player) => option(player.id, player.name, selected === player.id)).join('') +
+    option(NO_CULPRIT, 'Niemand', selected === NO_CULPRIT)
+  );
+}
+
+function rowHtml(row, counts = speciesCounts()) {
   // row-caught bleibt bewusst ungestylt: gefangen und in der Box ist der Normalfall.
   const classes = [`row-${row.outcome}`];
   if (row.in_team) classes.push('row-team');
 
+  const cell = rowContext(row, counts);
   const outcomeOptions = Object.entries(OUTCOME_LABELS)
-    .map(([value, label]) => `<option value="${value}"${row.outcome === value ? ' selected' : ''}>${label}</option>`)
+    .map(([value, label]) => option(value, label, row.outcome === value))
     .join('');
-
-  const responsibleOptions =
-    `<option value=""${row.responsible_player ? '' : ' selected'}>–</option>` +
-    state.players
-      .map(
-        (player) =>
-          `<option value="${esc(player.id)}"${row.responsible_player === player.id ? ' selected' : ''}>${esc(player.name)}</option>`,
-      )
-      .join('') +
-    `<option value="${NO_CULPRIT}"${row.responsible_player === NO_CULPRIT ? ' selected' : ''}>Niemand</option>`;
+  const responsibleOptions = culpritOptions(row.responsible_player);
 
   return `
     <tr data-row="${esc(row.id)}" class="${classes.join(' ')}">
@@ -311,7 +352,7 @@ function rowHtml(row) {
           <strong>${esc(row.encounter)}${row.postgame ? '<span class="postgame-tag">Postgame</span>' : ''}</strong>
         </div>
       </td>
-      ${state.players.map((player) => pickCell(row, player)).join('')}
+      ${state.players.map((player) => pickCell(row, player, cell)).join('')}
       <td class="col-meta"><select data-action="outcome" aria-label="Status">${outcomeOptions}</select></td>
       <td class="col-meta"><select data-action="responsible" aria-label="Schuldiger">${responsibleOptions}</select></td>
       <td class="col-note">
@@ -333,7 +374,10 @@ function renderTable() {
     state.players.map((player) => `<th class="col-player">${esc(player.name)}</th>`).join('') +
     head('status', 'Status', 'col-meta') +
     '<th class="col-meta">Schuldiger</th><th class="col-note">Notiz</th>';
-  el.rows.innerHTML = sortedRows().map(rowHtml).join('');
+  const counts = speciesCounts();
+  el.rows.innerHTML = sortedRows()
+    .map((row) => rowHtml(row, counts))
+    .join('');
   renderTeamCount();
 }
 
@@ -373,7 +417,7 @@ function renderCaps() {
     .map((cap, index) => {
       const cls = index < progress ? 'cap done' : index === progress ? 'cap current' : 'cap';
       return `<div class="${cls}">
-        <span class="cap-level">${cap.cap}</span>
+        <span class="cap-level">${esc(cap.cap)}</span>
         <span>${esc(cap.leader)}</span>
         <span class="cap-where">${esc(cap.place)}</span>
       </div>`;
@@ -391,14 +435,14 @@ function renderRunPickers() {
   const selectedGame = el.gameSelect.value || state.run?.game_id || games[0]?.id || '';
 
   el.gameSelect.innerHTML = games
-    .map((game) => `<option value="${esc(game.id)}"${game.id === selectedGame ? ' selected' : ''}>${esc(game.name)}</option>`)
+    .map((game) => option(game.id, game.name, game.id === selectedGame))
     .join('');
 
   const runsForGame = state.runs.filter((run) => run.game_id === selectedGame);
   el.runSelect.innerHTML = runsForGame
     .map((run) => {
       const label = `${run.name}${run.status === 'completed' ? ' · abgeschlossen' : ''}`;
-      return `<option value="${esc(run.id)}"${run.id === state.currentRunId ? ' selected' : ''}>${esc(label)}</option>`;
+      return option(run.id, label, run.id === state.currentRunId);
     })
     .join('');
 
@@ -422,7 +466,7 @@ function renderStats(data) {
   el.statGrid.innerHTML = cards
     .map(
       ([label, value]) =>
-        `<div class="stat-card"><span class="stat-label">${label}</span><span class="stat-value">${value}</span></div>`,
+        `<div class="stat-card"><span class="stat-label">${esc(label)}</span><span class="stat-value">${esc(value)}</span></div>`,
     )
     .join('');
 
@@ -435,9 +479,9 @@ function renderStats(data) {
     .map(
       (player) => `<tr>
         <td>${esc(player.name)}</td>
-        <td>${data.deaths_by_player[player.id] || 0}</td>
-        <td>${data.failed_encounters_by_player[player.id] || 0}</td>
-        <td><strong>${data.blame_by_player[player.id] || 0}</strong></td>
+        <td>${esc(data.deaths_by_player[player.id] || 0)}</td>
+        <td>${esc(data.failed_encounters_by_player[player.id] || 0)}</td>
+        <td><strong>${esc(data.blame_by_player[player.id] || 0)}</strong></td>
       </tr>`,
     )
     .join('');
@@ -446,8 +490,8 @@ function renderStats(data) {
     .map(
       (run) => `<tr>
         <td><strong>${esc(run.name)}</strong><span class="note">${esc(run.game_name || run.game_id)}</span></td>
-        <td>${run.deaths}</td>
-        <td>${run.failed_encounters}</td>
+        <td>${esc(run.deaths)}</td>
+        <td>${esc(run.failed_encounters)}</td>
       </tr>`,
     )
     .join('');
@@ -455,9 +499,9 @@ function renderStats(data) {
 
 function renderScopeOptions() {
   const scope = el.statScope.value || 'all';
-  const options = ['<option value="all">Alle Runs</option>'];
-  for (const game of state.games) options.push(`<option value="game:${esc(game.id)}">${esc(game.name)}</option>`);
-  for (const run of state.runs) options.push(`<option value="run:${esc(run.id)}">${esc(run.name)}</option>`);
+  const options = [option('all', 'Alle Runs', false)];
+  for (const game of state.games) options.push(option(`game:${game.id}`, game.name, false));
+  for (const run of state.runs) options.push(option(`run:${run.id}`, run.name, false));
   el.statScope.innerHTML = options.join('');
   el.statScope.value = scope;
 }
@@ -485,7 +529,9 @@ async function loadHistory() {
           <td>${
             entry.undone
               ? '<span class="status-badge">zurückgenommen</span>'
-              : ['row-create', 'row-patch', 'row-delete'].includes(entry.action)
+              : // Ob sich ein Eintrag zuruecknehmen laesst, entscheidet die API.
+                // Fehlt das Feld (aeltere API), gilt die Liste aus 'rules'.
+                (entry.undoable ?? UNDOABLE_ACTIONS.includes(entry.action))
                 ? `<button type="button" data-undo="${esc(entry.id)}">Rückgängig</button>`
                 : ''
           }</td>
@@ -501,9 +547,12 @@ async function loadHistory() {
 
 async function loadRuns() {
   const data = await api('/runs');
+  applyRules(data.rules);
   state.players = data.players;
   state.runs = data.runs;
   state.updatedAt = data.updated_at;
+  // Faellt der aktuelle Run weg (jemand hat ihn geloescht), sonst laeuft jeder
+  // weitere Ladeversuch in einen 404.
   if (!state.currentRunId || !state.runs.some((run) => run.id === state.currentRunId)) {
     state.currentRunId = data.current_run_id;
   }
@@ -615,8 +664,12 @@ let culpritResolve = null;
 function askCulprit(row) {
   el.culpritQuestion.textContent = `Wer ist schuld an „${row.encounter}“?`;
   el.culpritSelect.innerHTML =
-    state.players.map((player) => `<option value="${esc(player.id)}">${esc(player.name)}</option>`).join('') +
-    `<option value="${NO_CULPRIT}">Niemand – keiner war schuld</option>`;
+    state.players.map((player) => option(player.id, player.name, false)).join('') +
+    option(NO_CULPRIT, 'Niemand – keiner war schuld', false);
+  // returnValue ueberlebt das Schliessen: ohne Reset gilt ein frueheres "ok"
+  // beim naechsten Abbrechen weiter und wir schreiben einen Schuldigen, den
+  // niemand bestaetigt hat.
+  el.culpritDialog.returnValue = '';
   el.culpritDialog.showModal();
   return new Promise((resolve) => {
     culpritResolve = resolve;
@@ -687,7 +740,10 @@ el.gameSelect.addEventListener('change', async () => {
   renderRunPickers();
   if (runsForGame.length) await loadRun(runsForGame[0].id);
   else {
+    // Auch die Run-ID loesen, sonst holt der naechste Poll den Run des vorigen
+    // Spiels zurueck und ueberschreibt die Auswahl mitten in der Bedienung.
     state.run = null;
+    state.currentRunId = null;
     el.rows.innerHTML = '<tr><td colspan="9">Für dieses Spiel gibt es noch keinen Run.</td></tr>';
     el.capList.innerHTML = '';
     el.progressLabel.textContent = '–';
@@ -759,7 +815,7 @@ document.querySelectorAll('dialog [data-close]').forEach((button) => {
 
 el.newRunButton.addEventListener('click', () => {
   el.runGame.innerHTML = state.games
-    .map((game) => `<option value="${esc(game.id)}"${game.id === el.gameSelect.value ? ' selected' : ''}>${esc(game.name)}</option>`)
+    .map((game) => option(game.id, game.name, game.id === el.gameSelect.value))
     .join('');
   el.runName.value = `Run ${state.runs.length + 1}`;
   el.runDialog.showModal();
@@ -794,10 +850,7 @@ el.addLocationButton.addEventListener('click', () => {
     return;
   }
   el.locationSelect.innerHTML = missing
-    .map(
-      (location) =>
-        `<option value="${esc(location.id)}">${esc(location.name)}${location.postgame ? ' (Postgame)' : ''}</option>`,
-    )
+    .map((location) => option(location.id, `${location.name}${location.postgame ? ' (Postgame)' : ''}`, false))
     .join('');
   el.locationDialog.showModal();
 });
@@ -832,11 +885,16 @@ function isEditing() {
 async function poll() {
   if (document.hidden || pendingWrites > 0 || isEditing()) return;
   try {
-    const data = await api('/runs');
-    if (data.updated_at === state.updatedAt) return;
-    state.players = data.players;
-    state.runs = data.runs;
-    await loadRun(state.currentRunId);
+    const seen = state.updatedAt;
+    // Ueber loadRuns() statt eigenem Fetch: nur so greift der Rueckfall auf den
+    // aktuellen Run des Servers, wenn der eigene inzwischen geloescht wurde.
+    await loadRuns();
+    if (state.updatedAt === seen) return;
+    // Nur laden, was zum gewaehlten Spiel gehoert - sonst zieht der Poll die
+    // Ansicht auf ein Spiel zurueck, das gerade niemand sehen will.
+    const current = state.runs.find((run) => run.id === state.currentRunId);
+    const selectedGame = el.gameSelect.value;
+    if (current && (!selectedGame || current.game_id === selectedGame)) await loadRun(current.id);
     if (state.view === 'dashboard') await loadStats();
     if (state.view === 'history') await loadHistory();
   } catch {

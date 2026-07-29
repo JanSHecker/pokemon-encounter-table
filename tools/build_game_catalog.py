@@ -134,7 +134,7 @@ def collect_encounters(location_slug: str, versions: set[str]) -> list[dict[str,
     ]
 
 
-def build_location(raw: str | dict[str, Any], order: int, versions: set[str]) -> dict[str, Any] | None:
+def build_location(raw: str | dict[str, Any], versions: set[str]) -> dict[str, Any] | None:
     """Einen kuratierten Listeneintrag zu einem Katalog-Ort aufloesen.
 
     Eintraege sind entweder ein PokeAPI-Slug oder ein Dict mit Overrides.
@@ -164,7 +164,8 @@ def build_location(raw: str | dict[str, Any], order: int, versions: set[str]) ->
         print(f"  uebersprungen (keine Encounter): {location_id}", file=sys.stderr)
         return None
 
-    location = {"id": location_id, "order": order, "name": name, "encounters": encounters}
+    # 'order' vergibt build_catalog, sobald feststeht, welche Orte uebrig bleiben.
+    location = {"id": location_id, "order": 0, "name": name, "encounters": encounters}
     if spec.get("postgame"):
         location["postgame"] = True
     if spec.get("note"):
@@ -193,15 +194,11 @@ def build_catalog(game: dict[str, Any]) -> dict[str, Any]:
     versions = set(game["versions"])
     print(f"Baue Katalog '{game['id']}' ({len(game['locations'])} kuratierte Orte)...", file=sys.stderr)
 
-    locations = []
-    order = 0
-    for raw in game["locations"]:
-        order += 1
-        location = build_location(raw, order, versions)
-        if location is not None:
-            locations.append(location)
+    locations = [
+        location for location in (build_location(raw, versions) for raw in game["locations"]) if location is not None
+    ]
 
-    # Luecken schliessen, die durch uebersprungene Orte entstanden sind.
+    # Erst jetzt durchnummerieren - uebersprungene Orte sollen keine Luecke lassen.
     for index, location in enumerate(locations, start=1):
         location["order"] = index
 

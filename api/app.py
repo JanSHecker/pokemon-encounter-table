@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import os
 import re
@@ -7,18 +8,19 @@ import secrets
 import shutil
 import threading
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Iterator, Literal
+from typing import Any, Iterator, Literal, get_args
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Response, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 SCHEMA_VERSION = 3
 SLUG_PATTERN = r"^[a-z0-9]+(?:-[a-z0-9]+)*$"
 
 Outcome = Literal["pending", "caught", "dead", "failed"]
+OUTCOMES = get_args(Outcome)
 PickStatus = Literal["alive", "dead"]
 RunStatus = Literal["active", "completed"]
 
@@ -40,6 +42,23 @@ LOST_LABEL = PLACEHOLDER_PREFIXES[0]
 # Die drei Spieler hiessen bis Schema v2 anders und steckten als feste Felder in jeder Zeile.
 LEGACY_PLAYER_FIELDS = {"mark": "marc", "nikolai": "nicolai", "knev": "knev"}
 LEGACY_PLAYER_LABELS = {"Mark": "marc", "Nikolai": "nicolai", "KNEV": "knev"}
+
+# v2 kannte kein Spiel als Konzept, nur einen freien Namen. Bekannte Schreibweisen
+# landen auf der Katalog-ID; alles andere faengt resolve_game_id() ab.
+LEGACY_GAME_NAMES = {
+    "platin": "platinum",
+    "pokemon platin": "platinum",
+    "pokémon platin": "platinum",
+    "schwarz 2": "black-2-white-2",
+    "weiss 2": "black-2-white-2",
+    "weiß 2": "black-2-white-2",
+    "schwarz 2/weiss 2": "black-2-white-2",
+    "schwarz 2/weiß 2": "black-2-white-2",
+    "pokemon schwarz 2": "black-2-white-2",
+    "pokémon schwarz 2": "black-2-white-2",
+    "pokemon weiss 2": "black-2-white-2",
+    "pokémon weiß 2": "black-2-white-2",
+}
 
 # Alte Zeilen-IDs auf Katalog-Orte. Bewusst explizit - hier wird nicht geraten.
 LEGACY_LOCATION_IDS = {
@@ -67,6 +86,11 @@ LEGACY_SEA_ROUTES = {"220", "223", "226", "230"}
 HISTORY_KEEP = 20000  # Eintraege, die in der Datei verbleiben
 HISTORY_REWRITE_SLACK = 500  # erst so viel darueber wird aufgeraeumt
 HISTORY_PAGE_MAX = 500  # groesste Seite, die /history ausliefert
+UNDOABLE_ACTIONS = ("row-create", "row-patch", "row-delete")
+
+# Felder, die sich per PATCH ausdruecklich auf null setzen (also leeren) lassen.
+NULLABLE_ROW_FIELDS = {"note", "responsible_player", "picks"}
+NULLABLE_RUN_FIELDS: set[str] = set()
 
 # Taegliche Kopie des Datenstandes, plus eine vor jeder Schema-Migration.
 BACKUP_KEEP = 30
@@ -103,11 +127,21 @@ def games_path() -> Path:
 
 _catalog_cache: dict[str, dict[str, Any]] = {}
 
+# Aus den Katalogen abgeleitete Nachschlagewerke. Kataloge aendern sich zur
+# Laufzeit nicht, die Indizes also auch nicht - sie pro Zeile neu aufzubauen
+# kostet beim Laden eines Alt-Standes das Vielfache.
+_derived_cache: dict[tuple[str, str, str], Any] = {}
+
+
+def games_key() -> str:
+    directory = games_path()
+    return str(directory.resolve()) if directory.exists() else str(directory)
+
 
 def load_games() -> dict[str, dict[str, Any]]:
     """Kataloge lesen und je Verzeichnis cachen (Tests zeigen auf eigene Fixtures)."""
     directory = games_path()
-    key = str(directory.resolve()) if directory.exists() else str(directory)
+    key = games_key()
     if key in _catalog_cache:
         return _catalog_cache[key]
 
@@ -126,34 +160,79 @@ def load_games() -> dict[str, dict[str, Any]]:
 
 def reset_catalog_cache() -> None:
     _catalog_cache.clear()
+    _derived_cache.clear()
     _history_seq.clear()
+    _state_cache.clear()
+
+
+def game_or_none(game_id: str) -> dict[str, Any] | None:
+    """Katalog zu einer Spiel-ID oder None.
+
+    Einzige Stelle, an der eine Spiel-ID nachgeschlagen wird - alles darueber
+    entscheidet nur noch, was ein fehlender Katalog bedeutet.
+    """
+    return load_games().get(game_id)
 
 
 def find_game(game_id: str) -> dict[str, Any]:
-    games = load_games()
-    if game_id not in games:
-        known = ", ".join(sorted(games)) or "keine"
+    game = game_or_none(game_id)
+    if game is None:
+        known = ", ".join(sorted(load_games())) or "keine"
         raise HTTPException(status_code=404, detail=f"Spiel '{game_id}' nicht gefunden (bekannt: {known}).")
-    return games[game_id]
+    return game
+
+
+def game_locations(game_id: str) -> list[dict[str, Any]]:
+    game = game_or_none(game_id)
+    return game["locations"] if game else []
+
+
+def derived(kind: str, game_id: str, build: Any) -> Any:
+    """Ein abgeleitetes Nachschlagewerk je Spiel, einmal gebaut und gemerkt."""
+    key = (games_key(), kind, game_id)
+    if key not in _derived_cache:
+        _derived_cache[key] = build()
+    return _derived_cache[key]
 
 
 def catalog_locations(game_id: str) -> dict[str, dict[str, Any]]:
-    games = load_games()
-    if game_id not in games:
-        return {}
-    return {location["id"]: location for location in games[game_id]["locations"]}
+    return derived(
+        "locations", game_id, lambda: {location["id"]: location for location in game_locations(game_id)}
+    )
+
+
+def resolve_game_id(value: Any) -> str:
+    """Spielangabe auf eine Katalog-ID bringen.
+
+    Bereits migrierte Staende tragen hier eine Slug-ID - die bleibt unangetastet,
+    auch wenn der zugehoerige Katalog gerade nicht im Verzeichnis liegt. Nur der
+    Freitext aus v2 wird abgebildet, sonst waere ein Run dauerhaft unerreichbar:
+    das Frontend laedt zu jeder game_id einen Katalog und bricht bei 404 ab.
+    """
+    candidate = str(value or "").strip()
+    if not candidate:
+        return DEFAULT_GAME_ID
+    if len(candidate) <= 80 and re.fullmatch(SLUG_PATTERN, candidate):
+        return candidate
+
+    mapped = LEGACY_GAME_NAMES.get(candidate.casefold())
+    if mapped:
+        return mapped
+    slug = re.sub(r"[^a-z0-9]+", "-", candidate.casefold()).strip("-")
+    return slug if slug in load_games() else DEFAULT_GAME_ID
 
 
 def species_by_german_name(game_id: str) -> dict[str, str]:
     """Deutscher Pokémon-Name -> PokeAPI-Slug, für die Migration der Alt-Daten."""
-    lookup: dict[str, str] = {}
-    games = load_games()
-    if game_id not in games:
+
+    def build() -> dict[str, str]:
+        lookup: dict[str, str] = {}
+        for location in game_locations(game_id):
+            for entry in location["encounters"]:
+                lookup.setdefault(entry["name"].casefold(), entry["species"])
         return lookup
-    for location in games[game_id]["locations"]:
-        for entry in location["encounters"]:
-            lookup.setdefault(entry["name"].casefold(), entry["species"])
-    return lookup
+
+    return derived("species-by-name", game_id, build)
 
 
 # --------------------------------------------------------------------------- #
@@ -194,7 +273,9 @@ class EncounterRow(BaseModel):
     order: int = Field(default=0, ge=0)
     encounter: str = Field(min_length=1, max_length=200)
     note: str | None = Field(default=None, max_length=500)
-    responsible_player: str | None = Field(default=None, max_length=40)
+    # 80 Zeichen, weil v2 hier Freitext zuliess - engere Grenzen kippen Bestandsdaten
+    # beim Laden. Was beim Schreiben erlaubt ist, klaert validate_responsible().
+    responsible_player: str | None = Field(default=None, max_length=80)
     outcome: Outcome = "pending"
     postgame: bool = False
     in_team: bool = False
@@ -206,7 +287,7 @@ class EncounterPatch(BaseModel):
 
     encounter: str | None = Field(default=None, min_length=1, max_length=200)
     note: str | None = Field(default=None, max_length=500)
-    responsible_player: str | None = Field(default=None, max_length=40)
+    responsible_player: str | None = Field(default=None, max_length=80)
     outcome: Outcome | None = None
     in_team: bool | None = None
     picks: dict[str, PickPatch] | None = None
@@ -273,10 +354,25 @@ class RunSummary(BaseModel):
     death_count: int
 
 
+class Rules(BaseModel):
+    """Werte, die das Frontend kennen muss, um dieselbe Sprache zu sprechen.
+
+    Der Platzhalter fuer verlorene Encounter ist Teil des Protokolls: das
+    Frontend schreibt ihn als Namen, die API leitet daraus 'failed' ab. Eine
+    zweite Kopie im Frontend faellt beim Umbenennen still auseinander.
+    """
+
+    lost_label: str
+    no_culprit: str
+    team_size: int
+    undoable_actions: list[str]
+
+
 class RunsCollection(BaseModel):
     players: list[Player]
     current_run_id: str
     runs: list[RunSummary]
+    rules: Rules
     updated_at: str
 
 
@@ -295,6 +391,8 @@ class HistoryEntry(BaseModel):
     row_id: str | None
     summary: str
     undone: bool
+    # Damit das Frontend die Liste der ruecknehmbaren Aktionen nicht doppelt fuehrt.
+    undoable: bool = False
 
 
 class HistoryCollection(BaseModel):
@@ -313,6 +411,24 @@ def data_path() -> Path:
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def next_updated_at(previous: str | None) -> str:
+    """Streng monotoner Stand-Zeitstempel.
+
+    Sekundengenau reicht hier nicht: zwei Schreibzugriffe in derselben Sekunde
+    ergaeben denselben Wert, womit If-Match eine fremde Aenderung durchwinkt und
+    das Polling sie fuer "nichts passiert" haelt.
+    """
+    stamp = datetime.now(timezone.utc)
+    if previous:
+        try:
+            earlier = datetime.fromisoformat(previous)
+        except ValueError:
+            earlier = None
+        if earlier and stamp <= earlier:
+            stamp = earlier + timedelta(microseconds=1)
+    return stamp.isoformat()
 
 
 def is_placeholder(value: Any) -> bool:
@@ -384,18 +500,19 @@ def normalize_encounter(raw: dict[str, Any], player_ids: list[str], game_id: str
     responsible = row.get("responsible_player")
     if responsible in LEGACY_PLAYER_LABELS:
         row["responsible_player"] = LEGACY_PLAYER_LABELS[responsible]
+    elif isinstance(responsible, str) and len(responsible) > 80:
+        # Lieber ein gekuerzter Schuldiger als eine Datei, die sich nicht mehr laedt.
+        row["responsible_player"] = responsible[:80]
 
+    # Fehlende Felder ergaenzt gleich das Pick-Modell; hier fehlt nur, dass jeder
+    # Spieler ueberhaupt einen Eintrag hat und dass Altfelder verschwinden.
     picks = row["picks"]
     for player_id in player_ids:
         pick = dict(picks.get(player_id) or {})
-        pick.setdefault("species", None)
-        pick.setdefault("name", "")
-        pick.setdefault("status", "alive")
         pick.pop("level", None)  # bis v3.0 erfasst, wird nicht mehr gefuehrt
         picks[player_id] = pick
 
-    row["outcome"] = row.get("outcome") or derive_outcome(picks)
-    if row["outcome"] not in ("pending", "caught", "dead", "failed"):
+    if row.get("outcome") not in OUTCOMES:
         row["outcome"] = derive_outcome(picks)
 
     return EncounterRow.model_validate(row).model_dump()
@@ -410,9 +527,10 @@ def normalize_run(raw: dict[str, Any], fallback_id: str, player_ids: list[str]) 
     run.setdefault("completed_at", None)
     run.setdefault("progress", 0)
 
-    # v2 kannte nur einen freien Spielnamen, kein Spiel als Konzept.
-    game_id = run.pop("game", None) if "game_id" not in run else run.get("game_id")
-    run["game_id"] = game_id or DEFAULT_GAME_ID
+    # v2 kannte nur einen freien Spielnamen, kein Spiel als Konzept. Das Feld muss
+    # in jedem Fall weg - RunRecord verbietet Unbekanntes.
+    legacy_game = run.pop("game", None)
+    run["game_id"] = resolve_game_id(run.get("game_id") or legacy_game)
 
     run["encounters"] = [normalize_encounter(row, player_ids, run["game_id"]) for row in run.get("encounters", [])]
     return RunRecord.model_validate(run).model_dump()
@@ -464,11 +582,8 @@ def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
 
 def build_rows(game_id: str, include_postgame: bool, player_ids: list[str]) -> list[dict[str, Any]]:
     """Alle Orte eines Spiels als offene Zeilen anlegen."""
-    games = load_games()
-    if game_id not in games:
-        return []
     rows = []
-    for location in games[game_id]["locations"]:
+    for location in game_locations(game_id):
         if location.get("postgame") and not include_postgame:
             continue
         rows.append(
@@ -527,6 +642,14 @@ def history_path() -> Path:
 
 _history_seq: dict[str, int] = {}
 
+# Die Historie wird auch vom Lesepfad beschrieben (geerbte Eintraege aus Alt-
+# Staenden), der das Schreib-Lock nicht halten darf. Deshalb ein eigenes Lock;
+# die Reihenfolge ist immer write_lock -> history_lock.
+history_lock = threading.Lock()
+
+# Groesse, ab der sich ein Blick in die Datei zum Aufraeumen ueberhaupt lohnt.
+HISTORY_TRIM_PROBE_BYTES = HISTORY_KEEP * 200
+
 
 def read_history() -> list[dict[str, Any]]:
     path = history_path()
@@ -548,15 +671,49 @@ def append_history(records: list[dict[str, Any]]) -> None:
     if not records:
         return
     path = history_path()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a", encoding="utf-8") as handle:
-        for record in records:
-            handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    with history_lock:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("a", encoding="utf-8") as handle:
+            for record in records:
+                handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+        trim_history(path)
 
-    # Nur gelegentlich aufraeumen, nicht bei jedem Schreibzugriff.
+
+def trim_history(path: Path) -> None:
+    """Die Datei waechst unbegrenzt - irgendwann muss vorne etwas weg.
+
+    Erst die Dateigroesse pruefen: sie einzulesen, nur um Zeilen zu zaehlen,
+    kostet bei jedem Schreibzugriff mehr als die Ersparnis wert ist.
+    """
+    try:
+        if path.stat().st_size < HISTORY_TRIM_PROBE_BYTES:
+            return
+    except OSError:
+        return
     lines = path.read_text(encoding="utf-8").splitlines()
     if len(lines) > HISTORY_KEEP + HISTORY_REWRITE_SLACK:
         path.write_text("\n".join(lines[-HISTORY_KEEP:]) + "\n", encoding="utf-8")
+
+
+def adopt_history(records: list[dict[str, Any]]) -> None:
+    """Historie aus einem Alt-Stand einmalig in die eigene Datei ueberfuehren.
+
+    Laeuft auf dem Lesepfad und damit ohne Schreib-Lock: ohne den Abgleich gegen
+    die bereits bekannten IDs verdoppeln zwei gleichzeitige erste Requests die
+    komplette geerbte Historie.
+    """
+    if not records:
+        return
+    with history_lock:
+        known = {entry.get("id") for entry in read_history()}
+        fresh = [record for record in records if record.get("id") not in known]
+        if not fresh:
+            return
+        path = history_path()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("a", encoding="utf-8") as handle:
+            for record in fresh:
+                handle.write(json.dumps(record, ensure_ascii=False) + "\n")
 
 
 def next_history_id() -> str:
@@ -593,9 +750,16 @@ def daily_backup(source: Path) -> None:
     try:
         directory.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, target)
-        existing = sorted(directory.glob(f"{source.stem}-????-??-??.json"))
-        for outdated in existing[:-BACKUP_KEEP]:
-            outdated.unlink(missing_ok=True)
+
+        # Die Historie gehoert mit ins Backup: sie ist das Sicherheitsnetz, wird
+        # aber ab HISTORY_KEEP vorne beschnitten.
+        history = history_path()
+        if history.exists():
+            shutil.copyfile(history, directory / f"{history.stem}-{stamp}.jsonl")
+
+        for pattern in (f"{source.stem}-????-??-??.json", f"{history.stem}-????-??-??.jsonl"):
+            for outdated in sorted(directory.glob(pattern))[:-BACKUP_KEEP]:
+                outdated.unlink(missing_ok=True)
     except OSError:
         pass  # ein fehlgeschlagenes Backup darf den Schreibzugriff nicht blockieren
 
@@ -623,6 +787,21 @@ def save_state(state: dict[str, Any]) -> None:
     temporary = target.with_suffix(f"{target.suffix}.tmp")
     temporary.write_text(serialize_state(state), encoding="utf-8")
     os.replace(temporary, target)
+    _state_cache.update(fingerprint=state_fingerprint(target), state=state)
+
+
+# Zuletzt geladener Stand, samt Fingerabdruck der Datei. Jeder Request laedt
+# sonst neu: parsen, jede Zeile durch die Modelle schicken und das Ganze wieder
+# serialisieren, nur um es mit dem Dateitext zu vergleichen.
+_state_cache: dict[str, Any] = {}
+
+
+def state_fingerprint(target: Path) -> tuple[Any, ...] | None:
+    try:
+        stat = target.stat()
+    except OSError:
+        return None
+    return (str(target), stat.st_mtime_ns, stat.st_size)
 
 
 def load_state() -> dict[str, Any]:
@@ -631,15 +810,18 @@ def load_state() -> dict[str, Any]:
         state = initial_state()
         save_state(state)
         return state
+
+    fingerprint = state_fingerprint(target)
+    if fingerprint is not None and _state_cache.get("fingerprint") == fingerprint:
+        return _state_cache["state"]
+
     try:
         stored = target.read_text(encoding="utf-8")
         raw = json.loads(stored)
         state = normalize_state(raw)
 
         # Historie aus aelteren Staenden in die eigene Datei ueberfuehren.
-        inherited = [entry for entry in raw.get("history", []) if isinstance(entry, dict)]
-        if inherited:
-            append_history(inherited)
+        adopt_history([entry for entry in raw.get("history", []) if isinstance(entry, dict)])
 
         # Gegen den Dateitext vergleichen, nicht gegen das geparste Dict: die
         # normalize_*-Kette aendert verschachtelte Teile in-place, ein Vergleich
@@ -648,9 +830,13 @@ def load_state() -> dict[str, Any]:
             if raw.get("schema_version") != SCHEMA_VERSION:
                 migration_backup(target, raw.get("schema_version"))
             save_state(state)
+
+        # Nach dem moeglichen Rueckschreiben abnehmen, sonst zeigt der Abdruck
+        # auf den Stand vor der Migration und der Cache greift nie.
+        _state_cache.update(fingerprint=state_fingerprint(target), state=state)
         return state
     except (OSError, json.JSONDecodeError, ValueError, TypeError) as exc:
-        raise RuntimeError(f"Encounter data is invalid: {target}") from exc
+        raise RuntimeError(f"Encounter-Daten sind ungültig: {target}") from exc
 
 
 # --------------------------------------------------------------------------- #
@@ -692,7 +878,9 @@ _history_buffer: list[dict[str, Any]] = []
 def mutate(if_match: str | None) -> Iterator[dict[str, Any]]:
     """Laden, pruefen, aendern, speichern - unter dem globalen Schreib-Lock."""
     with write_lock:
-        state = load_state()
+        # Auf einer Kopie arbeiten: bricht eine Regel den Vorgang ab, ist der
+        # zwischengespeicherte Stand nicht schon halb veraendert.
+        state = copy.deepcopy(load_state())
         if if_match and if_match.strip('"') != state["updated_at"]:
             raise HTTPException(
                 status_code=status.HTTP_412_PRECONDITION_FAILED,
@@ -700,10 +888,22 @@ def mutate(if_match: str | None) -> Iterator[dict[str, Any]]:
             )
         _history_buffer.clear()
         yield state
-        state["updated_at"] = now_iso()
+        state["updated_at"] = next_updated_at(state.get("updated_at"))
         save_state(state)
         append_history(_history_buffer)
         _history_buffer.clear()
+
+
+@contextmanager
+def write_to_run(if_match: str | None, run_id: str | None) -> Iterator[tuple[dict[str, Any], dict[str, Any]]]:
+    """Schreibzugriff auf einen Run - benannt oder den aktuellen.
+
+    Die Endpunkte fuer den aktuellen Run und die run-spezifischen unterscheiden
+    sich nur hierin. Ohne gemeinsame Klammer driften die beiden Varianten
+    derselben Operation auseinander.
+    """
+    with mutate(if_match) as state:
+        yield state, find_run(state, run_id) if run_id is not None else current_run(state)
 
 
 def record_history(
@@ -763,9 +963,20 @@ def player_ids_of(state: dict[str, Any]) -> list[str]:
 
 
 def game_name_of(game_id: str) -> str | None:
-    games = load_games()
-    game = games.get(game_id)
+    game = game_or_none(game_id)
     return game["name"] if game else None
+
+
+def clamp_progress(game_id: str, value: int) -> int:
+    """Fortschritt zaehlt Level-Caps ab - mehr als der Katalog kennt, gibt es nicht.
+
+    Die Grenze gehoert auf den Schreibpfad und nicht nur ins Frontend, sonst
+    laufen andere Clients aus dem Wertebereich, den renderCaps erwartet.
+    """
+    game = game_or_none(game_id)
+    if game is None:
+        return max(value, 0)
+    return max(0, min(value, len(game.get("level_caps") or [])))
 
 
 def collection_for(state: dict[str, Any], run: dict[str, Any]) -> dict[str, Any]:
@@ -814,15 +1025,25 @@ def slugify_run_id(name: str, existing_ids: set[str]) -> str:
 # --------------------------------------------------------------------------- #
 
 
+def allowed_species(game_id: str) -> dict[str, set[str]]:
+    """Ort -> fangbare Arten."""
+
+    def build() -> dict[str, set[str]]:
+        return {
+            location["id"]: {entry["species"] for entry in location["encounters"]}
+            for location in game_locations(game_id)
+        }
+
+    return derived("allowed-species", game_id, build)
+
+
 def validate_species(run: dict[str, Any], row: dict[str, Any], picks: dict[str, Any], force: bool) -> None:
     """Nur Pokémon zulassen, die es an diesem Ort ueberhaupt gibt."""
     if force or not row.get("location_id"):
         return
-    locations = catalog_locations(run["game_id"])
-    location = locations.get(row["location_id"])
-    if location is None:
+    allowed = allowed_species(run["game_id"]).get(row["location_id"])
+    if allowed is None:
         return
-    allowed = {entry["species"] for entry in location["encounters"]}
     for player_id, pick in picks.items():
         species = pick.get("species")
         if species and species not in allowed:
@@ -835,21 +1056,32 @@ def validate_species(run: dict[str, Any], row: dict[str, Any], picks: dict[str, 
             )
 
 
+def reject_null_fields(updates: dict[str, Any], nullable: set[str]) -> None:
+    """Ausdrueckliches null nur dort zulassen, wo es ein Feld auch leeren kann.
+
+    Ohne diese Pruefung landet das None im Datensatz und erst die Modellpruefung
+    am Ende schlaegt fehl - der Aufrufer saehe einen 500er statt eines Hinweises.
+    """
+    invalid = sorted(key for key, value in updates.items() if value is None and key not in nullable)
+    if invalid:
+        raise HTTPException(status_code=422, detail=f"Diese Felder dürfen nicht null sein: {', '.join(invalid)}.")
+
+
 def validate_responsible(value: Any, player_ids: list[str]) -> None:
     if value is None or value == NO_CULPRIT or value in player_ids:
         return
-    erlaubt = ", ".join([*player_ids, NO_CULPRIT])
-    raise HTTPException(status_code=422, detail=f"'{value}' ist kein gültiger Schuldiger (erlaubt: {erlaubt}).")
+    allowed = ", ".join([*player_ids, NO_CULPRIT])
+    raise HTTPException(status_code=422, detail=f"'{value}' ist kein gültiger Schuldiger (erlaubt: {allowed}).")
 
 
 def require_culprit(row: dict[str, Any]) -> None:
     """Ohne Schuldigen fehlt der Vorfall in der Statistik - also gleich einfordern."""
     if row["outcome"] in ("dead", "failed") and not row.get("responsible_player"):
-        vorfall = "Tod" if row["outcome"] == "dead" else "verlorener Encounter"
+        incident = "Tod" if row["outcome"] == "dead" else "verlorener Encounter"
         raise HTTPException(
             status_code=422,
             detail=(
-                f"Bei '{row['encounter']}' fehlt der Schuldige ({vorfall}). "
+                f"Bei '{row['encounter']}' fehlt der Schuldige ({incident}). "
                 f"Spieler eintragen oder ausdrücklich '{NO_CULPRIT}', wenn niemand schuld war."
             ),
         )
@@ -859,33 +1091,72 @@ def require_team_slot(run: dict[str, Any], row: dict[str, Any]) -> None:
     """Mehr als sechs Links gleichzeitig gehen nicht - erst einer raus."""
     active = [entry for entry in run["encounters"] if entry.get("in_team") and entry["id"] != row["id"]]
     if len(active) >= TEAM_SIZE:
-        dabei = ", ".join(entry["encounter"] for entry in active)
+        current = ", ".join(entry["encounter"] for entry in active)
         raise HTTPException(
             status_code=409,
-            detail=f"Das Team ist voll ({TEAM_SIZE} Links). Erst einen herausnehmen. Aktuell dabei: {dabei}.",
+            detail=f"Das Team ist voll ({TEAM_SIZE} Links). Erst einen herausnehmen. Aktuell dabei: {current}.",
         )
+
+
+def team_ready(row: dict[str, Any]) -> bool:
+    """Ein Link belegt einen Platz fuer alle - also braucht jeder ein lebendes Pokémon.
+
+    Das Outcome allein reicht als Kriterium nicht: 'caught' steht schon, sobald
+    ein einziger Spieler etwas eingetragen hat.
+    """
+    picks = list(row["picks"].values())
+    if row["outcome"] != "caught" or not picks:
+        return False
+    return all(pick_is_filled(pick) and pick.get("status") != "dead" for pick in picks)
 
 
 def apply_team_rules(run: dict[str, Any], row: dict[str, Any], requested: bool | None) -> None:
     """Nur vollstaendige, lebende Reihen spielen mit."""
-    if requested and row["outcome"] != "caught":
+    ready = team_ready(row)
+    if requested and not ready:
         raise HTTPException(
             status_code=422,
             detail="Nur Reihen, in denen alle drei ein lebendes Pokémon haben, können ins Team.",
         )
-    if row["outcome"] != "caught":
+    if not ready:
         row["in_team"] = False
     elif requested:
         require_team_slot(run, row)
 
 
-def couple_deaths(row: dict[str, Any], responsible: str | None) -> bool:
+def require_known_players(picks: dict[str, Any], player_ids: list[str]) -> None:
+    unknown = set(picks) - set(player_ids)
+    if unknown:
+        raise HTTPException(status_code=422, detail=f"Unbekannte Spieler: {', '.join(sorted(unknown))}")
+
+
+def require_consistent_outcome(row: dict[str, Any]) -> None:
+    """'dead' lebt in den Picks, nicht im Outcome-Feld.
+
+    Ohne toten Pick waere der Tod nicht haltbar: die naechste Aenderung an der
+    Zeile leitet das Outcome neu ab und macht stillschweigend wieder 'caught'
+    daraus - der Vorfall verschwaende aus der Statistik.
+    """
+    if row["outcome"] == "dead" and not any(pick["status"] == "dead" for pick in row["picks"].values()):
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                f"'{row['encounter']}' lässt sich ohne Kopplung nicht auf 'tot' setzen. "
+                "Den Status der betroffenen Pokémon setzen."
+            ),
+        )
+
+
+def couple_deaths(row: dict[str, Any], responsible: str | None, requested_outcome: str | None = None) -> bool:
     """Soullink: stirbt ein Pokémon der Reihe, sterben alle.
+
+    Greift auch, wenn die Zeile selbst auf 'dead' gesetzt wird - sonst stuende
+    dort ein Tod, den kein einziger Pick traegt.
 
     Gibt True zurueck, wenn die Kopplung etwas veraendert hat.
     """
     picks = row["picks"]
-    if not any(pick["status"] == "dead" for pick in picks.values()):
+    if requested_outcome != "dead" and not any(pick["status"] == "dead" for pick in picks.values()):
         return False
 
     changed = False
@@ -931,32 +1202,36 @@ def apply_encounter_patch(
     updates = changes.model_dump(exclude_unset=True)
     if not updates:
         raise HTTPException(status_code=422, detail="Mindestens ein Feld muss angegeben werden.")
+    reject_null_fields(updates, NULLABLE_ROW_FIELDS)
 
     row = find_row(run, row_id)
     before = json.loads(json.dumps(row))
 
     pick_updates = updates.pop("picks", None) or {}
-    unknown = set(pick_updates) - set(player_ids)
-    if unknown:
-        raise HTTPException(status_code=422, detail=f"Unbekannte Spieler: {', '.join(sorted(unknown))}")
+    require_known_players(pick_updates, player_ids)
 
     merged_picks = {player_id: dict(row["picks"][player_id]) for player_id in player_ids}
     for player_id, pick_patch in pick_updates.items():
         merged_picks[player_id].update({key: value for key, value in pick_patch.items() if key in Pick.model_fields})
 
-    # Nur pruefen, was dieser Patch anfasst - sonst blockiert ein einmal per force
-    # gespeicherter Sonderfall jede spaetere Aenderung an derselben Zeile.
-    validate_species(run, row, {player_id: merged_picks[player_id] for player_id in pick_updates}, force)
+    # Nur pruefen, was dieser Patch wirklich anfasst - sonst blockiert ein einmal
+    # per force gespeicherter Sonderfall jede spaetere Aenderung am selben Pick,
+    # bis hin zum Kill-Button, der nur den Status setzt.
+    touched_species = {
+        player_id: merged_picks[player_id] for player_id, patch in pick_updates.items() if "species" in patch
+    }
+    validate_species(run, row, touched_species, force)
 
     row["picks"] = merged_picks
     row.update(updates)
 
     if couple:
-        couple_deaths(row, updates.get("responsible_player") or row.get("responsible_player"))
+        couple_deaths(row, updates.get("responsible_player") or row.get("responsible_player"), updates.get("outcome"))
         couple_failure(row, updates.get("outcome"))
     if "outcome" not in updates:
         row["outcome"] = derive_outcome(row["picks"], before.get("outcome"))
 
+    require_consistent_outcome(row)
     apply_team_rules(run, row, updates.get("in_team"))
     if "responsible_player" in updates:
         validate_responsible(updates["responsible_player"], player_ids)
@@ -1023,6 +1298,12 @@ def get_runs() -> dict[str, Any]:
         "players": state["players"],
         "current_run_id": state["current_run_id"],
         "runs": [run_summary(run) for run in state["runs"]],
+        "rules": {
+            "lost_label": LOST_LABEL,
+            "no_culprit": NO_CULPRIT,
+            "team_size": TEAM_SIZE,
+            "undoable_actions": list(UNDOABLE_ACTIONS),
+        },
         "updated_at": state["updated_at"],
     }
 
@@ -1038,14 +1319,30 @@ def get_run_encounters(run_id: str) -> dict[str, Any]:
     return collection_for(state, find_run(state, run_id))
 
 
+def history_entry_view(entry: dict[str, Any], *, undone: bool) -> dict[str, Any]:
+    """Ein Historieneintrag, wie ihn die API ausliefert.
+
+    Die Datei ist von Hand editierbar und traegt Eintraege aelterer Staende, in
+    denen Felder fehlen koennen. Pflichtfelder bekommen deshalb einen leeren
+    Ersatzwert - ein unvollstaendiger Eintrag darf die ganze Liste nicht mit
+    einem Serverfehler beantworten, gerade weil sie das Sicherheitsnetz ist.
+    """
+    view = {key: entry.get(key) or "" for key in ("id", "at", "action", "run_id", "summary")}
+    view["author"] = entry.get("author")
+    view["row_id"] = entry.get("row_id")
+    view["undone"] = undone
+    view["undoable"] = view["action"] in UNDOABLE_ACTIONS and not undone
+    return view
+
+
+def undone_entry_ids(entries: list[dict[str, Any]]) -> set[str]:
+    return {entry["undo_of"] for entry in entries if entry.get("undo_of")}
+
+
 def history_summary(entries: list[dict[str, Any]], limit: int) -> list[dict[str, Any]]:
     """Neueste zuerst; 'undone' ergibt sich aus den spaeteren Undo-Eintraegen."""
-    undone = {entry["undo_of"] for entry in entries if entry.get("undo_of")}
-    return [
-        {key: entry.get(key) for key in ("id", "at", "author", "action", "run_id", "row_id", "summary")}
-        | {"undone": entry.get("id") in undone}
-        for entry in reversed(entries[-limit:])
-    ]
+    undone = undone_entry_ids(entries)
+    return [history_entry_view(entry, undone=entry.get("id") in undone) for entry in reversed(entries[-limit:])]
 
 
 @app.get("/history", response_model=HistoryCollection, summary="Änderungshistorie")
@@ -1117,11 +1414,14 @@ def patch_run(
     if not updates:
         raise HTTPException(status_code=422, detail="Mindestens ein Feld muss angegeben werden.")
     make_current = updates.pop("make_current", None)
+    reject_null_fields(updates, NULLABLE_RUN_FIELDS)
 
     with mutate(if_match) as state:
         run = find_run(state, run_id)
         if make_current:
             state["current_run_id"] = run_id
+        if "progress" in updates:
+            updates["progress"] = clamp_progress(run["game_id"], updates["progress"])
         if updates.get("status") == "completed" and run["status"] != "completed":
             run["completed_at"] = now_iso()
         elif updates.get("status") == "active":
@@ -1153,8 +1453,7 @@ def create_run_encounter(
     author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
-    with mutate(if_match) as state:
-        run = find_run(state, run_id)
+    with write_to_run(if_match, run_id) as (state, run):
         return add_row(state, run, row, force=force, author=author)
 
 
@@ -1173,8 +1472,7 @@ def patch_run_encounter(
     author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
-    with mutate(if_match) as state:
-        run = find_run(state, run_id)
+    with write_to_run(if_match, run_id) as (state, run):
         return patch_row(state, run, row_id, changes, couple=couple, force=force, author=author)
 
 
@@ -1190,8 +1488,7 @@ def delete_run_encounter(
     author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> Response:
-    with mutate(if_match) as state:
-        run = find_run(state, run_id)
+    with write_to_run(if_match, run_id) as (state, run):
         remove_row(state, run, row_id, author=author)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
@@ -1209,8 +1506,8 @@ def create_encounter(
     author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
-    with mutate(if_match) as state:
-        return add_row(state, current_run(state), row, force=force, author=author)
+    with write_to_run(if_match, None) as (state, run):
+        return add_row(state, run, row, force=force, author=author)
 
 
 @app.patch(
@@ -1227,8 +1524,8 @@ def patch_encounter(
     author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> dict[str, Any]:
-    with mutate(if_match) as state:
-        return patch_row(state, current_run(state), row_id, changes, couple=couple, force=force, author=author)
+    with write_to_run(if_match, None) as (state, run):
+        return patch_row(state, run, row_id, changes, couple=couple, force=force, author=author)
 
 
 @app.delete(
@@ -1242,9 +1539,31 @@ def delete_encounter(
     author: str | None = Depends(author_from_header),
     if_match: str | None = Header(default=None, alias="If-Match"),
 ) -> Response:
-    with mutate(if_match) as state:
-        remove_row(state, current_run(state), row_id, author=author)
+    with write_to_run(if_match, None) as (state, run):
+        remove_row(state, run, row_id, author=author)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+def restore_row(entry: dict[str, Any]) -> dict[str, Any]:
+    """Den Zustand vor einer Aenderung aus der Historie zurueckholen.
+
+    Die Historiendatei ist von Hand editierbar und traegt Eintraege aus aelteren
+    Schemata - ein unbrauchbarer Snapshot ist deshalb ein Eingabefehler und kein
+    Serverfehler.
+    """
+    snapshot = entry.get("before")
+    if not isinstance(snapshot, dict):
+        raise HTTPException(
+            status_code=422,
+            detail=f"Zu '{entry.get('id')}' ist kein Zustand vor der Änderung gespeichert.",
+        )
+    try:
+        return EncounterRow.model_validate(snapshot).model_dump()
+    except ValidationError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Der gespeicherte Zustand zu '{entry.get('id')}' passt nicht zum aktuellen Schema.",
+        ) from exc
 
 
 @app.post(
@@ -1263,21 +1582,34 @@ def undo_history_entry(
         entry = next((item for item in entries if item.get("id") == entry_id), None)
         if entry is None:
             raise HTTPException(status_code=404, detail=f"Historieneintrag '{entry_id}' nicht gefunden.")
-        if any(item.get("undo_of") == entry_id for item in entries):
+        if entry_id in undone_entry_ids(entries):
             raise HTTPException(status_code=409, detail="Dieser Eintrag wurde bereits zurückgenommen.")
-        if entry["action"] not in ("row-create", "row-patch", "row-delete"):
-            raise HTTPException(status_code=422, detail=f"'{entry['action']}' lässt sich nicht zurücknehmen.")
+        action = entry.get("action")
+        if action not in UNDOABLE_ACTIONS:
+            raise HTTPException(status_code=422, detail=f"'{action}' lässt sich nicht zurücknehmen.")
 
-        run = find_run(state, entry["run_id"])
-        row_id = entry["row_id"]
-        if entry["action"] == "row-create":
+        run = find_run(state, entry.get("run_id"))
+        row_id = entry.get("row_id")
+        if action == "row-create":
             run["encounters"] = [row for row in run["encounters"] if row["id"] != row_id]
-        elif entry["action"] == "row-delete":
-            restored = EncounterRow.model_validate(entry["before"]).model_dump()
-            run["encounters"].append(restored)
-            run["encounters"].sort(key=lambda row: (row["order"], row["id"]))
         else:
-            replace_row(run, EncounterRow.model_validate(entry["before"]).model_dump())
+            restored = restore_row(entry)
+            if action == "row-delete":
+                if any(row["id"] == restored["id"] for row in run["encounters"]):
+                    raise HTTPException(
+                        status_code=409,
+                        detail=(
+                            f"'{restored['id']}' wurde zwischenzeitlich neu angelegt. "
+                            "Erst die neue Zeile löschen, dann zurücknehmen."
+                        ),
+                    )
+                run["encounters"].append(restored)
+                run["encounters"].sort(key=lambda row: (row["order"], row["id"]))
+            else:
+                replace_row(run, restored)
+            # Der Snapshot stammt aus einer anderen Team-Lage - die Regeln gelten
+            # hier genauso wie auf jedem anderen Schreibpfad.
+            apply_team_rules(run, restored, restored["in_team"])
 
         # Die Historie wird nur angehaengt - die Ruecknahme ist ein eigener Eintrag,
         # der den urspruenglichen als zurueckgenommen ausweist.
@@ -1290,9 +1622,7 @@ def undo_history_entry(
             summary=f"Zurückgenommen: {entry['summary']}",
             undo_of=entry_id,
         )
-        return {
-            key: entry.get(key) for key in ("id", "at", "author", "action", "run_id", "row_id", "summary")
-        } | {"undone": True}
+        return history_entry_view(entry, undone=True)
 
 
 # --------------------------------------------------------------------------- #
@@ -1311,14 +1641,21 @@ def add_row(
     if any(existing["id"] == row.id for existing in run["encounters"]):
         raise HTTPException(status_code=409, detail=f"Encounter '{row.id}' existiert in Run '{run['id']}' bereits.")
 
+    player_ids = player_ids_of(state)
     record = row.model_dump()
-    for player_id in player_ids_of(state):
+    require_known_players(record["picks"], player_ids)
+    for player_id in player_ids:
         record["picks"].setdefault(player_id, Pick().model_dump())
     validate_species(run, record, record["picks"], force)
     record["outcome"] = row.outcome if "outcome" in row.model_fields_set else derive_outcome(record["picks"])
-    couple_deaths(record, record.get("responsible_player"))
+
+    # Dieselbe Regelkette wie beim Patch - sonst entstehen ueber POST Zeilen,
+    # die ueber PATCH nie entstehen koennten.
+    couple_deaths(record, record.get("responsible_player"), record["outcome"])
+    couple_failure(record, record["outcome"])
+    require_consistent_outcome(record)
     apply_team_rules(run, record, record["in_team"])
-    validate_responsible(record.get("responsible_player"), player_ids_of(state))
+    validate_responsible(record.get("responsible_player"), player_ids)
     require_culprit(record)
 
     run["encounters"].append(record)
@@ -1423,29 +1760,24 @@ def get_stats(
         runs = [run for run in runs if run["game_id"] == game_id]
 
     player_ids = player_ids_of(state)
-    deaths = {player_id: 0 for player_id in player_ids}
-    failed = {player_id: 0 for player_id in player_ids}
-    unassigned_deaths = 0
-    unassigned_failed = 0
+    # Tod und vergeigter Encounter werden identisch verbucht - nur in andere
+    # Toepfe. Ein Zweig pro Outcome liefe unweigerlich auseinander.
+    by_player = {outcome: {player_id: 0 for player_id in player_ids} for outcome in ("dead", "failed")}
+    unassigned = {"dead": 0, "failed": 0}
     per_run = []
 
     for run in runs:
-        run_deaths = 0
-        run_failed = 0
+        run_counts = {"dead": 0, "failed": 0}
         for row in run["encounters"]:
+            outcome = row["outcome"]
+            if outcome not in run_counts:
+                continue
+            run_counts[outcome] += 1
             responsible = row.get("responsible_player")
-            if row["outcome"] == "dead":
-                run_deaths += 1
-                if responsible in deaths:
-                    deaths[responsible] += 1
-                else:
-                    unassigned_deaths += 1
-            elif row["outcome"] == "failed":
-                run_failed += 1
-                if responsible in failed:
-                    failed[responsible] += 1
-                else:
-                    unassigned_failed += 1
+            if responsible in by_player[outcome]:
+                by_player[outcome][responsible] += 1
+            else:
+                unassigned[outcome] += 1
 
         per_run.append(
             {
@@ -1454,11 +1786,13 @@ def get_stats(
                 "game_id": run["game_id"],
                 "game_name": game_name_of(run["game_id"]),
                 "status": run["status"],
-                "deaths": run_deaths,
-                "failed_encounters": run_failed,
+                "deaths": run_counts["dead"],
+                "failed_encounters": run_counts["failed"],
             }
         )
 
+    deaths, failed = by_player["dead"], by_player["failed"]
+    unassigned_deaths, unassigned_failed = unassigned["dead"], unassigned["failed"]
     blame = {player_id: deaths[player_id] + failed[player_id] for player_id in player_ids}
     total_deaths = sum(deaths.values()) + unassigned_deaths
     total_failed = sum(failed.values()) + unassigned_failed
