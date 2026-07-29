@@ -94,8 +94,8 @@ Rückholpfad – eine Änderungshistorie mit Undo gab es bis v4, sie ist bewusst
 ### Migration läuft über die `normalize_*`-Kette
 
 `normalize_state` → `normalize_run` → `normalize_encounter` heben beim Laden alte Stände an und
-schreiben bei Abweichung sofort zurück. Sie tragen die komplette v2→v3-Migration und den
-v3→v4-Schritt:
+schreiben bei Abweichung sofort zurück. Sie tragen die komplette v2→v3-Migration sowie die
+Schritte auf v4 und v5:
 
 - `players` von Namensliste zu `{id, name}`; `LEGACY_DISPLAY_NAMES` korrigiert die aus v2 geerbten
   Schreibweisen (Mark→Marc, Nikolai→Nicolai, KNEV→Knev). Das greift auch auf bereits migrierte
@@ -119,12 +119,28 @@ v3→v4-Schritt:
   **Ein Feld zu entfernen ist deshalb immer auch ein Versionssprung**, sonst verschwinden Daten
   ohne Sicherung
 
+- v5 löst die eigene Starter-Zeile auf: die Starter sind der Encounter des Ortes, an dem man sie
+  bekommt, und stehen dort ohnehin schon als „Geschenk“. Das erledigt `apply_catalog_moves()`, weil
+  es den ganzen Run braucht: `RETIRED_LOCATIONS` zieht die Zeile auf ihren Nachfolger, und steht
+  der schon als eigene Zeile im Run, legt `merge_rows()` beide zusammen – die **inhaltsreichere**
+  bleibt, sonst gewänne die leere und genau die gefangenen Pokémon wären weg. Im selben Durchgang
+  kommt `order` frisch aus dem Katalog: fällt ein Ort weg, rücken alle nachfolgenden auf, und
+  Alt-Zeilen mischten sich sonst mit ihrer alten Nummer falsch unter später angelegte
+
 Grenzen dürfen hier nur **weiter** werden: `normalize_*` prüft Bestandsdaten gegen die aktuellen
 Modelle, ein engeres Feld legt beim Laden die ganze API lahm statt nur die betroffene Zeile
 (`responsible_player` steht deshalb auf 80 Zeichen wie in v2, überlange Werte werden gekürzt).
 
 Neue Felder gehören als `setdefault` dort hinein – dann migrieren Bestandsdaten von selbst,
-entfallene als `pop`. Was das Modell ohnehin per Default füllt, gehört **nicht** hierher.
+entfallene als `pop`. Was das Modell ohnehin per Default füllt, gehört **nicht** hierher. Was
+mehrere Zeilen gleichzeitig betrifft – Orte zusammenlegen, `order` nachziehen – gehört dagegen in
+`apply_catalog_moves()`; `normalize_encounter` sieht immer nur eine Zeile.
+
+**Einen Ort aus einem Katalog zu entfernen ist ein Versionssprung**, so wie ein entfallenes Feld:
+ohne den greift `migration_backup()` nicht, und Zeilen zusammenzulegen ist nicht umkehrbar. Wer mit
+altem Code auf einen neueren Stand losgeht, schreibt ihn übrigens stillschweigend auf die alte
+Version zurück – nach einem Katalogwechsel gehört der Dienst neu gestartet, bevor jemand die
+Tabelle öffnet.
 
 ### Datenmodell
 

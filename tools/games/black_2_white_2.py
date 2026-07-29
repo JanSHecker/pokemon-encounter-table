@@ -21,7 +21,8 @@ GAME = {
     # National-Dex bis Generation 5 - so weit reicht die Auswahlliste im Frontend.
     "dex_max": 649,
     "locations": [
-        {"id": "starter", "name": "Starter", "species": ["snivy", "tepig", "oshawott"]},
+        # Die Starter gibt es in Eventura City; PokeAPI fuehrt sie dort als
+        # Geschenk. Eine eigene Starter-Zeile waere dieselbe Wahl zweimal.
         "aspertia-city",
         "unova-route-19",
         "floccesy-town",

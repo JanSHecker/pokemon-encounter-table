@@ -181,7 +181,7 @@ def test_migration_is_written_back_once(legacy_client, data_file):
     legacy_client.get("/encounters")
     stored = json.loads(data_file.read_text(encoding="utf-8"))
 
-    assert stored["schema_version"] == 4
+    assert stored["schema_version"] == 5
     assert "mark" not in stored["runs"][0]["encounters"][0]
 
 
@@ -200,6 +200,111 @@ def test_a_note_can_no_longer_be_written(client):
     response = client.patch("/encounters/sinnoh-route-201", json={"note": "doch nicht"})
 
     assert response.status_code == 422
+
+
+def stored_state(data_file, rows):
+    """Ein v4-Stand mit genau diesen Zeilen - Ausgangspunkt der v5-Migration."""
+    state = {
+        "schema_version": 4,
+        "players": [
+            {"id": "marc", "name": "Marc"},
+            {"id": "nicolai", "name": "Nicolai"},
+            {"id": "knev", "name": "Knev"},
+        ],
+        "current_run_id": "run-1",
+        "runs": [
+            {
+                "id": "run-1",
+                "name": "Run 1",
+                "game_id": "platinum",
+                "status": "active",
+                "created_at": "2026-01-01T00:00:00+00:00",
+                "completed_at": None,
+                "progress": 0,
+                "encounters": rows,
+            }
+        ],
+        "updated_at": "2026-01-01T00:00:00+00:00",
+    }
+    data_file.write_text(json.dumps(state, ensure_ascii=False), encoding="utf-8")
+    return TestClient(app_module.app)
+
+
+def starter_row(**overrides):
+    row = {
+        "id": "starter",
+        "location_id": "starter",
+        "order": 1,
+        "encounter": "Starter",
+        "responsible_player": None,
+        "outcome": "caught",
+        "postgame": False,
+        "in_team": True,
+        "picks": {
+            "marc": {"species": "starly", "name": "Staralili", "status": "alive"},
+            "nicolai": {"species": "bidoof", "name": "Bidiza", "status": "alive"},
+            "knev": {"species": "starly", "name": "Staralili", "status": "alive"},
+        },
+    }
+    return row | overrides
+
+
+def test_the_starter_row_moves_onto_its_location(data_file):
+    # v5 kennt keinen eigenen Starter-Ort mehr - die Starter sind der Encounter
+    # des Ortes, an dem man sie bekommt.
+    client = stored_state(data_file, [starter_row()])
+
+    rows = client.get("/encounters").json()["encounters"]
+
+    assert [row["id"] for row in rows] == ["sinnoh-route-201"]
+    assert rows[0]["location_id"] == "sinnoh-route-201"
+    assert rows[0]["encounter"] == "Route 201"
+    assert rows[0]["picks"]["marc"]["name"] == "Staralili"
+    assert rows[0]["in_team"] is True
+
+
+def test_the_starter_row_wins_against_an_empty_location_row(data_file):
+    # Wer den Ort schon in der Tabelle stehen hatte, haette sonst zwei Zeilen -
+    # und beim Zusammenlegen koennte die leere gewinnen.
+    empty = {
+        "id": "sinnoh-route-201",
+        "location_id": "sinnoh-route-201",
+        "order": 2,
+        "encounter": "Route 201",
+        "responsible_player": None,
+        "outcome": "pending",
+        "postgame": False,
+        "in_team": False,
+        "picks": {player: {"species": None, "name": "", "status": "alive"} for player in ("marc", "nicolai", "knev")},
+    }
+    client = stored_state(data_file, [starter_row(), empty])
+
+    rows = client.get("/encounters").json()["encounters"]
+
+    assert len(rows) == 1
+    assert rows[0]["picks"]["nicolai"] == {"species": "bidoof", "name": "Bidiza", "status": "alive"}
+    assert rows[0]["outcome"] == "caught"
+
+
+def test_order_follows_the_catalog_after_a_location_is_retired(data_file):
+    # Faellt ein Ort weg, ruecken alle nachfolgenden auf. Bleiben Alt-Zeilen auf
+    # ihrer alten Nummer, mischen sie sich falsch unter spaeter angelegte.
+    later = {
+        "id": "sinnoh-route-202",
+        "location_id": "sinnoh-route-202",
+        "order": 99,
+        "encounter": "Route 202",
+        "responsible_player": None,
+        "outcome": "pending",
+        "postgame": False,
+        "in_team": False,
+        "picks": {player: {"species": None, "name": "", "status": "alive"} for player in ("marc", "nicolai", "knev")},
+    }
+    client = stored_state(data_file, [starter_row(), later])
+
+    rows = client.get("/encounters").json()["encounters"]
+
+    assert {row["id"]: row["order"] for row in rows} == {"sinnoh-route-201": 1, "sinnoh-route-202": 2}
 
 
 def test_legacy_game_name_becomes_a_catalog_id(data_file):

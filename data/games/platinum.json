@@ -6,39 +6,8 @@
   ],
   "locations": [
     {
-      "id": "starter",
-      "order": 1,
-      "name": "Starter",
-      "encounters": [
-        {
-          "species": "turtwig",
-          "name": "Chelast",
-          "dex": 387,
-          "methods": [
-            "Geschenk"
-          ]
-        },
-        {
-          "species": "chimchar",
-          "name": "Panflam",
-          "dex": 390,
-          "methods": [
-            "Geschenk"
-          ]
-        },
-        {
-          "species": "piplup",
-          "name": "Plinfa",
-          "dex": 393,
-          "methods": [
-            "Geschenk"
-          ]
-        }
-      ]
-    },
-    {
       "id": "sinnoh-route-201",
-      "order": 2,
+      "order": 1,
       "name": "Route 201",
       "encounters": [
         {
@@ -74,6 +43,30 @@
           ]
         },
         {
+          "species": "turtwig",
+          "name": "Chelast",
+          "dex": 387,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "chimchar",
+          "name": "Panflam",
+          "dex": 390,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "piplup",
+          "name": "Plinfa",
+          "dex": 393,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
           "species": "starly",
           "name": "Staralili",
           "dex": 396,
@@ -101,7 +94,7 @@
     },
     {
       "id": "lake-verity",
-      "order": 3,
+      "order": 2,
       "name": "See der Wahrheit",
       "encounters": [
         {
@@ -196,7 +189,7 @@
     },
     {
       "id": "sinnoh-route-202",
-      "order": 4,
+      "order": 3,
       "name": "Route 202",
       "encounters": [
         {
@@ -259,7 +252,7 @@
     },
     {
       "id": "sinnoh-route-203",
-      "order": 5,
+      "order": 4,
       "name": "Route 203",
       "encounters": [
         {
@@ -394,7 +387,7 @@
     },
     {
       "id": "oreburgh-gate",
-      "order": 6,
+      "order": 5,
       "name": "Erzelinger Tunnel",
       "encounters": [
         {
@@ -476,7 +469,7 @@
     },
     {
       "id": "oreburgh-mine",
-      "order": 7,
+      "order": 6,
       "name": "Erzelingen-Mine",
       "encounters": [
         {
@@ -507,7 +500,7 @@
     },
     {
       "id": "sinnoh-route-207",
-      "order": 8,
+      "order": 7,
       "name": "Route 207",
       "encounters": [
         {
@@ -626,7 +619,7 @@
     },
     {
       "id": "sinnoh-route-204",
-      "order": 9,
+      "order": 8,
       "name": "Route 204",
       "encounters": [
         {
@@ -785,7 +778,7 @@
     },
     {
       "id": "ravaged-path",
-      "order": 10,
+      "order": 9,
       "name": "Ruinental",
       "encounters": [
         {
@@ -858,7 +851,7 @@
     },
     {
       "id": "valley-windworks",
-      "order": 11,
+      "order": 10,
       "name": "Windkraftwerk",
       "encounters": [
         {
@@ -1042,7 +1035,7 @@
     },
     {
       "id": "sinnoh-route-205",
-      "order": 12,
+      "order": 11,
       "name": "Route 205",
       "encounters": [
         {
@@ -1315,7 +1308,7 @@
     },
     {
       "id": "eterna-forest",
-      "order": 13,
+      "order": 12,
       "name": "Ewigwald",
       "encounters": [
         {
@@ -1523,7 +1516,7 @@
     },
     {
       "id": "old-chateau",
-      "order": 14,
+      "order": 13,
       "name": "Alte Villa",
       "encounters": [
         {
@@ -1554,7 +1547,7 @@
     },
     {
       "id": "sinnoh-route-211",
-      "order": 15,
+      "order": 14,
       "name": "Route 211",
       "encounters": [
         {
@@ -1713,7 +1706,7 @@
     },
     {
       "id": "sinnoh-route-206",
-      "order": 16,
+      "order": 15,
       "name": "Route 206",
       "encounters": [
         {
@@ -1840,7 +1833,7 @@
     },
     {
       "id": "wayward-cave",
-      "order": 17,
+      "order": 16,
       "name": "Bizarre Höhle",
       "encounters": [
         {
@@ -1895,7 +1888,7 @@
     },
     {
       "id": "sinnoh-route-208",
-      "order": 18,
+      "order": 17,
       "name": "Route 208",
       "encounters": [
         {
@@ -2086,7 +2079,7 @@
     },
     {
       "id": "sinnoh-route-209",
-      "order": 19,
+      "order": 18,
       "name": "Route 209",
       "encounters": [
         {
@@ -2285,7 +2278,7 @@
     },
     {
       "id": "lost-tower",
-      "order": 20,
+      "order": 19,
       "name": "Turm der Ruhenden",
       "encounters": [
         {
@@ -2324,7 +2317,7 @@
     },
     {
       "id": "solaceon-ruins",
-      "order": 21,
+      "order": 20,
       "name": "Trostu-Ruinen",
       "encounters": [
         {
@@ -2339,7 +2332,7 @@
     },
     {
       "id": "sinnoh-route-210",
-      "order": 22,
+      "order": 21,
       "name": "Route 210",
       "encounters": [
         {
@@ -2618,7 +2611,7 @@
     },
     {
       "id": "sinnoh-route-215",
-      "order": 23,
+      "order": 22,
       "name": "Route 215",
       "encounters": [
         {
@@ -2737,7 +2730,7 @@
     },
     {
       "id": "sinnoh-route-214",
-      "order": 24,
+      "order": 23,
       "name": "Route 214",
       "encounters": [
         {
@@ -2912,7 +2905,7 @@
     },
     {
       "id": "valor-lakefront",
-      "order": 25,
+      "order": 24,
       "name": "Kühnheitsufer",
       "encounters": [
         {
@@ -2975,7 +2968,7 @@
     },
     {
       "id": "sinnoh-route-213",
-      "order": 26,
+      "order": 25,
       "name": "Route 213",
       "encounters": [
         {
@@ -3136,7 +3129,7 @@
     },
     {
       "id": "great-marsh",
-      "order": 27,
+      "order": 26,
       "name": "Großmoor",
       "encounters": [
         {
@@ -3345,7 +3338,7 @@
     },
     {
       "id": "sinnoh-route-212",
-      "order": 28,
+      "order": 27,
       "name": "Route 212",
       "encounters": [
         {
@@ -3609,7 +3602,7 @@
     },
     {
       "id": "fuego-ironworks",
-      "order": 29,
+      "order": 28,
       "name": "Feurio-Hütte",
       "encounters": [
         {
@@ -3777,7 +3770,7 @@
     },
     {
       "id": "sinnoh-route-218",
-      "order": 30,
+      "order": 29,
       "name": "Route 218",
       "encounters": [
         {
@@ -3937,7 +3930,7 @@
     },
     {
       "id": "sinnoh-route-219",
-      "order": 31,
+      "order": 30,
       "name": "Route 219",
       "encounters": [
         {
@@ -4008,7 +4001,7 @@
     },
     {
       "id": "sinnoh-sea-route-220",
-      "order": 32,
+      "order": 31,
       "name": "Route 220",
       "encounters": [
         {
@@ -4087,7 +4080,7 @@
     },
     {
       "id": "sinnoh-route-221",
-      "order": 33,
+      "order": 32,
       "name": "Route 221",
       "encounters": [
         {
@@ -4270,7 +4263,7 @@
     },
     {
       "id": "sinnoh-route-222",
-      "order": 34,
+      "order": 33,
       "name": "Route 222",
       "encounters": [
         {
@@ -4463,7 +4456,7 @@
     },
     {
       "id": "iron-island",
-      "order": 35,
+      "order": 34,
       "name": "Eiseninsel",
       "encounters": [
         {
@@ -4614,7 +4607,7 @@
     },
     {
       "id": "lake-valor",
-      "order": 36,
+      "order": 35,
       "name": "See der Kühnheit",
       "encounters": [
         {
@@ -4719,7 +4712,7 @@
     },
     {
       "id": "sinnoh-route-216",
-      "order": 37,
+      "order": 36,
       "name": "Route 216",
       "encounters": [
         {
@@ -4782,7 +4775,7 @@
     },
     {
       "id": "sinnoh-route-217",
-      "order": 38,
+      "order": 37,
       "name": "Route 217",
       "encounters": [
         {
@@ -4845,7 +4838,7 @@
     },
     {
       "id": "acuity-lakefront",
-      "order": 39,
+      "order": 38,
       "name": "Stärkeufer",
       "encounters": [
         {
@@ -4892,7 +4885,7 @@
     },
     {
       "id": "lake-acuity",
-      "order": 40,
+      "order": 39,
       "name": "See der Stärke",
       "encounters": [
         {
@@ -5013,7 +5006,7 @@
     },
     {
       "id": "mt-coronet",
-      "order": 41,
+      "order": 40,
       "name": "Kraterberg",
       "encounters": [
         {
@@ -5254,7 +5247,7 @@
     },
     {
       "id": "spear-pillar",
-      "order": 42,
+      "order": 41,
       "name": "Speersäule",
       "encounters": [
         {
@@ -5277,7 +5270,7 @@
     },
     {
       "id": "distortion-world",
-      "order": 43,
+      "order": 42,
       "name": "Zerrwelt",
       "encounters": [
         {
@@ -5292,7 +5285,7 @@
     },
     {
       "id": "sinnoh-victory-road",
-      "order": 44,
+      "order": 43,
       "name": "Siegesstraße",
       "encounters": [
         {
@@ -5414,7 +5407,7 @@
     },
     {
       "id": "sinnoh-sea-route-223",
-      "order": 45,
+      "order": 44,
       "name": "Route 223",
       "encounters": [
         {
@@ -5494,7 +5487,7 @@
     },
     {
       "id": "sinnoh-route-224",
-      "order": 46,
+      "order": 45,
       "name": "Route 224",
       "encounters": [
         {
@@ -5648,7 +5641,7 @@
     },
     {
       "id": "sinnoh-route-225",
-      "order": 47,
+      "order": 46,
       "name": "Route 225",
       "encounters": [
         {
@@ -5784,7 +5777,7 @@
     },
     {
       "id": "sinnoh-sea-route-226",
-      "order": 48,
+      "order": 47,
       "name": "Route 226",
       "encounters": [
         {
@@ -5929,7 +5922,7 @@
     },
     {
       "id": "sinnoh-route-227",
-      "order": 49,
+      "order": 48,
       "name": "Route 227",
       "encounters": [
         {
@@ -6073,7 +6066,7 @@
     },
     {
       "id": "sinnoh-route-228",
-      "order": 50,
+      "order": 49,
       "name": "Route 228",
       "encounters": [
         {
@@ -6193,7 +6186,7 @@
     },
     {
       "id": "sinnoh-route-229",
-      "order": 51,
+      "order": 50,
       "name": "Route 229",
       "encounters": [
         {
@@ -6361,7 +6354,7 @@
     },
     {
       "id": "sinnoh-sea-route-230",
-      "order": 52,
+      "order": 51,
       "name": "Route 230",
       "encounters": [
         {
@@ -6514,7 +6507,7 @@
     },
     {
       "id": "stark-mountain",
-      "order": 53,
+      "order": 52,
       "name": "Kahlberg",
       "encounters": [
         {
@@ -6634,7 +6627,7 @@
     },
     {
       "id": "turnback-cave",
-      "order": 54,
+      "order": 53,
       "name": "Höhle der Umkehr",
       "encounters": [
         {
@@ -6738,7 +6731,7 @@
     },
     {
       "id": "sendoff-spring",
-      "order": 55,
+      "order": 54,
       "name": "Scheidequelle",
       "encounters": [
         {
@@ -6850,7 +6843,7 @@
     },
     {
       "id": "newmoon-island",
-      "order": 56,
+      "order": 55,
       "name": "Neumondinsel",
       "encounters": [
         {
@@ -6866,7 +6859,7 @@
     },
     {
       "id": "snowpoint-temple",
-      "order": 57,
+      "order": 56,
       "name": "Blizzach-Tempel",
       "encounters": [
         {
@@ -6914,7 +6907,7 @@
     },
     {
       "id": "ruin-maniac-cave",
-      "order": 58,
+      "order": 57,
       "name": "Maniac-Tunnel",
       "encounters": [
         {
@@ -6938,7 +6931,7 @@
     },
     {
       "id": "trophy-garden",
-      "order": 59,
+      "order": 58,
       "name": "Pokémon-Landgut",
       "encounters": [
         {
@@ -7114,7 +7107,7 @@
     },
     {
       "id": "floaroma-meadow",
-      "order": 60,
+      "order": 59,
       "name": "Auen von Flori",
       "encounters": [
         {
@@ -7178,7 +7171,7 @@
     },
     {
       "id": "resort-area",
-      "order": 61,
+      "order": 60,
       "name": "Erholungsareal",
       "encounters": [
         {
@@ -7210,7 +7203,7 @@
     },
     {
       "id": "flower-paradise",
-      "order": 62,
+      "order": 61,
       "name": "Blumenparadies",
       "encounters": [
         {

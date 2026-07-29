@@ -7,39 +7,8 @@
   ],
   "locations": [
     {
-      "id": "starter",
-      "order": 1,
-      "name": "Starter",
-      "encounters": [
-        {
-          "species": "snivy",
-          "name": "Serpifeu",
-          "dex": 495,
-          "methods": [
-            "Geschenk"
-          ]
-        },
-        {
-          "species": "tepig",
-          "name": "Floink",
-          "dex": 498,
-          "methods": [
-            "Geschenk"
-          ]
-        },
-        {
-          "species": "oshawott",
-          "name": "Ottaro",
-          "dex": 501,
-          "methods": [
-            "Geschenk"
-          ]
-        }
-      ]
-    },
-    {
       "id": "aspertia-city",
-      "order": 2,
+      "order": 1,
       "name": "Eventura City",
       "encounters": [
         {
@@ -98,7 +67,7 @@
     },
     {
       "id": "unova-route-19",
-      "order": 3,
+      "order": 2,
       "name": "Route 19",
       "encounters": [
         {
@@ -157,7 +126,7 @@
     },
     {
       "id": "floccesy-town",
-      "order": 4,
+      "order": 3,
       "name": "Dausing",
       "encounters": [
         {
@@ -180,7 +149,7 @@
     },
     {
       "id": "unova-route-20",
-      "order": 5,
+      "order": 4,
       "name": "Route 20",
       "encounters": [
         {
@@ -315,7 +284,7 @@
     },
     {
       "id": "floccesy-ranch",
-      "order": 6,
+      "order": 5,
       "name": "Dausing-Hof",
       "encounters": [
         {
@@ -456,7 +425,7 @@
     },
     {
       "id": "virbank-city",
-      "order": 7,
+      "order": 6,
       "name": "Vapydro City",
       "encounters": [
         {
@@ -528,7 +497,7 @@
     },
     {
       "id": "virbank-complex",
-      "order": 8,
+      "order": 7,
       "name": "Vapydro-Werke",
       "encounters": [
         {
@@ -670,7 +639,7 @@
     },
     {
       "id": "castelia-city",
-      "order": 9,
+      "order": 8,
       "name": "Stratos City",
       "encounters": [
         {
@@ -781,7 +750,7 @@
     },
     {
       "id": "castelia-sewers",
-      "order": 10,
+      "order": 9,
       "name": "Stratos-Kanalisation",
       "encounters": [
         {
@@ -825,7 +794,7 @@
     },
     {
       "id": "unova-route-4",
-      "order": 11,
+      "order": 10,
       "name": "Route 4",
       "encounters": [
         {
@@ -985,7 +954,7 @@
     },
     {
       "id": "desert-resort",
-      "order": 12,
+      "order": 11,
       "name": "Wüstenresort",
       "encounters": [
         {
@@ -1056,7 +1025,7 @@
     },
     {
       "id": "relic-castle",
-      "order": 13,
+      "order": 12,
       "name": "Alter Palast",
       "encounters": [
         {
@@ -1119,7 +1088,7 @@
     },
     {
       "id": "unova-route-16",
-      "order": 14,
+      "order": 13,
       "name": "Route 16",
       "encounters": [
         {
@@ -1195,7 +1164,7 @@
     },
     {
       "id": "lostlorn-forest",
-      "order": 15,
+      "order": 14,
       "name": "Hain der Täuschung",
       "encounters": [
         {
@@ -1417,7 +1386,7 @@
     },
     {
       "id": "unova-route-5",
-      "order": 16,
+      "order": 15,
       "name": "Route 5",
       "encounters": [
         {
@@ -1503,7 +1472,7 @@
     },
     {
       "id": "driftveil-drawbridge",
-      "order": 17,
+      "order": 16,
       "name": "Marea-Zugbrücke",
       "encounters": [
         {
@@ -1518,7 +1487,7 @@
     },
     {
       "id": "driftveil-city",
-      "order": 18,
+      "order": 17,
       "name": "Marea City",
       "encounters": [
         {
@@ -1533,7 +1502,7 @@
     },
     {
       "id": "relic-passage",
-      "order": 19,
+      "order": 18,
       "name": "Alter Fluchtweg",
       "encounters": [
         {
@@ -1665,7 +1634,7 @@
     },
     {
       "id": "unova-route-6",
-      "order": 20,
+      "order": 19,
       "name": "Route 6",
       "encounters": [
         {
@@ -1849,7 +1818,7 @@
     },
     {
       "id": "mistralton-cave",
-      "order": 21,
+      "order": 20,
       "name": "Panaero-Höhle",
       "encounters": [
         {
@@ -1896,7 +1865,7 @@
     },
     {
       "id": "chargestone-cave",
-      "order": 22,
+      "order": 21,
       "name": "Elektrolithhöhle",
       "encounters": [
         {
@@ -1959,7 +1928,7 @@
     },
     {
       "id": "unova-route-7",
-      "order": 23,
+      "order": 22,
       "name": "Route 7",
       "encounters": [
         {
@@ -2075,7 +2044,7 @@
     },
     {
       "id": "celestial-tower",
-      "order": 24,
+      "order": 23,
       "name": "Turm des Himmels",
       "encounters": [
         {
@@ -2114,7 +2083,7 @@
     },
     {
       "id": "strange-house",
-      "order": 25,
+      "order": 24,
       "name": "Bizarro-Haus",
       "encounters": [
         {
@@ -2185,7 +2154,7 @@
     },
     {
       "id": "reversal-mountain",
-      "order": 26,
+      "order": 25,
       "name": "Janusberg",
       "encounters": [
         {
@@ -2309,7 +2278,7 @@
     },
     {
       "id": "undella-town",
-      "order": 27,
+      "order": 26,
       "name": "Ondula",
       "encounters": [
         {
@@ -2384,7 +2353,7 @@
     },
     {
       "id": "undella-bay",
-      "order": 28,
+      "order": 27,
       "name": "Bucht von Ondula",
       "encounters": [
         {
@@ -2499,7 +2468,7 @@
     },
     {
       "id": "unova-route-13",
-      "order": 29,
+      "order": 28,
       "name": "Route 13",
       "encounters": [
         {
@@ -2693,7 +2662,7 @@
     },
     {
       "id": "unova-route-12",
-      "order": 30,
+      "order": 29,
       "name": "Route 12",
       "encounters": [
         {
@@ -2810,7 +2779,7 @@
     },
     {
       "id": "village-bridge",
-      "order": 31,
+      "order": 30,
       "name": "Dorfbrücke",
       "encounters": [
         {
@@ -2924,7 +2893,7 @@
     },
     {
       "id": "unova-route-11",
-      "order": 32,
+      "order": 31,
       "name": "Route 11",
       "encounters": [
         {
@@ -3089,7 +3058,7 @@
     },
     {
       "id": "unova-route-9",
-      "order": 33,
+      "order": 32,
       "name": "Route 9",
       "encounters": [
         {
@@ -3210,7 +3179,7 @@
     },
     {
       "id": "humilau-city",
-      "order": 34,
+      "order": 33,
       "name": "Abidaya City",
       "encounters": [
         {
@@ -3300,7 +3269,7 @@
     },
     {
       "id": "unova-route-22",
-      "order": 35,
+      "order": 34,
       "name": "Route 22",
       "encounters": [
         {
@@ -3446,7 +3415,7 @@
     },
     {
       "id": "unova-route-21",
-      "order": 36,
+      "order": 35,
       "name": "Route 21",
       "encounters": [
         {
@@ -3520,7 +3489,7 @@
     },
     {
       "id": "seaside-cave",
-      "order": 37,
+      "order": 36,
       "name": "Strandgrotte",
       "encounters": [
         {
@@ -3651,7 +3620,7 @@
     },
     {
       "id": "giant-chasm",
-      "order": 38,
+      "order": 37,
       "name": "Riesengrotte",
       "encounters": [
         {
@@ -3876,7 +3845,7 @@
     },
     {
       "id": "unova-route-23",
-      "order": 39,
+      "order": 38,
       "name": "Route 23",
       "encounters": [
         {
@@ -4084,7 +4053,7 @@
     },
     {
       "id": "unova-victory-road-2",
-      "order": 40,
+      "order": 39,
       "name": "Siegesstraße",
       "encounters": [
         {
@@ -4344,7 +4313,7 @@
     },
     {
       "id": "unova-route-1",
-      "order": 41,
+      "order": 40,
       "name": "Route 1",
       "encounters": [
         {
@@ -4447,7 +4416,7 @@
     },
     {
       "id": "accumula-town",
-      "order": 42,
+      "order": 41,
       "name": "Gavina",
       "encounters": [
         {
@@ -4471,7 +4440,7 @@
     },
     {
       "id": "unova-route-2",
-      "order": 43,
+      "order": 42,
       "name": "Route 2",
       "encounters": [
         {
@@ -4584,7 +4553,7 @@
     },
     {
       "id": "striaton-city",
-      "order": 44,
+      "order": 43,
       "name": "Orion City",
       "encounters": [
         {
@@ -4636,7 +4605,7 @@
     },
     {
       "id": "dreamyard",
-      "order": 45,
+      "order": 44,
       "name": "Traumbrache",
       "encounters": [
         {
@@ -4754,7 +4723,7 @@
     },
     {
       "id": "unova-route-3",
-      "order": 46,
+      "order": 45,
       "name": "Route 3",
       "encounters": [
         {
@@ -4934,7 +4903,7 @@
     },
     {
       "id": "wellspring-cave",
-      "order": 47,
+      "order": 46,
       "name": "Grundwassersenke",
       "encounters": [
         {
@@ -5001,7 +4970,7 @@
     },
     {
       "id": "nacrene-city",
-      "order": 48,
+      "order": 47,
       "name": "Septerna City",
       "encounters": [
         {
@@ -5097,7 +5066,7 @@
     },
     {
       "id": "pinwheel-forest",
-      "order": 49,
+      "order": 48,
       "name": "Ewigenwald",
       "encounters": [
         {
@@ -5403,7 +5372,7 @@
     },
     {
       "id": "unova-route-18",
-      "order": 50,
+      "order": 49,
       "name": "Route 18",
       "encounters": [
         {
@@ -5590,7 +5559,7 @@
     },
     {
       "id": "p2-laboratory",
-      "order": 51,
+      "order": 50,
       "name": "P2-Labor",
       "encounters": [
         {
@@ -5750,7 +5719,7 @@
     },
     {
       "id": "unova-route-17",
-      "order": 52,
+      "order": 51,
       "name": "Route 17",
       "encounters": [
         {
@@ -5823,7 +5792,7 @@
     },
     {
       "id": "unova-route-8",
-      "order": 53,
+      "order": 52,
       "name": "Route 8",
       "encounters": [
         {
@@ -5902,7 +5871,7 @@
     },
     {
       "id": "moor-of-icirrus",
-      "order": 54,
+      "order": 53,
       "name": "Moor von Nevaio",
       "encounters": [
         {
@@ -5979,7 +5948,7 @@
     },
     {
       "id": "icirrus-city",
-      "order": 55,
+      "order": 54,
       "name": "Nevaio City",
       "encounters": [
         {
@@ -6056,7 +6025,7 @@
     },
     {
       "id": "twist-mountain",
-      "order": 56,
+      "order": 55,
       "name": "Wendelberg",
       "encounters": [
         {
@@ -6153,7 +6122,7 @@
     },
     {
       "id": "dragonspiral-tower",
-      "order": 57,
+      "order": 56,
       "name": "Drachenstiege",
       "encounters": [
         {
@@ -6315,7 +6284,7 @@
     },
     {
       "id": "unova-route-14",
-      "order": 58,
+      "order": 57,
       "name": "Route 14",
       "encounters": [
         {
@@ -6437,7 +6406,7 @@
     },
     {
       "id": "abundant-shrine",
-      "order": 59,
+      "order": 58,
       "name": "Schrein der Ernte",
       "encounters": [
         {
@@ -6614,7 +6583,7 @@
     },
     {
       "id": "unova-route-15",
-      "order": 60,
+      "order": 59,
       "name": "Route 15",
       "encounters": [
         {
@@ -6718,7 +6687,7 @@
     },
     {
       "id": "clay-tunnel",
-      "order": 61,
+      "order": 60,
       "name": "Turner-Pfad",
       "encounters": [
         {
@@ -6826,7 +6795,7 @@
     },
     {
       "id": "underground-ruins",
-      "order": 62,
+      "order": 61,
       "name": "Unterirdische Ruine",
       "encounters": [
         {
@@ -6923,7 +6892,7 @@
     },
     {
       "id": "nature-sanctuary",
-      "order": 63,
+      "order": 62,
       "name": "Naturschutzgebiet",
       "encounters": [
         {

@@ -26,11 +26,9 @@ GAME = {
     # National-Dex bis Generation 4 - so weit reicht die Auswahlliste im Frontend.
     "dex_max": 493,
     "locations": [
-        # PokeAPI fuehrt die Starter als "gift" auf Route 201; als eigene Zeile ist
-        # das naeher an unserer Tabelle.
-        {"id": "starter", "name": "Starter", "species": ["turtwig", "chimchar", "piplup"]},
-        # Die Starter stehen bei PokeAPI zusaetzlich als Geschenk auf Route 201.
-        {"id": "sinnoh-route-201", "exclude_methods": ["Geschenk"]},
+        # Die Starter sind der Encounter von Route 201 und stehen bei PokeAPI genau
+        # dort als Geschenk. Eine eigene Starter-Zeile waere dieselbe Wahl zweimal.
+        "sinnoh-route-201",
         {"id": "lake-verity", "name": "See der Wahrheit"},
         "sinnoh-route-202",
         "sinnoh-route-203",

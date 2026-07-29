@@ -16,7 +16,7 @@ from fastapi import Depends, FastAPI, Header, HTTPException, Query, Response, st
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, ConfigDict, Field
 
-SCHEMA_VERSION = 4
+SCHEMA_VERSION = 5
 SLUG_PATTERN = r"^[a-z0-9]+(?:-[a-z0-9]+)*$"
 
 Outcome = Literal["pending", "caught", "dead", "failed"]
@@ -79,6 +79,15 @@ LEGACY_LOCATION_IDS = {
     "eiseninsel": "iron-island",
 }
 LEGACY_SEA_ROUTES = {"220", "223", "226", "230"}
+
+# Orte, die aus einem Katalog verschwunden sind, samt Nachfolger. v5 loest die
+# eigene Starter-Zeile auf: die Starter sind der Encounter des Ortes, an dem man
+# sie bekommt, und stehen dort ohnehin schon als Geschenk. Eintraege hier bleiben
+# fuer immer stehen - ein alter Datenstand kann jederzeit auftauchen.
+RETIRED_LOCATIONS = {
+    "platinum": {"starter": "sinnoh-route-201"},
+    "black-2-white-2": {"starter": "aspertia-city"},
+}
 
 # Felder, die sich per PATCH ausdruecklich auf null setzen (also leeren) lassen.
 NULLABLE_ROW_FIELDS = {"responsible_player", "picks"}
@@ -466,11 +475,8 @@ def normalize_encounter(raw: dict[str, Any], player_ids: list[str], game_id: str
 
     row.setdefault("location_id", None)
 
-    # Alt-Zeilen kennen ihre Position im Spielverlauf nicht - die steht im Katalog.
-    if not row.get("order") and row.get("location_id"):
-        location = catalog_locations(game_id).get(row["location_id"])
-        if location:
-            row["order"] = location["order"]
+    # 'order' steht im Katalog und wird in apply_catalog_moves() gesetzt - dort
+    # ist der ganze Run im Blick, was fuers Zusammenlegen von Zeilen noetig ist.
 
     responsible = row.get("responsible_player")
     if responsible in LEGACY_PLAYER_LABELS:
@@ -493,6 +499,78 @@ def normalize_encounter(raw: dict[str, Any], player_ids: list[str], game_id: str
     return EncounterRow.model_validate(row).model_dump()
 
 
+def filled_picks(row: dict[str, Any]) -> int:
+    return sum(pick_is_filled(pick) for pick in row["picks"].values())
+
+
+def merge_rows(keep: dict[str, Any], drop: dict[str, Any]) -> dict[str, Any]:
+    """Zwei Zeilen desselben Ortes zu einer machen.
+
+    Uebernommen wird nur, was in `keep` leer ist - andersherum wuerde ein leerer
+    Platzhalter die eingetragenen Pokémon ueberschreiben.
+    """
+    for player_id, pick in drop["picks"].items():
+        if pick_is_filled(pick) and not pick_is_filled(keep["picks"].get(player_id) or {}):
+            keep["picks"][player_id] = pick
+    if keep["outcome"] == "pending":
+        keep["outcome"] = drop["outcome"]
+    if not keep.get("responsible_player"):
+        keep["responsible_player"] = drop.get("responsible_player")
+    keep["in_team"] = keep["in_team"] or drop["in_team"]
+    return keep
+
+
+def apply_catalog_moves(rows: list[dict[str, Any]], game_id: str) -> list[dict[str, Any]]:
+    """Die Zeilen eines Runs auf den aktuellen Katalog ziehen.
+
+    Zwei Dinge, die nur mit Blick auf den ganzen Run gehen und deshalb nicht in
+    `normalize_encounter` stehen:
+
+    * Ein aufgeloester Ort (`RETIRED_LOCATIONS`) wandert auf seinen Nachfolger.
+      Steht der schon als eigene Zeile im Run, treffen zwei Zeilen auf denselben
+      Ort - dann bleibt die mit den Eintraegen, sonst gewaenne beim Zusammenlegen
+      die leere und genau die gefangenen Pokémon waeren weg. Fehlt der Katalog
+      gerade, bleibt die Zeile unangetastet: ein Ort, den niemand kennt, ist
+      schlechter als ein veralteter.
+    * `order` kommt frisch aus dem Katalog. Faellt ein Ort weg, verschieben sich
+      alle nachfolgenden Nummern; Alt-Zeilen behielten sonst die Nummerierung von
+      vorher und mischten sich falsch unter spaeter angelegte.
+    """
+    catalog = catalog_locations(game_id)
+    retired = RETIRED_LOCATIONS.get(game_id, {})
+
+    result: list[dict[str, Any]] = []
+    index_of: dict[str, int] = {}
+
+    for row in rows:
+        successor = catalog.get(retired.get(row.get("location_id") or "", ""))
+        if successor:
+            row["id"] = successor["id"]
+            row["location_id"] = successor["id"]
+            row["encounter"] = successor["name"]
+
+        location_id = row.get("location_id")
+        at = index_of.get(location_id) if location_id else None
+        if at is None:
+            if location_id:
+                index_of[location_id] = len(result)
+            result.append(row)
+            continue
+
+        existing = result[at]
+        # Die inhaltsreichere Zeile bleibt stehen, die andere geht in ihr auf.
+        result[at] = (
+            merge_rows(row, existing) if filled_picks(row) > filled_picks(existing) else merge_rows(existing, row)
+        )
+
+    for row in result:
+        location = catalog.get(row.get("location_id") or "")
+        if location:
+            row["order"] = location["order"]
+
+    return result
+
+
 def normalize_run(raw: dict[str, Any], fallback_id: str, player_ids: list[str]) -> dict[str, Any]:
     run = dict(raw)
     run.setdefault("id", fallback_id)
@@ -507,7 +585,8 @@ def normalize_run(raw: dict[str, Any], fallback_id: str, player_ids: list[str]) 
     legacy_game = run.pop("game", None)
     run["game_id"] = resolve_game_id(run.get("game_id") or legacy_game)
 
-    run["encounters"] = [normalize_encounter(row, player_ids, run["game_id"]) for row in run.get("encounters", [])]
+    rows = [normalize_encounter(row, player_ids, run["game_id"]) for row in run.get("encounters", [])]
+    run["encounters"] = apply_catalog_moves(rows, run["game_id"])
     return RunRecord.model_validate(run).model_dump()
 
 
