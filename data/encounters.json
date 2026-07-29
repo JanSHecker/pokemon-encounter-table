@@ -577,28 +577,28 @@
           }
         },
         {
-          "id": "route-202",
-          "location_id": "sinnoh-route-202",
-          "order": 4,
-          "encounter": "Route 202",
+          "id": "sinnoh-route-201",
+          "location_id": "sinnoh-route-201",
+          "order": 2,
+          "encounter": "Route 201",
           "responsible_player": null,
-          "outcome": "caught",
+          "outcome": "pending",
           "postgame": false,
           "in_team": false,
           "picks": {
             "marc": {
-              "species": "bidoof",
-              "name": "Bidiza",
+              "species": null,
+              "name": "",
               "status": "alive"
             },
             "nicolai": {
-              "species": "bidoof",
-              "name": "Bidiza",
+              "species": null,
+              "name": "",
               "status": "alive"
             },
             "knev": {
-              "species": "shinx",
-              "name": "Sheinux",
+              "species": null,
+              "name": "",
               "status": "alive"
             }
           }
@@ -631,55 +631,28 @@
           }
         },
         {
-          "id": "route-208",
-          "location_id": "sinnoh-route-208",
-          "order": 18,
-          "encounter": "Route 208",
+          "id": "route-202",
+          "location_id": "sinnoh-route-202",
+          "order": 4,
+          "encounter": "Route 202",
           "responsible_player": null,
           "outcome": "caught",
           "postgame": false,
           "in_team": false,
           "picks": {
             "marc": {
-              "species": "magikarp",
-              "name": "Karpador",
+              "species": "bidoof",
+              "name": "Bidiza",
               "status": "alive"
             },
             "nicolai": {
-              "species": "magikarp",
-              "name": "Karpador",
+              "species": "bidoof",
+              "name": "Bidiza",
               "status": "alive"
             },
             "knev": {
-              "species": "magikarp",
-              "name": "Karpador",
-              "status": "alive"
-            }
-          }
-        },
-        {
-          "id": "route-204",
-          "location_id": "sinnoh-route-204",
-          "order": 9,
-          "encounter": "Route 204",
-          "responsible_player": null,
-          "outcome": "caught",
-          "postgame": false,
-          "in_team": false,
-          "picks": {
-            "marc": {
               "species": "shinx",
               "name": "Sheinux",
-              "status": "alive"
-            },
-            "nicolai": {
-              "species": "budew",
-              "name": "Knospi",
-              "status": "alive"
-            },
-            "knev": {
-              "species": "kricketot",
-              "name": "Zirpurze",
               "status": "alive"
             }
           }
@@ -739,28 +712,28 @@
           }
         },
         {
-          "id": "ruinental",
-          "location_id": "ravaged-path",
-          "order": 10,
-          "encounter": "Ruinental",
-          "responsible_player": null,
-          "outcome": "caught",
+          "id": "erzelingen-mine",
+          "location_id": "oreburgh-mine",
+          "order": 7,
+          "encounter": "Erzelingen-Mine",
+          "responsible_player": "knev",
+          "outcome": "failed",
           "postgame": false,
           "in_team": false,
           "picks": {
             "marc": {
-              "species": "zubat",
-              "name": "Zubat",
+              "species": null,
+              "name": "Encounter verloren",
               "status": "alive"
             },
             "nicolai": {
-              "species": "psyduck",
-              "name": "Enton",
+              "species": null,
+              "name": "Encounter verloren",
               "status": "alive"
             },
             "knev": {
-              "species": "psyduck",
-              "name": "Enton",
+              "species": null,
+              "name": "Encounter verloren",
               "status": "alive"
             }
           }
@@ -793,28 +766,55 @@
           }
         },
         {
-          "id": "erzelingen-mine",
-          "location_id": "oreburgh-mine",
-          "order": 7,
-          "encounter": "Erzelingen-Mine",
-          "responsible_player": "knev",
-          "outcome": "failed",
+          "id": "route-204",
+          "location_id": "sinnoh-route-204",
+          "order": 9,
+          "encounter": "Route 204",
+          "responsible_player": null,
+          "outcome": "caught",
           "postgame": false,
           "in_team": false,
           "picks": {
             "marc": {
-              "species": null,
-              "name": "Encounter verloren",
+              "species": "shinx",
+              "name": "Sheinux",
               "status": "alive"
             },
             "nicolai": {
-              "species": null,
-              "name": "Encounter verloren",
+              "species": "budew",
+              "name": "Knospi",
               "status": "alive"
             },
             "knev": {
-              "species": null,
-              "name": "Encounter verloren",
+              "species": "kricketot",
+              "name": "Zirpurze",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "ruinental",
+          "location_id": "ravaged-path",
+          "order": 10,
+          "encounter": "Ruinental",
+          "responsible_player": null,
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "zubat",
+              "name": "Zubat",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "psyduck",
+              "name": "Enton",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "psyduck",
+              "name": "Enton",
               "status": "alive"
             }
           }
@@ -899,9 +899,846 @@
               "status": "dead"
             }
           }
+        },
+        {
+          "id": "old-chateau",
+          "location_id": "old-chateau",
+          "order": 14,
+          "encounter": "Alte Villa",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-211",
+          "location_id": "sinnoh-route-211",
+          "order": 15,
+          "encounter": "Route 211",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-206",
+          "location_id": "sinnoh-route-206",
+          "order": 16,
+          "encounter": "Route 206",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "wayward-cave",
+          "location_id": "wayward-cave",
+          "order": 17,
+          "encounter": "Bizarre Höhle",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "route-208",
+          "location_id": "sinnoh-route-208",
+          "order": 18,
+          "encounter": "Route 208",
+          "responsible_player": null,
+          "outcome": "caught",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": "magikarp",
+              "name": "Karpador",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": "magikarp",
+              "name": "Karpador",
+              "status": "alive"
+            },
+            "knev": {
+              "species": "magikarp",
+              "name": "Karpador",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-209",
+          "location_id": "sinnoh-route-209",
+          "order": 19,
+          "encounter": "Route 209",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "lost-tower",
+          "location_id": "lost-tower",
+          "order": 20,
+          "encounter": "Turm der Ruhenden",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "solaceon-ruins",
+          "location_id": "solaceon-ruins",
+          "order": 21,
+          "encounter": "Trostu-Ruinen",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-210",
+          "location_id": "sinnoh-route-210",
+          "order": 22,
+          "encounter": "Route 210",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-215",
+          "location_id": "sinnoh-route-215",
+          "order": 23,
+          "encounter": "Route 215",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-214",
+          "location_id": "sinnoh-route-214",
+          "order": 24,
+          "encounter": "Route 214",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "valor-lakefront",
+          "location_id": "valor-lakefront",
+          "order": 25,
+          "encounter": "Kühnheitsufer",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-213",
+          "location_id": "sinnoh-route-213",
+          "order": 26,
+          "encounter": "Route 213",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "great-marsh",
+          "location_id": "great-marsh",
+          "order": 27,
+          "encounter": "Großmoor",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-212",
+          "location_id": "sinnoh-route-212",
+          "order": 28,
+          "encounter": "Route 212",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "fuego-ironworks",
+          "location_id": "fuego-ironworks",
+          "order": 29,
+          "encounter": "Feurio-Hütte",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-218",
+          "location_id": "sinnoh-route-218",
+          "order": 30,
+          "encounter": "Route 218",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-219",
+          "location_id": "sinnoh-route-219",
+          "order": 31,
+          "encounter": "Route 219",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-sea-route-220",
+          "location_id": "sinnoh-sea-route-220",
+          "order": 32,
+          "encounter": "Route 220",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-221",
+          "location_id": "sinnoh-route-221",
+          "order": 33,
+          "encounter": "Route 221",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-222",
+          "location_id": "sinnoh-route-222",
+          "order": 34,
+          "encounter": "Route 222",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "iron-island",
+          "location_id": "iron-island",
+          "order": 35,
+          "encounter": "Eiseninsel",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "lake-valor",
+          "location_id": "lake-valor",
+          "order": 36,
+          "encounter": "See der Kühnheit",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-216",
+          "location_id": "sinnoh-route-216",
+          "order": 37,
+          "encounter": "Route 216",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-route-217",
+          "location_id": "sinnoh-route-217",
+          "order": 38,
+          "encounter": "Route 217",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "acuity-lakefront",
+          "location_id": "acuity-lakefront",
+          "order": 39,
+          "encounter": "Stärkeufer",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "lake-acuity",
+          "location_id": "lake-acuity",
+          "order": 40,
+          "encounter": "See der Stärke",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "mt-coronet",
+          "location_id": "mt-coronet",
+          "order": 41,
+          "encounter": "Kraterberg",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "spear-pillar",
+          "location_id": "spear-pillar",
+          "order": 42,
+          "encounter": "Speersäule",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "distortion-world",
+          "location_id": "distortion-world",
+          "order": 43,
+          "encounter": "Zerrwelt",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
+        },
+        {
+          "id": "sinnoh-victory-road",
+          "location_id": "sinnoh-victory-road",
+          "order": 44,
+          "encounter": "Siegesstraße",
+          "responsible_player": null,
+          "outcome": "pending",
+          "postgame": false,
+          "in_team": false,
+          "picks": {
+            "marc": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "nicolai": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            },
+            "knev": {
+              "species": null,
+              "name": "",
+              "status": "alive"
+            }
+          }
         }
       ]
     }
   ],
-  "updated_at": "2026-07-28T21:21:11+00:00"
+  "updated_at": "2026-07-29T15:33:43.588315+00:00"
 }
