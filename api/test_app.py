@@ -140,9 +140,9 @@ def test_legacy_state_migrates_to_players_and_picks(legacy_client):
     payload = legacy_client.get("/encounters").json()
 
     assert payload["players"] == [
-        {"id": "marc", "name": "Marc"},
-        {"id": "nicolai", "name": "Nicolai"},
-        {"id": "knev", "name": "Knev"},
+        {"id": "marc", "name": "Mark"},
+        {"id": "nicolai", "name": "Nikolai"},
+        {"id": "knev", "name": "KNEV"},
     ]
 
     first = payload["encounters"][0]
@@ -162,19 +162,19 @@ def test_legacy_lost_encounter_keeps_its_outcome(legacy_client):
     assert lost["picks"]["knev"]["species"] is None
 
 
-def test_shouted_legacy_name_is_corrected_in_v3_data(client, data_file):
+def test_player_names_are_normalized_to_configured_spelling(client, data_file):
     client.get("/encounters")  # legt den Store ueberhaupt erst an
     stored = json.loads(data_file.read_text(encoding="utf-8"))
     stored["players"] = [
         {"id": "marc", "name": "Marc"},
         {"id": "nicolai", "name": "Nicolai"},
-        {"id": "knev", "name": "KNEV"},
+        {"id": "knev", "name": "Knev"},
     ]
     data_file.write_text(json.dumps(stored, ensure_ascii=False), encoding="utf-8")
 
     names = [player["name"] for player in client.get("/runs").json()["players"]]
 
-    assert names == ["Marc", "Nicolai", "Knev"]
+    assert names == ["Mark", "Nikolai", "KNEV"]
 
 
 def test_migration_is_written_back_once(legacy_client, data_file):

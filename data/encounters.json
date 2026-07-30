@@ -3,15 +3,15 @@
   "players": [
     {
       "id": "marc",
-      "name": "Marc"
+      "name": "Mark"
     },
     {
       "id": "nicolai",
-      "name": "Nicolai"
+      "name": "Nikolai"
     },
     {
       "id": "knev",
-      "name": "Knev"
+      "name": "KNEV"
     }
   ],
   "current_run_id": "run-2",

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Projekt
 
-Gekoppelte Nuzlocke-Soullink-Tabelle für die drei Spieler **Marc**, **Nicolai** und **Knev**,
+Gekoppelte Nuzlocke-Soullink-Tabelle für die drei Spieler **Mark**, **Nikolai** und **KNEV**,
 über mehrere Editionen (Platin, Schwarz 2/Weiß 2) und Runs hinweg. Öffentlich unter
 `https://bronze-brawl.de/encounter-table/`.
 
@@ -98,7 +98,7 @@ schreiben bei Abweichung sofort zurück. Sie tragen die komplette v2→v3-Migrat
 Schritte auf v4 und v5:
 
 - `players` von Namensliste zu `{id, name}`; `LEGACY_DISPLAY_NAMES` korrigiert die aus v2 geerbten
-  Schreibweisen (Mark→Marc, Nikolai→Nicolai, KNEV→Knev). Das greift auch auf bereits migrierte
+  Schreibweisen (Mark, Nikolai und KNEV) werden bei der Migration exakt beibehalten. Das greift auch auf bereits migrierte
   v3-Daten – ein späteres Umbenennen bleibt trotzdem eine reine Datenänderung, solange niemand
   exakt die alte Schreibweise wählt
 - die festen Zeilenfelder `mark`/`nikolai`/`knev` + `*_status` zur `picks`-Map
