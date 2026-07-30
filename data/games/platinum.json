@@ -7741,93 +7741,240 @@
     {
       "order": 1,
       "kind": "gym",
-      "leader": "Veit",
-      "place": "Erzelingen",
-      "cap": 14
+      "leader": "Roark",
+      "place": "Cranidos",
+      "cap": 16,
+      "ace": "Cranidos",
+      "item": "Sitrus Berry",
+      "nature": "Hasty",
+      "ability": "Rock Head (!)",
+      "moves": [
+        "Zen Headbutt",
+        "Rock Tomb",
+        "Thunder Punch",
+        "Scary Face"
+      ]
     },
     {
       "order": 2,
       "kind": "gym",
-      "leader": "Silvana",
-      "place": "Ewigenau",
-      "cap": 22
+      "leader": "Gardenia",
+      "place": "Roserade",
+      "cap": 26,
+      "ace": "Roserade",
+      "item": "Sitrus Berry",
+      "nature": "Timid",
+      "ability": "Technician",
+      "moves": [
+        "Magical Leaf",
+        "Sludge",
+        "Dazzling Gleam",
+        "Extrasensory"
+      ]
     },
     {
       "order": 3,
       "kind": "gym",
-      "leader": "Lamina",
-      "place": "Herzhofen",
-      "cap": 26
+      "leader": "Fantina",
+      "place": "Mismagius",
+      "cap": 33,
+      "ace": "Mismagius",
+      "item": "Sitrus Berry",
+      "nature": "Naive",
+      "ability": "Levitate",
+      "moves": [
+        "Shadow Ball",
+        "Power Gem",
+        "Calm Mind",
+        "Dazzling Gleam"
+      ]
     },
     {
       "order": 4,
       "kind": "gym",
-      "leader": "Hilda",
-      "place": "Schleiede",
-      "cap": 32
+      "leader": "Maylene",
+      "place": "Lucario",
+      "cap": 39,
+      "ace": "Lucario",
+      "item": "Focus Sash",
+      "nature": "Timid",
+      "ability": "Adaptability (!)",
+      "moves": [
+        "Aura Sphere",
+        "Flash Cannon",
+        "Dark Pulse",
+        "Agility"
+      ]
     },
     {
       "order": 5,
       "kind": "gym",
-      "leader": "Marinus",
-      "place": "Weideburg",
-      "cap": 37
+      "leader": "Wake",
+      "place": "Floatzel",
+      "cap": 44,
+      "ace": "Floatzel",
+      "item": "Life Orb",
+      "nature": "Naive",
+      "ability": "Swift Swim",
+      "moves": [
+        "Aqua Tail",
+        "Crunch",
+        "Ice Punch",
+        "Aqua Jet"
+      ]
     },
     {
       "order": 6,
       "kind": "gym",
-      "leader": "Adam",
-      "place": "Fleetburg",
-      "cap": 41
+      "leader": "Byron",
+      "place": "Bastiodon",
+      "cap": 53,
+      "ace": "Bastiodon",
+      "item": "Leftovers",
+      "nature": "Sassy",
+      "ability": "Soundproof",
+      "moves": [
+        "Iron Head",
+        "Toxic",
+        "Protect",
+        "Metal Burst"
+      ]
     },
     {
       "order": 7,
       "kind": "gym",
-      "leader": "Frida",
-      "place": "Blizzach",
-      "cap": 42
+      "leader": "Candice",
+      "place": "Froslass",
+      "cap": 56,
+      "ace": "Froslass",
+      "item": "Life Orb",
+      "nature": "Modest",
+      "ability": "Levitate (!)",
+      "moves": [
+        "Blizzard",
+        "Shadow Ball",
+        "Thunderbolt",
+        "Attract"
+      ]
     },
     {
       "order": 8,
       "kind": "gym",
       "leader": "Volkner",
-      "place": "Sonnewik",
-      "cap": 50
+      "place": "Electivire",
+      "cap": 62,
+      "ace": "Electivire",
+      "item": "Life Orb",
+      "nature": "Jolly",
+      "ability": "Motor Drive",
+      "moves": [
+        "Wild Charge",
+        "Close Combat",
+        "Ice Punch",
+        "Earthquake"
+      ]
     },
     {
       "order": 9,
       "kind": "elite",
-      "leader": "Herbaro",
-      "place": "Top Vier",
-      "cap": 53
+      "leader": "Aaron",
+      "place": "Drapion",
+      "cap": 72,
+      "ace": "Drapion",
+      "item": "Scope Lens",
+      "nature": "Naive",
+      "ability": "Sniper",
+      "moves": [
+        "Cross Poison",
+        "Night Slash",
+        "X-Scissor",
+        "Earthquake"
+      ]
     },
     {
       "order": 10,
       "kind": "elite",
-      "leader": "Teresa",
-      "place": "Top Vier",
-      "cap": 55
+      "leader": "Bertha",
+      "place": "Rhyperior",
+      "cap": 73,
+      "ace": "Rhyperior",
+      "item": "Choice Band",
+      "nature": "Naughty",
+      "ability": "Solid Rock",
+      "moves": [
+        "Earthquake",
+        "Stone Edge",
+        "Megahorn",
+        "Fire Punch"
+      ]
     },
     {
       "order": 11,
       "kind": "elite",
-      "leader": "Ignaz",
-      "place": "Top Vier",
-      "cap": 57
+      "leader": "Flint",
+      "place": "Magmortar",
+      "cap": 74,
+      "ace": "Magmortar",
+      "item": "Life Orb",
+      "nature": "Modest",
+      "ability": "Flame Body",
+      "moves": [
+        "Fire Blast",
+        "Thunderbolt",
+        "Aura Sphere",
+        "Solar Beam"
+      ]
     },
     {
       "order": 12,
       "kind": "elite",
       "leader": "Lucian",
-      "place": "Top Vier",
-      "cap": 59
+      "place": "Gallade",
+      "cap": 75,
+      "ace": "Gallade",
+      "item": "Scope Lens",
+      "nature": "Jolly",
+      "ability": "Steadfast",
+      "moves": [
+        "Psycho Cut",
+        "Close Combat",
+        "Leaf Blade",
+        "Night Slash"
+      ]
     },
     {
       "order": 13,
       "kind": "champion",
       "leader": "Cynthia",
-      "place": "Champion",
-      "cap": 62
+      "place": "Garchomp",
+      "cap": 78,
+      "ace": "Garchomp",
+      "item": "Yache Berry",
+      "nature": "Hasty",
+      "ability": "Rough Skin",
+      "moves": [
+        "Earthquake",
+        "Outrage",
+        "Stone Edge",
+        "Swords Dance"
+      ]
+    },
+    {
+      "order": 14,
+      "kind": "rematch",
+      "leader": "Cynthia R2",
+      "place": "Rayquaza",
+      "cap": 89,
+      "ace": "Rayquaza",
+      "item": "Focus Sash",
+      "nature": "?",
+      "ability": "Air Lock",
+      "moves": [
+        "Outrage",
+        "Earthquake",
+        "Overheat",
+        "Dragon Dance"
+      ]
     }
   ],
   "pokedex": [

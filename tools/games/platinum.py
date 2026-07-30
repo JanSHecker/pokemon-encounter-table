@@ -104,28 +104,78 @@ GAME = {
         {"id": "flower-paradise", "postgame": True},
         {"id": "spring-path", "postgame": True},
     ],
-    # Cap = hoechstes Level im Team des jeweils naechsten Gegners.
-    #
-    # Achtung: Platin hat die Arenareihenfolge gegenueber Diamant/Perl geaendert -
-    # Lamina (Herzhofen) ist hier die dritte Arena, nicht die fuenfte.
-    #
-    # Die Top-Vier-Level gelten fuer den ersten Durchgang; nach dem Kahlberg-Event
-    # steigen sie deutlich an (Herbaro dann 69, Cynthia 78).
-    #
-    # Quelle: Bulbapedia, Stand Juli 2026, jeweils der Platin-Abschnitt.
+    # Renegade-Platinum-Caps. `place` zeigt im kompakten Frontend das Ace an;
+    # das vollstaendige Set bleibt fuer API-Clients strukturiert im Katalog.
     "level_caps": [
-        {"order": 1, "kind": "gym", "leader": "Veit", "place": "Erzelingen", "cap": 14},
-        {"order": 2, "kind": "gym", "leader": "Silvana", "place": "Ewigenau", "cap": 22},
-        {"order": 3, "kind": "gym", "leader": "Lamina", "place": "Herzhofen", "cap": 26},
-        {"order": 4, "kind": "gym", "leader": "Hilda", "place": "Schleiede", "cap": 32},
-        {"order": 5, "kind": "gym", "leader": "Marinus", "place": "Weideburg", "cap": 37},
-        {"order": 6, "kind": "gym", "leader": "Adam", "place": "Fleetburg", "cap": 41},
-        {"order": 7, "kind": "gym", "leader": "Frida", "place": "Blizzach", "cap": 42},
-        {"order": 8, "kind": "gym", "leader": "Volkner", "place": "Sonnewik", "cap": 50},
-        {"order": 9, "kind": "elite", "leader": "Herbaro", "place": "Top Vier", "cap": 53},
-        {"order": 10, "kind": "elite", "leader": "Teresa", "place": "Top Vier", "cap": 55},
-        {"order": 11, "kind": "elite", "leader": "Ignaz", "place": "Top Vier", "cap": 57},
-        {"order": 12, "kind": "elite", "leader": "Lucian", "place": "Top Vier", "cap": 59},
-        {"order": 13, "kind": "champion", "leader": "Cynthia", "place": "Champion", "cap": 62},
+        {
+            "order": 1, "kind": "gym", "leader": "Roark", "place": "Cranidos", "cap": 16,
+            "ace": "Cranidos", "item": "Sitrus Berry", "nature": "Hasty", "ability": "Rock Head (!)",
+            "moves": ["Zen Headbutt", "Rock Tomb", "Thunder Punch", "Scary Face"],
+        },
+        {
+            "order": 2, "kind": "gym", "leader": "Gardenia", "place": "Roserade", "cap": 26,
+            "ace": "Roserade", "item": "Sitrus Berry", "nature": "Timid", "ability": "Technician",
+            "moves": ["Magical Leaf", "Sludge", "Dazzling Gleam", "Extrasensory"],
+        },
+        {
+            "order": 3, "kind": "gym", "leader": "Fantina", "place": "Mismagius", "cap": 33,
+            "ace": "Mismagius", "item": "Sitrus Berry", "nature": "Naive", "ability": "Levitate",
+            "moves": ["Shadow Ball", "Power Gem", "Calm Mind", "Dazzling Gleam"],
+        },
+        {
+            "order": 4, "kind": "gym", "leader": "Maylene", "place": "Lucario", "cap": 39,
+            "ace": "Lucario", "item": "Focus Sash", "nature": "Timid", "ability": "Adaptability (!)",
+            "moves": ["Aura Sphere", "Flash Cannon", "Dark Pulse", "Agility"],
+        },
+        {
+            "order": 5, "kind": "gym", "leader": "Wake", "place": "Floatzel", "cap": 44,
+            "ace": "Floatzel", "item": "Life Orb", "nature": "Naive", "ability": "Swift Swim",
+            "moves": ["Aqua Tail", "Crunch", "Ice Punch", "Aqua Jet"],
+        },
+        {
+            "order": 6, "kind": "gym", "leader": "Byron", "place": "Bastiodon", "cap": 53,
+            "ace": "Bastiodon", "item": "Leftovers", "nature": "Sassy", "ability": "Soundproof",
+            "moves": ["Iron Head", "Toxic", "Protect", "Metal Burst"],
+        },
+        {
+            "order": 7, "kind": "gym", "leader": "Candice", "place": "Froslass", "cap": 56,
+            "ace": "Froslass", "item": "Life Orb", "nature": "Modest", "ability": "Levitate (!)",
+            "moves": ["Blizzard", "Shadow Ball", "Thunderbolt", "Attract"],
+        },
+        {
+            "order": 8, "kind": "gym", "leader": "Volkner", "place": "Electivire", "cap": 62,
+            "ace": "Electivire", "item": "Life Orb", "nature": "Jolly", "ability": "Motor Drive",
+            "moves": ["Wild Charge", "Close Combat", "Ice Punch", "Earthquake"],
+        },
+        {
+            "order": 9, "kind": "elite", "leader": "Aaron", "place": "Drapion", "cap": 72,
+            "ace": "Drapion", "item": "Scope Lens", "nature": "Naive", "ability": "Sniper",
+            "moves": ["Cross Poison", "Night Slash", "X-Scissor", "Earthquake"],
+        },
+        {
+            "order": 10, "kind": "elite", "leader": "Bertha", "place": "Rhyperior", "cap": 73,
+            "ace": "Rhyperior", "item": "Choice Band", "nature": "Naughty", "ability": "Solid Rock",
+            "moves": ["Earthquake", "Stone Edge", "Megahorn", "Fire Punch"],
+        },
+        {
+            "order": 11, "kind": "elite", "leader": "Flint", "place": "Magmortar", "cap": 74,
+            "ace": "Magmortar", "item": "Life Orb", "nature": "Modest", "ability": "Flame Body",
+            "moves": ["Fire Blast", "Thunderbolt", "Aura Sphere", "Solar Beam"],
+        },
+        {
+            "order": 12, "kind": "elite", "leader": "Lucian", "place": "Gallade", "cap": 75,
+            "ace": "Gallade", "item": "Scope Lens", "nature": "Jolly", "ability": "Steadfast",
+            "moves": ["Psycho Cut", "Close Combat", "Leaf Blade", "Night Slash"],
+        },
+        {
+            "order": 13, "kind": "champion", "leader": "Cynthia", "place": "Garchomp", "cap": 78,
+            "ace": "Garchomp", "item": "Yache Berry", "nature": "Hasty", "ability": "Rough Skin",
+            "moves": ["Earthquake", "Outrage", "Stone Edge", "Swords Dance"],
+        },
+        {
+            "order": 14, "kind": "rematch", "leader": "Cynthia R2", "place": "Rayquaza", "cap": 89,
+            "ace": "Rayquaza", "item": "Focus Sash", "nature": "?", "ability": "Air Lock",
+            "moves": ["Outrage", "Earthquake", "Overheat", "Dragon Dance"],
+        },
     ],
 }
