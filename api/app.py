@@ -25,13 +25,13 @@ PickStatus = Literal["alive", "dead"]
 RunStatus = Literal["active", "completed"]
 
 DEFAULT_PLAYERS = [
-    {"id": "marc", "name": "Mark"},
-    {"id": "nicolai", "name": "Nikolai"},
-    {"id": "knev", "name": "KNEV"},
+    {"id": "marc", "name": "Marc"},
+    {"id": "nicolai", "name": "Nicolai"},
+    {"id": "knev", "name": "Knev"},
 ]
 
 # Die drei Spieler-Namen sind user-facing Daten und bleiben exakt erhalten.
-LEGACY_DISPLAY_NAMES = {"Mark": "Mark", "Nikolai": "Nikolai", "KNEV": "KNEV", "Marc": "Mark", "Nicolai": "Nikolai", "Knev": "KNEV"}
+LEGACY_DISPLAY_NAMES = {"Mark": "Marc", "Nikolai": "Nicolai", "KNEV": "Knev", "Marc": "Marc", "Nicolai": "Nicolai", "Knev": "Knev"}
 DEFAULT_GAME_ID = "platinum"
 
 # Freitext, der einen verlorenen Encounter markiert (Alt-Daten und weiterhin erlaubt).

@@ -1,6 +1,6 @@
 # Gemeinsame Pokémon-Encounter-Tabelle
 
-Gekoppelte Nuzlocke-Soullink-Tabelle für **Mark**, **Nikolai** und **KNEV** – über mehrere
+Gekoppelte Nuzlocke-Soullink-Tabelle für **Marc**, **Nicolai** und **Knev** – über mehrere
 Editionen und Runs hinweg.
 
 - Live-Tabelle: https://bronze-brawl.de/encounter-table/

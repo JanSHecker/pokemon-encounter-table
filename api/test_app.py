@@ -140,9 +140,9 @@ def test_legacy_state_migrates_to_players_and_picks(legacy_client):
     payload = legacy_client.get("/encounters").json()
 
     assert payload["players"] == [
-        {"id": "marc", "name": "Mark"},
-        {"id": "nicolai", "name": "Nikolai"},
-        {"id": "knev", "name": "KNEV"},
+        {"id": "marc", "name": "Marc"},
+        {"id": "nicolai", "name": "Nicolai"},
+        {"id": "knev", "name": "Knev"},
     ]
 
     first = payload["encounters"][0]
@@ -174,7 +174,7 @@ def test_player_names_are_normalized_to_configured_spelling(client, data_file):
 
     names = [player["name"] for player in client.get("/runs").json()["players"]]
 
-    assert names == ["Mark", "Nikolai", "KNEV"]
+    assert names == ["Marc", "Nicolai", "Knev"]
 
 
 def test_migration_is_written_back_once(legacy_client, data_file):
