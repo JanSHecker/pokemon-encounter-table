@@ -111,17 +111,11 @@ def legacy_client(data_file):
     return TestClient(app_module.app)
 
 
-def test_configured_write_token_rejects_missing_and_invalid_bearer(client, monkeypatch):
+def test_writes_do_not_require_a_bearer_token(client, monkeypatch):
     monkeypatch.setenv("ENCOUNTER_API_TOKEN", "test-secret")
-    payload = {"name": "Token Run", "game_id": "platinum"}
+    payload = {"name": "Öffener Run", "game_id": "platinum"}
 
-    assert client.post("/runs", json=payload).status_code == 401
-    assert client.post(
-        "/runs", json=payload, headers={"Authorization": "Bearer wrong-token"}
-    ).status_code == 401
-    assert client.post(
-        "/runs", json=payload, headers={"Authorization": "Bearer test-secret"}
-    ).status_code == 201
+    assert client.post("/runs", json=payload).status_code == 201
 
 
 # --------------------------------------------------------------- Katalog ---
@@ -814,19 +808,14 @@ def test_writes_are_open_when_no_token_is_configured(client):
     assert response.status_code == 200
 
 
-def test_configured_token_makes_writes_private(client, monkeypatch):
+def test_configured_token_does_not_make_writes_private(client, monkeypatch):
     monkeypatch.setenv("ENCOUNTER_API_TOKEN", "geheim")
 
-    denied = client.patch("/encounters/sinnoh-route-201", json={"encounter": "Route 201 (nope)"})
-    assert denied.status_code == 401
-    assert denied.headers["www-authenticate"] == "Bearer"
-
-    allowed = client.patch(
+    response = client.patch(
         "/encounters/sinnoh-route-201",
-        headers={"Authorization": "Bearer geheim"},
         json={"encounter": "Route 201 (ok)"},
     )
-    assert allowed.status_code == 200
+    assert response.status_code == 200
 
 
 def test_stale_if_match_is_rejected(client):

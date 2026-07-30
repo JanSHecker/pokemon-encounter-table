@@ -351,14 +351,6 @@ td.location strong { display: block; font-weight: 650; color: var(--ink); }
 
 .status-badge.completed::before { background: var(--muted); }
 
-#write-access-status:not(.is-active) {
-  border-color: var(--line);
-  background: #ece7df;
-  color: var(--muted);
-}
-
-#write-access-status:not(.is-active)::before { background: var(--muted); }
-
 /* Bis der erste Run geladen ist, steht hier nichts - dann soll auch kein
    leeres Abzeichen mit Punkt blinken. */
 .status-badge:empty { display: none; }

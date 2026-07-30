@@ -4,7 +4,6 @@ import copy
 import json
 import os
 import re
-import secrets
 import shutil
 import threading
 from contextlib import contextmanager
@@ -13,7 +12,6 @@ from pathlib import Path
 from typing import Any, Iterator, Literal, get_args
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Response, status
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, ConfigDict, Field
 
 SCHEMA_VERSION = 5
@@ -108,7 +106,6 @@ app = FastAPI(
     description="Gekoppelte Nuzlocke-Encounter-Tabellen über mehrere Spiele und Runs.",
     root_path="/encounter-table/api",
 )
-security = HTTPBearer(auto_error=False)
 write_lock = threading.Lock()
 
 
@@ -784,22 +781,9 @@ def load_state() -> dict[str, Any]:
 # --------------------------------------------------------------------------- #
 
 
-def require_write_token(credentials: HTTPAuthorizationCredentials | None = Depends(security)) -> None:
-    """Token nur pruefen, wenn einer konfiguriert ist.
-
-    Ohne ENCOUNTER_API_TOKEN ist die Tabelle offen beschreibbar - so gewollt.
-    Wer das zumachen will, setzt die Variable; dann gilt wieder Bearer-Pflicht.
-    """
-    configured_token = os.environ.get("ENCOUNTER_API_TOKEN", "")
-    if not configured_token:
-        return
-    supplied_token = credentials.credentials if credentials else ""
-    if not secrets.compare_digest(supplied_token, configured_token):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Für Schreibzugriffe ist ein gültiger Bearer-Token nötig.",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+def require_write_token() -> None:
+    """Die gemeinsame Tabelle ist absichtlich ohne Schreib-Login offen."""
+    return
 
 
 @contextmanager
@@ -1156,7 +1140,7 @@ def api_overview() -> dict[str, Any]:
         "name": "Pokémon Encounter API",
         "schema_version": SCHEMA_VERSION,
         "read": "GET /games, GET /runs, GET /encounters, GET /stats",
-        "write": "POST/PATCH/DELETE; Bearer-Token nur nötig, wenn ENCOUNTER_API_TOKEN gesetzt ist",
+        "write": "POST/PATCH/DELETE; offene gemeinsame Schreibzugriffe",
         "openapi": "/openapi.json",
     }
 

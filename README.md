@@ -98,7 +98,7 @@ export ENCOUNTER_GAMES_PATH='/pfad/zu/data/games'      # optional
 export ENCOUNTER_BACKUP_DIR='/pfad/zu/backups'         # optional
 ```
 
-Ist `ENCOUNTER_API_TOKEN` gesetzt, brauchen alle Schreibzugriffe wieder einen Bearer-Token.
+Die gemeinsame Tabelle ist bewusst offen beschreibbar; Schreibzugriffe benötigen keinen Bearer-Token.
 
 ### Datensicherung
 

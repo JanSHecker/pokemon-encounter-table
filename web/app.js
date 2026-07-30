@@ -103,8 +103,7 @@ const el = {
   runGame: document.getElementById('run-game'),
   runPrefill: document.getElementById('run-prefill'),
   runPostgame: document.getElementById('run-postgame'),
-  writeAccessButton: document.getElementById('write-access-button'),
-  writeAccessStatus: document.getElementById('write-access-status'),
+
   culpritDialog: document.getElementById('culprit-dialog'),
   culpritQuestion: document.getElementById('culprit-question'),
   culpritSelect: document.getElementById('culprit-select'),
@@ -151,42 +150,10 @@ class ApiError extends Error {
   }
 }
 
-const WRITE_TOKEN_KEY = 'encounter-table-write-token';
-
-function writeToken() {
-  return window.sessionStorage.getItem(WRITE_TOKEN_KEY) || '';
-}
-
-function updateWriteAccessStatus() {
-  const authenticated = Boolean(writeToken());
-  el.writeAccessStatus.textContent = authenticated ? 'Schreiben aktiv' : 'Nur Lesen';
-  el.writeAccessStatus.classList.toggle('is-active', authenticated);
-}
-
-function askForWriteToken() {
-  const entered = window.prompt(
-    'Bearer-Token für Schreibzugriffe eingeben. Der Token bleibt nur in dieser Browser-Sitzung gespeichert:',
-  );
-  if (entered === null) return false;
-  const token = entered.trim();
-  if (token) window.sessionStorage.setItem(WRITE_TOKEN_KEY, token);
-  else window.sessionStorage.removeItem(WRITE_TOKEN_KEY);
-  updateWriteAccessStatus();
-  return Boolean(token);
-}
-
 async function api(path, options = {}) {
   const { method = 'GET', body } = options;
-  const isWrite = method.toUpperCase() !== 'GET';
   const headers = {};
   if (body !== undefined) headers['Content-Type'] = 'application/json';
-  if (isWrite) {
-    const token = writeToken() || (askForWriteToken() ? writeToken() : '');
-    if (!token) {
-      throw new ApiError(401, 'Schreibzugriff ist nicht aktiviert. Bitte zuerst einen Bearer-Token eingeben.');
-    }
-    headers.Authorization = `Bearer ${token}`;
-  }
 
   const response = await fetch(`${API_BASE}${path}`, {
     method,
@@ -197,10 +164,6 @@ async function api(path, options = {}) {
 
   if (response.status === 204) return null;
   const payload = await response.json().catch(() => null);
-  if (response.status === 401 && isWrite) {
-    window.sessionStorage.removeItem(WRITE_TOKEN_KEY);
-    updateWriteAccessStatus();
-  }
   if (!response.ok) {
     const detail = payload && typeof payload.detail === 'string' ? payload.detail : `HTTP ${response.status}`;
     throw new ApiError(response.status, detail);
@@ -1211,9 +1174,6 @@ el.typeReset.addEventListener('click', () => {
   state.typeSelection = [];
   renderTypeCalculator();
 });
-
-el.writeAccessButton.addEventListener('click', askForWriteToken);
-updateWriteAccessStatus();
 
 // -------------------------------------------------------------- Polling ---
 
