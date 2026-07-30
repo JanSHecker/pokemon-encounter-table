@@ -111,6 +111,19 @@ def legacy_client(data_file):
     return TestClient(app_module.app)
 
 
+def test_configured_write_token_rejects_missing_and_invalid_bearer(client, monkeypatch):
+    monkeypatch.setenv("ENCOUNTER_API_TOKEN", "test-secret")
+    payload = {"name": "Token Run", "game_id": "platinum"}
+
+    assert client.post("/runs", json=payload).status_code == 401
+    assert client.post(
+        "/runs", json=payload, headers={"Authorization": "Bearer wrong-token"}
+    ).status_code == 401
+    assert client.post(
+        "/runs", json=payload, headers={"Authorization": "Bearer test-secret"}
+    ).status_code == 201
+
+
 # --------------------------------------------------------------- Katalog ---
 
 
