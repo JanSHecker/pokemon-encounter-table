@@ -14,9 +14,9 @@ Eintraege sind entweder ein PokeAPI-Slug oder ein Dict:
     "species"   Pokemon-Liste manuell setzen (fuer Orte ohne Wild-Encounter)
     "postgame"  erst nach der Liga erreichbar
 
-Staedte sind bewusst nicht enthalten: dort gibt es nur Surf- und Angel-Encounter,
-die in unseren Regeln nicht als eigener Routen-Encounter zaehlen. Wer sie doch
-will, haengt die Slugs (canalave-city, eterna-city, ...) einfach an.
+Staedte mit einem eigenen Encounter sind enthalten. Dazu zaehlen neben Surf- und
+Angelstellen auch Geschenke und Eier; Staedte ohne irgendeinen Encounter laesst
+der Generator weiterhin weg.
 """
 
 GAME = {
@@ -29,38 +29,47 @@ GAME = {
         # Die Starter sind der Encounter von Route 201 und stehen bei PokeAPI genau
         # dort als Geschenk. Eine eigene Starter-Zeile waere dieselbe Wahl zweimal.
         "sinnoh-route-201",
+        "twinleaf-town",
         {"id": "lake-verity", "name": "See der Wahrheit"},
         "sinnoh-route-202",
         "sinnoh-route-203",
         {"id": "oreburgh-gate", "name": "Erzelinger Tunnel"},
         {"id": "oreburgh-mine", "name": "Erzelingen-Mine"},
+        "oreburgh-city",
         "sinnoh-route-207",
         "sinnoh-route-204",
         {"id": "ravaged-path", "name": "Ruinental"},
         {"id": "valley-windworks", "name": "Windkraftwerk"},
         "sinnoh-route-205",
         {"id": "eterna-forest", "name": "Ewigwald"},
+        "eterna-city",
         {"id": "old-chateau", "name": "Alte Villa"},
         "sinnoh-route-211",
         "sinnoh-route-206",
         {"id": "wayward-cave", "name": "Bizarre Höhle"},
         "sinnoh-route-208",
+        "hearthome-city",
         "sinnoh-route-209",
         "lost-tower",
         "solaceon-ruins",
         "sinnoh-route-210",
+        "celestic-town",
         "sinnoh-route-215",
+        "veilstone-city",
         "sinnoh-route-214",
         "valor-lakefront",
         "sinnoh-route-213",
+        "pastoria-city",
         "great-marsh",
         "sinnoh-route-212",
         "fuego-ironworks",
         "sinnoh-route-218",
+        "canalave-city",
         "sinnoh-route-219",
         "sinnoh-sea-route-220",
         "sinnoh-route-221",
         "sinnoh-route-222",
+        "sunyshore-city",
         "iron-island",
         "lake-valor",
         "sinnoh-route-216",

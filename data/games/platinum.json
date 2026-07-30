@@ -93,8 +93,63 @@
       ]
     },
     {
-      "id": "lake-verity",
+      "id": "twinleaf-town",
       "order": 2,
+      "name": "Zweiblattdorf",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lake-verity",
+      "order": 3,
       "name": "See der Wahrheit",
       "encounters": [
         {
@@ -189,7 +244,7 @@
     },
     {
       "id": "sinnoh-route-202",
-      "order": 3,
+      "order": 4,
       "name": "Route 202",
       "encounters": [
         {
@@ -252,7 +307,7 @@
     },
     {
       "id": "sinnoh-route-203",
-      "order": 4,
+      "order": 5,
       "name": "Route 203",
       "encounters": [
         {
@@ -387,7 +442,7 @@
     },
     {
       "id": "oreburgh-gate",
-      "order": 5,
+      "order": 6,
       "name": "Erzelinger Tunnel",
       "encounters": [
         {
@@ -469,7 +524,7 @@
     },
     {
       "id": "oreburgh-mine",
-      "order": 6,
+      "order": 7,
       "name": "Erzelingen-Mine",
       "encounters": [
         {
@@ -499,8 +554,71 @@
       ]
     },
     {
+      "id": "oreburgh-city",
+      "order": 8,
+      "name": "Erzelingen",
+      "encounters": [
+        {
+          "species": "omanyte",
+          "name": "Amonitas",
+          "dex": 138,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "kabuto",
+          "name": "Kabuto",
+          "dex": 140,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "aerodactyl",
+          "name": "Aerodactyl",
+          "dex": 142,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "lileep",
+          "name": "Liliep",
+          "dex": 345,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "anorith",
+          "name": "Anorith",
+          "dex": 347,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "cranidos",
+          "name": "Koknodon",
+          "dex": 408,
+          "methods": [
+            "Geschenk"
+          ]
+        },
+        {
+          "species": "shieldon",
+          "name": "Schilterus",
+          "dex": 410,
+          "methods": [
+            "Geschenk"
+          ]
+        }
+      ]
+    },
+    {
       "id": "sinnoh-route-207",
-      "order": 7,
+      "order": 9,
       "name": "Route 207",
       "encounters": [
         {
@@ -619,7 +737,7 @@
     },
     {
       "id": "sinnoh-route-204",
-      "order": 8,
+      "order": 10,
       "name": "Route 204",
       "encounters": [
         {
@@ -778,7 +896,7 @@
     },
     {
       "id": "ravaged-path",
-      "order": 9,
+      "order": 11,
       "name": "Ruinental",
       "encounters": [
         {
@@ -851,7 +969,7 @@
     },
     {
       "id": "valley-windworks",
-      "order": 10,
+      "order": 12,
       "name": "Windkraftwerk",
       "encounters": [
         {
@@ -1035,7 +1153,7 @@
     },
     {
       "id": "sinnoh-route-205",
-      "order": 11,
+      "order": 13,
       "name": "Route 205",
       "encounters": [
         {
@@ -1308,7 +1426,7 @@
     },
     {
       "id": "eterna-forest",
-      "order": 12,
+      "order": 14,
       "name": "Ewigwald",
       "encounters": [
         {
@@ -1515,8 +1633,71 @@
       ]
     },
     {
+      "id": "eterna-city",
+      "order": 15,
+      "name": "Ewigenau",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "togepi",
+          "name": "Togepi",
+          "dex": 175,
+          "methods": [
+            "Ei"
+          ]
+        },
+        {
+          "species": "barboach",
+          "name": "Schmerbe",
+          "dex": 339,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "whiscash",
+          "name": "Welsar",
+          "dex": 340,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
       "id": "old-chateau",
-      "order": 13,
+      "order": 16,
       "name": "Alte Villa",
       "encounters": [
         {
@@ -1547,7 +1728,7 @@
     },
     {
       "id": "sinnoh-route-211",
-      "order": 14,
+      "order": 17,
       "name": "Route 211",
       "encounters": [
         {
@@ -1706,7 +1887,7 @@
     },
     {
       "id": "sinnoh-route-206",
-      "order": 15,
+      "order": 18,
       "name": "Route 206",
       "encounters": [
         {
@@ -1833,7 +2014,7 @@
     },
     {
       "id": "wayward-cave",
-      "order": 16,
+      "order": 19,
       "name": "Bizarre Höhle",
       "encounters": [
         {
@@ -1888,7 +2069,7 @@
     },
     {
       "id": "sinnoh-route-208",
-      "order": 17,
+      "order": 20,
       "name": "Route 208",
       "encounters": [
         {
@@ -2078,8 +2259,23 @@
       ]
     },
     {
+      "id": "hearthome-city",
+      "order": 21,
+      "name": "Herzhofen",
+      "encounters": [
+        {
+          "species": "eevee",
+          "name": "Evoli",
+          "dex": 133,
+          "methods": [
+            "Geschenk"
+          ]
+        }
+      ]
+    },
+    {
       "id": "sinnoh-route-209",
-      "order": 18,
+      "order": 22,
       "name": "Route 209",
       "encounters": [
         {
@@ -2278,7 +2474,7 @@
     },
     {
       "id": "lost-tower",
-      "order": 19,
+      "order": 23,
       "name": "Turm der Ruhenden",
       "encounters": [
         {
@@ -2317,7 +2513,7 @@
     },
     {
       "id": "solaceon-ruins",
-      "order": 20,
+      "order": 24,
       "name": "Trostu-Ruinen",
       "encounters": [
         {
@@ -2332,7 +2528,7 @@
     },
     {
       "id": "sinnoh-route-210",
-      "order": 21,
+      "order": 25,
       "name": "Route 210",
       "encounters": [
         {
@@ -2610,8 +2806,79 @@
       ]
     },
     {
+      "id": "celestic-town",
+      "order": 26,
+      "name": "Elyses",
+      "encounters": [
+        {
+          "species": "psyduck",
+          "name": "Enton",
+          "dex": 54,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "golduck",
+          "name": "Entoron",
+          "dex": 55,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "goldeen",
+          "name": "Goldini",
+          "dex": 118,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "seaking",
+          "name": "Golking",
+          "dex": 119,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "corphish",
+          "name": "Krebscorps",
+          "dex": 341,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "crawdaunt",
+          "name": "Krebutack",
+          "dex": 342,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
       "id": "sinnoh-route-215",
-      "order": 22,
+      "order": 27,
       "name": "Route 215",
       "encounters": [
         {
@@ -2729,8 +2996,23 @@
       ]
     },
     {
+      "id": "veilstone-city",
+      "order": 28,
+      "name": "Schleiede",
+      "encounters": [
+        {
+          "species": "porygon",
+          "name": "Porygon",
+          "dex": 137,
+          "methods": [
+            "Geschenk"
+          ]
+        }
+      ]
+    },
+    {
       "id": "sinnoh-route-214",
-      "order": 23,
+      "order": 29,
       "name": "Route 214",
       "encounters": [
         {
@@ -2905,7 +3187,7 @@
     },
     {
       "id": "valor-lakefront",
-      "order": 24,
+      "order": 30,
       "name": "Kühnheitsufer",
       "encounters": [
         {
@@ -2968,7 +3250,7 @@
     },
     {
       "id": "sinnoh-route-213",
-      "order": 25,
+      "order": 31,
       "name": "Route 213",
       "encounters": [
         {
@@ -3128,8 +3410,87 @@
       ]
     },
     {
+      "id": "pastoria-city",
+      "order": 32,
+      "name": "Weideburg",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "shellos",
+          "name": "Schalellos",
+          "dex": 422,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "gastrodon",
+          "name": "Gastrodon",
+          "dex": 423,
+          "methods": [
+            "Surfen"
+          ]
+        }
+      ]
+    },
+    {
       "id": "great-marsh",
-      "order": 26,
+      "order": 33,
       "name": "Großmoor",
       "encounters": [
         {
@@ -3338,7 +3699,7 @@
     },
     {
       "id": "sinnoh-route-212",
-      "order": 27,
+      "order": 34,
       "name": "Route 212",
       "encounters": [
         {
@@ -3602,7 +3963,7 @@
     },
     {
       "id": "fuego-ironworks",
-      "order": 28,
+      "order": 35,
       "name": "Feurio-Hütte",
       "encounters": [
         {
@@ -3770,7 +4131,7 @@
     },
     {
       "id": "sinnoh-route-218",
-      "order": 29,
+      "order": 36,
       "name": "Route 218",
       "encounters": [
         {
@@ -3929,8 +4290,87 @@
       ]
     },
     {
+      "id": "canalave-city",
+      "order": 37,
+      "name": "Fleetburg",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "staryu",
+          "name": "Sterndu",
+          "dex": 120,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "shellos",
+          "name": "Schalellos",
+          "dex": 422,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "gastrodon",
+          "name": "Gastrodon",
+          "dex": 423,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "finneon",
+          "name": "Finneon",
+          "dex": 456,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "lumineon",
+          "name": "Lumineon",
+          "dex": 457,
+          "methods": [
+            "Angel"
+          ]
+        }
+      ]
+    },
+    {
       "id": "sinnoh-route-219",
-      "order": 30,
+      "order": 38,
       "name": "Route 219",
       "encounters": [
         {
@@ -4001,7 +4441,7 @@
     },
     {
       "id": "sinnoh-sea-route-220",
-      "order": 31,
+      "order": 39,
       "name": "Route 220",
       "encounters": [
         {
@@ -4080,7 +4520,7 @@
     },
     {
       "id": "sinnoh-route-221",
-      "order": 32,
+      "order": 40,
       "name": "Route 221",
       "encounters": [
         {
@@ -4263,7 +4703,7 @@
     },
     {
       "id": "sinnoh-route-222",
-      "order": 33,
+      "order": 41,
       "name": "Route 222",
       "encounters": [
         {
@@ -4455,8 +4895,87 @@
       ]
     },
     {
+      "id": "sunyshore-city",
+      "order": 42,
+      "name": "Sonnewik",
+      "encounters": [
+        {
+          "species": "tentacool",
+          "name": "Tentacha",
+          "dex": 72,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "tentacruel",
+          "name": "Tentoxa",
+          "dex": 73,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "staryu",
+          "name": "Sterndu",
+          "dex": 120,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "magikarp",
+          "name": "Karpador",
+          "dex": 129,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "gyarados",
+          "name": "Garados",
+          "dex": 130,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "remoraid",
+          "name": "Remoraid",
+          "dex": 223,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "octillery",
+          "name": "Octillery",
+          "dex": 224,
+          "methods": [
+            "Angel"
+          ]
+        },
+        {
+          "species": "wingull",
+          "name": "Wingull",
+          "dex": 278,
+          "methods": [
+            "Surfen"
+          ]
+        },
+        {
+          "species": "pelipper",
+          "name": "Pelipper",
+          "dex": 279,
+          "methods": [
+            "Surfen"
+          ]
+        }
+      ]
+    },
+    {
       "id": "iron-island",
-      "order": 34,
+      "order": 43,
       "name": "Eiseninsel",
       "encounters": [
         {
@@ -4607,7 +5126,7 @@
     },
     {
       "id": "lake-valor",
-      "order": 35,
+      "order": 44,
       "name": "See der Kühnheit",
       "encounters": [
         {
@@ -4712,7 +5231,7 @@
     },
     {
       "id": "sinnoh-route-216",
-      "order": 36,
+      "order": 45,
       "name": "Route 216",
       "encounters": [
         {
@@ -4775,7 +5294,7 @@
     },
     {
       "id": "sinnoh-route-217",
-      "order": 37,
+      "order": 46,
       "name": "Route 217",
       "encounters": [
         {
@@ -4838,7 +5357,7 @@
     },
     {
       "id": "acuity-lakefront",
-      "order": 38,
+      "order": 47,
       "name": "Stärkeufer",
       "encounters": [
         {
@@ -4885,7 +5404,7 @@
     },
     {
       "id": "lake-acuity",
-      "order": 39,
+      "order": 48,
       "name": "See der Stärke",
       "encounters": [
         {
@@ -5006,7 +5525,7 @@
     },
     {
       "id": "mt-coronet",
-      "order": 40,
+      "order": 49,
       "name": "Kraterberg",
       "encounters": [
         {
@@ -5247,7 +5766,7 @@
     },
     {
       "id": "spear-pillar",
-      "order": 41,
+      "order": 50,
       "name": "Speersäule",
       "encounters": [
         {
@@ -5270,7 +5789,7 @@
     },
     {
       "id": "distortion-world",
-      "order": 42,
+      "order": 51,
       "name": "Zerrwelt",
       "encounters": [
         {
@@ -5285,7 +5804,7 @@
     },
     {
       "id": "sinnoh-victory-road",
-      "order": 43,
+      "order": 52,
       "name": "Siegesstraße",
       "encounters": [
         {
@@ -5407,7 +5926,7 @@
     },
     {
       "id": "sinnoh-sea-route-223",
-      "order": 44,
+      "order": 53,
       "name": "Route 223",
       "encounters": [
         {
@@ -5487,7 +6006,7 @@
     },
     {
       "id": "sinnoh-route-224",
-      "order": 45,
+      "order": 54,
       "name": "Route 224",
       "encounters": [
         {
@@ -5641,7 +6160,7 @@
     },
     {
       "id": "sinnoh-route-225",
-      "order": 46,
+      "order": 55,
       "name": "Route 225",
       "encounters": [
         {
@@ -5777,7 +6296,7 @@
     },
     {
       "id": "sinnoh-sea-route-226",
-      "order": 47,
+      "order": 56,
       "name": "Route 226",
       "encounters": [
         {
@@ -5922,7 +6441,7 @@
     },
     {
       "id": "sinnoh-route-227",
-      "order": 48,
+      "order": 57,
       "name": "Route 227",
       "encounters": [
         {
@@ -6066,7 +6585,7 @@
     },
     {
       "id": "sinnoh-route-228",
-      "order": 49,
+      "order": 58,
       "name": "Route 228",
       "encounters": [
         {
@@ -6186,7 +6705,7 @@
     },
     {
       "id": "sinnoh-route-229",
-      "order": 50,
+      "order": 59,
       "name": "Route 229",
       "encounters": [
         {
@@ -6354,7 +6873,7 @@
     },
     {
       "id": "sinnoh-sea-route-230",
-      "order": 51,
+      "order": 60,
       "name": "Route 230",
       "encounters": [
         {
@@ -6507,7 +7026,7 @@
     },
     {
       "id": "stark-mountain",
-      "order": 52,
+      "order": 61,
       "name": "Kahlberg",
       "encounters": [
         {
@@ -6627,7 +7146,7 @@
     },
     {
       "id": "turnback-cave",
-      "order": 53,
+      "order": 62,
       "name": "Höhle der Umkehr",
       "encounters": [
         {
@@ -6731,7 +7250,7 @@
     },
     {
       "id": "sendoff-spring",
-      "order": 54,
+      "order": 63,
       "name": "Scheidequelle",
       "encounters": [
         {
@@ -6843,7 +7362,7 @@
     },
     {
       "id": "newmoon-island",
-      "order": 55,
+      "order": 64,
       "name": "Neumondinsel",
       "encounters": [
         {
@@ -6859,7 +7378,7 @@
     },
     {
       "id": "snowpoint-temple",
-      "order": 56,
+      "order": 65,
       "name": "Blizzach-Tempel",
       "encounters": [
         {
@@ -6907,7 +7426,7 @@
     },
     {
       "id": "ruin-maniac-cave",
-      "order": 57,
+      "order": 66,
       "name": "Maniac-Tunnel",
       "encounters": [
         {
@@ -6931,7 +7450,7 @@
     },
     {
       "id": "trophy-garden",
-      "order": 58,
+      "order": 67,
       "name": "Pokémon-Landgut",
       "encounters": [
         {
@@ -7107,7 +7626,7 @@
     },
     {
       "id": "floaroma-meadow",
-      "order": 59,
+      "order": 68,
       "name": "Auen von Flori",
       "encounters": [
         {
@@ -7171,7 +7690,7 @@
     },
     {
       "id": "resort-area",
-      "order": 60,
+      "order": 69,
       "name": "Erholungsareal",
       "encounters": [
         {
@@ -7203,7 +7722,7 @@
     },
     {
       "id": "flower-paradise",
-      "order": 61,
+      "order": 70,
       "name": "Blumenparadies",
       "encounters": [
         {

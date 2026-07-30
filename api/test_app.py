@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -130,6 +131,26 @@ def test_games_endpoint_lists_the_catalog(client):
 
 def test_unknown_game_is_reported(client):
     assert client.get("/games/smaragd").status_code == 404
+
+
+def test_platinum_catalog_includes_cities_with_encounters():
+    catalog_path = Path(__file__).resolve().parent.parent / "data" / "games" / "platinum.json"
+    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+    locations = {location["id"]: location for location in catalog["locations"]}
+    expected_cities = {
+        "twinleaf-town",
+        "oreburgh-city",
+        "eterna-city",
+        "hearthome-city",
+        "veilstone-city",
+        "pastoria-city",
+        "celestic-town",
+        "canalave-city",
+        "sunyshore-city",
+    }
+
+    assert expected_cities <= locations.keys()
+    assert all(locations[location_id]["encounters"] for location_id in expected_cities)
 
 
 def test_empty_store_starts_prefilled_without_postgame(client):
