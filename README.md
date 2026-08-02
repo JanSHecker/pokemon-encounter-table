@@ -7,34 +7,53 @@ Editionen und Runs hinweg.
 - Öffentliche API: https://bronze-brawl.de/encounter-table/api/
 - API-Dokumentation: https://bronze-brawl.de/encounter-table/api/docs
 
-Unterstützte Spiele: **Pokémon Platin** und **Pokémon Schwarz 2 / Weiß 2**.
+Unterstützte Spiele: **Pokémon Platin**, **Pokémon Renegade Platin** und
+**Pokémon Schwarz 2 / Weiß 2**. Renegade Platin ist der Hack: gleiche Orte wie Platin, eigene
+Level-Caps.
 
 ## Was die Tabelle kann
 
+**Run-Übersicht** als Startseite: alle Runs mit Fortschrittsbalken (gefangen · tot · vergeigt),
+Status (**aktiv · pausiert · fertig · verkackt**, aktiv ist immer höchstens einer), Spieler-Chips
+und einem Knopf zum Anlegen. Über ✎ und ✕ an der Karte lässt sich ein Run **umbenennen oder
+löschen** (der letzte bleibt stehen). Spieler lassen sich hier hinzufügen und entfernen – jeder
+bekommt eine Farbe und eine eigene Spalte in allen Runs.
+
+**Run-Ansicht** mit der Encounter-Tabelle als Hauptspalte:
+
 - Ein neuer Run enthält **alle Orte des Spiels** in Spielreihenfolge als offene Zeilen.
-- Beim Eintragen stehen nur die Pokémon zur Auswahl, die **an diesem Ort fangbar** sind.
-- Die gerade gespielten Links sind **hervorgehoben** (★, grüner Rand); der Rest ist die Box.
-  Maximal sechs gleichzeitig, ein Zähler oben zeigt den Stand.
-- Zeilenfarben auf einen Blick: **grün** im Team, **weiß** lebend in der Box, **grau** Encounter
-  verloren, **rot** tot.
-- **Sortierung** umschaltbar – Spielreihenfolge, Offene zuerst, Gefangene zuerst, Team zuerst oder
-  nach Zustand gruppiert. Die Auswahl bleibt im Browser gespeichert.
-- Ein gemeldeter Tod **koppelt automatisch die ganze Reihe** – alle drei gelten als tot.
-- Wird eine Zeile auf **Verloren** gesetzt, tragen alle drei „Encounter verloren“.
-- Die **Level-Caps** des Spiels stehen über der Tabelle, das jeweils nächste ist hervorgehoben.
-- Arten, die ein Spieler im Run schon gefangen hat, sind in der Auswahl mit ⚠ markiert.
-- Ein **Typenrechner** als eigene Ansicht: bis zu zwei Typen anklicken, rechts steht, was der
-  Kombination wehtut. Die Generation ist umstellbar (1, 2–5, 6+) – beide Editionen liegen in 2–5,
-  wo Stahl noch Geist und Unlicht resistiert und es keine Feen gibt.
-- Bei einem Tod oder verlorenen Encounter wird **nach dem Schuldigen gefragt** – sonst fehlt der
-  Vorfall in der Statistik. „Niemand" ist eine gültige Antwort.
-- Alle Browser aktualisieren sich alle 10 Sekunden von selbst.
+- Jede Zelle zeigt Sprite, Name und **Typ-Badges**; ein Klick öffnet die Auswahl. Oben stehen die
+  Arten, die **an diesem Ort vorkommen**, darunter der Rest des Pokedex.
+- Der **Pokéball** links schaltet die ganze Reihe ins Team – maximal sechs gleichzeitig.
+- Zeilenfarben auf einen Blick: **grün** im Team, **weiß** lebend in der Box, **ocker** Encounter
+  verloren, **rot** tot. Filter-Pills (Alle · Team · Box · Tot · Verloren · Offen), ein **Suchfeld
+  für Orte** und die **Sortierung** (Spielreihenfolge oder nach Status) blenden den Rest aus.
+- Ein gemeldeter Tod (☠) **koppelt automatisch die ganze Reihe** – alle gelten als tot, der
+  Meldende wird als Schuldiger eingetragen, „↺“ macht es rückgängig.
+- „verloren melden“ fragt nach dem Schuldigen und setzt die Reihe für alle auf verloren.
+- Arten, die ein Spieler im Run schon gefangen hat, sind mit ⚠ markiert – das gilt für die ganze
+  **Entwicklungslinie**.
+
+Rechts daneben:
+
+- Die **Level-Cap-Karte**: Cap des nächsten Kampfes, Typ und Ort des Gegners sowie eine Zeitleiste
+  aller Kämpfe der Edition, in der sich direkt springen lässt.
+- Die **Fail-Statistik**: Schuld = Tod ×2 + vergeigter Encounter, sortiert nach Schuldigstem.
+- Ein **Typenrechner** mit bis zu zwei Typen: „Angriff“ zeigt die beste Coverage der Kombination,
+  „Abwehr“ das Produkt beider Verteidigungswerte (also auch ×4 und ×¼). Ist ein Angriffstyp
+  gewählt, markiert die Tabelle die anfälligen Pokémon rot, und unten steht, wer davon betroffen
+  ist.
+
+**Alle Browser sehen jede Änderung sofort** – trägt einer etwas ein, steht es bei den anderen in
+unter einer Sekunde. Der Server meldet Änderungen über `GET /events` (Server-Sent Events); daneben
+läuft weiterhin ein Poll alle 10 Sekunden als Rückfall, falls ein Proxy den Stream schluckt.
+Wer gerade einen Dialog offen hat, bekommt die Änderung, sobald er ihn schließt.
 
 ## Projektstruktur
 
 | Pfad | Inhalt |
 | --- | --- |
-| `web/` | Frontend: `index.html`, `app.js`, `styles.css` – kein Build-Schritt |
+| `web/` | Frontend: `index.html`, `app.js`, `styles.css`, `icons/` – kein Build-Schritt |
 | `api/app.py` | FastAPI-Backend: Runs, Encounter, Statistik |
 | `api/test_app.py` | Tests |
 | `data/encounters.json` | Datenstand als versionierbarer Snapshot |
@@ -79,9 +98,11 @@ liegen in `tools/.cache/`; Cache löschen erzwingt frische Daten.
 ### Ein Spiel ergänzen
 
 1. `tools/games/<spiel>.py` anlegen mit `GAME = {...}`: Orte in Spielreihenfolge und Level-Caps.
+   Teilt sich das Spiel die Orte mit einem bestehenden (wie Renegade Platin mit Platin), kommt die
+   Liste aus einer Datei mit führendem Unterstrich – die überspringt der Generator (`_sinnoh.py`).
 2. `python tools/build_game_catalog.py --game <id>` laufen lassen.
-3. Ergebnis unter `data/games/` committen. Mehr ist nicht nötig – API und Frontend sind
-   spielunabhängig.
+3. Ergebnis unter `data/games/` committen und den Dienst neu starten – Kataloge werden beim Start
+   gelesen und dann gecacht. Mehr ist nicht nötig: API und Frontend sind spielunabhängig.
 
 Nicht aus PokeAPI ableitbar und deshalb Handarbeit: die Reihenfolge der Orte, die Auswahl der
 relevanten Orte und die Level-Caps.
@@ -100,6 +121,20 @@ export ENCOUNTER_BACKUP_DIR='/pfad/zu/backups'         # optional
 
 Die gemeinsame Tabelle ist bewusst offen beschreibbar; Schreibzugriffe benötigen keinen Bearer-Token.
 
+### Live-Updates im Betrieb
+
+`GET /events` hält eine offene Verbindung pro Browser. Zwei Dinge sind dafür einzustellen:
+
+- **Reverse Proxy:** die Antwort trägt `X-Accel-Buffering: no`, damit nginx den Stream nicht
+  puffert – eine eigene `proxy_buffering off;`-Regel ist damit nicht nötig. Andere Proxys brauchen
+  gegebenenfalls das Äquivalent.
+- **Neustart:** der Stream endet planmäßig nach 30 Sekunden und der Browser verbindet sich neu.
+  Ohne diese Grenze würde uvicorn beim Beenden auf die offenen Verbindungen warten. Im Dienst
+  zusätzlich `--timeout-graceful-shutdown 5` setzen, dann ist ein Deploy sofort durch.
+
+Fällt der Stream aus (Proxy, Netz, alter Browser), aktualisiert sich die Seite weiterhin alle
+10 Sekunden von selbst – nur eben nicht sofort.
+
 ### Datensicherung
 
 Neben dem Datenstand entsteht automatisch `backups/`: eine Kopie pro Tag (die letzten 30) sowie
@@ -117,7 +152,11 @@ entsteht automatisch – eine eigene Sicherung vorher schadet trotzdem nicht.
 | `GET /encounters` | Zeilen des aktuellen Runs |
 | `PATCH /encounters/{id}` | Zeile ändern (auch `/runs/{run}/encounters/{id}`) |
 | `POST /runs` | Run anlegen, standardmäßig aus dem Katalog vorbefüllt |
+| `PATCH /runs/{id}` | Name, Status (`active`/`paused`/`completed`/`failed`) und Level-Cap-Fortschritt |
+| `DELETE /runs/{id}` | Run löschen – außer es ist der letzte (409) |
+| `GET /players`, `POST /players`, `DELETE /players/{id}` | Kader pflegen – Entfernen löscht die Einträge des Spielers in allen Runs |
 | `GET /stats` | Negativstatistik, optional `?run_id=` oder `?game_id=` |
+| `GET /events` | Server-Sent Events: meldet jede Änderung als `{"updated_at": …}` |
 
 Nützliche Parameter und Header:
 
@@ -137,7 +176,9 @@ Nützliche Parameter und Header:
   vergeigter Encounter ist je eine Schuld für genau den Spieler aus `responsible_player`. Ein
   gekoppelter Tod kostet die Reihe drei Pokémon, zählt aber als **ein** Tod. Fangzahlen werden
   nicht geführt.
-- `in_team` markiert die Links, die gerade gespielt werden. Höchstens sechs gleichzeitig, nur
-  vollständig gefangene Reihen – stirbt oder verliert eine Reihe, fliegt sie automatisch raus.
-- Spieler werden intern als IDs geführt (`marc`, `nicolai`, `knev`); die Anzeigenamen stehen in
+- `in_team` markiert die Links, die gerade gespielt werden. Höchstens sechs gleichzeitig, und nur
+  Reihen mit mindestens einem lebenden Pokémon – stirbt oder verliert eine Reihe, fliegt sie
+  automatisch raus. Dass ein Spieler an einem Ort leer ausgeht, hindert die Reihe nicht: der Link
+  belegt trotzdem bei allen denselben Platz.
+- Spieler werden intern als IDs geführt (`marc`, `nicolai`, `knev`); Anzeigename und Farbe stehen in
   `players` und lassen sich ändern, ohne Zeilen anzufassen.
