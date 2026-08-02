@@ -3,202 +3,192 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pokémon Encounter</title>
+  <title>Soul-Link Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Silkscreen:wght@400;700&display=swap"
+        rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="page">
-    <header>
-      <div class="title-row">
-        <h1>Pokémon Encounter</h1>
-      </div>
-      <div class="toolbar">
-        <div class="picker">
-          <label for="game-select">Spiel</label>
-          <select id="game-select" aria-label="Spiel auswählen"></select>
-        </div>
-        <div class="picker">
-          <label for="run-select">Run</label>
-          <select id="run-select" aria-label="Run auswählen"></select>
-          <span id="run-status" class="status-badge"></span>
-        </div>
-        <div class="toolbar-actions">
-          <button type="button" id="new-run-button">Neuer Run</button>
-          <button type="button" id="add-location-button">Ort hinzufügen</button>
-          <span id="team-count" class="team-badge" title="Links, die gerade gespielt werden"></span>
-          <span id="last-updated" class="last-updated"></span>
-        </div>
-      </div>
-
-      <nav class="view-nav" aria-label="Ansicht">
-        <button type="button" class="view-button active" data-view="table">Encounter-Tabelle</button>
-        <button type="button" class="view-button" data-view="dashboard">Dashboard</button>
-        <button type="button" class="view-button" data-view="types">Typenrechner</button>
-      </nav>
+  <div class="app">
+    <header class="topbar">
+      <!-- Ball und Titel sind zusammen der Zurueck-Link: ein eigener Button
+           daneben liesse den Titel beim Viewwechsel springen. -->
+      <button type="button" class="brand" id="brand-button" title="Zur Run-Übersicht">
+        <span class="pokeball" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-title">Soul-Link Tracker</span>
+          <span class="brand-sub" id="brand-sub">RUN-ÜBERSICHT</span>
+        </span>
+      </button>
+      <div class="head-stats" id="head-stats"></div>
+      <button type="button" class="ghost-button" id="players-button">Spieler verwalten</button>
     </header>
 
-    <div id="global-error" class="error" hidden></div>
+    <p class="error" id="global-error" role="alert" hidden></p>
 
-    <section id="table-view" class="view">
-      <section class="caps" aria-label="Level-Caps">
-        <div class="caps-header">
-          <h2>Level-Caps</h2>
-          <div class="caps-progress">
-            <button type="button" id="progress-down" aria-label="Fortschritt zurück">−</button>
-            <span id="progress-label">–</span>
-            <button type="button" id="progress-up" aria-label="Fortschritt vor">+</button>
+    <main class="home-scroll" id="home-view">
+      <div class="home">
+        <div class="home-head">
+          <div class="home-title">
+            <h1>Runs</h1>
+            <span class="home-sub" id="home-sub"></span>
+          </div>
+          <button type="button" class="primary-button" data-action="new-run">＋ Neuer Run</button>
+        </div>
+
+        <div class="run-grid" id="run-grid"></div>
+
+        <section class="roster">
+          <div class="roster-head">
+            <h2>Spieler</h2>
+            <span class="roster-note">gelten für alle Runs</span>
+            <button type="button" class="ghost-button" data-action="open-players">Bearbeiten</button>
+          </div>
+          <div class="chips" id="roster-chips"></div>
+        </section>
+      </div>
+    </main>
+
+    <main class="run-layout" id="run-view" hidden>
+      <section class="table-column">
+        <div class="table-toolbar">
+          <div class="filters" id="filter-bar"></div>
+          <input type="search" id="location-search" class="location-search" placeholder="Ort suchen…"
+                 autocomplete="off" aria-label="Ort suchen">
+          <span class="pixel-label muted-label">SORTIERUNG</span>
+          <div class="segmented" id="sort-bar"></div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-scroll" id="table-scroll">
+            <div class="table-head" id="table-head"></div>
+            <div id="table-rows"></div>
           </div>
         </div>
-        <div id="cap-list" class="cap-list"></div>
       </section>
 
-      <div class="table-toolbar">
-        <label for="sort-select">Sortierung</label>
-        <select id="sort-select" aria-label="Tabelle sortieren">
-          <option value="order">Spielreihenfolge</option>
-          <option value="location">Ort (A–Z)</option>
-          <option value="open">Offene zuerst</option>
-          <option value="caught">Gefangene zuerst</option>
-          <option value="team">Team zuerst</option>
-          <option value="status">Nach Zustand</option>
-        </select>
-        <span class="hint">Ein Klick auf „Ort“ oder „Status“ sortiert ebenfalls</span>
-      </div>
+      <aside class="aside">
+        <div class="cap-card" id="cap-card"></div>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr id="table-head">
-              <th class="col-location">Ort</th>
-              <th class="col-meta">Status</th>
-              <th class="col-meta">Schuldiger</th>
-            </tr>
-          </thead>
-          <tbody id="encounter-rows"></tbody>
-        </table>
-      </div>
-      <p class="attribution">
-        Encounter-Listen und Artwork stammen aus Daten der
-        <a href="https://pokeapi.co/" target="_blank" rel="noreferrer">PokeAPI</a>.
-      </p>
-    </section>
-
-    <section id="dashboard-view" class="view" hidden>
-      <div class="panel">
-        <h2>Negativstatistik</h2>
-        <p class="muted">
-          Gezählt wird nur, was schiefgegangen ist – und immer beim Verursacher. Ein gekoppelter Tod
-          kostet die Reihe zwar drei Pokémon, zählt aber als <strong>ein</strong> Tod. Schuld =
-          verschuldete Tode + vergeigte Encounter.
-        </p>
-        <div class="scope-picker">
-          <label for="stats-scope">Auswertung</label>
-          <select id="stats-scope" aria-label="Auswertungsbereich"></select>
-        </div>
-        <div id="stat-grid" class="stat-grid"></div>
-        <div class="dashboard-grid">
-          <div>
-            <h3>Schuldtabelle</h3>
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>Spieler</th><th>Tode</th><th>Vergeigte Encounter</th><th>Schuld</th></tr></thead>
-                <tbody id="player-stats"></tbody>
-              </table>
-            </div>
+        <div class="card fail-card">
+          <div class="card-head">
+            <span class="pixel-label">FAIL-STATISTIK</span>
+            <span class="card-note">✝ TOD · ✗ VERGEIGT</span>
           </div>
-          <div>
-            <h3>Runs</h3>
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>Run</th><th>Tode</th><th>Vergeigte Encounter</th></tr></thead>
-                <tbody id="run-stats"></tbody>
-              </table>
+          <div id="fail-list"></div>
+          <span class="blame-line" id="blame-line"></span>
+        </div>
+
+        <div class="card type-card">
+          <div class="card-head">
+            <span class="pixel-label">TYPENRECHNER</span>
+            <div class="segmented small" id="type-modes"></div>
+          </div>
+          <div class="type-grid" id="type-grid"></div>
+          <div class="type-result">
+            <div class="type-result-head">
+              <span id="type-result-title">Typ wählen (max. 2)</span>
+              <button type="button" class="link-button" id="type-reset" hidden>zurücksetzen</button>
             </div>
+            <div id="type-result-list"></div>
+          </div>
+          <div class="team-check">
+            <span class="pixel-label soft" id="team-check-title">WER HAT PROBLEME DAMIT</span>
+            <div id="team-check-list"></div>
           </div>
         </div>
+      </aside>
+    </main>
+  </div>
+
+  <dialog id="picker-dialog" class="dialog picker-dialog">
+    <div class="dialog-head">
+      <span class="dot" id="picker-dot"></span>
+      <div class="dialog-titles">
+        <span class="dialog-title" id="picker-title"></span>
+        <span class="dialog-sub" id="picker-sub"></span>
       </div>
-    </section>
-
-
-    <section id="types-view" class="view" hidden>
-      <div class="panel">
-        <h2>Typenrechner</h2>
-        <p class="muted">
-          Bis zu zwei Typen anklicken – rechts steht, was der Kombination wehtut. Voreingestellt
-          sind die Generationen 2–5: der Stand beider hier geführten Editionen.
-        </p>
-        <div class="type-layout">
-          <div class="type-controls">
-            <div class="picker">
-              <label for="type-generation">Generation</label>
-              <select id="type-generation" aria-label="Generation"></select>
-            </div>
-            <div id="type-grid" class="type-grid"></div>
-            <button type="button" id="type-reset">Auswahl entfernen</button>
-          </div>
-          <div id="defense-result" class="defense-result" aria-live="polite"></div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <dialog id="run-dialog">
-    <form method="dialog" id="run-form">
-      <h2>Neuer Run</h2>
-      <label for="run-name">Name</label>
-      <input id="run-name" name="name" required maxlength="120" placeholder="Run 3">
-      <label for="run-game">Spiel</label>
-      <select id="run-game" name="game_id"></select>
-      <label class="checkbox">
-        <input type="checkbox" id="run-prefill" checked>
-        Alle Orte des Spiels vorbefüllen
-      </label>
-      <label class="checkbox">
-        <input type="checkbox" id="run-postgame">
-        Postgame-Orte mit aufnehmen
-      </label>
-      <div class="dialog-actions">
-        <button type="button" data-close>Abbrechen</button>
-        <button type="submit" class="primary">Anlegen</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="culprit-dialog">
-    <form method="dialog" id="culprit-form">
-      <h2 id="culprit-question">Wer ist schuld?</h2>
-      <p class="muted">Ohne Schuldigen taucht der Vorfall in keiner Statistik auf.</p>
-      <select id="culprit-select" aria-label="Schuldiger"></select>
-      <div class="dialog-actions">
-        <button type="button" data-close>Abbrechen</button>
-        <button type="submit" class="primary" value="ok">Übernehmen</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="species-dialog" class="wide-dialog">
-    <h2 id="species-title">Pokémon wählen</h2>
-    <input type="search" id="species-search" placeholder="Suchen – Enter nimmt den ersten Treffer"
-           autocomplete="off" aria-label="Pokémon suchen">
-    <div class="species-quick">
-      <button type="button" data-choice="">– leer –</button>
-      <button type="button" data-choice="__lost__">Encounter verloren</button>
-      <button type="button" data-choice="__custom__">Anderes …</button>
+      <button type="button" class="icon-button" data-close title="Schließen">✕</button>
     </div>
-    <div id="species-list" class="species-list"></div>
+    <div class="picker-search">
+      <input type="search" id="picker-search" placeholder="Pokémon suchen…" autocomplete="off"
+             aria-label="Pokémon suchen">
+    </div>
+    <div class="picker-list" id="picker-list"></div>
+    <div class="dialog-foot">
+      <span class="foot-note">⚠ = Art oder Entwicklungslinie schon vergeben · Enter nimmt den ersten Treffer</span>
+      <button type="button" class="ghost-button" id="picker-clear">Abbrechen</button>
+    </div>
+  </dialog>
+
+  <dialog id="lost-dialog" class="dialog small-dialog">
+    <div class="dialog-titles">
+      <span class="dialog-title">Encounter verloren</span>
+      <span class="dialog-sub" id="lost-sub"></span>
+    </div>
+    <div class="culprit-block">
+      <span class="pixel-label soft">WER WAR SCHULD</span>
+      <div id="culprit-list"></div>
+    </div>
     <div class="dialog-actions">
-      <button type="button" data-close>Abbrechen</button>
+      <button type="button" class="ghost-button" data-close>Abbrechen</button>
     </div>
   </dialog>
 
-  <dialog id="location-dialog">
-    <form method="dialog" id="location-form">
-      <h2>Ort hinzufügen</h2>
-      <label for="location-select">Ort</label>
-      <select id="location-select" size="12"></select>
-      <div class="dialog-actions">
-        <button type="button" data-close>Abbrechen</button>
-        <button type="submit" class="primary">Hinzufügen</button>
+  <dialog id="players-dialog" class="dialog small-dialog">
+    <div class="dialog-titles">
+      <span class="dialog-title">Spieler</span>
+      <span class="dialog-sub">Eine Spalte pro Spieler – gilt für alle Runs.</span>
+    </div>
+    <div id="player-list" class="player-list"></div>
+    <form class="player-form" id="player-form">
+      <input id="player-name" placeholder="Name des Spielers" maxlength="60" autocomplete="off"
+             aria-label="Name des Spielers">
+      <button type="submit" class="primary-button">Hinzufügen</button>
+    </form>
+    <div class="dialog-foot plain">
+      <span class="foot-note">Entfernen löscht die Einträge des Spielers in allen Runs.</span>
+      <button type="button" class="ghost-button" data-close>Fertig</button>
+    </div>
+  </dialog>
+
+  <dialog id="rename-dialog" class="dialog small-dialog">
+    <div class="dialog-titles">
+      <span class="dialog-title">Run umbenennen</span>
+      <span class="dialog-sub" id="rename-sub"></span>
+    </div>
+    <form id="rename-form" class="run-form">
+      <div class="field">
+        <span class="pixel-label soft">NAME</span>
+        <input id="rename-input" required maxlength="120" autocomplete="off" aria-label="Neuer Name">
+      </div>
+      <div class="dialog-actions spread">
+        <button type="button" class="ghost-button" data-close>Abbrechen</button>
+        <button type="submit" class="primary-button">Umbenennen</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="run-dialog" class="dialog small-dialog">
+    <span class="dialog-title">Neuen Run anlegen</span>
+    <form id="run-form" class="run-form">
+      <div class="field">
+        <span class="pixel-label soft">NAME</span>
+        <input id="run-name" required maxlength="120" placeholder="Run 3" autocomplete="off" aria-label="Name des Runs">
+      </div>
+      <div class="field">
+        <span class="pixel-label soft">SPIEL</span>
+        <div class="choice-row" id="run-games"></div>
+      </div>
+      <div class="field">
+        <span class="pixel-label soft">SPIELER</span>
+        <div class="chips small" id="run-roster"></div>
+      </div>
+      <div class="dialog-actions spread">
+        <button type="button" class="ghost-button" data-close>Abbrechen</button>
+        <button type="submit" class="primary-button">Run anlegen &amp; öffnen</button>
       </div>
     </form>
   </dialog>

@@ -4,7 +4,10 @@
     {
       "name": "encounter-table",
       "runtimeExecutable": ".venv/Scripts/python.exe",
-      "runtimeArgs": ["-m", "uvicorn", "tools.dev_server:app", "--port", "8010", "--reload"],
+      "runtimeArgs": [
+        "-m", "uvicorn", "tools.dev_server:app", "--port", "8010", "--reload",
+        "--timeout-graceful-shutdown", "2"
+      ],
       "port": 8010,
       "url": "http://localhost:8010"
     }

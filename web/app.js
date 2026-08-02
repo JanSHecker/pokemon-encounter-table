@@ -1,9 +1,11 @@
 'use strict';
 
 /*
- * Read-write Frontend fuer die gekoppelte Encounter-Tabelle.
+ * Soul-Link Tracker - Frontend fuer die gekoppelte Encounter-Tabelle.
  *
- * Es gibt keinen Login und keine Identitaet - wer editiert, ist egal.
+ * Zwei Ansichten: die Run-Uebersicht (Landing Page) und das Run-Dashboard.
+ * Es gibt keinen Login und keine Identitaet - wer editiert, ist egal, alle sehen
+ * dasselbe.
  *
  * API-Basis ueberschreiben (lokale Entwicklung): ?api=http://127.0.0.1:8000
  */
@@ -13,12 +15,11 @@ const API_BASE =
   window.localStorage.getItem('encounter-api-base') ||
   '/encounter-table/api';
 
-const ARTWORK_BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
+// Die kleinen Spielsprites, nicht das Artwork: in einer Zelle von 42px ist die
+// gerasterte Grafik lesbarer als eine herunterskalierte Illustration.
+const SPRITE_BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
 const POLL_INTERVAL_MS = 10000;
 const SORT_KEY = 'encounter-sort';
-const GENERATION_KEY = 'encounter-type-generation';
-// Beide gefuehrten Editionen liegen in Generation 2-5 - danach richtet sich die Vorgabe.
-const DEFAULT_GENERATION = 'gen2';
 const MAX_TYPES = 2;
 
 // Vertragswerte der API (GET /runs -> rules). Der Platzhalter ist Protokoll: wir
@@ -35,36 +36,61 @@ function applyRules(rules) {
   TEAM_SIZE = rules.team_size ?? TEAM_SIZE;
 }
 
-// Jede Sortierung gruppiert nur; die Reihenfolge innerhalb einer Gruppe klaert
-// WITHIN_GROUP.
-const SORTERS = {
-  order: () => 0,
-  location: () => 0,
-  open: (row) => (row.outcome === 'pending' ? 0 : 1),
-  caught: (row) => (row.outcome === 'caught' ? 0 : 1),
-  team: (row) => (row.in_team ? 0 : 1),
-  status: (row) => (row.in_team ? 0 : { caught: 1, pending: 2, failed: 3, dead: 4 }[row.outcome] ?? 5),
+// Reihenfolge wie im Pokedex, nicht alphabetisch. Die Farben stehen in der CSS
+// (.t-fire und Co.), hier steht nur das deutsche Label - so gibt es keine zweite
+// Farbliste, die auseinanderlaufen kann.
+const TYPE_LABELS = {
+  normal: 'NORMAL', fighting: 'KAMPF', flying: 'FLUG',
+  poison: 'GIFT', ground: 'BODEN', rock: 'GESTEIN',
+  bug: 'KÄFER', ghost: 'GEIST', steel: 'STAHL',
+  fire: 'FEUER', water: 'WASSER', grass: 'PFLANZE',
+  electric: 'ELEKTRO', psychic: 'PSYCHO', ice: 'EIS',
+  dragon: 'DRACHE', dark: 'UNLICHT', fairy: 'FEE',
 };
 
-// numeric, sonst steht "Route 10" vor "Route 9": ein reiner Zeichenvergleich
-// sieht die 1 vor der 9 und die Ortsliste besteht fast nur aus Nummern.
-const NAME_COLLATOR = new Intl.Collator('de', { numeric: true, sensitivity: 'base' });
+const TYPE_ORDER = Object.keys(TYPE_LABELS);
 
-// Innerhalb einer Gruppe gilt die Spielreihenfolge aus dem Katalog - genau
-// dafuer traegt jede Zeile 'order'. Alphabetisch ist die Ausnahme, nicht die
-// Regel: fuer einen Nuzlocke zaehlt, was als Naechstes drankommt.
-const WITHIN_GROUP = {
-  location: (a, b) => NAME_COLLATOR.compare(a.encounter, b.encounter),
+/** Heutige Typentabelle: angreifender Typ -> Abweichungen von 1x. */
+const CHART = {
+  normal: { rock: 0.5, ghost: 0, steel: 0.5 },
+  fighting: { normal: 2, flying: 0.5, poison: 0.5, rock: 2, bug: 0.5, ghost: 0, steel: 2, psychic: 0.5, ice: 2, dark: 2, fairy: 0.5 },
+  flying: { fighting: 2, rock: 0.5, bug: 2, steel: 0.5, grass: 2, electric: 0.5 },
+  poison: { poison: 0.5, ground: 0.5, rock: 0.5, ghost: 0.5, steel: 0, grass: 2, fairy: 2 },
+  ground: { flying: 0, poison: 2, rock: 2, bug: 0.5, steel: 2, fire: 2, grass: 0.5, electric: 2 },
+  rock: { fighting: 0.5, flying: 2, ground: 0.5, bug: 2, steel: 0.5, fire: 2, ice: 2 },
+  bug: { fighting: 0.5, flying: 0.5, poison: 0.5, ghost: 0.5, steel: 0.5, fire: 0.5, grass: 2, psychic: 2, dark: 2, fairy: 0.5 },
+  ghost: { normal: 0, ghost: 2, psychic: 2, dark: 0.5 },
+  steel: { rock: 2, steel: 0.5, fire: 0.5, water: 0.5, electric: 0.5, ice: 2, fairy: 2 },
+  fire: { rock: 0.5, bug: 2, steel: 2, fire: 0.5, water: 0.5, grass: 2, ice: 2, dragon: 0.5 },
+  water: { ground: 2, rock: 2, fire: 2, water: 0.5, grass: 0.5, dragon: 0.5 },
+  grass: { flying: 0.5, poison: 0.5, ground: 2, rock: 2, bug: 0.5, steel: 0.5, fire: 0.5, water: 2, grass: 0.5, dragon: 0.5 },
+  electric: { flying: 2, ground: 0, water: 2, grass: 0.5, electric: 0.5, dragon: 0.5 },
+  psychic: { fighting: 2, poison: 2, steel: 0.5, psychic: 0.5, dark: 0 },
+  ice: { flying: 2, ground: 2, steel: 0.5, fire: 0.5, water: 0.5, grass: 2, ice: 0.5, dragon: 2 },
+  dragon: { steel: 0.5, dragon: 2, fairy: 0 },
+  dark: { fighting: 0.5, ghost: 2, psychic: 2, dark: 0.5, fairy: 0.5 },
+  fairy: { fighting: 2, poison: 0.5, steel: 0.5, fire: 0.5, dragon: 2, dark: 2 },
 };
 
-const OUTCOME_LABELS = {
-  pending: 'Offen',
-  caught: 'Gefangen',
-  dead: 'Tot',
-  failed: 'Verloren',
-};
+// Alle Faktoren sind Zweierpotenzen und damit exakt vergleichbar - gerundet wird nichts.
+const BUCKETS = [4, 2, 0.5, 0.25, 0];
+const BUCKET_CLASS = { 4: '4', 2: '2', 0.5: '05', 0.25: '025', 0: '0' };
+
+const FILTERS = [
+  ['alle', 'Alle'], ['team', 'Team'], ['box', 'Box'],
+  ['tot', 'Tot'], ['verloren', 'Verloren'], ['offen', 'Offen'],
+];
+
+// Reihenfolge der Sortierung 'Nach Status': was gerade gespielt wird, zuerst.
+const CATEGORY_RANK = { team: 0, box: 1, tot: 2, verloren: 3, offen: 4 };
+
+const RUN_STATUS_LABELS = { active: 'AKTIV', paused: 'PAUSIERT', completed: 'FERTIG', failed: 'VERKACKT' };
+const RUN_STATUS_ACTIONS = [
+  ['active', 'aktiv'], ['paused', 'pause'], ['completed', 'geschafft'], ['failed', 'verkackt'],
+];
 
 const state = {
+  view: 'home',
   games: [],
   catalogs: {},
   players: [],
@@ -72,58 +98,83 @@ const state = {
   currentRunId: null,
   run: null,
   updatedAt: null,
-  view: 'table',
-  generation: DEFAULT_GENERATION,
-  typeSelection: [],
+  stats: null,
+  filter: 'alle',
+  sort: 'order',
+  search: '',
+  types: [],
+  // Der Modus wird bewusst nicht gespeichert: nur im Angriff markiert die
+  // Tabelle die anfaelligen Pokémon, und ein aus der letzten Sitzung
+  // stehengebliebenes 'def' sieht aus, als wuerde die Markierung fehlen.
+  mode: 'atk',
+  picker: null,
+  lostRowId: null,
+  newRunGame: null,
 };
 
 const el = {
-  gameSelect: document.getElementById('game-select'),
-  runSelect: document.getElementById('run-select'),
-  runStatus: document.getElementById('run-status'),
-  sortSelect: document.getElementById('sort-select'),
-  teamCount: document.getElementById('team-count'),
-  lastUpdated: document.getElementById('last-updated'),
+  brandButton: document.getElementById('brand-button'),
+  brandSub: document.getElementById('brand-sub'),
+  headStats: document.getElementById('head-stats'),
+  playersButton: document.getElementById('players-button'),
   globalError: document.getElementById('global-error'),
+
+  homeView: document.getElementById('home-view'),
+  homeSub: document.getElementById('home-sub'),
+  runGrid: document.getElementById('run-grid'),
+  rosterChips: document.getElementById('roster-chips'),
+
+  runView: document.getElementById('run-view'),
+  filterBar: document.getElementById('filter-bar'),
+  locationSearch: document.getElementById('location-search'),
+  sortBar: document.getElementById('sort-bar'),
+  tableScroll: document.getElementById('table-scroll'),
   tableHead: document.getElementById('table-head'),
-  rows: document.getElementById('encounter-rows'),
-  capList: document.getElementById('cap-list'),
-  progressLabel: document.getElementById('progress-label'),
-  progressUp: document.getElementById('progress-up'),
-  progressDown: document.getElementById('progress-down'),
-  statScope: document.getElementById('stats-scope'),
-  statGrid: document.getElementById('stat-grid'),
-  playerStats: document.getElementById('player-stats'),
-  runStats: document.getElementById('run-stats'),
-  newRunButton: document.getElementById('new-run-button'),
-  addLocationButton: document.getElementById('add-location-button'),
+  tableRows: document.getElementById('table-rows'),
+
+  capCard: document.getElementById('cap-card'),
+  failList: document.getElementById('fail-list'),
+  blameLine: document.getElementById('blame-line'),
+  typeModes: document.getElementById('type-modes'),
+  typeGrid: document.getElementById('type-grid'),
+  typeResultTitle: document.getElementById('type-result-title'),
+  typeResultList: document.getElementById('type-result-list'),
+  typeReset: document.getElementById('type-reset'),
+  teamCheckTitle: document.getElementById('team-check-title'),
+  teamCheckList: document.getElementById('team-check-list'),
+
+  pickerDialog: document.getElementById('picker-dialog'),
+  pickerDot: document.getElementById('picker-dot'),
+  pickerTitle: document.getElementById('picker-title'),
+  pickerSub: document.getElementById('picker-sub'),
+  pickerSearch: document.getElementById('picker-search'),
+  pickerList: document.getElementById('picker-list'),
+  pickerClear: document.getElementById('picker-clear'),
+
+  lostDialog: document.getElementById('lost-dialog'),
+  lostSub: document.getElementById('lost-sub'),
+  culpritList: document.getElementById('culprit-list'),
+
+  playersDialog: document.getElementById('players-dialog'),
+  playerList: document.getElementById('player-list'),
+  playerForm: document.getElementById('player-form'),
+  playerName: document.getElementById('player-name'),
+
+  renameDialog: document.getElementById('rename-dialog'),
+  renameForm: document.getElementById('rename-form'),
+  renameInput: document.getElementById('rename-input'),
+  renameSub: document.getElementById('rename-sub'),
+
   runDialog: document.getElementById('run-dialog'),
   runForm: document.getElementById('run-form'),
   runName: document.getElementById('run-name'),
-  runGame: document.getElementById('run-game'),
-  runPrefill: document.getElementById('run-prefill'),
-  runPostgame: document.getElementById('run-postgame'),
-
-  culpritDialog: document.getElementById('culprit-dialog'),
-  culpritQuestion: document.getElementById('culprit-question'),
-  culpritSelect: document.getElementById('culprit-select'),
-  locationDialog: document.getElementById('location-dialog'),
-  locationForm: document.getElementById('location-form'),
-  locationSelect: document.getElementById('location-select'),
-  speciesDialog: document.getElementById('species-dialog'),
-  speciesTitle: document.getElementById('species-title'),
-  speciesSearch: document.getElementById('species-search'),
-  speciesList: document.getElementById('species-list'),
-  typeGeneration: document.getElementById('type-generation'),
-  typeGrid: document.getElementById('type-grid'),
-  typeReset: document.getElementById('type-reset'),
-  defenseResult: document.getElementById('defense-result'),
+  runGames: document.getElementById('run-games'),
+  runRoster: document.getElementById('run-roster'),
 };
-
-const VIEWS = ['table', 'dashboard', 'types'];
 
 // --------------------------------------------------------------- Helfer ---
 
+/** Gerendert wird durchgehend mit innerHTML - jeder ausgegebene Wert geht hier durch. */
 function esc(value) {
   return String(value ?? '')
     .replaceAll('&', '&amp;')
@@ -133,14 +184,19 @@ function esc(value) {
     .replaceAll("'", '&#039;');
 }
 
-/** Eine <option> - jeder ausgegebene Wert geht durch esc(). */
-function option(value, label, selected) {
-  return `<option value="${esc(value)}"${selected ? ' selected' : ''}>${esc(label)}</option>`;
-}
-
 function formatDate(value) {
   if (!value) return '';
-  return new Intl.DateTimeFormat('de-DE', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(value));
+  return new Intl.DateTimeFormat('de-DE', { dateStyle: 'short' }).format(new Date(value));
+}
+
+function spriteUrl(dex) {
+  return `${SPRITE_BASE}/${Number(dex) || 0}.png`;
+}
+
+/** Typ-Badge, wie sie an Pokémon, im Ergebnis und an der Cap-Karte steht. */
+function typeBadge(type) {
+  if (!TYPE_LABELS[type]) return '';
+  return `<span class="type-badge t-${esc(type)}"><span class="type-icon"></span>${esc(TYPE_LABELS[type])}</span>`;
 }
 
 class ApiError extends Error {
@@ -187,7 +243,6 @@ function clearError() {
 let writeChain = Promise.resolve();
 let pendingWrites = 0;
 
-/** Schreiboperation mit einheitlicher Fehlerbehandlung. */
 function write(action) {
   pendingWrites += 1;
   document.body.classList.add('saving');
@@ -203,7 +258,7 @@ function write(action) {
     .catch(async (error) => {
       if (error instanceof ApiError && error.status === 412) {
         showError('Die Tabelle wurde zwischenzeitlich geändert. Es wird neu geladen.');
-        await loadRun(state.currentRunId);
+        await reloadEverything();
       } else if (error instanceof ApiError && [409, 422].includes(error.status)) {
         // Regelverstoss, kein Fehler - die API erklaert sich selbst.
         showError(error.message);
@@ -232,8 +287,8 @@ function speciesInfo(species) {
   return (species && catalog()?.index.species.get(species)) || null;
 }
 
-function speciesDex(species) {
-  return speciesInfo(species)?.dex ?? null;
+function speciesTypes(species) {
+  return speciesInfo(species)?.types || [];
 }
 
 /** Entwicklungslinie einer Art - die Einheit, in der die Dupes-Clause zaehlt.
@@ -253,9 +308,7 @@ async function ensureCatalog(gameId) {
   // nicht, die Tabelle schlaegt aber fuer jede Zelle darin nach.
   //
   // Die Ortslisten kommen zuerst und der Pokedex danach: er ist die
-  // vollstaendigere Quelle (er allein kennt die Familie) und soll gewinnen.
-  // Faellt er weg - alter Katalog, noch nicht neu generiert -, bleibt wenigstens
-  // das Artwork stehen.
+  // vollstaendigere Quelle (er allein kennt Familie und Typen) und soll gewinnen.
   fetched.index = {
     locations: new Map(fetched.locations.map((location) => [location.id, location])),
     species: new Map([
@@ -264,6 +317,85 @@ async function ensureCatalog(gameId) {
     ]),
   };
   state.catalogs[gameId] = fetched;
+}
+
+function rows() {
+  return state.run?.encounters || [];
+}
+
+function findRow(rowId) {
+  return rows().find((row) => row.id === rowId) || null;
+}
+
+function player(playerId) {
+  return state.players.find((entry) => entry.id === playerId) || null;
+}
+
+/** Zustand einer Zeile fuer Filter, Sortierung und Faerbung.
+ *
+ * 'box' und 'team' sind derselbe Fang - nur einmal auf der Bank und einmal im
+ * Spiel. Die API kennt dafuer kein eigenes Outcome, das steht in `in_team`.
+ */
+function category(row) {
+  if (row.outcome === 'dead') return 'tot';
+  if (row.outcome === 'failed') return 'verloren';
+  if (row.outcome === 'caught') return row.in_team ? 'team' : 'box';
+  return 'offen';
+}
+
+function categoryCounts() {
+  const counts = { alle: rows().length, team: 0, box: 0, tot: 0, verloren: 0, offen: 0 };
+  for (const row of rows()) counts[category(row)] += 1;
+  return counts;
+}
+
+function visibleRows() {
+  const term = normalize(state.search.trim());
+  const list = rows().filter(
+    (row) =>
+      (state.filter === 'alle' || category(row) === state.filter) &&
+      (!term || normalize(row.encounter).includes(term)),
+  );
+  const rank = (row) => (state.sort === 'status' ? CATEGORY_RANK[category(row)] : 0);
+  return list.sort((a, b) => rank(a) - rank(b) || a.order - b.order || a.id.localeCompare(b.id));
+}
+
+function isFilled(pick) {
+  return Boolean(pick && (pick.species || String(pick.name || '').trim()));
+}
+
+/** Die Pokémon, die ein Spieler gerade im Team hat. */
+function teamMons(playerId) {
+  return rows()
+    .filter((row) => row.in_team && category(row) !== 'tot')
+    .map((row) => row.picks[playerId])
+    .filter((pick) => isFilled(pick) && pick.status !== 'dead');
+}
+
+/** Negativstatistik des offenen Runs: eine Zeile = ein Vorfall beim Verursacher.
+ *
+ * Dieselbe Rechnung wie GET /stats, nur lokal: die Zahlen sollen sich mit der
+ * Tabelle aendern und nicht erst beim naechsten Poll.
+ */
+function failStats() {
+  const deaths = {};
+  const misses = {};
+  for (const entry of state.players) {
+    deaths[entry.id] = 0;
+    misses[entry.id] = 0;
+  }
+  for (const row of rows()) {
+    const blame = row.responsible_player;
+    if (!blame || deaths[blame] === undefined) continue;
+    if (row.outcome === 'dead') deaths[blame] += 1;
+    else if (row.outcome === 'failed') misses[blame] += 1;
+  }
+  // Schuld = Tod x2 + vergeigter Encounter: ein toter Link kostet die ganze
+  // Reihe, ein verpasster nur die Gelegenheit.
+  const scored = state.players
+    .map((entry) => ({ player: entry, deaths: deaths[entry.id], misses: misses[entry.id], score: deaths[entry.id] * 2 + misses[entry.id] }))
+    .sort((a, b) => b.score - a.score);
+  return { scored, worst: scored[0], max: Math.max(1, ...scored.map((entry) => entry.score)) };
 }
 
 /** Was jeder Spieler im Run schon belegt hat - Arten und Entwicklungslinien.
@@ -279,7 +411,7 @@ function pickCounts() {
   const counts = new Map();
   const bump = (map, key) => map.set(key, (map.get(key) || 0) + 1);
 
-  for (const row of state.run?.encounters || []) {
+  for (const row of rows()) {
     for (const [playerId, pick] of Object.entries(row.picks || {})) {
       if (!pick.species) continue;
       let perPlayer = counts.get(playerId);
@@ -307,269 +439,909 @@ function dupeReason(counts, playerId, ownSpecies, species) {
   return null;
 }
 
+// -------------------------------------------------------- Typenrechner ----
+
+function factor(attack, defence) {
+  return CHART[attack]?.[defence] ?? 1;
+}
+
+/** Schaden der gewaehlten Angriffstypen gegen eine Typenkombination.
+ *
+ * Bei zwei Angriffstypen zaehlt der bessere - man greift schliesslich mit einer
+ * Attacke an und sucht sich die passende aus (Coverage).
+ */
+function attackAgainst(selection, defenders) {
+  return Math.max(...selection.map((attack) => defenders.reduce((total, type) => total * factor(attack, type), 1)));
+}
+
+/** Multiplikator je Typ fuer das Ergebnisfeld. */
+function bucketsFor(selection, mode) {
+  const grouped = new Map();
+  for (const type of TYPE_ORDER) {
+    const value = mode === 'atk'
+      ? Math.max(...selection.map((attack) => factor(attack, type)))
+      // Abwehr mit zwei Typen ist das Produkt beider Verteidigungswerte - so
+      // entstehen ueberhaupt erst x4 und x1/4.
+      : selection.reduce((total, defence) => total * factor(type, defence), 1);
+    if (value === 1) continue;
+    if (!grouped.has(value)) grouped.set(value, []);
+    grouped.get(value).push(type);
+  }
+  return grouped;
+}
+
+function formatFactor(value) {
+  if (value === 0.25) return '×¼';
+  if (value === 0.5) return '×½';
+  return `×${value}`;
+}
+
 // -------------------------------------------------------------- Rendern ---
 
-/** Die Zelle zeigt nur den Stand; gewaehlt wird im Auswahldialog.
- *
- * Frueher stand hier ein <select> mit der kompletten Ortsliste - bei 44 Zeilen
- * und drei Spielern schon ueber tausend <option>. Mit dem ganzen Pokedex zur
- * Auswahl waeren es zehntausende, und suchen liesse sich darin trotzdem nicht.
- */
-function pickCell(row, player, counts) {
-  const pick = row.picks[player.id] || { species: null, name: '', status: 'alive' };
-  const dupe = dupeReason(counts, player.id, pick.species, pick.species);
-  const dex = speciesDex(pick.species);
-  const isDead = pick.status === 'dead';
-
-  return `
-    <td class="col-player">
-      <div class="pick">
-        <img class="pick-image" alt="" aria-hidden="true" loading="lazy"
-             ${dex ? `src="${ARTWORK_BASE}/${esc(dex)}.png" onload="this.classList.add('loaded')"` : ''}>
-        <div class="pick-controls">
-          <div class="pick-row">
-            <button type="button" class="pick-button${isDead ? ' dead' : ''}${pick.name ? '' : ' is-empty'}"
-                    data-action="species" data-player="${esc(player.id)}"
-                    aria-label="Pokémon von ${esc(player.name)} wählen">${esc(pick.name || '– leer –')}</button>
-            <button type="button" class="kill-button${isDead ? ' is-dead' : ''}" data-action="kill"
-                    data-player="${esc(player.id)}" title="${isDead ? 'Wiederbeleben (entkoppelt)' : 'Als tot melden – koppelt die ganze Reihe'}">☠</button>
-          </div>
-          ${dupe ? `<span class="dupe-hint">⚠ ${esc(dupe)}</span>` : ''}
-        </div>
-      </div>
-    </td>`;
+function render() {
+  const isHome = state.view === 'home';
+  el.homeView.hidden = !isHome;
+  el.runView.hidden = isHome;
+  renderBrand();
+  renderHeadStats();
+  if (isHome) renderHome();
+  else renderRunView();
 }
 
-/** Spiegelt team_ready() der API: ein Link braucht bei allen ein lebendes Pokémon.
- *
- * 'caught' allein reicht nicht - das steht schon, sobald einer etwas eingetragen
- * hat. Ohne diese Pruefung zeigten wir einen Stern, den die API mit 422 ablehnt.
- */
-function teamReady(row) {
-  const picks = Object.values(row.picks || {});
-  if (row.outcome !== 'caught' || !picks.length) return false;
-  return picks.every((pick) => (pick.species || (pick.name || '').trim()) && pick.status !== 'dead');
-}
-
-/** Nur vollstaendig gefangene Reihen lassen sich ins Team nehmen.
- *
- * Bei allen anderen bleibt der Platz leer - ein ausgegrauter Stern sah zu sehr
- * nach "anklickbar" aus. Der Platzhalter haelt die Ortsnamen in einer Flucht.
- */
-function teamToggle(row) {
-  if (!teamReady(row)) {
-    return '<span class="team-toggle-spacer" aria-hidden="true"></span>';
+function renderBrand() {
+  if (state.view === 'home') {
+    el.brandSub.textContent = 'RUN-ÜBERSICHT';
+    el.brandSub.classList.remove('is-link');
+    return;
   }
-  return `<button type="button" class="team-toggle${row.in_team ? ' is-active' : ''}" data-action="team"
-                  aria-pressed="${row.in_team}"
-                  title="${row.in_team ? 'Aus dem Team nehmen' : 'Ins Team nehmen'}">${row.in_team ? '★' : '☆'}</button>`;
+  const game = state.run?.game_name || state.run?.game_id || '';
+  el.brandSub.textContent = `← ALLE RUNS · ${(state.run?.run_name || '')} · ${game}`.toUpperCase();
+  el.brandSub.classList.add('is-link');
 }
 
-function culpritOptions(selected) {
-  return (
-    option('', '–', !selected) +
-    state.players.map((player) => option(player.id, player.name, selected === player.id)).join('') +
-    option(NO_CULPRIT, 'Niemand', selected === NO_CULPRIT)
-  );
+function headStat(value, label, tone = '') {
+  return `<div class="head-stat ${esc(tone)}"><b>${esc(value)}</b><span>${esc(label)}</span></div>`;
 }
 
-function rowHtml(row, counts = pickCounts()) {
-  // row-caught bleibt bewusst ungestylt: gefangen und in der Box ist der Normalfall.
-  const classes = [`row-${row.outcome}`];
-  if (row.in_team) classes.push('row-team');
+function renderHeadStats() {
+  if (state.view === 'home') {
+    el.headStats.innerHTML = headStat(state.runs.length, 'RUNS') + headStat(state.players.length, 'SPIELER');
+    return;
+  }
+  const counts = categoryCounts();
+  el.headStats.innerHTML =
+    headStat(`${counts.team + counts.box}/${counts.alle}`, 'GEFANGEN') +
+    headStat(`${counts.team}/${TEAM_SIZE}`, 'IM TEAM', 'good') +
+    headStat(counts.tot, 'TOT', 'bad') +
+    headStat(counts.verloren, 'VERGEIGT', 'warn');
+}
 
-  const outcomeOptions = Object.entries(OUTCOME_LABELS)
-    .map(([value, label]) => option(value, label, row.outcome === value))
-    .join('');
-  const responsibleOptions = culpritOptions(row.responsible_player);
+// --------------------------------------------------------- Run-Uebersicht -
+
+function playerChip(entry, className = 'chip') {
+  return `<span class="${className}"><span class="dot" style="background:${esc(entry.color)}"></span>${esc(entry.name)}</span>`;
+}
+
+function runCard(run) {
+  const total = run.encounter_count || 1;
+  const percent = (value) => `${(value / total) * 100}%`;
+  const caught = run.caught_count;
+  const status = RUN_STATUS_LABELS[run.status] ? run.status : 'active';
+
+  const actions = RUN_STATUS_ACTIONS.map(([key, label]) => {
+    const on = status === key;
+    return `<button type="button" class="status-button tone-${esc(key)}${on ? ' is-on' : ''}"
+                    data-action="run-status" data-run="${esc(run.id)}" data-status="${esc(key)}">${esc(label)}</button>`;
+  }).join('');
 
   return `
-    <tr data-row="${esc(row.id)}" class="${classes.join(' ')}">
-      <td class="location">
-        <div class="location-cell">
-          ${teamToggle(row)}
-          <strong>${esc(row.encounter)}${row.postgame ? '<span class="postgame-tag">Postgame</span>' : ''}</strong>
+    <article class="run-card${status === 'active' ? ' is-active' : ''}${status === 'failed' ? ' is-failed' : ''}">
+      <div class="run-card-head">
+        <div class="run-card-title">
+          <b>${esc(run.name)}</b>
+          <span>${esc(run.game_name || run.game_id)} · seit ${esc(formatDate(run.created_at))}</span>
         </div>
-      </td>
-      ${state.players.map((player) => pickCell(row, player, counts)).join('')}
-      <td class="col-meta"><select data-action="outcome" aria-label="Status">${outcomeOptions}</select></td>
-      <td class="col-meta"><select data-action="responsible" aria-label="Schuldiger">${responsibleOptions}</select></td>
-    </tr>`;
+        <span class="status-pill tone-${esc(status)}">${esc(RUN_STATUS_LABELS[status])}</span>
+        <button type="button" class="card-icon" data-action="rename-run" data-run="${esc(run.id)}"
+                title="Run umbenennen">✎</button>
+        <button type="button" class="card-icon danger" data-action="delete-run" data-run="${esc(run.id)}"
+                title="Run löschen">✕</button>
+      </div>
+
+      <div class="run-progress">
+        <div class="bar">
+          <span class="done" style="width:${esc(percent(caught))}"></span>
+          <span class="lost" style="width:${esc(percent(run.failed_count))}"></span>
+          <span class="dead" style="width:${esc(percent(run.death_count))}"></span>
+        </div>
+        <span>${esc(caught)} gefangen · ${esc(run.death_count)} tot · ${esc(run.failed_count)} vergeigt ·
+              ${esc(run.encounter_count)} Orte</span>
+      </div>
+
+      <div class="chips">${state.players.map((entry) => playerChip(entry)).join('')}</div>
+
+      <div class="run-card-actions">
+        <button type="button" class="open-button" data-action="open-run" data-run="${esc(run.id)}">Öffnen</button>
+        <div class="status-row"><span class="pixel-label">STATUS</span>${actions}</div>
+      </div>
+    </article>`;
+}
+
+function renderHome() {
+  el.homeSub.textContent = `${state.runs.length} Runs · ${state.players.length} Spieler`;
+  el.runGrid.innerHTML =
+    state.runs.map(runCard).join('') +
+    `<button type="button" class="new-run-card" data-action="new-run">
+       <b>＋</b>
+       <strong>Neuen Run anlegen</strong>
+       <span>Spiel, Name und Spieler wählen</span>
+     </button>`;
+  el.rosterChips.innerHTML = state.players.map((entry) => playerChip(entry)).join('');
+}
+
+// ------------------------------------------------------------- Run-View ---
+
+function renderRunView() {
+  renderFilters();
+  renderSort();
+  renderTable();
+  renderCapCard();
+  renderFailStats();
+  renderTypeCalculator();
+}
+
+function renderFilters() {
+  const counts = categoryCounts();
+  el.filterBar.innerHTML = FILTERS.map(
+    ([key, label]) => `<button type="button" class="filter-button${state.filter === key ? ' is-on' : ''}"
+                               data-action="filter" data-filter="${esc(key)}">${esc(label)}<span>${esc(counts[key])}</span></button>`,
+  ).join('');
+}
+
+function renderSort() {
+  const options = [
+    ['order', 'Spielreihenfolge', 'Orte in der Reihenfolge, in der man sie besucht'],
+    ['status', 'Nach Status', 'Team → Box → tot → verloren → offen'],
+  ];
+  el.sortBar.innerHTML = options.map(
+    ([key, label, title]) => `<button type="button" class="${state.sort === key ? 'is-on' : ''}"
+                                      data-action="sort" data-sort="${esc(key)}" title="${esc(title)}">${esc(label)}</button>`,
+  ).join('');
+}
+
+function pickCell(row, entry, context) {
+  const pick = row.picks[entry.id] || {};
+  const cat = context.cat;
+  const lost = cat === 'verloren';
+  const dead = pick.status === 'dead';
+  const info = speciesInfo(pick.species);
+  const name = lost ? '' : String(pick.name || info?.name || '');
+
+  if (!name) {
+    // Leere Zelle: gestrichelte Kachel mit "+", bei verlorener Reihe stattdessen
+    // der Hinweis - dort gibt es nichts mehr einzutragen.
+    const title = lost ? 'Encounter verloren' : `${entry.name}: Encounter eintragen`;
+    return `
+      <div class="pick-cell">
+        <button type="button" class="pick-button" title="${esc(title)}"
+                data-action="pick" data-player="${esc(entry.id)}"${lost ? ' disabled' : ''}>
+          <span class="sprite ${lost ? 'is-lost' : 'is-empty'}">${lost ? '' : '+'}</span>
+          <span class="pick-text"><span class="pick-name is-empty">${lost ? 'verloren' : 'eintragen'}</span></span>
+        </button>
+      </div>`;
+  }
+
+  const types = speciesTypes(pick.species);
+  const multiplier = context.selection.length && types.length ? attackAgainst(context.selection, types) : 1;
+  const weak = context.mode === 'atk' && !dead && multiplier >= 2;
+  const dupe = dupeReason(context.counts, entry.id, pick.species, pick.species);
+  const spriteClass = dead ? 'is-dead' : row.in_team ? 'is-team' : '';
+  const background = info ? ` style="background-image:url('${esc(spriteUrl(info.dex))}')"` : '';
+
+  return `
+    <div class="pick-cell${weak ? ' is-weak' : ''}">
+      <button type="button" class="pick-button" title="${esc(`${entry.name}: ${name} ändern`)}"
+              data-action="pick" data-player="${esc(entry.id)}">
+        <span class="sprite ${spriteClass}"${background}></span>
+        <span class="pick-text">
+          <span class="pick-name${dead ? ' is-dead' : ''}">${esc(name)}</span>
+          <span class="pick-types">
+            ${types.map(typeBadge).join('')}
+            ${weak ? `<span class="weak-note">${esc(formatFactor(multiplier))}</span>` : ''}
+            ${dupe ? `<span class="dupe-note" title="${esc(dupe)}">⚠</span>` : ''}
+          </span>
+        </span>
+      </button>
+      <button type="button" class="kill-button${dead ? ' is-dead' : ''}" data-action="kill" data-player="${esc(entry.id)}"
+              title="${esc(dead ? 'Reihe wiederbeleben' : `${entry.name} verliert ${name} – koppelt die Reihe und trägt ${entry.name} als Schuldigen ein`)}"
+              >${dead ? '↺' : '☠'}</button>
+    </div>`;
+}
+
+function rowHtml(row, context) {
+  const cat = category(row);
+  const inner = { ...context, cat };
+  const blamed = player(row.responsible_player);
+  const sub = blamed
+    ? `<span class="blamed">Schuld: ${esc(blamed.name)}</span>`
+    : row.responsible_player === NO_CULPRIT
+      ? '<span>Schuld: niemand</span>'
+      : cat === 'offen'
+        ? '<span>noch kein Encounter</span>'
+        : '<span></span>';
+
+  const canTeam = row.outcome === 'caught';
+  const full = context.teamCount >= TEAM_SIZE && !row.in_team;
+  const ballClass = row.in_team ? 'is-on' : !canTeam ? 'is-locked' : full ? 'is-full' : 'can-toggle';
+  const ballTitle = !canTeam
+    ? 'kein Fang'
+    : row.in_team
+      ? 'Aus dem Team nehmen'
+      : full
+        ? `Team ist voll (${TEAM_SIZE})`
+        : 'Ins Team aufnehmen';
+
+  const action = { offen: 'verloren melden', verloren: 'zurücksetzen', tot: 'wiederbeleben' }[cat] || '';
+
+  return `
+    <div class="table-row is-${esc(cat)}" data-row="${esc(row.id)}">
+      <div class="team-cell">
+        <button type="button" class="ball-button ${ballClass}" data-action="team" title="${esc(ballTitle)}"
+                ${canTeam && (!full || row.in_team) ? '' : 'disabled'}><span class="ball"></span></button>
+      </div>
+      <div class="loc-cell">
+        <b>${esc(row.encounter)}</b>
+        ${sub}
+      </div>
+      ${state.players.map((entry) => pickCell(row, entry, inner)).join('')}
+      <div class="state-cell">
+        <span class="state-pill cat-${esc(cat)}">${esc(cat.toUpperCase())}</span>
+        ${action
+          ? `<button type="button" class="state-action${cat === 'offen' ? ' is-warning' : ''}" data-action="state">${esc(action)}</button>`
+          : ''}
+      </div>
+    </div>`;
 }
 
 function renderTable() {
-  if (!state.run) return;
-  const sort = el.sortSelect.value;
-  // 'Ort (A-Z)' sortiert dieselbe Spalte wie die Spielreihenfolge - ohne diese
-  // Zuordnung zeigte keine Ueberschrift an, wonach gerade sortiert wird.
-  const sortedColumn = sort === 'location' ? 'order' : sort;
-  const head = (key, label, cls) =>
-    `<th class="${cls} sortable${sortedColumn === key ? ' is-sorted' : ''}" data-sort="${key}"
-         role="button" tabindex="0" title="Nach ${label} sortieren">${label}${sortedColumn === key ? ' ▾' : ''}</th>`;
+  const players = state.players;
+  // Kopf und Zeilen teilen sich dasselbe Raster; es haengt an der Spieleranzahl
+  // und steht deshalb als Variable am Scroll-Container.
+  el.tableScroll.style.setProperty('--cols', `56px 164px repeat(${players.length}, minmax(196px, 1fr)) 124px`);
+  el.tableScroll.style.setProperty('--min', `${344 + players.length * 196}px`);
 
   el.tableHead.innerHTML =
-    head('order', 'Ort', 'col-location') +
-    state.players.map((player) => `<th class="col-player">${esc(player.name)}</th>`).join('') +
-    head('status', 'Status', 'col-meta') +
-    '<th class="col-meta">Schuldiger</th>';
-  const counts = pickCounts();
-  el.rows.innerHTML = sortedRows()
-    .map((row) => rowHtml(row, counts))
-    .join('');
-  renderTeamCount();
+    '<span>TEAM</span><span>ORT</span>' +
+    players
+      .map(
+        (entry) => `<span class="player-head"><span class="dot" style="background:${esc(entry.color)}"></span>
+                    <span>${esc(entry.name.toUpperCase())}</span></span>`,
+      )
+      .join('') +
+    '<span>STATUS</span>';
+
+  const context = {
+    counts: pickCounts(),
+    teamCount: rows().filter((row) => row.in_team).length,
+    selection: state.types,
+    mode: state.mode,
+  };
+  const visible = visibleRows();
+  const term = state.search.trim();
+  el.tableRows.innerHTML = visible.length
+    ? visible.map((row) => rowHtml(row, context)).join('')
+    : `<p class="empty-hint">${term ? `Kein Ort passt zu „${esc(term)}“.` : 'Zu diesem Filter gibt es gerade nichts.'}</p>`;
 }
 
-/** Sortierte Kopie fuer die Anzeige - die Reihenfolge in state.run bleibt die der API. */
-function sortedRows() {
-  const key = el.sortSelect.value;
-  const rank = SORTERS[key] || SORTERS.order;
-  const within = WITHIN_GROUP[key] || ((a, b) => a.order - b.order);
-  return [...state.run.encounters].sort(
-    (a, b) => rank(a) - rank(b) || within(a, b) || a.id.localeCompare(b.id),
-  );
-}
-
-function renderTeamCount() {
-  const active = (state.run?.encounters || []).filter((row) => row.in_team).length;
-  el.teamCount.textContent = `Team ${active}/${TEAM_SIZE}`;
-  el.teamCount.classList.toggle('full', active >= TEAM_SIZE);
-}
-
-function replaceRow(row) {
-  const index = state.run.encounters.findIndex((entry) => entry.id === row.id);
-  const previous = index >= 0 ? state.run.encounters[index] : null;
-  if (index >= 0) state.run.encounters[index] = row;
-  const tr = el.rows.querySelector(`tr[data-row="${row.id}"]`);
-  if (!tr) return;
-  // Fokus rausnehmen, bevor die Zeile ersetzt wird: ein fokussiertes <select>
-  // feuert beim Zerstoeren sonst noch ein change-Event, das als weitere
-  // Aenderung durchginge.
-  if (document.activeElement && tr.contains(document.activeElement)) document.activeElement.blur();
-
-  // Wechselt die Zeile die Sortiergruppe, muss die ganze Tabelle neu. Sonst
-  // bleibt sie an ihrem alten Platz stehen, bis der naechste Poll sie verschiebt
-  // - bis zu zehn Sekunden spaeter, was wie ein Ruckler aussieht und nicht wie
-  // eine Sortierung. Aendert sich die Gruppe nicht, bleibt es beim Austausch der
-  // einen Zeile: ein Neuzeichnen fuer jedes eingetragene Pokemon waere unruhig.
-  const rank = SORTERS[el.sortSelect.value] || SORTERS.order;
-  if (previous && rank(previous) !== rank(row)) {
-    renderTable();
+function renderCapCard() {
+  const caps = catalog()?.level_caps || [];
+  if (!caps.length) {
+    el.capCard.innerHTML = '<span class="cap-foot">Für dieses Spiel sind keine Level-Caps hinterlegt.</span>';
     return;
   }
 
-  tr.outerHTML = rowHtml(row);
-  renderTeamCount();
-}
+  const index = Math.min(Math.max(state.run?.progress ?? 0, 0), caps.length - 1);
+  const cap = caps[index];
+  const type = TYPE_LABELS[cap.type] ? cap.type : '';
 
-function renderCaps() {
-  const current = catalog();
-  const caps = current?.level_caps || [];
-  const progress = state.run?.progress ?? 0;
-
-  el.capList.innerHTML = caps
-    .map((cap, index) => {
-      const cls = index < progress ? 'cap done' : index === progress ? 'cap current' : 'cap';
-      return `<div class="${cls}">
-        <span class="cap-level">${esc(cap.cap)}</span>
-        <span>${esc(cap.leader)}</span>
-        <span class="cap-where">${esc(cap.place)}</span>
-      </div>`;
+  const ticks = caps
+    .map((entry, at) => {
+      const title = `${entry.leader} · ${entry.place} · Lv ${entry.cap}${TYPE_LABELS[entry.type] ? ` · ${TYPE_LABELS[entry.type]}` : ''}`;
+      const classes = ['cap-tick'];
+      if (at <= index) classes.push('is-done');
+      if (at === index) classes.push('is-current');
+      if (TYPE_LABELS[entry.type]) classes.push(`t-${entry.type}`);
+      return `<button type="button" class="${classes.join(' ')}" data-action="cap" data-cap="${at}" title="${esc(title)}"></button>`;
     })
     .join('');
 
-  const next = caps[progress];
-  el.progressLabel.textContent = next ? `Nächster: ${next.leader} (Lv ${next.cap})` : 'Alles geschafft';
-  el.progressDown.disabled = progress <= 0;
-  el.progressUp.disabled = progress >= caps.length;
+  el.capCard.innerHTML = `
+    <div class="cap-head">
+      <span class="pixel-label">LEVEL-CAP · GILT FÜR ALLE</span>
+      <button type="button" class="cap-step" data-action="cap-step" data-delta="-1"
+              ${index <= 0 ? 'disabled' : ''} title="Einen Kampf zurück">−</button>
+      <button type="button" class="cap-step" data-action="cap-step" data-delta="1"
+              ${index >= caps.length - 1 ? 'disabled' : ''} title="Nächster Kampf">+</button>
+    </div>
+    <span class="cap-value">Lv ${esc(cap.cap)}</span>
+    <div class="cap-leader-row">
+      ${type
+        ? typeBadge(type)
+        : '<span class="type-badge is-mixed t-normal"><span class="type-icon"></span>GEMISCHT</span>'}
+      <span class="cap-leader">${esc(cap.leader)} · ${esc(cap.place)}</span>
+    </div>
+    <div class="cap-ticks">${ticks}</div>
+    <span class="cap-foot">KAMPF ${index + 1} VON ${caps.length} ·
+      ${esc((state.run?.game_name || state.run?.game_id || '').toUpperCase())}</span>`;
 }
 
-function renderRunPickers() {
-  const games = state.games;
-  const selectedGame = el.gameSelect.value || state.run?.game_id || games[0]?.id || '';
-
-  el.gameSelect.innerHTML = games
-    .map((game) => option(game.id, game.name, game.id === selectedGame))
-    .join('');
-
-  const runsForGame = state.runs.filter((run) => run.game_id === selectedGame);
-  el.runSelect.innerHTML = runsForGame
-    .map((run) => {
-      const label = `${run.name}${run.status === 'completed' ? ' · abgeschlossen' : ''}`;
-      return option(run.id, label, run.id === state.currentRunId);
-    })
-    .join('');
-
-  const summary = state.runs.find((run) => run.id === state.currentRunId);
-  el.runStatus.textContent = summary?.status === 'completed' ? 'Abgeschlossen' : 'Aktiv';
-  el.runStatus.classList.toggle('completed', summary?.status === 'completed');
-  el.lastUpdated.textContent = state.updatedAt ? `Stand: ${formatDate(state.updatedAt)}` : '';
-  el.addLocationButton.disabled = !catalog();
-}
-
-// ------------------------------------------------------------ Dashboard ---
-
-function renderStats(data) {
-  const unassigned = data.unassigned_deaths + data.unassigned_failed_encounters;
-  const cards = [
-    ['Tode', data.total_deaths],
-    ['Vergeigte Encounter', data.total_failed_encounters],
-    ['Schuld gesamt', data.total_blame],
-    ['Ohne Schuldigen', unassigned],
-  ];
-  el.statGrid.innerHTML = cards
+function renderFailStats() {
+  const { scored, worst, max } = failStats();
+  el.failList.innerHTML = scored
     .map(
-      ([label, value]) =>
-        `<div class="stat-card"><span class="stat-label">${esc(label)}</span><span class="stat-value">${esc(value)}</span></div>`,
+      (entry) => `
+      <div class="fail-row">
+        <span class="dot" style="background:${esc(entry.player.color)}"></span>
+        <span class="name">${esc(entry.player.name)}</span>
+        <div class="bar">
+          <span class="dead" style="width:${esc(((entry.deaths * 2) / max) * 100)}%"></span>
+          <span class="lost" style="width:${esc((entry.misses / max) * 100)}%"></span>
+        </div>
+        <span class="tally">${esc(entry.deaths)} ✝ · ${esc(entry.misses)} ✗</span>
+      </div>`,
+    )
+    .join('');
+  el.blameLine.textContent = worst
+    ? `Schuldigster: ${worst.player.name} · Schuld = Tod ×2 + vergeigter Encounter`
+    : '';
+}
+
+function renderTypeCalculator() {
+  const selection = state.types;
+  const attacking = state.mode === 'atk';
+
+  el.typeModes.innerHTML = [['atk', 'ANGRIFF'], ['def', 'ABWEHR']]
+    .map(
+      ([key, label]) => `<button type="button" class="${state.mode === key ? 'is-on' : ''}"
+                                 data-action="type-mode" data-mode="${esc(key)}">${esc(label)}</button>`,
     )
     .join('');
 
-  // Der Schuldigste steht oben - darum geht es hier ja.
-  const ranked = [...(data.players || [])].sort(
-    (a, b) => (data.blame_by_player[b.id] || 0) - (data.blame_by_player[a.id] || 0),
+  el.typeGrid.innerHTML = TYPE_ORDER.map((type) => {
+    const on = selection.includes(type);
+    return `<button type="button" class="type-chip t-${esc(type)}${on ? ' is-on' : ''}" data-action="type" data-type="${esc(type)}"
+                    aria-pressed="${on}"><span class="type-icon"></span>${esc(TYPE_LABELS[type])}</button>`;
+  }).join('');
+
+  const labels = selection.map((type) => TYPE_LABELS[type].charAt(0) + TYPE_LABELS[type].slice(1).toLowerCase());
+  el.typeResultTitle.textContent = selection.length
+    ? `${labels.join(' + ')} ${attacking ? 'greift an' : 'wird angegriffen'}`
+    : 'Typ wählen (max. 2)';
+  el.typeReset.hidden = !selection.length;
+
+  const grouped = selection.length ? bucketsFor(selection, state.mode) : new Map();
+  el.typeResultList.innerHTML = BUCKETS.filter((value) => grouped.has(value))
+    .map((value) => {
+      const tone = `${attacking ? 'atk' : 'def'}-${BUCKET_CLASS[value]}`;
+      return `
+        <div class="bucket${value < 2 ? ' is-weak' : ''}">
+          <span class="bucket-badge ${esc(tone)}">${esc(formatFactor(value))}</span>
+          <div class="bucket-items">${grouped.get(value).map(typeBadge).join('')}</div>
+        </div>`;
+    })
+    .join('');
+
+  el.teamCheckTitle.textContent = attacking ? 'WER HAT PROBLEME DAMIT' : 'WER HAT LINKS DIESES TYPS';
+  el.teamCheckList.innerHTML = state.players
+    .map((entry) => {
+      const mons = teamMons(entry.id);
+      const hits = selection.length
+        ? mons.filter((pick) => {
+            const types = speciesTypes(pick.species);
+            if (!types.length) return false;
+            return attacking
+              ? attackAgainst(selection, types) >= 2
+              : selection.some((type) => types.includes(type));
+          })
+        : [];
+      const risk = !selection.length
+        ? '—'
+        : hits.length === 0
+          ? attacking ? 'SAUBER' : 'KEINE'
+          : `${hits.length}${attacking ? ' ANFÄLLIG' : ' LINKS'}`;
+      const tone = !selection.length || hits.length === 0 ? '' : attacking ? 'is-bad' : 'is-link';
+      const sprites = hits
+        .map((pick) => {
+          const info = speciesInfo(pick.species);
+          const name = pick.name || info?.name || '';
+          return info
+            ? `<span title="${esc(name)}" style="background-image:url('${esc(spriteUrl(info.dex))}')"></span>`
+            : '';
+        })
+        .join('');
+
+      return `
+        <div class="check-row">
+          <span class="dot" style="background:${esc(entry.color)}"></span>
+          <span class="name">${esc(entry.name)}</span>
+          <div class="check-mons">${sprites}</div>
+          <span class="check-risk ${tone}">${esc(risk)}</span>
+        </div>`;
+    })
+    .join('');
+}
+
+// -------------------------------------------------------------- Schreiben -
+
+async function patchRow(rowId, body, query = '') {
+  const updated = await write(() =>
+    api(`/runs/${encodeURIComponent(state.currentRunId)}/encounters/${encodeURIComponent(rowId)}${query}`, {
+      method: 'PATCH',
+      body,
+    }),
   );
-
-  el.playerStats.innerHTML = ranked
-    .map(
-      (player) => `<tr>
-        <td>${esc(player.name)}</td>
-        <td>${esc(data.deaths_by_player[player.id] || 0)}</td>
-        <td>${esc(data.failed_encounters_by_player[player.id] || 0)}</td>
-        <td><strong>${esc(data.blame_by_player[player.id] || 0)}</strong></td>
-      </tr>`,
-    )
-    .join('');
-
-  el.runStats.innerHTML = data.runs
-    .map(
-      (run) => `<tr>
-        <td><strong>${esc(run.name)}</strong><span class="subline">${esc(run.game_name || run.game_id)}</span></td>
-        <td>${esc(run.deaths)}</td>
-        <td>${esc(run.failed_encounters)}</td>
-      </tr>`,
-    )
-    .join('');
+  if (!updated) return null;
+  const index = rows().findIndex((row) => row.id === updated.id);
+  if (index >= 0) state.run.encounters[index] = updated;
+  // Eine Aenderung verschiebt Zaehler, Filtergruppe, Fail-Statistik und
+  // Typen-Check gleichzeitig - die Ansicht wird deshalb ganz neu gezeichnet.
+  renderHeadStats();
+  renderRunView();
+  return updated;
 }
 
-function renderScopeOptions() {
-  const scope = el.statScope.value || 'all';
-  const options = [option('all', 'Alle Runs', false)];
-  for (const game of state.games) options.push(option(`game:${game.id}`, game.name, false));
-  for (const run of state.runs) options.push(option(`run:${run.id}`, run.name, false));
-  el.statScope.innerHTML = options.join('');
-  el.statScope.value = scope;
+/** Schreibt nur, wenn sich wirklich etwas aendert - schluckt Phantom-Events. */
+async function patchPick(row, playerId, changes, query = '') {
+  const pick = row.picks[playerId] || {};
+  const differs = Object.entries(changes).some(([key, value]) => (pick[key] ?? null) !== (value ?? null));
+  if (!differs) return null;
+  return patchRow(row.id, { picks: { [playerId]: changes } }, query);
 }
 
-async function loadStats() {
-  const scope = el.statScope.value || 'all';
-  let query = '';
-  if (scope.startsWith('game:')) query = `?game_id=${encodeURIComponent(scope.slice(5))}`;
-  else if (scope.startsWith('run:')) query = `?run_id=${encodeURIComponent(scope.slice(4))}`;
-  try {
-    renderStats(await api(`/stats${query}`));
-  } catch (error) {
-    showError(`Statistik konnte nicht geladen werden: ${error.message}`);
+/** Alle Picks einer Zeile auf einmal - fuer Zuruecksetzen und Wiederbeleben. */
+function allPicks(changes) {
+  return Object.fromEntries(state.players.map((entry) => [entry.id, changes]));
+}
+
+async function handleKill(row, playerId) {
+  if (row.picks[playerId]?.status === 'dead') {
+    // Wiederbeleben gilt fuer die ganze Reihe und laeuft deshalb ohne Kopplung -
+    // sonst zoege der erste tote Pick alle sofort wieder mit.
+    await patchRow(row.id, { picks: allPicks({ status: 'alive' }), responsible_player: null }, '?couple=false');
+    return;
+  }
+  const body = { picks: { [playerId]: { status: 'dead' } } };
+  if (!row.responsible_player) body.responsible_player = playerId;
+  await patchRow(row.id, body);
+}
+
+async function handleStateAction(row) {
+  const cat = category(row);
+  if (cat === 'offen') {
+    openLostDialog(row);
+    return;
+  }
+  if (cat === 'verloren') {
+    await patchRow(row.id, {
+      outcome: 'pending',
+      picks: allPicks({ species: null, name: '' }),
+      responsible_player: null,
+    });
+    return;
+  }
+  if (cat === 'tot') {
+    await patchRow(row.id, { picks: allPicks({ status: 'alive' }), responsible_player: null }, '?couple=false');
   }
 }
+
+async function changeCap(index) {
+  const caps = catalog()?.level_caps || [];
+  const next = Math.min(Math.max(index, 0), Math.max(caps.length - 1, 0));
+  if (!caps.length || next === state.run.progress) return;
+  const updated = await write(() =>
+    api(`/runs/${encodeURIComponent(state.currentRunId)}`, { method: 'PATCH', body: { progress: next } }),
+  );
+  if (updated) {
+    state.run.progress = updated.progress;
+    renderCapCard();
+  }
+}
+
+async function setRunStatus(runId, status) {
+  const updated = await write(() => api(`/runs/${encodeURIComponent(runId)}`, { method: 'PATCH', body: { status } }));
+  if (updated) {
+    await loadRuns();
+    render();
+  }
+}
+
+function openRenameDialog(runId) {
+  const run = state.runs.find((entry) => entry.id === runId);
+  if (!run) return;
+  el.renameForm.dataset.run = run.id;
+  el.renameSub.textContent = `${run.game_name || run.game_id} · seit ${formatDate(run.created_at)}`;
+  el.renameInput.value = run.name;
+  el.renameDialog.showModal();
+  el.renameInput.select();
+}
+
+el.renameForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const runId = el.renameForm.dataset.run;
+  const name = el.renameInput.value.trim();
+  el.renameDialog.close();
+  if (!runId || !name) return;
+  const updated = await write(() => api(`/runs/${encodeURIComponent(runId)}`, { method: 'PATCH', body: { name } }));
+  if (!updated) return;
+  await loadRuns();
+  // Der Name steht auch im Kopf der Run-Ansicht.
+  if (state.view === 'run' && state.currentRunId === runId) await loadRun(runId);
+  render();
+});
+
+async function deleteRun(runId) {
+  const run = state.runs.find((entry) => entry.id === runId);
+  if (!run) return;
+  const question =
+    `„${run.name}“ mit allen ${run.encounter_count} Zeilen löschen?\n` +
+    'Das lässt sich nur noch aus einem Backup zurückholen.';
+  if (!window.confirm(question)) return;
+  // DELETE antwortet mit 204, also ohne Inhalt - der Erfolg muss selbst markiert
+  // werden, sonst ist er von einem abgefangenen Fehler nicht zu unterscheiden.
+  const removed = await write(() =>
+    api(`/runs/${encodeURIComponent(runId)}`, { method: 'DELETE' }).then(() => true),
+  );
+  if (!removed) return;
+  if (state.currentRunId === runId) state.currentRunId = null;
+  await reloadEverything();
+}
+
+// ------------------------------------------------------ Pokémon-Auswahl ---
+
+// Der Dialog ist einer fuer die ganze Tabelle: 132 Zellen mit je einer eigenen
+// Liste waeren sonst zehntausende DOM-Knoten.
+
+/** Die Auswahlliste: erst die Arten des Ortes nach Methode, dann der Rest. */
+function pickerGroups(row) {
+  const encounters = catalogLocation(row.location_id)?.encounters || [];
+  const groups = [];
+  const byMethod = new Map();
+  for (const entry of encounters) {
+    const key = entry.methods.join(' / ');
+    if (!byMethod.has(key)) byMethod.set(key, []);
+    byMethod.get(key).push(entry);
+  }
+  for (const [label, entries] of byMethod) groups.push({ label: `${label} · KOMMT HIER VOR`, entries, local: true });
+
+  const here = new Set(encounters.map((entry) => entry.species));
+  const rest = (catalog()?.pokedex || []).filter((entry) => !here.has(entry.species));
+  if (rest.length) groups.push({ label: 'ALLE ANDEREN', entries: rest, local: false });
+  return groups;
+}
+
+function normalize(value) {
+  return String(value ?? '').toLocaleLowerCase('de');
+}
+
+function renderPickerList() {
+  if (!state.picker) return;
+  const { row, playerId, groups, counts } = state.picker;
+  const term = normalize(el.pickerSearch.value.trim());
+  const own = row.picks[playerId]?.species || null;
+
+  let html = '';
+  let matches = 0;
+  for (const group of groups) {
+    const hits = term
+      ? group.entries.filter((entry) => normalize(entry.name).includes(term) || entry.species.includes(term))
+      : group.entries;
+    if (!hits.length) continue;
+    matches += hits.length;
+
+    html += `<div class="picker-group">
+      <div class="picker-group-head">
+        <span class="pixel-label${group.local ? ' is-local' : ''}">${esc(group.label)}</span>
+        <span class="rule"></span>
+        <span class="count">${esc(hits.length)}</span>
+      </div>
+      <div class="picker-options">`;
+    for (const entry of hits) {
+      const dupe = dupeReason(counts, playerId, own, entry.species);
+      const classes = ['picker-option'];
+      if (entry.species === own) classes.push('is-current');
+      else if (dupe) classes.push('is-dupe');
+      html += `
+        <button type="button" class="${classes.join(' ')}" data-species="${esc(entry.species)}"
+                title="${esc(dupe || entry.name)}">
+          <img src="${esc(spriteUrl(entry.dex))}" alt="" loading="lazy">
+          <span class="option-text">
+            <span class="option-name">${esc(entry.name)}</span>
+            <span class="option-meta">
+              ${(entry.types || []).map(typeBadge).join('')}
+              <span class="option-dex">#${esc(entry.dex)}</span>
+            </span>
+          </span>
+          ${dupe ? '<span class="warn">⚠</span>' : ''}
+        </button>`;
+    }
+    html += '</div></div>';
+  }
+
+  el.pickerList.innerHTML = matches
+    ? html
+    : `<p class="picker-empty">Nichts gefunden zu „${esc(el.pickerSearch.value.trim())}“.</p>`;
+}
+
+function openPicker(row, playerId) {
+  const entry = player(playerId);
+  const own = row.picks[playerId] || {};
+  state.picker = { row, playerId, groups: pickerGroups(row), counts: pickCounts() };
+
+  el.pickerDot.style.background = entry?.color || 'var(--accent)';
+  el.pickerTitle.textContent = `${entry ? entry.name : playerId} · ${row.encounter}`;
+  const current = own.name || speciesInfo(own.species)?.name || '';
+  el.pickerSub.textContent = current ? `Aktuell: ${current} · anderes Pokémon wählen` : 'Gefangenes Pokémon eintragen';
+  el.pickerClear.textContent = isFilled(own) ? 'Eintrag löschen' : 'Abbrechen';
+  el.pickerSearch.value = '';
+  renderPickerList();
+  el.pickerDialog.showModal();
+  el.pickerSearch.focus();
+}
+
+async function choosePick(species) {
+  const context = state.picker;
+  el.pickerDialog.close();
+  if (!context) return;
+  const { row, playerId } = context;
+
+  if (species === null) {
+    await patchPick(row, playerId, { species: null, name: '' });
+    return;
+  }
+  // Die API laesst nur durch, was der Katalog fuer diesen Ort kennt. Zur Auswahl
+  // steht aber der ganze Pokedex, also traegt der Aufrufer die Entscheidung und
+  // schickt force mit - geprueft wird sichtbar im Dialog, nicht per 422.
+  const local = (catalogLocation(row.location_id)?.encounters || []).some((entry) => entry.species === species);
+  const info = speciesInfo(species);
+  await patchPick(row, playerId, { species, name: info?.name || species }, local ? '' : '?force=true');
+}
+
+el.pickerDialog.addEventListener('close', () => {
+  state.picker = null;
+});
+
+el.pickerSearch.addEventListener('input', renderPickerList);
+
+el.pickerSearch.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter') return;
+  // Enter nimmt den ersten Treffer - sonst muesste man nach dem Tippen doch
+  // wieder zur Maus greifen.
+  event.preventDefault();
+  const first = el.pickerList.querySelector('[data-species]');
+  if (first) choosePick(first.dataset.species);
+});
+
+el.pickerList.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-species]');
+  if (button) choosePick(button.dataset.species);
+});
+
+el.pickerClear.addEventListener('click', () => {
+  const context = state.picker;
+  if (context && isFilled(context.row.picks[context.playerId])) choosePick(null);
+  else el.pickerDialog.close();
+});
+
+// ------------------------------------------------- Verlorener Encounter ---
+
+function openLostDialog(row) {
+  state.lostRowId = row.id;
+  el.lostSub.textContent = `${row.encounter} · die Reihe wird für alle als verloren markiert.`;
+  el.culpritList.innerHTML =
+    state.players
+      .map(
+        (entry) => `<button type="button" class="culprit-button" data-culprit="${esc(entry.id)}">
+                      <span class="dot" style="background:${esc(entry.color)}"></span>${esc(entry.name)}</button>`,
+      )
+      .join('') +
+    `<button type="button" class="culprit-button" data-culprit="${esc(NO_CULPRIT)}">
+       <span class="dot" style="background:#c8d0dc"></span>Niemand – keiner war schuld</button>`;
+  el.lostDialog.showModal();
+}
+
+el.culpritList.addEventListener('click', async (event) => {
+  const button = event.target.closest('[data-culprit]');
+  if (!button) return;
+  const row = findRow(state.lostRowId);
+  el.lostDialog.close();
+  if (!row) return;
+  // Die API traegt bei 'failed' den Platzhalter bei allen Spielern ein und nimmt
+  // die Zeile aus dem Team - hier steht nur, wer es verbockt hat.
+  await patchRow(row.id, { outcome: 'failed', responsible_player: button.dataset.culprit });
+});
+
+el.lostDialog.addEventListener('close', () => {
+  state.lostRowId = null;
+});
+
+// ------------------------------------------------------ Spielerverwaltung -
+
+async function openPlayersDialog() {
+  el.playerName.value = '';
+  renderPlayerList();
+  el.playersDialog.showModal();
+  // Die Tallies gelten fuer alle Runs - anders als die Fail-Statistik der
+  // rechten Spalte, die nur den offenen Run zeigt.
+  try {
+    state.stats = await api('/stats');
+    renderPlayerList();
+  } catch {
+    // Ohne Statistik bleibt die Liste stehen, nur ohne Zahlen.
+  }
+}
+
+function renderPlayerList() {
+  const deaths = state.stats?.deaths_by_player || {};
+  const misses = state.stats?.failed_encounters_by_player || {};
+  el.playerList.innerHTML = state.players
+    .map(
+      (entry) => `
+      <div class="player-row">
+        <span class="dot" style="background:${esc(entry.color)}"></span>
+        <span class="name">${esc(entry.name)}</span>
+        <span class="tally">${esc(deaths[entry.id] || 0)} ✝ · ${esc(misses[entry.id] || 0)} ✗</span>
+        <button type="button" data-remove="${esc(entry.id)}" title="Spieler entfernen">✕</button>
+      </div>`,
+    )
+    .join('');
+}
+
+el.playerList.addEventListener('click', async (event) => {
+  const button = event.target.closest('[data-remove]');
+  if (!button) return;
+  const entry = player(button.dataset.remove);
+  if (!entry) return;
+  if (!window.confirm(`${entry.name} entfernen? Die Einträge dieses Spielers verschwinden in allen Runs.`)) return;
+  // DELETE antwortet mit 204, also ohne Inhalt - der Erfolg muss hier selbst
+  // markiert werden, sonst ist er von einem abgefangenen Fehler nicht zu
+  // unterscheiden (beides waere null).
+  const removed = await write(() =>
+    api(`/players/${encodeURIComponent(entry.id)}`, { method: 'DELETE' }).then(() => true),
+  );
+  if (!removed) return;
+  await reloadEverything();
+  renderPlayerList();
+});
+
+el.playerForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const name = el.playerName.value.trim();
+  if (!name) return;
+  const roster = await write(() => api('/players', { method: 'POST', body: { name } }));
+  if (!roster) return;
+  el.playerName.value = '';
+  await reloadEverything();
+  renderPlayerList();
+});
+
+// ------------------------------------------------------------- Neuer Run -
+
+function openRunDialog() {
+  state.newRunGame = state.newRunGame || state.run?.game_id || state.games[0]?.id || null;
+  el.runName.value = `Run ${state.runs.length + 1}`;
+  renderRunDialog();
+  el.runDialog.showModal();
+  el.runName.focus();
+}
+
+function renderRunDialog() {
+  el.runGames.innerHTML = state.games
+    .map(
+      (game) => `<button type="button" class="choice-button${game.id === state.newRunGame ? ' is-on' : ''}"
+                          data-game="${esc(game.id)}">${esc(game.name)}</button>`,
+    )
+    .join('');
+  el.runRoster.innerHTML = state.players.map((entry) => playerChip(entry, 'chip')).join('');
+}
+
+el.runGames.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-game]');
+  if (!button) return;
+  state.newRunGame = button.dataset.game;
+  renderRunDialog();
+});
+
+el.runForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const name = el.runName.value.trim();
+  if (!name || !state.newRunGame) return;
+  const created = await write(() =>
+    api('/runs', { method: 'POST', body: { name, game_id: state.newRunGame, make_current: true } }),
+  );
+  if (!created) return;
+  el.runDialog.close();
+  await loadRuns();
+  await openRun(created.id);
+});
+
+// --------------------------------------------------------- Interaktionen -
+
+document.querySelectorAll('dialog [data-close]').forEach((button) => {
+  button.addEventListener('click', () => button.closest('dialog').close());
+});
+
+// Solange ein Dialog offen war oder der Tab im Hintergrund lag, wurde nicht neu
+// gezeichnet. Beides endet hier - also nachholen.
+document.querySelectorAll('dialog').forEach((dialog) => dialog.addEventListener('close', refreshWhenFree));
+document.addEventListener('visibilitychange', refreshWhenFree);
+
+el.brandButton.addEventListener('click', () => showHome());
+el.playersButton.addEventListener('click', openPlayersDialog);
+
+// Nur die Tabelle neu zeichnen: die Toolbar bleibt stehen, sonst verlöre das
+// Suchfeld bei jedem Tastendruck den Fokus.
+el.locationSearch.addEventListener('input', () => {
+  state.search = el.locationSearch.value;
+  renderTable();
+});
+
+el.locationSearch.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape' || !el.locationSearch.value) return;
+  // Escape leert erst die Suche, statt gleich etwas anderes zu schliessen.
+  event.stopPropagation();
+  el.locationSearch.value = '';
+  state.search = '';
+  renderTable();
+});
+
+el.typeReset.addEventListener('click', () => {
+  state.types = [];
+  renderRunView();
+});
+
+/**
+ * Beim dritten Typ faellt der aelteste heraus, statt den Klick zu schlucken -
+ * eine tote Schaltflaeche liest sich sonst wie ein Fehler.
+ */
+function toggleType(type) {
+  const at = state.types.indexOf(type);
+  if (at >= 0) state.types.splice(at, 1);
+  else state.types.push(type);
+  while (state.types.length > MAX_TYPES) state.types.shift();
+  renderRunView();
+}
+
+document.addEventListener('click', async (event) => {
+  const target = event.target.closest('[data-action]');
+  if (!target || !target.isConnected || target.closest('dialog')) return;
+  const action = target.dataset.action;
+  const row = target.closest('[data-row]') ? findRow(target.closest('[data-row]').dataset.row) : null;
+
+  if (action === 'new-run') openRunDialog();
+  else if (action === 'open-players') openPlayersDialog();
+  else if (action === 'open-run') await openRun(target.dataset.run);
+  else if (action === 'run-status') await setRunStatus(target.dataset.run, target.dataset.status);
+  else if (action === 'rename-run') openRenameDialog(target.dataset.run);
+  else if (action === 'delete-run') await deleteRun(target.dataset.run);
+  else if (action === 'filter') {
+    state.filter = target.dataset.filter;
+    renderRunView();
+  } else if (action === 'sort') {
+    state.sort = target.dataset.sort;
+    window.localStorage.setItem(SORT_KEY, state.sort);
+    renderRunView();
+  } else if (action === 'type') toggleType(target.dataset.type);
+  else if (action === 'type-mode') {
+    state.mode = target.dataset.mode;
+    renderRunView();
+  } else if (action === 'cap') await changeCap(Number(target.dataset.cap));
+  else if (action === 'cap-step') await changeCap((state.run?.progress ?? 0) + Number(target.dataset.delta));
+  else if (!row) return;
+  else if (action === 'team') await patchRow(row.id, { in_team: !row.in_team });
+  else if (action === 'kill') await handleKill(row, target.dataset.player);
+  else if (action === 'pick') openPicker(row, target.dataset.player);
+  else if (action === 'state') await handleStateAction(row);
+});
 
 // --------------------------------------------------------------- Laden ----
 
@@ -593,641 +1365,126 @@ async function loadRun(runId) {
   state.currentRunId = data.run_id;
   state.updatedAt = data.updated_at;
   await ensureCatalog(data.game_id);
-  el.gameSelect.value = data.game_id;
-  renderRunPickers();
-  renderCaps();
-  renderTable();
+}
+
+async function reloadEverything() {
+  await loadRuns();
+  if (state.view === 'run') await loadRun(state.currentRunId);
+  render();
+}
+
+async function openRun(runId) {
+  try {
+    await loadRun(runId);
+    state.view = 'run';
+    state.filter = 'alle';
+    state.search = '';
+    el.locationSearch.value = '';
+    updateHash();
+    render();
+    el.tableScroll.scrollTop = 0;
+  } catch (error) {
+    showError(`Der Run konnte nicht geladen werden: ${error.message}`);
+  }
+}
+
+function showHome() {
+  state.view = 'home';
   updateHash();
+  render();
 }
 
 function updateHash() {
-  if (!state.run) return;
-  const parts = [`game=${encodeURIComponent(state.run.game_id)}`, `run=${encodeURIComponent(state.run.run_id)}`];
-  if (state.view !== 'table') parts.push(`view=${state.view}`);
-  const next = `#${parts.join('&')}`;
-  if (window.location.hash !== next) window.history.replaceState(null, '', next);
-}
-
-function setView(view) {
-  state.view = view;
-  document.querySelectorAll('.view-button').forEach((button) => button.classList.toggle('active', button.dataset.view === view));
-  document.querySelectorAll('.view').forEach((section) => { section.hidden = section.id !== `${view}-view`; });
-  if (view === 'dashboard') {
-    renderScopeOptions();
-    loadStats();
-  }
-  updateHash();
-}
-
-// -------------------------------------------------------- Interaktionen ---
-
-function rowOf(target) {
-  const tr = target.closest('tr[data-row]');
-  if (!tr) return null;
-  return state.run.encounters.find((row) => row.id === tr.dataset.row) || null;
-}
-
-async function patchRow(rowId, body, query = '') {
-  const updated = await write(() =>
-    api(`/runs/${encodeURIComponent(state.currentRunId)}/encounters/${encodeURIComponent(rowId)}${query}`, {
-      method: 'PATCH',
-      body,
-    }),
-  );
-  if (updated) replaceRow(updated);
-  return updated;
-}
-
-/** Schreibt nur, wenn sich wirklich etwas aendert - schluckt Phantom-Events. */
-async function patchPick(row, playerId, changes, query = '') {
-  const pick = row.picks[playerId] || {};
-  const differs = Object.entries(changes).some(([key, value]) => (pick[key] ?? null) !== (value ?? null));
-  if (!differs) {
-    replaceRow(row);
-    return null;
-  }
-  return patchRow(row.id, { picks: { [playerId]: changes } }, query);
-}
-
-async function handleSpeciesChange(row, playerId, value) {
-  if (value === null) return; // Dialog abgebrochen
-
-  if (value === '__custom__') {
-    const entered = window.prompt('Pokémon eintragen:', row.picks[playerId]?.name || '');
-    if (entered === null) return;
-    await patchPick(row, playerId, { species: null, name: entered.trim() }, '?force=true');
-    return;
-  }
-
-  if (value === '') {
-    await patchPick(row, playerId, { species: null, name: '' });
-    return;
-  }
-
-  if (value === '__lost__') {
-    // Wer den Encounter auf "verloren" setzt, hat ihn vergeigt - das ist der Schuldige.
-    const body = { picks: { [playerId]: { species: null, name: LOST_LABEL } } };
-    if (!row.responsible_player) body.responsible_player = playerId;
-    await patchRow(row.id, body);
-    return;
-  }
-
-  // Die API laesst nur durch, was der Katalog fuer diesen Ort kennt. Zur Auswahl
-  // steht jetzt aber der ganze Pokedex, also traegt der Aufrufer die Entscheidung
-  // und schickt force mit - geprueft wird sichtbar im Dialog, nicht per 422.
-  const local = (catalogLocation(row.location_id)?.encounters || []).some((entry) => entry.species === value);
-  const info = speciesInfo(value);
-  await patchPick(row, playerId, { species: value, name: info?.name || value }, local ? '' : '?force=true');
-}
-
-// ------------------------------------------------------ Pokémon-Auswahl ---
-
-// Was gerade gewaehlt wird. Der Dialog ist einer fuer die ganze Tabelle: 132
-// Zellen mit je einer eigenen Liste waeren sonst zehntausende DOM-Knoten.
-let picker = null;
-
-/** Die Auswahlliste: erst der Ort, dann der Rest des Pokedex.
- *
- * Die Gruppen sind der eigentliche Punkt - was an diesem Ort vorkommt, steht
- * oben und ist die Regel; alles andere ist der begruendete Sonderfall.
- */
-function pickerGroups(row) {
-  const encounters = catalogLocation(row.location_id)?.encounters || [];
-  const groups = new Map();
-  for (const entry of encounters) {
-    const key = entry.methods.join(' / ');
-    if (!groups.has(key)) groups.set(key, []);
-    groups.get(key).push(entry);
-  }
-
-  const atLocation = new Set(encounters.map((entry) => entry.species));
-  const rest = (catalog()?.pokedex || []).filter((entry) => !atLocation.has(entry.species));
-  if (rest.length) groups.set('Kommt hier nicht vor', rest);
-  return groups;
-}
-
-function normalize(value) {
-  return String(value ?? '').toLocaleLowerCase('de');
-}
-
-function renderPickerList() {
-  if (!picker) return;
-  const { row, playerId, groups, counts } = picker;
-  const term = normalize(el.speciesSearch.value.trim());
-  const own = row.picks[playerId]?.species || null;
-
-  let html = '';
-  let matches = 0;
-  for (const [label, entries] of groups) {
-    const hits = term
-      ? entries.filter((entry) => normalize(entry.name).includes(term) || entry.species.includes(term))
-      : entries;
-    if (!hits.length) continue;
-    matches += hits.length;
-
-    html += `<h3 class="species-group">${esc(label)}</h3><div class="species-options">`;
-    for (const entry of hits) {
-      const dupe = dupeReason(counts, playerId, own, entry.species);
-      html += `<button type="button" class="species-option${entry.species === own ? ' is-current' : ''}"
-                       data-species="${esc(entry.species)}">
-          <span class="species-dex">#${esc(entry.dex)}</span>
-          <span class="species-name">${esc(entry.name)}</span>
-          ${dupe ? `<span class="species-warn" title="${esc(dupe)}">⚠</span>` : ''}
-        </button>`;
-    }
-    html += '</div>';
-  }
-
-  if (!matches) html = `<p class="muted">Nichts gefunden zu „${esc(el.speciesSearch.value.trim())}“.</p>`;
-  el.speciesList.innerHTML = html;
-}
-
-function openSpeciesPicker(row, playerId) {
-  const player = state.players.find((entry) => entry.id === playerId);
-  picker = { row, playerId, groups: pickerGroups(row), counts: pickCounts(), resolve: null };
-
-  el.speciesTitle.textContent = `${player ? player.name : playerId} – ${row.encounter}`;
-  el.speciesSearch.value = '';
-  renderPickerList();
-  el.speciesDialog.returnValue = '';
-  el.speciesDialog.showModal();
-  el.speciesSearch.focus();
-
-  return new Promise((resolve) => {
-    picker.resolve = resolve;
-  });
-}
-
-/** Genau ein Ausgang: der Dialog schliesst, das Promise loest sich auf. */
-function closePicker(value) {
-  if (!picker) return;
-  picker.choice = value;
-  el.speciesDialog.close();
-}
-
-el.speciesDialog.addEventListener('close', () => {
-  const pending = picker;
-  picker = null;
-  // 'choice' fehlt, wenn der Dialog ueber Escape oder Abbrechen zuging.
-  if (pending?.resolve) pending.resolve(pending.choice ?? null);
-});
-
-el.speciesSearch.addEventListener('input', renderPickerList);
-
-// Enter in der Suche nimmt den ersten Treffer - sonst muesste man nach dem
-// Tippen doch wieder zur Maus greifen.
-el.speciesSearch.addEventListener('keydown', (event) => {
-  if (event.key !== 'Enter') return;
-  event.preventDefault();
-  const first = el.speciesList.querySelector('.species-option');
-  if (first) closePicker(first.dataset.species);
-});
-
-el.speciesList.addEventListener('click', (event) => {
-  const button = event.target.closest('[data-species]');
-  if (button) closePicker(button.dataset.species);
-});
-
-el.speciesDialog.querySelectorAll('[data-choice]').forEach((button) => {
-  button.addEventListener('click', () => closePicker(button.dataset.choice));
-});
-
-// Klick daneben schliesst wie Abbrechen. Zwei Bedingungen, weil beides fuer sich
-// zu viel faengt: der Dialog ist das Klickziel auch in seinem eigenen Rand, und
-// ein per Tastatur ausgeloester Klick meldet die Koordinaten 0/0 - also
-// scheinbar ausserhalb.
-el.speciesDialog.addEventListener('click', (event) => {
-  if (event.target !== el.speciesDialog) return;
-  const box = el.speciesDialog.getBoundingClientRect();
-  const inside =
-    event.clientX >= box.left &&
-    event.clientX <= box.right &&
-    event.clientY >= box.top &&
-    event.clientY <= box.bottom;
-  if (!inside) closePicker(null);
-});
-
-// Die API verlangt bei Tod und verlorenem Encounter einen Schuldigen - sonst
-// faellt der Vorfall aus der Statistik. Also gleich hier abfragen.
-let culpritResolve = null;
-
-function askCulprit(row) {
-  el.culpritQuestion.textContent = `Wer ist schuld an „${row.encounter}“?`;
-  el.culpritSelect.innerHTML =
-    state.players.map((player) => option(player.id, player.name, false)).join('') +
-    option(NO_CULPRIT, 'Niemand – keiner war schuld', false);
-  // returnValue ueberlebt das Schliessen: ohne Reset gilt ein frueheres "ok"
-  // beim naechsten Abbrechen weiter und wir schreiben einen Schuldigen, den
-  // niemand bestaetigt hat.
-  el.culpritDialog.returnValue = '';
-  el.culpritDialog.showModal();
-  return new Promise((resolve) => {
-    culpritResolve = resolve;
-  });
-}
-
-el.culpritDialog.addEventListener('close', () => {
-  const resolve = culpritResolve;
-  culpritResolve = null;
-  if (resolve) resolve(el.culpritDialog.returnValue === 'ok' ? el.culpritSelect.value : null);
-});
-
-async function handleOutcomeChange(row, outcome) {
-  if ((outcome === 'failed' || outcome === 'dead') && !row.responsible_player) {
-    const culprit = await askCulprit(row);
-    if (culprit === null) {
-      replaceRow(row); // abgebrochen - Auswahl zuruecksetzen
-      return;
-    }
-    await patchRow(row.id, { outcome, responsible_player: culprit });
-    return;
-  }
-  await patchRow(row.id, { outcome });
-}
-
-async function handleKill(row, playerId) {
-  const pick = row.picks[playerId];
-  if (pick?.status === 'dead') {
-    // Wiederbeleben ist immer eine Ausnahme - deshalb ohne Kopplung.
-    await patchRow(row.id, { picks: { [playerId]: { status: 'alive' } } }, '?couple=false');
-    return;
-  }
-  const body = { picks: { [playerId]: { status: 'dead' } } };
-  if (!row.responsible_player) body.responsible_player = playerId;
-  await patchRow(row.id, body);
-}
-
-el.rows.addEventListener('change', async (event) => {
-  const target = event.target;
-  // Events von Elementen, die gerade aus dem DOM geflogen sind, gehoeren zu
-  // einer schon gespeicherten Aenderung - sonst schreiben wir sie doppelt.
-  if (!target.isConnected) return;
-  const row = rowOf(target);
-  if (!row) return;
-  const action = target.dataset.action;
-
-  if (action === 'outcome') await handleOutcomeChange(row, target.value);
-  else if (action === 'responsible') await patchRow(row.id, { responsible_player: target.value || null });
-});
-
-el.rows.addEventListener('click', async (event) => {
-  const target = event.target.closest('[data-action]');
-  if (!target || !target.isConnected) return;
-  const row = rowOf(target);
-  if (!row) return;
-
-  if (target.dataset.action === 'kill') await handleKill(row, target.dataset.player);
-  else if (target.dataset.action === 'team') await patchRow(row.id, { in_team: !row.in_team });
-  else if (target.dataset.action === 'species') {
-    const playerId = target.dataset.player;
-    await handleSpeciesChange(row, playerId, await openSpeciesPicker(row, playerId));
-  }
-});
-
-el.gameSelect.addEventListener('change', async () => {
-  const runsForGame = state.runs.filter((run) => run.game_id === el.gameSelect.value);
-  renderRunPickers();
-  if (runsForGame.length) await loadRun(runsForGame[0].id);
-  else {
-    // Auch die Run-ID loesen, sonst holt der naechste Poll den Run des vorigen
-    // Spiels zurueck und ueberschreibt die Auswahl mitten in der Bedienung.
-    state.run = null;
-    state.currentRunId = null;
-    el.rows.innerHTML = '<tr><td colspan="9">Für dieses Spiel gibt es noch keinen Run.</td></tr>';
-    el.capList.innerHTML = '';
-    el.progressLabel.textContent = '–';
-  }
-});
-
-el.runSelect.addEventListener('change', () => loadRun(el.runSelect.value));
-
-function setSort(key) {
-  if (!SORTERS[key]) return;
-  el.sortSelect.value = key;
-  window.localStorage.setItem(SORT_KEY, key);
-  renderTable();
-}
-
-el.sortSelect.addEventListener('change', () => setSort(el.sortSelect.value));
-
-el.tableHead.addEventListener('click', (event) => {
-  const header = event.target.closest('[data-sort]');
-  if (header) setSort(header.dataset.sort);
-});
-
-el.tableHead.addEventListener('keydown', (event) => {
-  if (event.key !== 'Enter' && event.key !== ' ') return;
-  const header = event.target.closest('[data-sort]');
-  if (!header) return;
-  event.preventDefault();
-  setSort(header.dataset.sort);
-});
-el.statScope.addEventListener('change', loadStats);
-
-document.querySelectorAll('.view-button').forEach((button) => {
-  button.addEventListener('click', () => setView(button.dataset.view));
-});
-
-async function changeProgress(delta) {
-  if (!state.run) return;
-  const caps = catalog()?.level_caps || [];
-  const next = Math.min(Math.max(state.run.progress + delta, 0), caps.length);
-  if (next === state.run.progress) return;
-  const updated = await write(() =>
-    api(`/runs/${encodeURIComponent(state.currentRunId)}`, { method: 'PATCH', body: { progress: next } }),
-  );
-  if (updated) {
-    state.run.progress = updated.progress;
-    renderCaps();
-    renderTable();
+  const next = state.view === 'run' && state.run ? `#run=${encodeURIComponent(state.run.run_id)}` : '';
+  if (window.location.hash !== next) {
+    window.history.replaceState(null, '', next || window.location.pathname + window.location.search);
   }
 }
-
-el.progressUp.addEventListener('click', () => changeProgress(1));
-el.progressDown.addEventListener('click', () => changeProgress(-1));
-
-// --------------------------------------------------------------- Dialoge --
-
-document.querySelectorAll('dialog [data-close]').forEach((button) => {
-  button.addEventListener('click', () => button.closest('dialog').close());
-});
-
-el.newRunButton.addEventListener('click', () => {
-  el.runGame.innerHTML = state.games
-    .map((game) => option(game.id, game.name, game.id === el.gameSelect.value))
-    .join('');
-  el.runName.value = `Run ${state.runs.length + 1}`;
-  el.runDialog.showModal();
-});
-
-el.runForm.addEventListener('submit', async () => {
-  const created = await write(() =>
-    api('/runs', {
-      method: 'POST',
-      body: {
-        name: el.runName.value.trim(),
-        game_id: el.runGame.value,
-        prefill: el.runPrefill.checked,
-        include_postgame: el.runPostgame.checked,
-        make_current: true,
-      },
-    }),
-  );
-  if (created) {
-    await loadRuns();
-    await loadRun(created.id);
-  }
-});
-
-el.addLocationButton.addEventListener('click', () => {
-  const current = catalog();
-  if (!current || !state.run) return;
-  const present = new Set(state.run.encounters.map((row) => row.location_id).filter(Boolean));
-  const missing = current.locations.filter((location) => !present.has(location.id));
-  if (!missing.length) {
-    showError('Alle Orte dieses Spiels stehen bereits in der Tabelle.');
-    return;
-  }
-  el.locationSelect.innerHTML = missing
-    .map((location) => option(location.id, `${location.name}${location.postgame ? ' (Postgame)' : ''}`, false))
-    .join('');
-  el.locationDialog.showModal();
-});
-
-el.locationForm.addEventListener('submit', async () => {
-  const location = catalogLocation(el.locationSelect.value);
-  if (!location) return;
-  const created = await write(() =>
-    api(`/runs/${encodeURIComponent(state.currentRunId)}/encounters`, {
-      method: 'POST',
-      body: {
-        id: location.id,
-        location_id: location.id,
-        order: location.order,
-        encounter: location.name,
-        postgame: Boolean(location.postgame),
-        picks: Object.fromEntries(state.players.map((player) => [player.id, { species: null, name: '' }])),
-      },
-    }),
-  );
-  if (created) await loadRun(state.currentRunId);
-});
-
-// --------------------------------------------------------- Typenrechner ---
-
-// Reihenfolge wie im Spiel, nicht alphabetisch - so liegt das Raster so, wie man
-// es aus jedem Pokedex kennt.
-const TYPE_NAMES = {
-  normal: 'Normal', fighting: 'Kampf', flying: 'Flug',
-  poison: 'Gift', ground: 'Boden', rock: 'Gestein',
-  bug: 'Käfer', ghost: 'Geist', steel: 'Stahl',
-  fire: 'Feuer', water: 'Wasser', grass: 'Pflanze',
-  electric: 'Elektro', psychic: 'Psycho', ice: 'Eis',
-  dragon: 'Drache', dark: 'Unlicht', fairy: 'Fee',
-};
-
-const TYPE_ORDER = Object.keys(TYPE_NAMES);
-
-/** Heutige Tabelle (ab Generation 6): angreifender Typ -> Abweichungen von 1x. */
-const MODERN_CHART = {
-  normal: { rock: 0.5, ghost: 0, steel: 0.5 },
-  fighting: { normal: 2, flying: 0.5, poison: 0.5, rock: 2, bug: 0.5, ghost: 0, steel: 2, psychic: 0.5, ice: 2, dark: 2, fairy: 0.5 },
-  flying: { fighting: 2, rock: 0.5, bug: 2, steel: 0.5, grass: 2, electric: 0.5 },
-  poison: { poison: 0.5, ground: 0.5, rock: 0.5, ghost: 0.5, steel: 0, grass: 2, fairy: 2 },
-  ground: { flying: 0, poison: 2, rock: 2, bug: 0.5, steel: 2, fire: 2, grass: 0.5, electric: 2 },
-  rock: { fighting: 0.5, flying: 2, ground: 0.5, bug: 2, steel: 0.5, fire: 2, ice: 2 },
-  bug: { fighting: 0.5, flying: 0.5, poison: 0.5, ghost: 0.5, steel: 0.5, fire: 0.5, grass: 2, psychic: 2, dark: 2, fairy: 0.5 },
-  ghost: { normal: 0, ghost: 2, psychic: 2, dark: 0.5 },
-  steel: { rock: 2, steel: 0.5, fire: 0.5, water: 0.5, electric: 0.5, ice: 2, fairy: 2 },
-  fire: { rock: 0.5, bug: 2, steel: 2, fire: 0.5, water: 0.5, grass: 2, ice: 2, dragon: 0.5 },
-  water: { ground: 2, rock: 2, fire: 2, water: 0.5, grass: 0.5, dragon: 0.5 },
-  grass: { flying: 0.5, poison: 0.5, ground: 2, rock: 2, bug: 0.5, steel: 0.5, fire: 0.5, water: 2, grass: 0.5, dragon: 0.5 },
-  electric: { flying: 2, ground: 0, water: 2, grass: 0.5, electric: 0.5, dragon: 0.5 },
-  psychic: { fighting: 2, poison: 2, steel: 0.5, psychic: 0.5, dark: 0 },
-  ice: { flying: 2, ground: 2, steel: 0.5, fire: 0.5, water: 0.5, grass: 2, ice: 0.5, dragon: 2 },
-  dragon: { steel: 0.5, dragon: 2, fairy: 0 },
-  dark: { fighting: 0.5, ghost: 2, psychic: 2, dark: 0.5, fairy: 0.5 },
-  fairy: { fighting: 2, poison: 0.5, steel: 0.5, fire: 0.5, dragon: 2, dark: 2 },
-};
-
-/**
- * Aeltere Generationen als Abweichung von der heutigen Tabelle. Beide Listen sind
- * aus den past_damage_relations der PokeAPI abgeleitet und nicht aus dem Kopf: es
- * sind genau vier Aenderungen bis Generation 1 und zwei bis Generation 5, alles
- * andere ist seit jeher gleich. `without` haelt die Typen heraus, die es damals
- * noch nicht gab - sie duerfen weder waehlbar sein noch im Ergebnis auftauchen.
- */
-const GENERATIONS = [
-  {
-    id: 'gen1',
-    label: 'Generation 1 (Rot/Blau/Gelb)',
-    without: ['steel', 'dark', 'fairy'],
-    // Geist gegen Psycho ist der beruehmte Programmierfehler der ersten Spiele:
-    // gedacht war sehr effektiv, im Spiel passierte gar nichts.
-    changes: { poison: { bug: 2 }, bug: { poison: 2 }, ghost: { psychic: 0 }, ice: { fire: 1 } },
-  },
-  {
-    id: 'gen2',
-    label: 'Generationen 2–5 (bis Schwarz 2/Weiß 2)',
-    without: ['fairy'],
-    changes: { ghost: { steel: 0.5 }, dark: { steel: 0.5 } },
-  },
-  {
-    id: 'gen6',
-    label: 'Generation 6+ (ab X/Y)',
-    without: [],
-    changes: {},
-  },
-];
-
-// Alle Faktoren sind Zweierpotenzen und damit exakt vergleichbar - gerundet wird nichts.
-const DEFENSE_BUCKETS = [
-  { factor: 4, heading: 'Nimmt 4× Schaden von', tone: 'worse' },
-  { factor: 2, heading: 'Nimmt 2× Schaden von', tone: 'bad' },
-  { factor: 1, heading: 'Nimmt 1× Schaden von', tone: 'plain' },
-  { factor: 0.5, heading: 'Nimmt ½× Schaden von', tone: 'good' },
-  { factor: 0.25, heading: 'Nimmt ¼× Schaden von', tone: 'better' },
-  { factor: 0, heading: 'Nimmt 0× Schaden von', tone: 'best' },
-];
-
-function generation() {
-  return GENERATIONS.find((entry) => entry.id === state.generation) || GENERATIONS[1];
-}
-
-function generationTypes(gen) {
-  return TYPE_ORDER.filter((type) => !gen.without.includes(type));
-}
-
-/** Angreifender Typ -> Schaden gegen diese Typenkombination. */
-function defenseFactors(gen, types) {
-  const factors = {};
-  for (const attack of generationTypes(gen)) {
-    const row = { ...MODERN_CHART[attack], ...gen.changes[attack] };
-    factors[attack] = types.reduce((factor, type) => factor * (row[type] ?? 1), 1);
-  }
-  return factors;
-}
-
-function typeChip(type) {
-  return `<span class="type-chip type-${esc(type)}">${esc(TYPE_NAMES[type])}</span>`;
-}
-
-function defenseHtml(gen, types) {
-  if (!types.length) {
-    return '<p class="muted">Wähle links einen Typ – oder zwei für eine Kombination.</p>';
-  }
-  const factors = defenseFactors(gen, types);
-  const order = generationTypes(gen);
-  return DEFENSE_BUCKETS.map((bucket) => {
-    const hits = order.filter((type) => factors[type] === bucket.factor);
-    if (!hits.length) return '';
-    return `
-      <div class="defense-group ${esc(bucket.tone)}">
-        <h3>${esc(bucket.heading)}</h3>
-        <div class="type-chips">${hits.map(typeChip).join('')}</div>
-      </div>`;
-  }).join('');
-}
-
-function renderTypeCalculator() {
-  const gen = generation();
-  const available = generationTypes(gen);
-  // Ein Generationswechsel kann die Auswahl ungueltig machen (Fee in Platin).
-  state.typeSelection = state.typeSelection.filter((type) => available.includes(type));
-
-  el.typeGeneration.innerHTML = GENERATIONS.map((entry) => option(entry.id, entry.label, entry.id === gen.id)).join('');
-  el.typeGrid.innerHTML = available.map((type) => {
-    const active = state.typeSelection.includes(type);
-    return `<button type="button" class="type-button type-${esc(type)}${active ? ' is-active' : ''}"
-      data-type="${esc(type)}" aria-pressed="${active ? 'true' : 'false'}"
-      ><span class="type-mark">${active ? '✓' : ''}</span>${esc(TYPE_NAMES[type])}</button>`;
-  }).join('');
-  el.typeReset.disabled = !state.typeSelection.length;
-  el.defenseResult.innerHTML = defenseHtml(gen, state.typeSelection);
-}
-
-/**
- * Beim dritten Typ faellt der aelteste heraus, statt den Klick zu schlucken -
- * eine tote Schaltflaeche liest sich sonst wie ein Fehler.
- */
-function toggleType(type) {
-  const selection = state.typeSelection;
-  const at = selection.indexOf(type);
-  if (at >= 0) selection.splice(at, 1);
-  else selection.push(type);
-  while (selection.length > MAX_TYPES) selection.shift();
-  renderTypeCalculator();
-}
-
-el.typeGrid.addEventListener('click', (event) => {
-  const button = event.target.closest('button[data-type]');
-  if (button) toggleType(button.dataset.type);
-});
-
-el.typeGeneration.addEventListener('change', () => {
-  state.generation = el.typeGeneration.value;
-  window.localStorage.setItem(GENERATION_KEY, state.generation);
-  renderTypeCalculator();
-});
-
-el.typeReset.addEventListener('click', () => {
-  state.typeSelection = [];
-  renderTypeCalculator();
-});
 
 // -------------------------------------------------------------- Polling ---
 
-function isEditing() {
-  const active = document.activeElement;
-  return Boolean(active && active.closest('#encounter-rows, dialog'));
+/** Wann ein Neuzeichnen gerade stoeren wuerde.
+ *
+ * Ein offener Dialog ist der Fall, der zaehlt: die Auswahlliste unter der Hand
+ * neu aufzubauen nimmt dem Klick das Ziel. Das Suchfeld ueber der Tabelle
+ * blockiert bewusst nicht - es steht ausserhalb des neu gezeichneten Bereichs
+ * und behaelt den Fokus.
+ */
+function isBusy() {
+  return pendingWrites > 0 || Boolean(document.querySelector('dialog[open]'));
 }
 
+// Eine Aenderung, die gerade nicht gezeigt werden konnte. Sie ist nicht
+// verloren - sie wird nachgeholt, sobald der Weg frei ist.
+let refreshPending = false;
+
 async function poll() {
-  if (document.hidden || pendingWrites > 0 || isEditing()) return;
+  if (document.hidden || isBusy()) {
+    refreshPending = true;
+    return;
+  }
+  refreshPending = false;
   try {
     const seen = state.updatedAt;
     // Ueber loadRuns() statt eigenem Fetch: nur so greift der Rueckfall auf den
     // aktuellen Run des Servers, wenn der eigene inzwischen geloescht wurde.
     await loadRuns();
     if (state.updatedAt === seen) return;
-    // Nur laden, was zum gewaehlten Spiel gehoert - sonst zieht der Poll die
-    // Ansicht auf ein Spiel zurueck, das gerade niemand sehen will.
-    const current = state.runs.find((run) => run.id === state.currentRunId);
-    const selectedGame = el.gameSelect.value;
-    if (current && (!selectedGame || current.game_id === selectedGame)) await loadRun(current.id);
-    if (state.view === 'dashboard') await loadStats();
+    if (state.view === 'run') await loadRun(state.currentRunId);
+    render();
   } catch {
     // Ein verpasster Poll ist kein Fehler, der die Seite stoeren soll.
   }
 }
 
+function refreshWhenFree() {
+  if (refreshPending && !isBusy() && !document.hidden) poll();
+}
+
+/** Push statt Warten: der Server meldet jede Änderung ueber /events.
+ *
+ * Uebertragen wird nur der Zeitstempel; geladen wird wie beim Poll. Der
+ * EventSource verbindet sich nach einem Abbruch von selbst neu, und das Polling
+ * laeuft weiter - schluckt ein Proxy den Stream, faellt es auf die zehn Sekunden
+ * von vorher zurueck, statt gar nicht mehr zu aktualisieren.
+ */
+function connectStream() {
+  if (!window.EventSource) return;
+  const stream = new EventSource(`${API_BASE}/events`);
+  stream.addEventListener('message', (event) => {
+    let payload = null;
+    try {
+      payload = JSON.parse(event.data);
+    } catch {
+      return;
+    }
+    if (!payload || !payload.updated_at || payload.updated_at === state.updatedAt) return;
+    poll();
+  });
+}
+
 // ----------------------------------------------------------------- Start --
 
 async function init() {
-  try {
-    const savedSort = window.localStorage.getItem(SORT_KEY);
-    if (savedSort && SORTERS[savedSort]) el.sortSelect.value = savedSort;
+  state.sort = window.localStorage.getItem(SORT_KEY) === 'status' ? 'status' : 'order';
 
+  try {
     state.games = await api('/games');
     await loadRuns();
 
-    const hash = new URLSearchParams(window.location.hash.slice(1));
-    const wantedRun = hash.get('run');
-    if (wantedRun && state.runs.some((run) => run.id === wantedRun)) state.currentRunId = wantedRun;
+    const wanted = new URLSearchParams(window.location.hash.slice(1)).get('run');
+    if (wanted && state.runs.some((run) => run.id === wanted)) {
+      await openRun(wanted);
+    } else {
+      render();
+    }
 
-    await loadRun(state.currentRunId);
-
-    const wantedView = hash.get('view');
-    if (VIEWS.includes(wantedView)) setView(wantedView);
-
+    connectStream();
     window.setInterval(poll, POLL_INTERVAL_MS);
   } catch (error) {
     showError(`Die Tabelle konnte nicht geladen werden: ${error.message}`);
+    render();
   }
 }
 
-// Der Rechner haengt an keinem Run und keinem Katalog - er steht deshalb auch
-// dann noch, wenn init() an der API scheitert.
-state.generation = window.localStorage.getItem(GENERATION_KEY) || DEFAULT_GENERATION;
-renderTypeCalculator();
 init();
