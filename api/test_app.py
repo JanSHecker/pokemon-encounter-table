@@ -1,3 +1,4 @@
+import asyncio
 import json
 from pathlib import Path
 
@@ -153,6 +154,24 @@ def test_platinum_catalog_includes_cities_with_encounters():
     assert all(locations[location_id]["encounters"] for location_id in expected_cities)
 
 
+def test_the_pokedex_carries_types_for_every_species():
+    """Ohne Typen bleiben Typ-Badges und Typenrechner im Frontend leer."""
+    catalog_path = Path(__file__).resolve().parent.parent / "data" / "games" / "platinum.json"
+    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+
+    assert all(1 <= len(entry["types"]) <= 2 for entry in catalog["pokedex"])
+    # Die Typen sind die heutigen, nicht die der Edition - Piepi ist auch in Platin eine Fee.
+    assert next(entry for entry in catalog["pokedex"] if entry["species"] == "clefairy")["types"] == ["fairy"]
+
+
+def test_every_level_cap_names_its_battle_type():
+    """Leer ist erlaubt (gemischt), fehlen darf das Feld nicht: es faerbt die Cap-Karte."""
+    games_dir = Path(__file__).resolve().parent.parent / "data" / "games"
+    for path in games_dir.glob("*.json"):
+        catalog = json.loads(path.read_text(encoding="utf-8"))
+        assert all("type" in cap for cap in catalog["level_caps"]), path.name
+
+
 def test_empty_store_starts_prefilled_without_postgame(client):
     payload = client.get("/encounters").json()
 
@@ -167,10 +186,11 @@ def test_empty_store_starts_prefilled_without_postgame(client):
 def test_legacy_state_migrates_to_players_and_picks(legacy_client):
     payload = legacy_client.get("/encounters").json()
 
+    # Die Farbe kommt aus der Palette, in der Reihenfolge der Spieler.
     assert payload["players"] == [
-        {"id": "marc", "name": "Marc"},
-        {"id": "nicolai", "name": "Nicolai"},
-        {"id": "knev", "name": "Knev"},
+        {"id": "marc", "name": "Marc", "color": "#3f6fb5"},
+        {"id": "nicolai", "name": "Nicolai", "color": "#3f8a52"},
+        {"id": "knev", "name": "Knev", "color": "#c07a2c"},
     ]
 
     first = payload["encounters"][0]
@@ -209,7 +229,7 @@ def test_migration_is_written_back_once(legacy_client, data_file):
     legacy_client.get("/encounters")
     stored = json.loads(data_file.read_text(encoding="utf-8"))
 
-    assert stored["schema_version"] == 5
+    assert stored["schema_version"] == 6
     assert "mark" not in stored["runs"][0]["encounters"][0]
 
 
@@ -417,6 +437,231 @@ def test_progress_drives_the_level_cap(client):
     assert updated.json()["progress"] == 1
 
 
+def test_a_new_run_pauses_the_running_one(client):
+    client.post("/runs", json={"id": "run-2", "name": "Run 2", "game_id": "platinum"})
+
+    statuses = {run["id"]: run["status"] for run in client.get("/runs").json()["runs"]}
+
+    assert statuses == {"run-1": "paused", "run-2": "active"}
+
+
+def test_reactivating_a_run_pauses_the_other_and_becomes_current(client):
+    client.post("/runs", json={"id": "run-2", "name": "Run 2", "game_id": "platinum"})
+
+    client.patch("/runs/run-1", json={"status": "active"})
+
+    payload = client.get("/runs").json()
+    assert {run["id"]: run["status"] for run in payload["runs"]} == {"run-1": "active", "run-2": "paused"}
+    assert payload["current_run_id"] == "run-1"
+
+
+def test_a_botched_run_is_marked_as_ended(client):
+    updated = client.patch("/runs/run-1", json={"status": "failed"})
+
+    assert updated.status_code == 200
+    assert updated.json()["status"] == "failed"
+    assert updated.json()["completed_at"] is not None
+
+
+def test_pausing_a_run_takes_its_end_date_back(client):
+    client.patch("/runs/run-1", json={"status": "completed"})
+
+    updated = client.patch("/runs/run-1", json={"status": "paused"})
+
+    assert updated.json()["completed_at"] is None
+
+
+def test_a_run_can_be_renamed(client):
+    assert client.patch("/runs/run-1", json={"name": "Soullink mit Ansage"}).json()["name"] == "Soullink mit Ansage"
+
+
+def test_deleting_a_run_hands_its_role_to_another(client):
+    client.post("/runs", json={"id": "run-2", "name": "Run 2", "game_id": "platinum"})
+
+    assert client.delete("/runs/run-2").status_code == 204
+
+    payload = client.get("/runs").json()
+    assert [run["id"] for run in payload["runs"]] == ["run-1"]
+    # Der geloeschte war der aktive und der aktuelle - beides muss weiterwandern.
+    assert payload["current_run_id"] == "run-1"
+    assert payload["runs"][0]["status"] == "active"
+
+
+def test_deleting_a_paused_run_leaves_the_active_one_alone(client):
+    client.post("/runs", json={"id": "run-2", "name": "Run 2", "game_id": "platinum"})
+
+    client.delete("/runs/run-1")
+
+    payload = client.get("/runs").json()
+    assert payload["current_run_id"] == "run-2"
+    assert payload["runs"][0]["status"] == "active"
+
+
+def test_deleting_the_running_run_does_not_reactivate_a_finished_one(client):
+    client.post("/runs", json={"id": "run-2", "name": "Run 2", "game_id": "platinum"})
+    client.patch("/runs/run-1", json={"status": "completed"})
+
+    client.delete("/runs/run-2")
+
+    payload = client.get("/runs").json()
+    assert payload["runs"][0]["status"] == "completed"
+    assert payload["current_run_id"] == "run-1"
+
+
+def test_the_last_run_cannot_be_deleted(client):
+    response = client.delete("/runs/run-1")
+
+    assert response.status_code == 409
+    assert "letzte Run" in response.json()["detail"]
+    assert len(client.get("/runs").json()["runs"]) == 1
+
+
+def test_deleting_an_unknown_run_is_a_404(client):
+    assert client.delete("/runs/gibtsnicht").status_code == 404
+
+
+def test_an_unknown_run_status_does_not_brick_the_store(data_file):
+    stored = json.loads(json.dumps(LEGACY_STATE))
+    stored["runs"][0]["status"] = "irgendwas"
+    data_file.write_text(json.dumps(stored, ensure_ascii=False), encoding="utf-8")
+
+    assert TestClient(app_module.app).get("/runs").json()["runs"][0]["status"] == "active"
+
+
+# --------------------------------------------------------------- Spieler ---
+
+
+def test_a_new_player_gets_the_next_free_colour_and_a_column(client):
+    response = client.post("/players", json={"name": "Jan Hendrik"})
+
+    assert response.status_code == 201
+    added = response.json()[-1]
+    assert added == {"id": "jan-hendrik", "name": "Jan Hendrik", "color": "#8a4bb0"}
+    # Ohne Eintrag in jeder Zeile liefe der naechste Patch dort ins Leere.
+    rows = client.get("/encounters").json()["encounters"]
+    assert all("jan-hendrik" in row["picks"] for row in rows)
+    assert client.patch(
+        "/encounters/sinnoh-route-201",
+        json={"picks": {"jan-hendrik": {"species": "starly", "name": "Staralili"}}},
+    ).status_code == 200
+
+
+def test_a_duplicate_player_name_gets_its_own_id(client):
+    client.post("/players", json={"name": "Marc"})
+
+    assert [player["id"] for player in client.get("/players").json()] == [
+        "marc",
+        "nicolai",
+        "knev",
+        "marc-2",
+    ]
+
+
+def test_removing_a_player_removes_their_picks_everywhere(client):
+    catch_row(client, "sinnoh-route-201")
+    client.patch("/encounters/sinnoh-route-201", json={"in_team": True})
+
+    assert client.delete("/players/knev").status_code == 204
+
+    row = client.get("/encounters/sinnoh-route-201").json()
+    assert set(row["picks"]) == {"marc", "nicolai"}
+    assert row["in_team"] is True
+    assert [player["id"] for player in client.get("/players").json()] == ["marc", "nicolai"]
+
+
+def test_removing_the_culprit_leaves_the_incident_with_nobody(client):
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        json={"outcome": "failed", "responsible_player": "knev"},
+    )
+
+    client.delete("/players/knev")
+
+    row = client.get("/encounters/sinnoh-route-201").json()
+    assert row["outcome"] == "failed"
+    assert row["responsible_player"] == "niemand"
+
+
+def test_removing_the_only_dead_player_takes_the_death_with_them(client):
+    catch_row(client, "sinnoh-route-201")
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        json={"picks": {"marc": {"status": "dead"}}, "responsible_player": "marc"},
+        params={"couple": "false"},
+    )
+
+    client.delete("/players/marc")
+
+    row = client.get("/encounters/sinnoh-route-201").json()
+    assert row["outcome"] == "caught"
+    assert row["responsible_player"] is None
+
+
+def test_removing_an_unknown_player_is_a_404(client):
+    assert client.delete("/players/gibtsnicht").status_code == 404
+
+
+# ---------------------------------------------------------- Live-Updates ---
+
+
+# Der Stream endet nie - ueber den TestClient gelesen haengt er den Testlauf auf.
+# Geprueft wird deshalb der Generator selbst; die HTTP-Huelle drumherum ist eine
+# StreamingResponse ohne eigene Logik.
+async def read_events(count, between=None):
+    response = await app_module.stream_events()
+    assert response.media_type == "text/event-stream"
+    # Ohne diesen Header puffert nginx den Stream, bis der Puffer voll ist.
+    assert response.raw_headers is not None
+    assert response.headers["x-accel-buffering"] == "no"
+
+    events = []
+    iterator = response.body_iterator
+    while len(events) < count:
+        chunk = await iterator.__anext__()
+        if chunk.startswith("data: "):
+            events.append(json.loads(chunk.removeprefix("data: ")))
+            if between and len(events) == 1:
+                between()
+    await iterator.aclose()
+    return events
+
+
+def test_the_event_stream_starts_with_the_current_state(client):
+    expected = client.get("/runs").json()["updated_at"]
+
+    events = asyncio.run(read_events(1))
+
+    assert events == [{"updated_at": expected}]
+
+
+def test_the_event_stream_announces_a_change(client):
+    def write():
+        client.patch("/encounters/sinnoh-route-201", json={"picks": {"marc": {"name": "Bidiza"}}})
+
+    events = asyncio.run(read_events(2, between=write))
+
+    assert events[0]["updated_at"] != events[1]["updated_at"]
+    assert events[1]["updated_at"] == client.get("/runs").json()["updated_at"]
+
+
+def test_the_event_stream_ends_by_itself(client, monkeypatch):
+    """Ein Stream ohne Ende haelt den Prozess fest: uvicorn wartet beim Beenden
+    auf offene Verbindungen, und jeder Neustart bliebe stehen, solange auch nur
+    ein Browser lauscht."""
+    monkeypatch.setattr(app_module, "STREAM_MAX_SECONDS", 0.05)
+    monkeypatch.setattr(app_module, "STREAM_TICK_SECONDS", 0.01)
+
+    async def drain():
+        response = await app_module.stream_events()
+        return [chunk async for chunk in response.body_iterator]
+
+    chunks = asyncio.run(drain())
+
+    # Der Browser verbindet sich selbst neu - dafuer steht die Wartezeit am Anfang.
+    assert chunks[0] == f"retry: {app_module.STREAM_RETRY_MS}\n\n"
+    assert any(chunk.startswith("data: ") for chunk in chunks)
+
+
 # -------------------------------------------------------------- Soullink ---
 
 
@@ -593,9 +838,9 @@ def test_the_team_holds_at_most_six_links(client):
     assert "voll" in response.json()["detail"]
 
 
-def test_a_row_with_only_one_pick_cannot_join_the_team(client):
-    # 'caught' steht schon bei einem einzigen Eintrag - ein Link belegt aber bei
-    # allen drei Spielern einen Platz.
+def test_a_row_with_only_one_pick_can_join_the_team(client):
+    # Dass ein Spieler an einem Ort leer ausgeht, ist im Soullink der Normalfall -
+    # die Reihe belegt trotzdem bei allen denselben Platz.
     client.patch(
         "/encounters/sinnoh-route-201",
         json={"picks": {"marc": {"species": "starly", "name": "Staralili"}}},
@@ -603,7 +848,8 @@ def test_a_row_with_only_one_pick_cannot_join_the_team(client):
 
     response = client.patch("/encounters/sinnoh-route-201", json={"in_team": True})
 
-    assert response.status_code == 422
+    assert response.status_code == 200
+    assert response.json()["in_team"] is True
 
 
 def test_a_death_takes_the_link_out_of_the_team(client):

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import copy
 import json
 import os
@@ -9,23 +10,39 @@ import threading
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Iterator, Literal, get_args
+from typing import Any, AsyncIterator, Iterator, Literal, get_args
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Response, status
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConfigDict, Field
 
-SCHEMA_VERSION = 5
+SCHEMA_VERSION = 6
 SLUG_PATTERN = r"^[a-z0-9]+(?:-[a-z0-9]+)*$"
+# Grossschreibung ist erlaubt: ein '#3F6FB5' aus einem fremden Client soll nicht
+# an der Farbpruefung scheitern.
+COLOR_PATTERN = r"^#[0-9a-fA-F]{6}$"
 
 Outcome = Literal["pending", "caught", "dead", "failed"]
 OUTCOMES = get_args(Outcome)
+# Die beiden Vorfaelle der Negativstatistik - sie brauchen einen Schuldigen.
+BLAMED_OUTCOMES = ("dead", "failed")
 PickStatus = Literal["alive", "dead"]
-RunStatus = Literal["active", "completed"]
+# 'paused' und 'failed' kamen mit der Run-Uebersicht dazu: ein Run laeuft, liegt
+# auf Eis, ist durch - oder ist verkackt. Aktiv ist immer hoechstens einer.
+RunStatus = Literal["active", "paused", "completed", "failed"]
+RUN_STATUSES = get_args(RunStatus)
+ENDED_RUN_STATUSES = ("completed", "failed")
+
+# Spielerfarben in Vergabereihenfolge. Die Farbe ist die Identitaet eines Spielers
+# in Tabellenkopf, Chips und Statistik und steht deshalb am Datensatz: aus der
+# Position abgeleitet wuerde beim Entfernen eines Spielers die halbe Tabelle die
+# Farbe wechseln.
+PLAYER_COLORS = ["#3f6fb5", "#3f8a52", "#c07a2c", "#8a4bb0", "#c14f6f", "#2f8f93", "#7a6a3f"]
 
 DEFAULT_PLAYERS = [
-    {"id": "marc", "name": "Marc"},
-    {"id": "nicolai", "name": "Nicolai"},
-    {"id": "knev", "name": "Knev"},
+    {"id": "marc", "name": "Marc", "color": PLAYER_COLORS[0]},
+    {"id": "nicolai", "name": "Nicolai", "color": PLAYER_COLORS[1]},
+    {"id": "knev", "name": "Knev", "color": PLAYER_COLORS[2]},
 ]
 
 # Die drei Spieler-Namen sind user-facing Daten und bleiben exakt erhalten.
@@ -241,6 +258,15 @@ class Player(BaseModel):
 
     id: str = Field(pattern=SLUG_PATTERN, min_length=1, max_length=40)
     name: str = Field(min_length=1, max_length=60)
+    color: str = Field(default=PLAYER_COLORS[0], pattern=COLOR_PATTERN)
+
+
+class PlayerCreate(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str | None = Field(default=None, pattern=SLUG_PATTERN, max_length=40)
+    name: str = Field(min_length=1, max_length=60)
+    color: str | None = Field(default=None, pattern=COLOR_PATTERN)
 
 
 class Pick(BaseModel):
@@ -572,6 +598,10 @@ def normalize_run(raw: dict[str, Any], fallback_id: str, player_ids: list[str]) 
     run.setdefault("id", fallback_id)
     run.setdefault("name", f"Run {fallback_id.removeprefix('run-')}")
     run.setdefault("status", "active")
+    # Ein unbekannter Status legt sonst beim Laden die ganze API lahm, statt nur
+    # diesen einen Run zu betreffen.
+    if run["status"] not in RUN_STATUSES:
+        run["status"] = "active"
     run.setdefault("created_at", now_iso())
     run.setdefault("completed_at", None)
     run.setdefault("progress", 0)
@@ -594,10 +624,16 @@ def normalize_state(raw: dict[str, Any]) -> dict[str, Any]:
             {"id": LEGACY_PLAYER_LABELS.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")), "name": name}
             for name in players
         ]
-    players = [
-        Player.model_validate(player).model_dump() | {"name": LEGACY_DISPLAY_NAMES.get(player["name"], player["name"])}
-        for player in players
-    ]
+    roster: list[dict[str, Any]] = []
+    for index, player in enumerate(players):
+        # v5 -> v6: die Farbe gehoert zum Spieler. Bestandsdaten bekommen sie der
+        # Reihe nach - also genau die, die beim Anlegen vergeben worden waere.
+        entry = dict(player)
+        entry.setdefault("color", PLAYER_COLORS[index % len(PLAYER_COLORS)])
+        entry = Player.model_validate(entry).model_dump()
+        entry["name"] = LEGACY_DISPLAY_NAMES.get(entry["name"], entry["name"])
+        roster.append(entry)
+    players = roster
     player_ids = [player["id"] for player in players]
 
     runs_raw = raw.get("runs")
@@ -890,14 +926,32 @@ def run_summary(run: dict[str, Any]) -> dict[str, Any]:
     return base | {"game_name": game_name_of(run["game_id"])} | row_counts(run["encounters"])
 
 
-def slugify_run_id(name: str, existing_ids: set[str]) -> str:
-    base = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") or "run"
+def slugify_id(name: str, existing_ids: set[str], fallback: str) -> str:
+    base = re.sub(r"[^a-z0-9]+", "-", name.casefold()).strip("-") or fallback
     candidate = base
     suffix = 2
     while candidate in existing_ids:
         candidate = f"{base}-{suffix}"
         suffix += 1
     return candidate
+
+
+def pause_other_active_runs(state: dict[str, Any], run_id: str) -> None:
+    """Aktiv ist hoechstens ein Run - der Rest geht auf Pause.
+
+    Die Uebersicht zeigt genau einen laufenden Run; zwei gleichzeitig waeren
+    nicht darstellbar und der Datenstand haette zwei Wahrheiten.
+    """
+    for other in state["runs"]:
+        if other["id"] != run_id and other["status"] == "active":
+            other["status"] = "paused"
+
+
+def next_player_color(players: list[dict[str, Any]]) -> str:
+    """Die erste noch freie Farbe der Palette."""
+    used = {player.get("color") for player in players}
+    free = [color for color in PLAYER_COLORS if color not in used]
+    return free[0] if free else PLAYER_COLORS[len(players) % len(PLAYER_COLORS)]
 
 
 # --------------------------------------------------------------------------- #
@@ -956,7 +1010,7 @@ def validate_responsible(value: Any, player_ids: list[str]) -> None:
 
 def require_culprit(row: dict[str, Any]) -> None:
     """Ohne Schuldigen fehlt der Vorfall in der Statistik - also gleich einfordern."""
-    if row["outcome"] in ("dead", "failed") and not row.get("responsible_player"):
+    if row["outcome"] in BLAMED_OUTCOMES and not row.get("responsible_player"):
         incident = "Tod" if row["outcome"] == "dead" else "verlorener Encounter"
         raise HTTPException(
             status_code=422,
@@ -979,24 +1033,24 @@ def require_team_slot(run: dict[str, Any], row: dict[str, Any]) -> None:
 
 
 def team_ready(row: dict[str, Any]) -> bool:
-    """Ein Link belegt einen Platz fuer alle - also braucht jeder ein lebendes Pokémon.
+    """Eine Reihe darf ins Team, sobald ueberhaupt jemand etwas Lebendes hat.
 
-    Das Outcome allein reicht als Kriterium nicht: 'caught' steht schon, sobald
-    ein einziger Spieler etwas eingetragen hat.
+    Genau das sagt 'caught': mindestens ein Eintrag, kein toter Pick. Dass ein
+    Spieler an einem Ort leer ausgeht, ist im Soullink der Normalfall - der Link
+    belegt trotzdem bei allen denselben Platz. Bis v5 verlangte diese Pruefung
+    einen Eintrag von jedem; damit liess sich eine halb gefuellte Reihe nie
+    spielen, obwohl die anderen ihr Pokémon im Team hatten.
     """
-    picks = list(row["picks"].values())
-    if row["outcome"] != "caught" or not picks:
-        return False
-    return all(pick_is_filled(pick) and pick.get("status") != "dead" for pick in picks)
+    return row["outcome"] == "caught"
 
 
 def apply_team_rules(run: dict[str, Any], row: dict[str, Any], requested: bool | None) -> None:
-    """Nur vollstaendige, lebende Reihen spielen mit."""
+    """Nur Reihen mit einem lebenden Fang spielen mit."""
     ready = team_ready(row)
     if requested and not ready:
         raise HTTPException(
             status_code=422,
-            detail="Nur Reihen, in denen alle drei ein lebendes Pokémon haben, können ins Team.",
+            detail="Nur Reihen mit mindestens einem lebenden Pokémon können ins Team.",
         )
     if not ready:
         row["in_team"] = False
@@ -1198,6 +1252,82 @@ def get_run_encounters(run_id: str) -> dict[str, Any]:
 
 
 # --------------------------------------------------------------------------- #
+# Live-Updates
+# --------------------------------------------------------------------------- #
+
+# Wie oft der Stream nach einem neuen Stand sieht. load_state() ist dabei billig:
+# es vergleicht (Pfad, mtime, Groesse) und faellt sonst auf den Cache zurueck -
+# nur wenn wirklich jemand geschrieben hat, wird geparst.
+STREAM_TICK_SECONDS = 1.0
+# Ein Kommentar auf der stillen Leitung, damit Proxys sie nicht zumachen: nginx
+# schliesst nach 60 s ohne Verkehr.
+STREAM_KEEPALIVE_SECONDS = 15.0
+# Danach endet der Stream und der Browser verbindet sich neu.
+#
+# Ein Stream, der nie endet, haelt den Prozess am Leben: uvicorn wartet beim
+# Beenden auf offene Verbindungen ("Waiting for connections to close") und
+# haengt, solange auch nur ein Browser lauscht - jeder Neustart und jedes
+# Deployment bliebe stehen. Mit dieser Grenze kostet ein Neustart hoechstens
+# diese halbe Minute, und der Browser merkt vom Wechsel nichts.
+STREAM_MAX_SECONDS = 30.0
+# Wie lange der Browser nach einem Abbruch bis zum naechsten Versuch wartet.
+# Vorgabe waeren drei Sekunden - eine Sekunde passt besser zu einem Stream, der
+# planmaessig alle halbe Minute endet.
+STREAM_RETRY_MS = 1000
+
+
+@app.get("/events", summary="Änderungen als Server-Sent Events")
+async def stream_events() -> StreamingResponse:
+    """Meldet jede Änderung, sobald sie im Datenstand steht.
+
+    Damit sehen alle offenen Browser einen Eintrag sofort statt beim nächsten
+    Poll. Der Stream ist die Abkürzung, nicht die Voraussetzung: das Frontend
+    pollt weiter, falls ein Proxy die Verbindung schluckt.
+
+    Übertragen wird nur der Zeitstempel. Wer ihn nicht kennt, lädt selbst nach -
+    so bleibt es bei einem Nachrichtenformat, das nichts über Runs, Zeilen oder
+    Spieler weiß und deshalb auch nichts davon veralten lassen kann.
+    """
+
+    async def stream() -> AsyncIterator[str]:
+        last: str | None = None
+        quiet = 0.0
+        elapsed = 0.0
+        yield f"retry: {STREAM_RETRY_MS}\n\n"
+        while elapsed < STREAM_MAX_SECONDS:
+            try:
+                current = load_state()["updated_at"]
+            except RuntimeError:
+                # Kaputte oder gerade halb geschriebene Datei: nichts melden und
+                # es beim naechsten Durchgang erneut versuchen.
+                current = last
+
+            if current != last:
+                last = current
+                quiet = 0.0
+                yield f"data: {json.dumps({'updated_at': current})}\n\n"
+            elif quiet >= STREAM_KEEPALIVE_SECONDS:
+                quiet = 0.0
+                yield ": ping\n\n"
+
+            await asyncio.sleep(STREAM_TICK_SECONDS)
+            quiet += STREAM_TICK_SECONDS
+            elapsed += STREAM_TICK_SECONDS
+
+    return StreamingResponse(
+        stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-store",
+            # Ohne das puffert nginx den Stream und die Meldung kommt erst an,
+            # wenn der Puffer voll ist - das spart eine Anpassung an der
+            # Proxy-Konfiguration.
+            "X-Accel-Buffering": "no",
+        },
+    )
+
+
+# --------------------------------------------------------------------------- #
 # Schreiben
 # --------------------------------------------------------------------------- #
 
@@ -1216,7 +1346,7 @@ def create_run(
     find_game(run.game_id)
     with mutate(if_match) as state:
         existing_ids = {entry["id"] for entry in state["runs"]}
-        run_id = run.id or slugify_run_id(run.name, existing_ids)
+        run_id = run.id or slugify_id(run.name, existing_ids, "run")
         if run_id in existing_ids:
             raise HTTPException(status_code=409, detail=f"Run '{run_id}' existiert bereits.")
 
@@ -1228,6 +1358,8 @@ def create_run(
             created_at=now_iso(),
             encounters=[EncounterRow.model_validate(row) for row in rows],
         ).model_dump()
+        # Ein neuer Run ist der, der gespielt wird.
+        pause_other_active_runs(state, run_id)
         state["runs"].append(created)
         if run.make_current:
             state["current_run_id"] = run_id
@@ -1257,12 +1389,60 @@ def patch_run(
             state["current_run_id"] = run_id
         if "progress" in updates:
             updates["progress"] = clamp_progress(run["game_id"], updates["progress"])
-        if updates.get("status") == "completed" and run["status"] != "completed":
+        status_update = updates.get("status")
+        if status_update == "active":
+            # Wer einen Run wieder aufnimmt, spielt ihn auch - sonst zeigten
+            # Uebersicht ('aktiv') und /encounters (current_run_id) verschiedene.
+            pause_other_active_runs(state, run_id)
+            state["current_run_id"] = run_id
+        if status_update in ENDED_RUN_STATUSES and run["status"] not in ENDED_RUN_STATUSES:
             run["completed_at"] = now_iso()
-        elif updates.get("status") == "active":
+        elif status_update in ("active", "paused"):
             run["completed_at"] = None
         run.update(updates)
         return run
+
+
+@app.delete(
+    "/runs/{run_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_write_token)],
+    summary="Run löschen",
+)
+def delete_run(
+    run_id: str,
+    if_match: str | None = Header(default=None, alias="If-Match"),
+) -> Response:
+    """Loescht einen Run samt seiner Zeilen.
+
+    Der letzte Run bleibt stehen: ohne Runs legt `normalize_state` beim naechsten
+    Laden stillschweigend einen neuen an - das Loeschen saehe aus, als waere es
+    fehlgeschlagen, und der Rueckweg fuehrte nur ueber `backups/`.
+    """
+    with mutate(if_match) as state:
+        run = find_run(state, run_id)
+        if len(state["runs"]) <= 1:
+            raise HTTPException(
+                status_code=409,
+                detail="Der letzte Run lässt sich nicht löschen. Erst einen neuen anlegen.",
+            )
+
+        was_active = run["status"] == "active"
+        state["runs"] = [entry for entry in state["runs"] if entry["id"] != run_id]
+        if state["current_run_id"] == run_id:
+            # Der aktuelle Run ist der, den /encounters liefert - er muss existieren.
+            successor = next((entry for entry in state["runs"] if entry["status"] == "active"), None)
+            if successor is None and was_active:
+                # War der geloeschte der laufende, uebernimmt der naechste pausierte.
+                # Ein fertiger oder verkackter bleibt, was er ist - ihn zu
+                # reaktivieren waere eine Aussage ueber den Run, die niemand
+                # getroffen hat.
+                successor = next((entry for entry in state["runs"] if entry["status"] == "paused"), None)
+                if successor is not None:
+                    successor["status"] = "active"
+                    successor["completed_at"] = None
+            state["current_run_id"] = (successor or state["runs"][0])["id"]
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @app.post(
@@ -1363,6 +1543,77 @@ def delete_encounter(
         remove_row(run, row_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
+
+# --------------------------------------------------------------------------- #
+# Spieler
+# --------------------------------------------------------------------------- #
+
+
+@app.get("/players", response_model=list[Player], summary="Spieler")
+def get_players() -> list[dict[str, Any]]:
+    return load_state()["players"]
+
+
+@app.post(
+    "/players",
+    response_model=list[Player],
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(require_write_token)],
+    summary="Spieler hinzufügen",
+)
+def create_player(
+    new: PlayerCreate,
+    if_match: str | None = Header(default=None, alias="If-Match"),
+) -> list[dict[str, Any]]:
+    """Antwortet mit dem ganzen Kader - eine neue Spalte betrifft die ganze Tabelle."""
+    with mutate(if_match) as state:
+        existing = {player["id"] for player in state["players"]}
+        player_id = new.id or slugify_id(new.name, existing, "spieler")
+        if player_id in existing:
+            raise HTTPException(status_code=409, detail=f"Spieler '{player_id}' existiert bereits.")
+
+        state["players"].append(
+            Player(id=player_id, name=new.name, color=new.color or next_player_color(state["players"])).model_dump()
+        )
+        # Jede Zeile fuehrt einen Eintrag pro Spieler. Ohne den laeuft der
+        # naechste Patch dieser Zeile in einen KeyError statt in eine Antwort.
+        for run in state["runs"]:
+            for row in run["encounters"]:
+                row["picks"].setdefault(player_id, Pick().model_dump())
+        return state["players"]
+
+
+@app.delete(
+    "/players/{player_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_write_token)],
+    summary="Spieler entfernen",
+)
+def delete_player(
+    player_id: str,
+    if_match: str | None = Header(default=None, alias="If-Match"),
+) -> Response:
+    """Entfernt den Spieler samt seiner Eintraege in allen Runs.
+
+    Die Zeilen muessen danach fuer sich stimmen: ohne den letzten toten Pick ist
+    eine Zeile nicht mehr tot, ohne Eintraege nicht mehr gefangen. Der Vorfall
+    bleibt bestehen, verliert aber seinen Schuldigen - ausdruecklich 'niemand',
+    denn eine tote Zeile ohne Schuldigen faellt aus der Negativstatistik.
+    """
+    with mutate(if_match) as state:
+        if not any(player["id"] == player_id for player in state["players"]):
+            raise HTTPException(status_code=404, detail=f"Spieler '{player_id}' nicht gefunden.")
+
+        state["players"] = [player for player in state["players"] if player["id"] != player_id]
+        for run in state["runs"]:
+            for row in run["encounters"]:
+                row["picks"].pop(player_id, None)
+                row["outcome"] = derive_outcome(row["picks"], row["outcome"])
+                if row.get("responsible_player") == player_id:
+                    row["responsible_player"] = NO_CULPRIT if row["outcome"] in BLAMED_OUTCOMES else None
+                if not team_ready(row):
+                    row["in_team"] = False
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 # --------------------------------------------------------------------------- #
