@@ -153,6 +153,9 @@ def test_platinum_catalog_includes_cities_with_encounters():
     assert expected_cities <= locations.keys()
     assert all(locations[location_id]["encounters"] for location_id in expected_cities)
     assert locations["ravaged-path"]["name"] == "Verwüsteter Pfad"
+    renegade_path = Path(__file__).resolve().parent.parent / "data" / "games" / "renegade-platinum.json"
+    renegade = json.loads(renegade_path.read_text(encoding="utf-8"))
+    assert next(location for location in renegade["locations"] if location["id"] == "ravaged-path")["name"] == "Verwüsteter Pfad"
 
 
 def test_the_pokedex_carries_types_for_every_species():

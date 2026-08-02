@@ -897,7 +897,7 @@
     {
       "id": "ravaged-path",
       "order": 11,
-      "name": "Ruinental",
+      "name": "Verwüsteter Pfad",
       "encounters": [
         {
           "species": "zubat",
