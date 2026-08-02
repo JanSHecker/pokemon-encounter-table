@@ -29,7 +29,7 @@ LOCATIONS = [
     "oreburgh-city",
     "sinnoh-route-207",
     "sinnoh-route-204",
-    {"id": "ravaged-path", "name": "Ruinental"},
+    {"id": "ravaged-path", "name": "Verwüsteter Pfad"},
     {"id": "valley-windworks", "name": "Windkraftwerk"},
     "sinnoh-route-205",
     {"id": "eterna-forest", "name": "Ewigwald"},
