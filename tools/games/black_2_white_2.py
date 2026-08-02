@@ -111,16 +111,19 @@ GAME = {
     # gemeinsames Cap statt vier einzelner: 58 ist das hoechste Level der vier.
     #
     # Quelle: Bulbapedia, Stand Juli 2026, jeweils der Abschnitt Schwarz 2/Weiß 2.
+    #
+    # `type` ist der Typ des Kampfes (faerbt Badge und Zeitleiste der Cap-Karte);
+    # die Top Vier deckt vier Typen ab und bleibt deshalb leer = "gemischt".
     "level_caps": [
-        {"order": 1, "kind": "gym", "leader": "Cheren", "place": "Eventura City", "cap": 13},
-        {"order": 2, "kind": "gym", "leader": "Mica", "place": "Vapydro City", "cap": 18},
-        {"order": 3, "kind": "gym", "leader": "Artie", "place": "Stratos City", "cap": 24},
-        {"order": 4, "kind": "gym", "leader": "Kamilla", "place": "Rayono City", "cap": 30},
-        {"order": 5, "kind": "gym", "leader": "Turner", "place": "Marea City", "cap": 33},
-        {"order": 6, "kind": "gym", "leader": "Géraldine", "place": "Panaero City", "cap": 36},
-        {"order": 7, "kind": "gym", "leader": "Lysander", "place": "Twindrake City", "cap": 44},
-        {"order": 8, "kind": "gym", "leader": "Benson", "place": "Abidaya City", "cap": 51},
-        {"order": 9, "kind": "elite", "leader": "Top Vier", "place": "Anissa · Eugen · Astor · Kattlea", "cap": 58},
-        {"order": 10, "kind": "champion", "leader": "Lilia", "place": "Champion", "cap": 59},
+        {"order": 1, "kind": "gym", "leader": "Cheren", "place": "Eventura City", "cap": 13, "type": "normal"},
+        {"order": 2, "kind": "gym", "leader": "Mica", "place": "Vapydro City", "cap": 18, "type": "poison"},
+        {"order": 3, "kind": "gym", "leader": "Artie", "place": "Stratos City", "cap": 24, "type": "bug"},
+        {"order": 4, "kind": "gym", "leader": "Kamilla", "place": "Rayono City", "cap": 30, "type": "electric"},
+        {"order": 5, "kind": "gym", "leader": "Turner", "place": "Marea City", "cap": 33, "type": "ground"},
+        {"order": 6, "kind": "gym", "leader": "Géraldine", "place": "Panaero City", "cap": 36, "type": "flying"},
+        {"order": 7, "kind": "gym", "leader": "Lysander", "place": "Twindrake City", "cap": 44, "type": "dragon"},
+        {"order": 8, "kind": "gym", "leader": "Benson", "place": "Abidaya City", "cap": 51, "type": "water"},
+        {"order": 9, "kind": "elite", "leader": "Top Vier", "place": "Anissa · Eugen · Astor · Kattlea", "cap": 58, "type": ""},
+        {"order": 10, "kind": "champion", "leader": "Lilia", "place": "Champion", "cap": 59, "type": "dragon"},
     ],
 }

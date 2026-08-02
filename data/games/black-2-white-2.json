@@ -7045,70 +7045,80 @@
       "kind": "gym",
       "leader": "Cheren",
       "place": "Eventura City",
-      "cap": 13
+      "cap": 13,
+      "type": "normal"
     },
     {
       "order": 2,
       "kind": "gym",
       "leader": "Mica",
       "place": "Vapydro City",
-      "cap": 18
+      "cap": 18,
+      "type": "poison"
     },
     {
       "order": 3,
       "kind": "gym",
       "leader": "Artie",
       "place": "Stratos City",
-      "cap": 24
+      "cap": 24,
+      "type": "bug"
     },
     {
       "order": 4,
       "kind": "gym",
       "leader": "Kamilla",
       "place": "Rayono City",
-      "cap": 30
+      "cap": 30,
+      "type": "electric"
     },
     {
       "order": 5,
       "kind": "gym",
       "leader": "Turner",
       "place": "Marea City",
-      "cap": 33
+      "cap": 33,
+      "type": "ground"
     },
     {
       "order": 6,
       "kind": "gym",
       "leader": "Géraldine",
       "place": "Panaero City",
-      "cap": 36
+      "cap": 36,
+      "type": "flying"
     },
     {
       "order": 7,
       "kind": "gym",
       "leader": "Lysander",
       "place": "Twindrake City",
-      "cap": 44
+      "cap": 44,
+      "type": "dragon"
     },
     {
       "order": 8,
       "kind": "gym",
       "leader": "Benson",
       "place": "Abidaya City",
-      "cap": 51
+      "cap": 51,
+      "type": "water"
     },
     {
       "order": 9,
       "kind": "elite",
       "leader": "Top Vier",
       "place": "Anissa · Eugen · Astor · Kattlea",
-      "cap": 58
+      "cap": 58,
+      "type": ""
     },
     {
       "order": 10,
       "kind": "champion",
       "leader": "Lilia",
       "place": "Champion",
-      "cap": 59
+      "cap": 59,
+      "type": "dragon"
     }
   ],
   "pokedex": [
@@ -7116,3895 +7126,6151 @@
       "species": "bulbasaur",
       "name": "Bisasam",
       "dex": 1,
-      "family": 1
+      "family": 1,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "ivysaur",
       "name": "Bisaknosp",
       "dex": 2,
-      "family": 1
+      "family": 1,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "venusaur",
       "name": "Bisaflor",
       "dex": 3,
-      "family": 1
+      "family": 1,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "charmander",
       "name": "Glumanda",
       "dex": 4,
-      "family": 2
+      "family": 2,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "charmeleon",
       "name": "Glutexo",
       "dex": 5,
-      "family": 2
+      "family": 2,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "charizard",
       "name": "Glurak",
       "dex": 6,
-      "family": 2
+      "family": 2,
+      "types": [
+        "fire",
+        "flying"
+      ]
     },
     {
       "species": "squirtle",
       "name": "Schiggy",
       "dex": 7,
-      "family": 3
+      "family": 3,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "wartortle",
       "name": "Schillok",
       "dex": 8,
-      "family": 3
+      "family": 3,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "blastoise",
       "name": "Turtok",
       "dex": 9,
-      "family": 3
+      "family": 3,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "caterpie",
       "name": "Raupy",
       "dex": 10,
-      "family": 4
+      "family": 4,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "metapod",
       "name": "Safcon",
       "dex": 11,
-      "family": 4
+      "family": 4,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "butterfree",
       "name": "Smettbo",
       "dex": 12,
-      "family": 4
+      "family": 4,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "weedle",
       "name": "Hornliu",
       "dex": 13,
-      "family": 5
+      "family": 5,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "kakuna",
       "name": "Kokuna",
       "dex": 14,
-      "family": 5
+      "family": 5,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "beedrill",
       "name": "Bibor",
       "dex": 15,
-      "family": 5
+      "family": 5,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "pidgey",
       "name": "Taubsi",
       "dex": 16,
-      "family": 6
+      "family": 6,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "pidgeotto",
       "name": "Tauboga",
       "dex": 17,
-      "family": 6
+      "family": 6,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "pidgeot",
       "name": "Tauboss",
       "dex": 18,
-      "family": 6
+      "family": 6,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "rattata",
       "name": "Rattfratz",
       "dex": 19,
-      "family": 7
+      "family": 7,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "raticate",
       "name": "Rattikarl",
       "dex": 20,
-      "family": 7
+      "family": 7,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "spearow",
       "name": "Habitak",
       "dex": 21,
-      "family": 8
+      "family": 8,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "fearow",
       "name": "Ibitak",
       "dex": 22,
-      "family": 8
+      "family": 8,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "ekans",
       "name": "Rettan",
       "dex": 23,
-      "family": 9
+      "family": 9,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "arbok",
       "name": "Arbok",
       "dex": 24,
-      "family": 9
+      "family": 9,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "pikachu",
       "name": "Pikachu",
       "dex": 25,
-      "family": 10
+      "family": 10,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "raichu",
       "name": "Raichu",
       "dex": 26,
-      "family": 10
+      "family": 10,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "sandshrew",
       "name": "Sandan",
       "dex": 27,
-      "family": 11
+      "family": 11,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "sandslash",
       "name": "Sandamer",
       "dex": 28,
-      "family": 11
+      "family": 11,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "nidoran-f",
       "name": "Nidoran♀",
       "dex": 29,
-      "family": 12
+      "family": 12,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "nidorina",
       "name": "Nidorina",
       "dex": 30,
-      "family": 12
+      "family": 12,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "nidoqueen",
       "name": "Nidoqueen",
       "dex": 31,
-      "family": 12
+      "family": 12,
+      "types": [
+        "poison",
+        "ground"
+      ]
     },
     {
       "species": "nidoran-m",
       "name": "Nidoran♂",
       "dex": 32,
-      "family": 13
+      "family": 13,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "nidorino",
       "name": "Nidorino",
       "dex": 33,
-      "family": 13
+      "family": 13,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "nidoking",
       "name": "Nidoking",
       "dex": 34,
-      "family": 13
+      "family": 13,
+      "types": [
+        "poison",
+        "ground"
+      ]
     },
     {
       "species": "clefairy",
       "name": "Piepi",
       "dex": 35,
-      "family": 14
+      "family": 14,
+      "types": [
+        "fairy"
+      ]
     },
     {
       "species": "clefable",
       "name": "Pixi",
       "dex": 36,
-      "family": 14
+      "family": 14,
+      "types": [
+        "fairy"
+      ]
     },
     {
       "species": "vulpix",
       "name": "Vulpix",
       "dex": 37,
-      "family": 15
+      "family": 15,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "ninetales",
       "name": "Vulnona",
       "dex": 38,
-      "family": 15
+      "family": 15,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "jigglypuff",
       "name": "Pummeluff",
       "dex": 39,
-      "family": 16
+      "family": 16,
+      "types": [
+        "normal",
+        "fairy"
+      ]
     },
     {
       "species": "wigglytuff",
       "name": "Knuddeluff",
       "dex": 40,
-      "family": 16
+      "family": 16,
+      "types": [
+        "normal",
+        "fairy"
+      ]
     },
     {
       "species": "zubat",
       "name": "Zubat",
       "dex": 41,
-      "family": 17
+      "family": 17,
+      "types": [
+        "poison",
+        "flying"
+      ]
     },
     {
       "species": "golbat",
       "name": "Golbat",
       "dex": 42,
-      "family": 17
+      "family": 17,
+      "types": [
+        "poison",
+        "flying"
+      ]
     },
     {
       "species": "oddish",
       "name": "Myrapla",
       "dex": 43,
-      "family": 18
+      "family": 18,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "gloom",
       "name": "Duflor",
       "dex": 44,
-      "family": 18
+      "family": 18,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "vileplume",
       "name": "Giflor",
       "dex": 45,
-      "family": 18
+      "family": 18,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "paras",
       "name": "Paras",
       "dex": 46,
-      "family": 19
+      "family": 19,
+      "types": [
+        "bug",
+        "grass"
+      ]
     },
     {
       "species": "parasect",
       "name": "Parasek",
       "dex": 47,
-      "family": 19
+      "family": 19,
+      "types": [
+        "bug",
+        "grass"
+      ]
     },
     {
       "species": "venonat",
       "name": "Bluzuk",
       "dex": 48,
-      "family": 20
+      "family": 20,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "venomoth",
       "name": "Omot",
       "dex": 49,
-      "family": 20
+      "family": 20,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "diglett",
       "name": "Digda",
       "dex": 50,
-      "family": 21
+      "family": 21,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "dugtrio",
       "name": "Digdri",
       "dex": 51,
-      "family": 21
+      "family": 21,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "meowth",
       "name": "Mauzi",
       "dex": 52,
-      "family": 22
+      "family": 22,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "persian",
       "name": "Snobilikat",
       "dex": 53,
-      "family": 22
+      "family": 22,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "psyduck",
       "name": "Enton",
       "dex": 54,
-      "family": 23
+      "family": 23,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "golduck",
       "name": "Entoron",
       "dex": 55,
-      "family": 23
+      "family": 23,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "mankey",
       "name": "Menki",
       "dex": 56,
-      "family": 24
+      "family": 24,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "primeape",
       "name": "Rasaff",
       "dex": 57,
-      "family": 24
+      "family": 24,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "growlithe",
       "name": "Fukano",
       "dex": 58,
-      "family": 25
+      "family": 25,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "arcanine",
       "name": "Arkani",
       "dex": 59,
-      "family": 25
+      "family": 25,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "poliwag",
       "name": "Quapsel",
       "dex": 60,
-      "family": 26
+      "family": 26,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "poliwhirl",
       "name": "Quaputzi",
       "dex": 61,
-      "family": 26
+      "family": 26,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "poliwrath",
       "name": "Quappo",
       "dex": 62,
-      "family": 26
+      "family": 26,
+      "types": [
+        "water",
+        "fighting"
+      ]
     },
     {
       "species": "abra",
       "name": "Abra",
       "dex": 63,
-      "family": 27
+      "family": 27,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "kadabra",
       "name": "Kadabra",
       "dex": 64,
-      "family": 27
+      "family": 27,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "alakazam",
       "name": "Simsala",
       "dex": 65,
-      "family": 27
+      "family": 27,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "machop",
       "name": "Machollo",
       "dex": 66,
-      "family": 28
+      "family": 28,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "machoke",
       "name": "Maschock",
       "dex": 67,
-      "family": 28
+      "family": 28,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "machamp",
       "name": "Machomei",
       "dex": 68,
-      "family": 28
+      "family": 28,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "bellsprout",
       "name": "Knofensa",
       "dex": 69,
-      "family": 29
+      "family": 29,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "weepinbell",
       "name": "Ultrigaria",
       "dex": 70,
-      "family": 29
+      "family": 29,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "victreebel",
       "name": "Sarzenia",
       "dex": 71,
-      "family": 29
+      "family": 29,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "tentacool",
       "name": "Tentacha",
       "dex": 72,
-      "family": 30
+      "family": 30,
+      "types": [
+        "water",
+        "poison"
+      ]
     },
     {
       "species": "tentacruel",
       "name": "Tentoxa",
       "dex": 73,
-      "family": 30
+      "family": 30,
+      "types": [
+        "water",
+        "poison"
+      ]
     },
     {
       "species": "geodude",
       "name": "Kleinstein",
       "dex": 74,
-      "family": 31
+      "family": 31,
+      "types": [
+        "rock",
+        "ground"
+      ]
     },
     {
       "species": "graveler",
       "name": "Georok",
       "dex": 75,
-      "family": 31
+      "family": 31,
+      "types": [
+        "rock",
+        "ground"
+      ]
     },
     {
       "species": "golem",
       "name": "Geowaz",
       "dex": 76,
-      "family": 31
+      "family": 31,
+      "types": [
+        "rock",
+        "ground"
+      ]
     },
     {
       "species": "ponyta",
       "name": "Ponita",
       "dex": 77,
-      "family": 32
+      "family": 32,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "rapidash",
       "name": "Gallopa",
       "dex": 78,
-      "family": 32
+      "family": 32,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "slowpoke",
       "name": "Flegmon",
       "dex": 79,
-      "family": 33
+      "family": 33,
+      "types": [
+        "water",
+        "psychic"
+      ]
     },
     {
       "species": "slowbro",
       "name": "Lahmus",
       "dex": 80,
-      "family": 33
+      "family": 33,
+      "types": [
+        "water",
+        "psychic"
+      ]
     },
     {
       "species": "magnemite",
       "name": "Magnetilo",
       "dex": 81,
-      "family": 34
+      "family": 34,
+      "types": [
+        "electric",
+        "steel"
+      ]
     },
     {
       "species": "magneton",
       "name": "Magneton",
       "dex": 82,
-      "family": 34
+      "family": 34,
+      "types": [
+        "electric",
+        "steel"
+      ]
     },
     {
       "species": "farfetchd",
       "name": "Porenta",
       "dex": 83,
-      "family": 35
+      "family": 35,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "doduo",
       "name": "Dodu",
       "dex": 84,
-      "family": 36
+      "family": 36,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "dodrio",
       "name": "Dodri",
       "dex": 85,
-      "family": 36
+      "family": 36,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "seel",
       "name": "Jurob",
       "dex": 86,
-      "family": 37
+      "family": 37,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "dewgong",
       "name": "Jugong",
       "dex": 87,
-      "family": 37
+      "family": 37,
+      "types": [
+        "water",
+        "ice"
+      ]
     },
     {
       "species": "grimer",
       "name": "Sleima",
       "dex": 88,
-      "family": 38
+      "family": 38,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "muk",
       "name": "Sleimok",
       "dex": 89,
-      "family": 38
+      "family": 38,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "shellder",
       "name": "Muschas",
       "dex": 90,
-      "family": 39
+      "family": 39,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "cloyster",
       "name": "Austos",
       "dex": 91,
-      "family": 39
+      "family": 39,
+      "types": [
+        "water",
+        "ice"
+      ]
     },
     {
       "species": "gastly",
       "name": "Nebulak",
       "dex": 92,
-      "family": 40
+      "family": 40,
+      "types": [
+        "ghost",
+        "poison"
+      ]
     },
     {
       "species": "haunter",
       "name": "Alpollo",
       "dex": 93,
-      "family": 40
+      "family": 40,
+      "types": [
+        "ghost",
+        "poison"
+      ]
     },
     {
       "species": "gengar",
       "name": "Gengar",
       "dex": 94,
-      "family": 40
+      "family": 40,
+      "types": [
+        "ghost",
+        "poison"
+      ]
     },
     {
       "species": "onix",
       "name": "Onix",
       "dex": 95,
-      "family": 41
+      "family": 41,
+      "types": [
+        "rock",
+        "ground"
+      ]
     },
     {
       "species": "drowzee",
       "name": "Traumato",
       "dex": 96,
-      "family": 42
+      "family": 42,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "hypno",
       "name": "Hypno",
       "dex": 97,
-      "family": 42
+      "family": 42,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "krabby",
       "name": "Krabby",
       "dex": 98,
-      "family": 43
+      "family": 43,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "kingler",
       "name": "Kingler",
       "dex": 99,
-      "family": 43
+      "family": 43,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "voltorb",
       "name": "Voltobal",
       "dex": 100,
-      "family": 44
+      "family": 44,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "electrode",
       "name": "Lektrobal",
       "dex": 101,
-      "family": 44
+      "family": 44,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "exeggcute",
       "name": "Owei",
       "dex": 102,
-      "family": 45
+      "family": 45,
+      "types": [
+        "grass",
+        "psychic"
+      ]
     },
     {
       "species": "exeggutor",
       "name": "Kokowei",
       "dex": 103,
-      "family": 45
+      "family": 45,
+      "types": [
+        "grass",
+        "psychic"
+      ]
     },
     {
       "species": "cubone",
       "name": "Tragosso",
       "dex": 104,
-      "family": 46
+      "family": 46,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "marowak",
       "name": "Knogga",
       "dex": 105,
-      "family": 46
+      "family": 46,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "hitmonlee",
       "name": "Kicklee",
       "dex": 106,
-      "family": 47
+      "family": 47,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "hitmonchan",
       "name": "Nockchan",
       "dex": 107,
-      "family": 47
+      "family": 47,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "lickitung",
       "name": "Schlurp",
       "dex": 108,
-      "family": 48
+      "family": 48,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "koffing",
       "name": "Smogon",
       "dex": 109,
-      "family": 49
+      "family": 49,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "weezing",
       "name": "Smogmog",
       "dex": 110,
-      "family": 49
+      "family": 49,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "rhyhorn",
       "name": "Rihorn",
       "dex": 111,
-      "family": 50
+      "family": 50,
+      "types": [
+        "ground",
+        "rock"
+      ]
     },
     {
       "species": "rhydon",
       "name": "Rizeros",
       "dex": 112,
-      "family": 50
+      "family": 50,
+      "types": [
+        "ground",
+        "rock"
+      ]
     },
     {
       "species": "chansey",
       "name": "Chaneira",
       "dex": 113,
-      "family": 51
+      "family": 51,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "tangela",
       "name": "Tangela",
       "dex": 114,
-      "family": 52
+      "family": 52,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "kangaskhan",
       "name": "Kangama",
       "dex": 115,
-      "family": 53
+      "family": 53,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "horsea",
       "name": "Seeper",
       "dex": 116,
-      "family": 54
+      "family": 54,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "seadra",
       "name": "Seemon",
       "dex": 117,
-      "family": 54
+      "family": 54,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "goldeen",
       "name": "Goldini",
       "dex": 118,
-      "family": 55
+      "family": 55,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "seaking",
       "name": "Golking",
       "dex": 119,
-      "family": 55
+      "family": 55,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "staryu",
       "name": "Sterndu",
       "dex": 120,
-      "family": 56
+      "family": 56,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "starmie",
       "name": "Starmie",
       "dex": 121,
-      "family": 56
+      "family": 56,
+      "types": [
+        "water",
+        "psychic"
+      ]
     },
     {
       "species": "mr-mime",
       "name": "Pantimos",
       "dex": 122,
-      "family": 57
+      "family": 57,
+      "types": [
+        "psychic",
+        "fairy"
+      ]
     },
     {
       "species": "scyther",
       "name": "Sichlor",
       "dex": 123,
-      "family": 58
+      "family": 58,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "jynx",
       "name": "Rossana",
       "dex": 124,
-      "family": 59
+      "family": 59,
+      "types": [
+        "ice",
+        "psychic"
+      ]
     },
     {
       "species": "electabuzz",
       "name": "Elektek",
       "dex": 125,
-      "family": 60
+      "family": 60,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "magmar",
       "name": "Magmar",
       "dex": 126,
-      "family": 61
+      "family": 61,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "pinsir",
       "name": "Pinsir",
       "dex": 127,
-      "family": 62
+      "family": 62,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "tauros",
       "name": "Tauros",
       "dex": 128,
-      "family": 63
+      "family": 63,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "magikarp",
       "name": "Karpador",
       "dex": 129,
-      "family": 64
+      "family": 64,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "gyarados",
       "name": "Garados",
       "dex": 130,
-      "family": 64
+      "family": 64,
+      "types": [
+        "water",
+        "flying"
+      ]
     },
     {
       "species": "lapras",
       "name": "Lapras",
       "dex": 131,
-      "family": 65
+      "family": 65,
+      "types": [
+        "water",
+        "ice"
+      ]
     },
     {
       "species": "ditto",
       "name": "Ditto",
       "dex": 132,
-      "family": 66
+      "family": 66,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "eevee",
       "name": "Evoli",
       "dex": 133,
-      "family": 67
+      "family": 67,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "vaporeon",
       "name": "Aquana",
       "dex": 134,
-      "family": 67
+      "family": 67,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "jolteon",
       "name": "Blitza",
       "dex": 135,
-      "family": 67
+      "family": 67,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "flareon",
       "name": "Flamara",
       "dex": 136,
-      "family": 67
+      "family": 67,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "porygon",
       "name": "Porygon",
       "dex": 137,
-      "family": 68
+      "family": 68,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "omanyte",
       "name": "Amonitas",
       "dex": 138,
-      "family": 69
+      "family": 69,
+      "types": [
+        "rock",
+        "water"
+      ]
     },
     {
       "species": "omastar",
       "name": "Amoroso",
       "dex": 139,
-      "family": 69
+      "family": 69,
+      "types": [
+        "rock",
+        "water"
+      ]
     },
     {
       "species": "kabuto",
       "name": "Kabuto",
       "dex": 140,
-      "family": 70
+      "family": 70,
+      "types": [
+        "rock",
+        "water"
+      ]
     },
     {
       "species": "kabutops",
       "name": "Kabutops",
       "dex": 141,
-      "family": 70
+      "family": 70,
+      "types": [
+        "rock",
+        "water"
+      ]
     },
     {
       "species": "aerodactyl",
       "name": "Aerodactyl",
       "dex": 142,
-      "family": 71
+      "family": 71,
+      "types": [
+        "rock",
+        "flying"
+      ]
     },
     {
       "species": "snorlax",
       "name": "Relaxo",
       "dex": 143,
-      "family": 72
+      "family": 72,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "articuno",
       "name": "Arktos",
       "dex": 144,
-      "family": 73
+      "family": 73,
+      "types": [
+        "ice",
+        "flying"
+      ]
     },
     {
       "species": "zapdos",
       "name": "Zapdos",
       "dex": 145,
-      "family": 74
+      "family": 74,
+      "types": [
+        "electric",
+        "flying"
+      ]
     },
     {
       "species": "moltres",
       "name": "Lavados",
       "dex": 146,
-      "family": 75
+      "family": 75,
+      "types": [
+        "fire",
+        "flying"
+      ]
     },
     {
       "species": "dratini",
       "name": "Dratini",
       "dex": 147,
-      "family": 76
+      "family": 76,
+      "types": [
+        "dragon"
+      ]
     },
     {
       "species": "dragonair",
       "name": "Dragonir",
       "dex": 148,
-      "family": 76
+      "family": 76,
+      "types": [
+        "dragon"
+      ]
     },
     {
       "species": "dragonite",
       "name": "Dragoran",
       "dex": 149,
-      "family": 76
+      "family": 76,
+      "types": [
+        "dragon",
+        "flying"
+      ]
     },
     {
       "species": "mewtwo",
       "name": "Mewtu",
       "dex": 150,
-      "family": 77
+      "family": 77,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "mew",
       "name": "Mew",
       "dex": 151,
-      "family": 78
+      "family": 78,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "chikorita",
       "name": "Endivie",
       "dex": 152,
-      "family": 79
+      "family": 79,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "bayleef",
       "name": "Lorblatt",
       "dex": 153,
-      "family": 79
+      "family": 79,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "meganium",
       "name": "Meganie",
       "dex": 154,
-      "family": 79
+      "family": 79,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "cyndaquil",
       "name": "Feurigel",
       "dex": 155,
-      "family": 80
+      "family": 80,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "quilava",
       "name": "Igelavar",
       "dex": 156,
-      "family": 80
+      "family": 80,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "typhlosion",
       "name": "Tornupto",
       "dex": 157,
-      "family": 80
+      "family": 80,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "totodile",
       "name": "Karnimani",
       "dex": 158,
-      "family": 81
+      "family": 81,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "croconaw",
       "name": "Tyracroc",
       "dex": 159,
-      "family": 81
+      "family": 81,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "feraligatr",
       "name": "Impergator",
       "dex": 160,
-      "family": 81
+      "family": 81,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "sentret",
       "name": "Wiesor",
       "dex": 161,
-      "family": 82
+      "family": 82,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "furret",
       "name": "Wiesenior",
       "dex": 162,
-      "family": 82
+      "family": 82,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "hoothoot",
       "name": "Hoothoot",
       "dex": 163,
-      "family": 83
+      "family": 83,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "noctowl",
       "name": "Noctuh",
       "dex": 164,
-      "family": 83
+      "family": 83,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "ledyba",
       "name": "Ledyba",
       "dex": 165,
-      "family": 84
+      "family": 84,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "ledian",
       "name": "Ledian",
       "dex": 166,
-      "family": 84
+      "family": 84,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "spinarak",
       "name": "Webarak",
       "dex": 167,
-      "family": 85
+      "family": 85,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "ariados",
       "name": "Ariados",
       "dex": 168,
-      "family": 85
+      "family": 85,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "crobat",
       "name": "Iksbat",
       "dex": 169,
-      "family": 17
+      "family": 17,
+      "types": [
+        "poison",
+        "flying"
+      ]
     },
     {
       "species": "chinchou",
       "name": "Lampi",
       "dex": 170,
-      "family": 86
+      "family": 86,
+      "types": [
+        "water",
+        "electric"
+      ]
     },
     {
       "species": "lanturn",
       "name": "Lanturn",
       "dex": 171,
-      "family": 86
+      "family": 86,
+      "types": [
+        "water",
+        "electric"
+      ]
     },
     {
       "species": "pichu",
       "name": "Pichu",
       "dex": 172,
-      "family": 10
+      "family": 10,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "cleffa",
       "name": "Pii",
       "dex": 173,
-      "family": 14
+      "family": 14,
+      "types": [
+        "fairy"
+      ]
     },
     {
       "species": "igglybuff",
       "name": "Fluffeluff",
       "dex": 174,
-      "family": 16
+      "family": 16,
+      "types": [
+        "normal",
+        "fairy"
+      ]
     },
     {
       "species": "togepi",
       "name": "Togepi",
       "dex": 175,
-      "family": 87
+      "family": 87,
+      "types": [
+        "fairy"
+      ]
     },
     {
       "species": "togetic",
       "name": "Togetic",
       "dex": 176,
-      "family": 87
+      "family": 87,
+      "types": [
+        "fairy",
+        "flying"
+      ]
     },
     {
       "species": "natu",
       "name": "Natu",
       "dex": 177,
-      "family": 88
+      "family": 88,
+      "types": [
+        "psychic",
+        "flying"
+      ]
     },
     {
       "species": "xatu",
       "name": "Xatu",
       "dex": 178,
-      "family": 88
+      "family": 88,
+      "types": [
+        "psychic",
+        "flying"
+      ]
     },
     {
       "species": "mareep",
       "name": "Voltilamm",
       "dex": 179,
-      "family": 89
+      "family": 89,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "flaaffy",
       "name": "Waaty",
       "dex": 180,
-      "family": 89
+      "family": 89,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "ampharos",
       "name": "Ampharos",
       "dex": 181,
-      "family": 89
+      "family": 89,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "bellossom",
       "name": "Blubella",
       "dex": 182,
-      "family": 18
+      "family": 18,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "marill",
       "name": "Marill",
       "dex": 183,
-      "family": 90
+      "family": 90,
+      "types": [
+        "water",
+        "fairy"
+      ]
     },
     {
       "species": "azumarill",
       "name": "Azumarill",
       "dex": 184,
-      "family": 90
+      "family": 90,
+      "types": [
+        "water",
+        "fairy"
+      ]
     },
     {
       "species": "sudowoodo",
       "name": "Mogelbaum",
       "dex": 185,
-      "family": 91
+      "family": 91,
+      "types": [
+        "rock"
+      ]
     },
     {
       "species": "politoed",
       "name": "Quaxo",
       "dex": 186,
-      "family": 26
+      "family": 26,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "hoppip",
       "name": "Hoppspross",
       "dex": 187,
-      "family": 92
+      "family": 92,
+      "types": [
+        "grass",
+        "flying"
+      ]
     },
     {
       "species": "skiploom",
       "name": "Hubelupf",
       "dex": 188,
-      "family": 92
+      "family": 92,
+      "types": [
+        "grass",
+        "flying"
+      ]
     },
     {
       "species": "jumpluff",
       "name": "Papungha",
       "dex": 189,
-      "family": 92
+      "family": 92,
+      "types": [
+        "grass",
+        "flying"
+      ]
     },
     {
       "species": "aipom",
       "name": "Griffel",
       "dex": 190,
-      "family": 93
+      "family": 93,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "sunkern",
       "name": "Sonnkern",
       "dex": 191,
-      "family": 94
+      "family": 94,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "sunflora",
       "name": "Sonnflora",
       "dex": 192,
-      "family": 94
+      "family": 94,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "yanma",
       "name": "Yanma",
       "dex": 193,
-      "family": 95
+      "family": 95,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "wooper",
       "name": "Felino",
       "dex": 194,
-      "family": 96
+      "family": 96,
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     {
       "species": "quagsire",
       "name": "Morlord",
       "dex": 195,
-      "family": 96
+      "family": 96,
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     {
       "species": "espeon",
       "name": "Psiana",
       "dex": 196,
-      "family": 67
+      "family": 67,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "umbreon",
       "name": "Nachtara",
       "dex": 197,
-      "family": 67
+      "family": 67,
+      "types": [
+        "dark"
+      ]
     },
     {
       "species": "murkrow",
       "name": "Kramurx",
       "dex": 198,
-      "family": 97
+      "family": 97,
+      "types": [
+        "dark",
+        "flying"
+      ]
     },
     {
       "species": "slowking",
       "name": "Laschoking",
       "dex": 199,
-      "family": 33
+      "family": 33,
+      "types": [
+        "water",
+        "psychic"
+      ]
     },
     {
       "species": "misdreavus",
       "name": "Traunfugil",
       "dex": 200,
-      "family": 98
+      "family": 98,
+      "types": [
+        "ghost"
+      ]
     },
     {
       "species": "unown",
       "name": "Icognito",
       "dex": 201,
-      "family": 99
+      "family": 99,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "wobbuffet",
       "name": "Woingenau",
       "dex": 202,
-      "family": 100
+      "family": 100,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "girafarig",
       "name": "Girafarig",
       "dex": 203,
-      "family": 101
+      "family": 101,
+      "types": [
+        "normal",
+        "psychic"
+      ]
     },
     {
       "species": "pineco",
       "name": "Tannza",
       "dex": 204,
-      "family": 102
+      "family": 102,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "forretress",
       "name": "Forstellka",
       "dex": 205,
-      "family": 102
+      "family": 102,
+      "types": [
+        "bug",
+        "steel"
+      ]
     },
     {
       "species": "dunsparce",
       "name": "Dummisel",
       "dex": 206,
-      "family": 103
+      "family": 103,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "gligar",
       "name": "Skorgla",
       "dex": 207,
-      "family": 104
+      "family": 104,
+      "types": [
+        "ground",
+        "flying"
+      ]
     },
     {
       "species": "steelix",
       "name": "Stahlos",
       "dex": 208,
-      "family": 41
+      "family": 41,
+      "types": [
+        "steel",
+        "ground"
+      ]
     },
     {
       "species": "snubbull",
       "name": "Snubbull",
       "dex": 209,
-      "family": 105
+      "family": 105,
+      "types": [
+        "fairy"
+      ]
     },
     {
       "species": "granbull",
       "name": "Granbull",
       "dex": 210,
-      "family": 105
+      "family": 105,
+      "types": [
+        "fairy"
+      ]
     },
     {
       "species": "qwilfish",
       "name": "Baldorfish",
       "dex": 211,
-      "family": 106
+      "family": 106,
+      "types": [
+        "water",
+        "poison"
+      ]
     },
     {
       "species": "scizor",
       "name": "Scherox",
       "dex": 212,
-      "family": 58
+      "family": 58,
+      "types": [
+        "bug",
+        "steel"
+      ]
     },
     {
       "species": "shuckle",
       "name": "Pottrott",
       "dex": 213,
-      "family": 107
+      "family": 107,
+      "types": [
+        "bug",
+        "rock"
+      ]
     },
     {
       "species": "heracross",
       "name": "Skaraborn",
       "dex": 214,
-      "family": 108
+      "family": 108,
+      "types": [
+        "bug",
+        "fighting"
+      ]
     },
     {
       "species": "sneasel",
       "name": "Sniebel",
       "dex": 215,
-      "family": 109
+      "family": 109,
+      "types": [
+        "dark",
+        "ice"
+      ]
     },
     {
       "species": "teddiursa",
       "name": "Teddiursa",
       "dex": 216,
-      "family": 110
+      "family": 110,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "ursaring",
       "name": "Ursaring",
       "dex": 217,
-      "family": 110
+      "family": 110,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "slugma",
       "name": "Schneckmag",
       "dex": 218,
-      "family": 111
+      "family": 111,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "magcargo",
       "name": "Magcargo",
       "dex": 219,
-      "family": 111
+      "family": 111,
+      "types": [
+        "fire",
+        "rock"
+      ]
     },
     {
       "species": "swinub",
       "name": "Quiekel",
       "dex": 220,
-      "family": 112
+      "family": 112,
+      "types": [
+        "ice",
+        "ground"
+      ]
     },
     {
       "species": "piloswine",
       "name": "Keifel",
       "dex": 221,
-      "family": 112
+      "family": 112,
+      "types": [
+        "ice",
+        "ground"
+      ]
     },
     {
       "species": "corsola",
       "name": "Corasonn",
       "dex": 222,
-      "family": 113
+      "family": 113,
+      "types": [
+        "water",
+        "rock"
+      ]
     },
     {
       "species": "remoraid",
       "name": "Remoraid",
       "dex": 223,
-      "family": 114
+      "family": 114,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "octillery",
       "name": "Octillery",
       "dex": 224,
-      "family": 114
+      "family": 114,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "delibird",
       "name": "Botogel",
       "dex": 225,
-      "family": 115
+      "family": 115,
+      "types": [
+        "ice",
+        "flying"
+      ]
     },
     {
       "species": "mantine",
       "name": "Mantax",
       "dex": 226,
-      "family": 116
+      "family": 116,
+      "types": [
+        "water",
+        "flying"
+      ]
     },
     {
       "species": "skarmory",
       "name": "Panzaeron",
       "dex": 227,
-      "family": 117
+      "family": 117,
+      "types": [
+        "steel",
+        "flying"
+      ]
     },
     {
       "species": "houndour",
       "name": "Hunduster",
       "dex": 228,
-      "family": 118
+      "family": 118,
+      "types": [
+        "dark",
+        "fire"
+      ]
     },
     {
       "species": "houndoom",
       "name": "Hundemon",
       "dex": 229,
-      "family": 118
+      "family": 118,
+      "types": [
+        "dark",
+        "fire"
+      ]
     },
     {
       "species": "kingdra",
       "name": "Seedraking",
       "dex": 230,
-      "family": 54
+      "family": 54,
+      "types": [
+        "water",
+        "dragon"
+      ]
     },
     {
       "species": "phanpy",
       "name": "Phanpy",
       "dex": 231,
-      "family": 119
+      "family": 119,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "donphan",
       "name": "Donphan",
       "dex": 232,
-      "family": 119
+      "family": 119,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "porygon2",
       "name": "Porygon2",
       "dex": 233,
-      "family": 68
+      "family": 68,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "stantler",
       "name": "Damhirplex",
       "dex": 234,
-      "family": 120
+      "family": 120,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "smeargle",
       "name": "Farbeagle",
       "dex": 235,
-      "family": 121
+      "family": 121,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "tyrogue",
       "name": "Rabauz",
       "dex": 236,
-      "family": 47
+      "family": 47,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "hitmontop",
       "name": "Kapoera",
       "dex": 237,
-      "family": 47
+      "family": 47,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "smoochum",
       "name": "Kussilla",
       "dex": 238,
-      "family": 59
+      "family": 59,
+      "types": [
+        "ice",
+        "psychic"
+      ]
     },
     {
       "species": "elekid",
       "name": "Elekid",
       "dex": 239,
-      "family": 60
+      "family": 60,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "magby",
       "name": "Magby",
       "dex": 240,
-      "family": 61
+      "family": 61,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "miltank",
       "name": "Miltank",
       "dex": 241,
-      "family": 122
+      "family": 122,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "blissey",
       "name": "Heiteira",
       "dex": 242,
-      "family": 51
+      "family": 51,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "raikou",
       "name": "Raikou",
       "dex": 243,
-      "family": 123
+      "family": 123,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "entei",
       "name": "Entei",
       "dex": 244,
-      "family": 124
+      "family": 124,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "suicune",
       "name": "Suicune",
       "dex": 245,
-      "family": 125
+      "family": 125,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "larvitar",
       "name": "Larvitar",
       "dex": 246,
-      "family": 126
+      "family": 126,
+      "types": [
+        "rock",
+        "ground"
+      ]
     },
     {
       "species": "pupitar",
       "name": "Pupitar",
       "dex": 247,
-      "family": 126
+      "family": 126,
+      "types": [
+        "rock",
+        "ground"
+      ]
     },
     {
       "species": "tyranitar",
       "name": "Despotar",
       "dex": 248,
-      "family": 126
+      "family": 126,
+      "types": [
+        "rock",
+        "dark"
+      ]
     },
     {
       "species": "lugia",
       "name": "Lugia",
       "dex": 249,
-      "family": 127
+      "family": 127,
+      "types": [
+        "psychic",
+        "flying"
+      ]
     },
     {
       "species": "ho-oh",
       "name": "Ho-Oh",
       "dex": 250,
-      "family": 128
+      "family": 128,
+      "types": [
+        "fire",
+        "flying"
+      ]
     },
     {
       "species": "celebi",
       "name": "Celebi",
       "dex": 251,
-      "family": 129
+      "family": 129,
+      "types": [
+        "psychic",
+        "grass"
+      ]
     },
     {
       "species": "treecko",
       "name": "Geckarbor",
       "dex": 252,
-      "family": 130
+      "family": 130,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "grovyle",
       "name": "Reptain",
       "dex": 253,
-      "family": 130
+      "family": 130,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "sceptile",
       "name": "Gewaldro",
       "dex": 254,
-      "family": 130
+      "family": 130,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "torchic",
       "name": "Flemmli",
       "dex": 255,
-      "family": 131
+      "family": 131,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "combusken",
       "name": "Jungglut",
       "dex": 256,
-      "family": 131
+      "family": 131,
+      "types": [
+        "fire",
+        "fighting"
+      ]
     },
     {
       "species": "blaziken",
       "name": "Lohgock",
       "dex": 257,
-      "family": 131
+      "family": 131,
+      "types": [
+        "fire",
+        "fighting"
+      ]
     },
     {
       "species": "mudkip",
       "name": "Hydropi",
       "dex": 258,
-      "family": 132
+      "family": 132,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "marshtomp",
       "name": "Moorabbel",
       "dex": 259,
-      "family": 132
+      "family": 132,
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     {
       "species": "swampert",
       "name": "Sumpex",
       "dex": 260,
-      "family": 132
+      "family": 132,
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     {
       "species": "poochyena",
       "name": "Fiffyen",
       "dex": 261,
-      "family": 133
+      "family": 133,
+      "types": [
+        "dark"
+      ]
     },
     {
       "species": "mightyena",
       "name": "Magnayen",
       "dex": 262,
-      "family": 133
+      "family": 133,
+      "types": [
+        "dark"
+      ]
     },
     {
       "species": "zigzagoon",
       "name": "Zigzachs",
       "dex": 263,
-      "family": 134
+      "family": 134,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "linoone",
       "name": "Geradaks",
       "dex": 264,
-      "family": 134
+      "family": 134,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "wurmple",
       "name": "Waumpel",
       "dex": 265,
-      "family": 135
+      "family": 135,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "silcoon",
       "name": "Schaloko",
       "dex": 266,
-      "family": 135
+      "family": 135,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "beautifly",
       "name": "Papinella",
       "dex": 267,
-      "family": 135
+      "family": 135,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "cascoon",
       "name": "Panekon",
       "dex": 268,
-      "family": 135
+      "family": 135,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "dustox",
       "name": "Pudox",
       "dex": 269,
-      "family": 135
+      "family": 135,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "lotad",
       "name": "Loturzel",
       "dex": 270,
-      "family": 136
+      "family": 136,
+      "types": [
+        "water",
+        "grass"
+      ]
     },
     {
       "species": "lombre",
       "name": "Lombrero",
       "dex": 271,
-      "family": 136
+      "family": 136,
+      "types": [
+        "water",
+        "grass"
+      ]
     },
     {
       "species": "ludicolo",
       "name": "Kappalores",
       "dex": 272,
-      "family": 136
+      "family": 136,
+      "types": [
+        "water",
+        "grass"
+      ]
     },
     {
       "species": "seedot",
       "name": "Samurzel",
       "dex": 273,
-      "family": 137
+      "family": 137,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "nuzleaf",
       "name": "Blanas",
       "dex": 274,
-      "family": 137
+      "family": 137,
+      "types": [
+        "grass",
+        "dark"
+      ]
     },
     {
       "species": "shiftry",
       "name": "Tengulist",
       "dex": 275,
-      "family": 137
+      "family": 137,
+      "types": [
+        "grass",
+        "dark"
+      ]
     },
     {
       "species": "taillow",
       "name": "Schwalbini",
       "dex": 276,
-      "family": 138
+      "family": 138,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "swellow",
       "name": "Schwalboss",
       "dex": 277,
-      "family": 138
+      "family": 138,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "wingull",
       "name": "Wingull",
       "dex": 278,
-      "family": 139
+      "family": 139,
+      "types": [
+        "water",
+        "flying"
+      ]
     },
     {
       "species": "pelipper",
       "name": "Pelipper",
       "dex": 279,
-      "family": 139
+      "family": 139,
+      "types": [
+        "water",
+        "flying"
+      ]
     },
     {
       "species": "ralts",
       "name": "Trasla",
       "dex": 280,
-      "family": 140
+      "family": 140,
+      "types": [
+        "psychic",
+        "fairy"
+      ]
     },
     {
       "species": "kirlia",
       "name": "Kirlia",
       "dex": 281,
-      "family": 140
+      "family": 140,
+      "types": [
+        "psychic",
+        "fairy"
+      ]
     },
     {
       "species": "gardevoir",
       "name": "Guardevoir",
       "dex": 282,
-      "family": 140
+      "family": 140,
+      "types": [
+        "psychic",
+        "fairy"
+      ]
     },
     {
       "species": "surskit",
       "name": "Gehweiher",
       "dex": 283,
-      "family": 141
+      "family": 141,
+      "types": [
+        "bug",
+        "water"
+      ]
     },
     {
       "species": "masquerain",
       "name": "Maskeregen",
       "dex": 284,
-      "family": 141
+      "family": 141,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "shroomish",
       "name": "Knilz",
       "dex": 285,
-      "family": 142
+      "family": 142,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "breloom",
       "name": "Kapilz",
       "dex": 286,
-      "family": 142
+      "family": 142,
+      "types": [
+        "grass",
+        "fighting"
+      ]
     },
     {
       "species": "slakoth",
       "name": "Bummelz",
       "dex": 287,
-      "family": 143
+      "family": 143,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "vigoroth",
       "name": "Muntier",
       "dex": 288,
-      "family": 143
+      "family": 143,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "slaking",
       "name": "Letarking",
       "dex": 289,
-      "family": 143
+      "family": 143,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "nincada",
       "name": "Nincada",
       "dex": 290,
-      "family": 144
+      "family": 144,
+      "types": [
+        "bug",
+        "ground"
+      ]
     },
     {
       "species": "ninjask",
       "name": "Ninjask",
       "dex": 291,
-      "family": 144
+      "family": 144,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "shedinja",
       "name": "Ninjatom",
       "dex": 292,
-      "family": 144
+      "family": 144,
+      "types": [
+        "bug",
+        "ghost"
+      ]
     },
     {
       "species": "whismur",
       "name": "Flurmel",
       "dex": 293,
-      "family": 145
+      "family": 145,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "loudred",
       "name": "Krakeelo",
       "dex": 294,
-      "family": 145
+      "family": 145,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "exploud",
       "name": "Krawumms",
       "dex": 295,
-      "family": 145
+      "family": 145,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "makuhita",
       "name": "Makuhita",
       "dex": 296,
-      "family": 146
+      "family": 146,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "hariyama",
       "name": "Hariyama",
       "dex": 297,
-      "family": 146
+      "family": 146,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "azurill",
       "name": "Azurill",
       "dex": 298,
-      "family": 90
+      "family": 90,
+      "types": [
+        "normal",
+        "fairy"
+      ]
     },
     {
       "species": "nosepass",
       "name": "Nasgnet",
       "dex": 299,
-      "family": 147
+      "family": 147,
+      "types": [
+        "rock"
+      ]
     },
     {
       "species": "skitty",
       "name": "Eneco",
       "dex": 300,
-      "family": 148
+      "family": 148,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "delcatty",
       "name": "Enekoro",
       "dex": 301,
-      "family": 148
+      "family": 148,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "sableye",
       "name": "Zobiris",
       "dex": 302,
-      "family": 149
+      "family": 149,
+      "types": [
+        "dark",
+        "ghost"
+      ]
     },
     {
       "species": "mawile",
       "name": "Flunkifer",
       "dex": 303,
-      "family": 150
+      "family": 150,
+      "types": [
+        "steel",
+        "fairy"
+      ]
     },
     {
       "species": "aron",
       "name": "Stollunior",
       "dex": 304,
-      "family": 151
+      "family": 151,
+      "types": [
+        "steel",
+        "rock"
+      ]
     },
     {
       "species": "lairon",
       "name": "Stollrak",
       "dex": 305,
-      "family": 151
+      "family": 151,
+      "types": [
+        "steel",
+        "rock"
+      ]
     },
     {
       "species": "aggron",
       "name": "Stolloss",
       "dex": 306,
-      "family": 151
+      "family": 151,
+      "types": [
+        "steel",
+        "rock"
+      ]
     },
     {
       "species": "meditite",
       "name": "Meditie",
       "dex": 307,
-      "family": 152
+      "family": 152,
+      "types": [
+        "fighting",
+        "psychic"
+      ]
     },
     {
       "species": "medicham",
       "name": "Meditalis",
       "dex": 308,
-      "family": 152
+      "family": 152,
+      "types": [
+        "fighting",
+        "psychic"
+      ]
     },
     {
       "species": "electrike",
       "name": "Frizelbliz",
       "dex": 309,
-      "family": 153
+      "family": 153,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "manectric",
       "name": "Voltenso",
       "dex": 310,
-      "family": 153
+      "family": 153,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "plusle",
       "name": "Plusle",
       "dex": 311,
-      "family": 154
+      "family": 154,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "minun",
       "name": "Minun",
       "dex": 312,
-      "family": 155
+      "family": 155,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "volbeat",
       "name": "Volbeat",
       "dex": 313,
-      "family": 156
+      "family": 156,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "illumise",
       "name": "Illumise",
       "dex": 314,
-      "family": 157
+      "family": 157,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "roselia",
       "name": "Roselia",
       "dex": 315,
-      "family": 158
+      "family": 158,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "gulpin",
       "name": "Schluppuck",
       "dex": 316,
-      "family": 159
+      "family": 159,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "swalot",
       "name": "Schlukwech",
       "dex": 317,
-      "family": 159
+      "family": 159,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "carvanha",
       "name": "Kanivanha",
       "dex": 318,
-      "family": 160
+      "family": 160,
+      "types": [
+        "water",
+        "dark"
+      ]
     },
     {
       "species": "sharpedo",
       "name": "Tohaido",
       "dex": 319,
-      "family": 160
+      "family": 160,
+      "types": [
+        "water",
+        "dark"
+      ]
     },
     {
       "species": "wailmer",
       "name": "Wailmer",
       "dex": 320,
-      "family": 161
+      "family": 161,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "wailord",
       "name": "Wailord",
       "dex": 321,
-      "family": 161
+      "family": 161,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "numel",
       "name": "Camaub",
       "dex": 322,
-      "family": 162
+      "family": 162,
+      "types": [
+        "fire",
+        "ground"
+      ]
     },
     {
       "species": "camerupt",
       "name": "Camerupt",
       "dex": 323,
-      "family": 162
+      "family": 162,
+      "types": [
+        "fire",
+        "ground"
+      ]
     },
     {
       "species": "torkoal",
       "name": "Qurtel",
       "dex": 324,
-      "family": 163
+      "family": 163,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "spoink",
       "name": "Spoink",
       "dex": 325,
-      "family": 164
+      "family": 164,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "grumpig",
       "name": "Groink",
       "dex": 326,
-      "family": 164
+      "family": 164,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "spinda",
       "name": "Pandir",
       "dex": 327,
-      "family": 165
+      "family": 165,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "trapinch",
       "name": "Knacklion",
       "dex": 328,
-      "family": 166
+      "family": 166,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "vibrava",
       "name": "Vibrava",
       "dex": 329,
-      "family": 166
+      "family": 166,
+      "types": [
+        "ground",
+        "dragon"
+      ]
     },
     {
       "species": "flygon",
       "name": "Libelldra",
       "dex": 330,
-      "family": 166
+      "family": 166,
+      "types": [
+        "ground",
+        "dragon"
+      ]
     },
     {
       "species": "cacnea",
       "name": "Tuska",
       "dex": 331,
-      "family": 167
+      "family": 167,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "cacturne",
       "name": "Noktuska",
       "dex": 332,
-      "family": 167
+      "family": 167,
+      "types": [
+        "grass",
+        "dark"
+      ]
     },
     {
       "species": "swablu",
       "name": "Wablu",
       "dex": 333,
-      "family": 168
+      "family": 168,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "altaria",
       "name": "Altaria",
       "dex": 334,
-      "family": 168
+      "family": 168,
+      "types": [
+        "dragon",
+        "flying"
+      ]
     },
     {
       "species": "zangoose",
       "name": "Sengo",
       "dex": 335,
-      "family": 169
+      "family": 169,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "seviper",
       "name": "Vipitis",
       "dex": 336,
-      "family": 170
+      "family": 170,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "lunatone",
       "name": "Lunastein",
       "dex": 337,
-      "family": 171
+      "family": 171,
+      "types": [
+        "rock",
+        "psychic"
+      ]
     },
     {
       "species": "solrock",
       "name": "Sonnfel",
       "dex": 338,
-      "family": 172
+      "family": 172,
+      "types": [
+        "rock",
+        "psychic"
+      ]
     },
     {
       "species": "barboach",
       "name": "Schmerbe",
       "dex": 339,
-      "family": 173
+      "family": 173,
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     {
       "species": "whiscash",
       "name": "Welsar",
       "dex": 340,
-      "family": 173
+      "family": 173,
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     {
       "species": "corphish",
       "name": "Krebscorps",
       "dex": 341,
-      "family": 174
+      "family": 174,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "crawdaunt",
       "name": "Krebutack",
       "dex": 342,
-      "family": 174
+      "family": 174,
+      "types": [
+        "water",
+        "dark"
+      ]
     },
     {
       "species": "baltoy",
       "name": "Puppance",
       "dex": 343,
-      "family": 175
+      "family": 175,
+      "types": [
+        "ground",
+        "psychic"
+      ]
     },
     {
       "species": "claydol",
       "name": "Lepumentas",
       "dex": 344,
-      "family": 175
+      "family": 175,
+      "types": [
+        "ground",
+        "psychic"
+      ]
     },
     {
       "species": "lileep",
       "name": "Liliep",
       "dex": 345,
-      "family": 176
+      "family": 176,
+      "types": [
+        "rock",
+        "grass"
+      ]
     },
     {
       "species": "cradily",
       "name": "Wielie",
       "dex": 346,
-      "family": 176
+      "family": 176,
+      "types": [
+        "rock",
+        "grass"
+      ]
     },
     {
       "species": "anorith",
       "name": "Anorith",
       "dex": 347,
-      "family": 177
+      "family": 177,
+      "types": [
+        "rock",
+        "bug"
+      ]
     },
     {
       "species": "armaldo",
       "name": "Armaldo",
       "dex": 348,
-      "family": 177
+      "family": 177,
+      "types": [
+        "rock",
+        "bug"
+      ]
     },
     {
       "species": "feebas",
       "name": "Barschwa",
       "dex": 349,
-      "family": 178
+      "family": 178,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "milotic",
       "name": "Milotic",
       "dex": 350,
-      "family": 178
+      "family": 178,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "castform",
       "name": "Formeo",
       "dex": 351,
-      "family": 179
+      "family": 179,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "kecleon",
       "name": "Kecleon",
       "dex": 352,
-      "family": 180
+      "family": 180,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "shuppet",
       "name": "Shuppet",
       "dex": 353,
-      "family": 181
+      "family": 181,
+      "types": [
+        "ghost"
+      ]
     },
     {
       "species": "banette",
       "name": "Banette",
       "dex": 354,
-      "family": 181
+      "family": 181,
+      "types": [
+        "ghost"
+      ]
     },
     {
       "species": "duskull",
       "name": "Zwirrlicht",
       "dex": 355,
-      "family": 182
+      "family": 182,
+      "types": [
+        "ghost"
+      ]
     },
     {
       "species": "dusclops",
       "name": "Zwirrklop",
       "dex": 356,
-      "family": 182
+      "family": 182,
+      "types": [
+        "ghost"
+      ]
     },
     {
       "species": "tropius",
       "name": "Tropius",
       "dex": 357,
-      "family": 183
+      "family": 183,
+      "types": [
+        "grass",
+        "flying"
+      ]
     },
     {
       "species": "chimecho",
       "name": "Palimpalim",
       "dex": 358,
-      "family": 184
+      "family": 184,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "absol",
       "name": "Absol",
       "dex": 359,
-      "family": 185
+      "family": 185,
+      "types": [
+        "dark"
+      ]
     },
     {
       "species": "wynaut",
       "name": "Isso",
       "dex": 360,
-      "family": 100
+      "family": 100,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "snorunt",
       "name": "Schneppke",
       "dex": 361,
-      "family": 186
+      "family": 186,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "glalie",
       "name": "Firnontor",
       "dex": 362,
-      "family": 186
+      "family": 186,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "spheal",
       "name": "Seemops",
       "dex": 363,
-      "family": 187
+      "family": 187,
+      "types": [
+        "ice",
+        "water"
+      ]
     },
     {
       "species": "sealeo",
       "name": "Seejong",
       "dex": 364,
-      "family": 187
+      "family": 187,
+      "types": [
+        "ice",
+        "water"
+      ]
     },
     {
       "species": "walrein",
       "name": "Walraisa",
       "dex": 365,
-      "family": 187
+      "family": 187,
+      "types": [
+        "ice",
+        "water"
+      ]
     },
     {
       "species": "clamperl",
       "name": "Perlu",
       "dex": 366,
-      "family": 188
+      "family": 188,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "huntail",
       "name": "Aalabyss",
       "dex": 367,
-      "family": 188
+      "family": 188,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "gorebyss",
       "name": "Saganabyss",
       "dex": 368,
-      "family": 188
+      "family": 188,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "relicanth",
       "name": "Relicanth",
       "dex": 369,
-      "family": 189
+      "family": 189,
+      "types": [
+        "water",
+        "rock"
+      ]
     },
     {
       "species": "luvdisc",
       "name": "Liebiskus",
       "dex": 370,
-      "family": 190
+      "family": 190,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "bagon",
       "name": "Kindwurm",
       "dex": 371,
-      "family": 191
+      "family": 191,
+      "types": [
+        "dragon"
+      ]
     },
     {
       "species": "shelgon",
       "name": "Draschel",
       "dex": 372,
-      "family": 191
+      "family": 191,
+      "types": [
+        "dragon"
+      ]
     },
     {
       "species": "salamence",
       "name": "Brutalanda",
       "dex": 373,
-      "family": 191
+      "family": 191,
+      "types": [
+        "dragon",
+        "flying"
+      ]
     },
     {
       "species": "beldum",
       "name": "Tanhel",
       "dex": 374,
-      "family": 192
+      "family": 192,
+      "types": [
+        "steel",
+        "psychic"
+      ]
     },
     {
       "species": "metang",
       "name": "Metang",
       "dex": 375,
-      "family": 192
+      "family": 192,
+      "types": [
+        "steel",
+        "psychic"
+      ]
     },
     {
       "species": "metagross",
       "name": "Metagross",
       "dex": 376,
-      "family": 192
+      "family": 192,
+      "types": [
+        "steel",
+        "psychic"
+      ]
     },
     {
       "species": "regirock",
       "name": "Regirock",
       "dex": 377,
-      "family": 193
+      "family": 193,
+      "types": [
+        "rock"
+      ]
     },
     {
       "species": "regice",
       "name": "Regice",
       "dex": 378,
-      "family": 194
+      "family": 194,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "registeel",
       "name": "Registeel",
       "dex": 379,
-      "family": 195
+      "family": 195,
+      "types": [
+        "steel"
+      ]
     },
     {
       "species": "latias",
       "name": "Latias",
       "dex": 380,
-      "family": 196
+      "family": 196,
+      "types": [
+        "dragon",
+        "psychic"
+      ]
     },
     {
       "species": "latios",
       "name": "Latios",
       "dex": 381,
-      "family": 197
+      "family": 197,
+      "types": [
+        "dragon",
+        "psychic"
+      ]
     },
     {
       "species": "kyogre",
       "name": "Kyogre",
       "dex": 382,
-      "family": 198
+      "family": 198,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "groudon",
       "name": "Groudon",
       "dex": 383,
-      "family": 199
+      "family": 199,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "rayquaza",
       "name": "Rayquaza",
       "dex": 384,
-      "family": 200
+      "family": 200,
+      "types": [
+        "dragon",
+        "flying"
+      ]
     },
     {
       "species": "jirachi",
       "name": "Jirachi",
       "dex": 385,
-      "family": 201
+      "family": 201,
+      "types": [
+        "steel",
+        "psychic"
+      ]
     },
     {
       "species": "deoxys",
       "name": "Deoxys",
       "dex": 386,
-      "family": 202
+      "family": 202,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "turtwig",
       "name": "Chelast",
       "dex": 387,
-      "family": 203
+      "family": 203,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "grotle",
       "name": "Chelcarain",
       "dex": 388,
-      "family": 203
+      "family": 203,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "torterra",
       "name": "Chelterrar",
       "dex": 389,
-      "family": 203
+      "family": 203,
+      "types": [
+        "grass",
+        "ground"
+      ]
     },
     {
       "species": "chimchar",
       "name": "Panflam",
       "dex": 390,
-      "family": 204
+      "family": 204,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "monferno",
       "name": "Panpyro",
       "dex": 391,
-      "family": 204
+      "family": 204,
+      "types": [
+        "fire",
+        "fighting"
+      ]
     },
     {
       "species": "infernape",
       "name": "Panferno",
       "dex": 392,
-      "family": 204
+      "family": 204,
+      "types": [
+        "fire",
+        "fighting"
+      ]
     },
     {
       "species": "piplup",
       "name": "Plinfa",
       "dex": 393,
-      "family": 205
+      "family": 205,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "prinplup",
       "name": "Pliprin",
       "dex": 394,
-      "family": 205
+      "family": 205,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "empoleon",
       "name": "Impoleon",
       "dex": 395,
-      "family": 205
+      "family": 205,
+      "types": [
+        "water",
+        "steel"
+      ]
     },
     {
       "species": "starly",
       "name": "Staralili",
       "dex": 396,
-      "family": 206
+      "family": 206,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "staravia",
       "name": "Staravia",
       "dex": 397,
-      "family": 206
+      "family": 206,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "staraptor",
       "name": "Staraptor",
       "dex": 398,
-      "family": 206
+      "family": 206,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "bidoof",
       "name": "Bidiza",
       "dex": 399,
-      "family": 207
+      "family": 207,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "bibarel",
       "name": "Bidifas",
       "dex": 400,
-      "family": 207
+      "family": 207,
+      "types": [
+        "normal",
+        "water"
+      ]
     },
     {
       "species": "kricketot",
       "name": "Zirpurze",
       "dex": 401,
-      "family": 208
+      "family": 208,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "kricketune",
       "name": "Zirpeise",
       "dex": 402,
-      "family": 208
+      "family": 208,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "shinx",
       "name": "Sheinux",
       "dex": 403,
-      "family": 209
+      "family": 209,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "luxio",
       "name": "Luxio",
       "dex": 404,
-      "family": 209
+      "family": 209,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "luxray",
       "name": "Luxtra",
       "dex": 405,
-      "family": 209
+      "family": 209,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "budew",
       "name": "Knospi",
       "dex": 406,
-      "family": 158
+      "family": 158,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "roserade",
       "name": "Roserade",
       "dex": 407,
-      "family": 158
+      "family": 158,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "cranidos",
       "name": "Koknodon",
       "dex": 408,
-      "family": 211
+      "family": 211,
+      "types": [
+        "rock"
+      ]
     },
     {
       "species": "rampardos",
       "name": "Rameidon",
       "dex": 409,
-      "family": 211
+      "family": 211,
+      "types": [
+        "rock"
+      ]
     },
     {
       "species": "shieldon",
       "name": "Schilterus",
       "dex": 410,
-      "family": 212
+      "family": 212,
+      "types": [
+        "rock",
+        "steel"
+      ]
     },
     {
       "species": "bastiodon",
       "name": "Bollterus",
       "dex": 411,
-      "family": 212
+      "family": 212,
+      "types": [
+        "rock",
+        "steel"
+      ]
     },
     {
       "species": "burmy",
       "name": "Burmy",
       "dex": 412,
-      "family": 213
+      "family": 213,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "wormadam",
       "name": "Burmadame",
       "dex": 413,
-      "family": 213
+      "family": 213,
+      "types": [
+        "bug",
+        "grass"
+      ]
     },
     {
       "species": "mothim",
       "name": "Moterpel",
       "dex": 414,
-      "family": 213
+      "family": 213,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "combee",
       "name": "Wadribie",
       "dex": 415,
-      "family": 214
+      "family": 214,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "vespiquen",
       "name": "Honweisel",
       "dex": 416,
-      "family": 214
+      "family": 214,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "pachirisu",
       "name": "Pachirisu",
       "dex": 417,
-      "family": 215
+      "family": 215,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "buizel",
       "name": "Bamelin",
       "dex": 418,
-      "family": 216
+      "family": 216,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "floatzel",
       "name": "Bojelin",
       "dex": 419,
-      "family": 216
+      "family": 216,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "cherubi",
       "name": "Kikugi",
       "dex": 420,
-      "family": 217
+      "family": 217,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "cherrim",
       "name": "Kinoso",
       "dex": 421,
-      "family": 217
+      "family": 217,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "shellos",
       "name": "Schalellos",
       "dex": 422,
-      "family": 218
+      "family": 218,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "gastrodon",
       "name": "Gastrodon",
       "dex": 423,
-      "family": 218
+      "family": 218,
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     {
       "species": "ambipom",
       "name": "Ambidiffel",
       "dex": 424,
-      "family": 93
+      "family": 93,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "drifloon",
       "name": "Driftlon",
       "dex": 425,
-      "family": 219
+      "family": 219,
+      "types": [
+        "ghost",
+        "flying"
+      ]
     },
     {
       "species": "drifblim",
       "name": "Drifzepeli",
       "dex": 426,
-      "family": 219
+      "family": 219,
+      "types": [
+        "ghost",
+        "flying"
+      ]
     },
     {
       "species": "buneary",
       "name": "Haspiror",
       "dex": 427,
-      "family": 220
+      "family": 220,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "lopunny",
       "name": "Schlapor",
       "dex": 428,
-      "family": 220
+      "family": 220,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "mismagius",
       "name": "Traunmagil",
       "dex": 429,
-      "family": 98
+      "family": 98,
+      "types": [
+        "ghost"
+      ]
     },
     {
       "species": "honchkrow",
       "name": "Kramshef",
       "dex": 430,
-      "family": 97
+      "family": 97,
+      "types": [
+        "dark",
+        "flying"
+      ]
     },
     {
       "species": "glameow",
       "name": "Charmian",
       "dex": 431,
-      "family": 221
+      "family": 221,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "purugly",
       "name": "Shnurgarst",
       "dex": 432,
-      "family": 221
+      "family": 221,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "chingling",
       "name": "Klingplim",
       "dex": 433,
-      "family": 184
+      "family": 184,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "stunky",
       "name": "Skunkapuh",
       "dex": 434,
-      "family": 223
+      "family": 223,
+      "types": [
+        "poison",
+        "dark"
+      ]
     },
     {
       "species": "skuntank",
       "name": "Skuntank",
       "dex": 435,
-      "family": 223
+      "family": 223,
+      "types": [
+        "poison",
+        "dark"
+      ]
     },
     {
       "species": "bronzor",
       "name": "Bronzel",
       "dex": 436,
-      "family": 224
+      "family": 224,
+      "types": [
+        "steel",
+        "psychic"
+      ]
     },
     {
       "species": "bronzong",
       "name": "Bronzong",
       "dex": 437,
-      "family": 224
+      "family": 224,
+      "types": [
+        "steel",
+        "psychic"
+      ]
     },
     {
       "species": "bonsly",
       "name": "Mobai",
       "dex": 438,
-      "family": 91
+      "family": 91,
+      "types": [
+        "rock"
+      ]
     },
     {
       "species": "mime-jr",
       "name": "Pantimimi",
       "dex": 439,
-      "family": 57
+      "family": 57,
+      "types": [
+        "psychic",
+        "fairy"
+      ]
     },
     {
       "species": "happiny",
       "name": "Wonneira",
       "dex": 440,
-      "family": 51
+      "family": 51,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "chatot",
       "name": "Plaudagei",
       "dex": 441,
-      "family": 228
+      "family": 228,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "spiritomb",
       "name": "Kryppuk",
       "dex": 442,
-      "family": 229
+      "family": 229,
+      "types": [
+        "ghost",
+        "dark"
+      ]
     },
     {
       "species": "gible",
       "name": "Kaumalat",
       "dex": 443,
-      "family": 230
+      "family": 230,
+      "types": [
+        "dragon",
+        "ground"
+      ]
     },
     {
       "species": "gabite",
       "name": "Knarksel",
       "dex": 444,
-      "family": 230
+      "family": 230,
+      "types": [
+        "dragon",
+        "ground"
+      ]
     },
     {
       "species": "garchomp",
       "name": "Knakrack",
       "dex": 445,
-      "family": 230
+      "family": 230,
+      "types": [
+        "dragon",
+        "ground"
+      ]
     },
     {
       "species": "munchlax",
       "name": "Mampfaxo",
       "dex": 446,
-      "family": 72
+      "family": 72,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "riolu",
       "name": "Riolu",
       "dex": 447,
-      "family": 232
+      "family": 232,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "lucario",
       "name": "Lucario",
       "dex": 448,
-      "family": 232
+      "family": 232,
+      "types": [
+        "fighting",
+        "steel"
+      ]
     },
     {
       "species": "hippopotas",
       "name": "Hippopotas",
       "dex": 449,
-      "family": 233
+      "family": 233,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "hippowdon",
       "name": "Hippoterus",
       "dex": 450,
-      "family": 233
+      "family": 233,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "skorupi",
       "name": "Pionskora",
       "dex": 451,
-      "family": 234
+      "family": 234,
+      "types": [
+        "poison",
+        "bug"
+      ]
     },
     {
       "species": "drapion",
       "name": "Piondragi",
       "dex": 452,
-      "family": 234
+      "family": 234,
+      "types": [
+        "poison",
+        "dark"
+      ]
     },
     {
       "species": "croagunk",
       "name": "Glibunkel",
       "dex": 453,
-      "family": 235
+      "family": 235,
+      "types": [
+        "poison",
+        "fighting"
+      ]
     },
     {
       "species": "toxicroak",
       "name": "Toxiquak",
       "dex": 454,
-      "family": 235
+      "family": 235,
+      "types": [
+        "poison",
+        "fighting"
+      ]
     },
     {
       "species": "carnivine",
       "name": "Venuflibis",
       "dex": 455,
-      "family": 236
+      "family": 236,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "finneon",
       "name": "Finneon",
       "dex": 456,
-      "family": 237
+      "family": 237,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "lumineon",
       "name": "Lumineon",
       "dex": 457,
-      "family": 237
+      "family": 237,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "mantyke",
       "name": "Mantirps",
       "dex": 458,
-      "family": 116
+      "family": 116,
+      "types": [
+        "water",
+        "flying"
+      ]
     },
     {
       "species": "snover",
       "name": "Shnebedeck",
       "dex": 459,
-      "family": 239
+      "family": 239,
+      "types": [
+        "grass",
+        "ice"
+      ]
     },
     {
       "species": "abomasnow",
       "name": "Rexblisar",
       "dex": 460,
-      "family": 239
+      "family": 239,
+      "types": [
+        "grass",
+        "ice"
+      ]
     },
     {
       "species": "weavile",
       "name": "Snibunna",
       "dex": 461,
-      "family": 109
+      "family": 109,
+      "types": [
+        "dark",
+        "ice"
+      ]
     },
     {
       "species": "magnezone",
       "name": "Magnezone",
       "dex": 462,
-      "family": 34
+      "family": 34,
+      "types": [
+        "electric",
+        "steel"
+      ]
     },
     {
       "species": "lickilicky",
       "name": "Schlurplek",
       "dex": 463,
-      "family": 48
+      "family": 48,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "rhyperior",
       "name": "Rihornior",
       "dex": 464,
-      "family": 50
+      "family": 50,
+      "types": [
+        "ground",
+        "rock"
+      ]
     },
     {
       "species": "tangrowth",
       "name": "Tangoloss",
       "dex": 465,
-      "family": 52
+      "family": 52,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "electivire",
       "name": "Elevoltek",
       "dex": 466,
-      "family": 60
+      "family": 60,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "magmortar",
       "name": "Magbrant",
       "dex": 467,
-      "family": 61
+      "family": 61,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "togekiss",
       "name": "Togekiss",
       "dex": 468,
-      "family": 87
+      "family": 87,
+      "types": [
+        "fairy",
+        "flying"
+      ]
     },
     {
       "species": "yanmega",
       "name": "Yanmega",
       "dex": 469,
-      "family": 95
+      "family": 95,
+      "types": [
+        "bug",
+        "flying"
+      ]
     },
     {
       "species": "leafeon",
       "name": "Folipurba",
       "dex": 470,
-      "family": 67
+      "family": 67,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "glaceon",
       "name": "Glaziola",
       "dex": 471,
-      "family": 67
+      "family": 67,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "gliscor",
       "name": "Skorgro",
       "dex": 472,
-      "family": 104
+      "family": 104,
+      "types": [
+        "ground",
+        "flying"
+      ]
     },
     {
       "species": "mamoswine",
       "name": "Mamutel",
       "dex": 473,
-      "family": 112
+      "family": 112,
+      "types": [
+        "ice",
+        "ground"
+      ]
     },
     {
       "species": "porygon-z",
       "name": "Porygon-Z",
       "dex": 474,
-      "family": 68
+      "family": 68,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "gallade",
       "name": "Galagladi",
       "dex": 475,
-      "family": 140
+      "family": 140,
+      "types": [
+        "psychic",
+        "fighting"
+      ]
     },
     {
       "species": "probopass",
       "name": "Voluminas",
       "dex": 476,
-      "family": 147
+      "family": 147,
+      "types": [
+        "rock",
+        "steel"
+      ]
     },
     {
       "species": "dusknoir",
       "name": "Zwirrfinst",
       "dex": 477,
-      "family": 182
+      "family": 182,
+      "types": [
+        "ghost"
+      ]
     },
     {
       "species": "froslass",
       "name": "Frosdedje",
       "dex": 478,
-      "family": 186
+      "family": 186,
+      "types": [
+        "ice",
+        "ghost"
+      ]
     },
     {
       "species": "rotom",
       "name": "Rotom",
       "dex": 479,
-      "family": 240
+      "family": 240,
+      "types": [
+        "electric",
+        "ghost"
+      ]
     },
     {
       "species": "uxie",
       "name": "Selfe",
       "dex": 480,
-      "family": 241
+      "family": 241,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "mesprit",
       "name": "Vesprit",
       "dex": 481,
-      "family": 242
+      "family": 242,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "azelf",
       "name": "Tobutz",
       "dex": 482,
-      "family": 243
+      "family": 243,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "dialga",
       "name": "Dialga",
       "dex": 483,
-      "family": 244
+      "family": 244,
+      "types": [
+        "steel",
+        "dragon"
+      ]
     },
     {
       "species": "palkia",
       "name": "Palkia",
       "dex": 484,
-      "family": 245
+      "family": 245,
+      "types": [
+        "water",
+        "dragon"
+      ]
     },
     {
       "species": "heatran",
       "name": "Heatran",
       "dex": 485,
-      "family": 246
+      "family": 246,
+      "types": [
+        "fire",
+        "steel"
+      ]
     },
     {
       "species": "regigigas",
       "name": "Regigigas",
       "dex": 486,
-      "family": 247
+      "family": 247,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "giratina",
       "name": "Giratina",
       "dex": 487,
-      "family": 248
+      "family": 248,
+      "types": [
+        "ghost",
+        "dragon"
+      ]
     },
     {
       "species": "cresselia",
       "name": "Cresselia",
       "dex": 488,
-      "family": 249
+      "family": 249,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "phione",
       "name": "Phione",
       "dex": 489,
-      "family": 250
+      "family": 250,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "manaphy",
       "name": "Manaphy",
       "dex": 490,
-      "family": 250
+      "family": 250,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "darkrai",
       "name": "Darkrai",
       "dex": 491,
-      "family": 252
+      "family": 252,
+      "types": [
+        "dark"
+      ]
     },
     {
       "species": "shaymin",
       "name": "Shaymin",
       "dex": 492,
-      "family": 253
+      "family": 253,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "arceus",
       "name": "Arceus",
       "dex": 493,
-      "family": 254
+      "family": 254,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "victini",
       "name": "Victini",
       "dex": 494,
-      "family": 255
+      "family": 255,
+      "types": [
+        "psychic",
+        "fire"
+      ]
     },
     {
       "species": "snivy",
       "name": "Serpifeu",
       "dex": 495,
-      "family": 256
+      "family": 256,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "servine",
       "name": "Efoserp",
       "dex": 496,
-      "family": 256
+      "family": 256,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "serperior",
       "name": "Serpiroyal",
       "dex": 497,
-      "family": 256
+      "family": 256,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "tepig",
       "name": "Floink",
       "dex": 498,
-      "family": 257
+      "family": 257,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "pignite",
       "name": "Ferkokel",
       "dex": 499,
-      "family": 257
+      "family": 257,
+      "types": [
+        "fire",
+        "fighting"
+      ]
     },
     {
       "species": "emboar",
       "name": "Flambirex",
       "dex": 500,
-      "family": 257
+      "family": 257,
+      "types": [
+        "fire",
+        "fighting"
+      ]
     },
     {
       "species": "oshawott",
       "name": "Ottaro",
       "dex": 501,
-      "family": 258
+      "family": 258,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "dewott",
       "name": "Zwottronin",
       "dex": 502,
-      "family": 258
+      "family": 258,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "samurott",
       "name": "Admurai",
       "dex": 503,
-      "family": 258
+      "family": 258,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "patrat",
       "name": "Nagelotz",
       "dex": 504,
-      "family": 259
+      "family": 259,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "watchog",
       "name": "Kukmarda",
       "dex": 505,
-      "family": 259
+      "family": 259,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "lillipup",
       "name": "Yorkleff",
       "dex": 506,
-      "family": 260
+      "family": 260,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "herdier",
       "name": "Terribark",
       "dex": 507,
-      "family": 260
+      "family": 260,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "stoutland",
       "name": "Bissbark",
       "dex": 508,
-      "family": 260
+      "family": 260,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "purrloin",
       "name": "Felilou",
       "dex": 509,
-      "family": 261
+      "family": 261,
+      "types": [
+        "dark"
+      ]
     },
     {
       "species": "liepard",
       "name": "Kleoparda",
       "dex": 510,
-      "family": 261
+      "family": 261,
+      "types": [
+        "dark"
+      ]
     },
     {
       "species": "pansage",
       "name": "Vegimak",
       "dex": 511,
-      "family": 262
+      "family": 262,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "simisage",
       "name": "Vegichita",
       "dex": 512,
-      "family": 262
+      "family": 262,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "pansear",
       "name": "Grillmak",
       "dex": 513,
-      "family": 263
+      "family": 263,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "simisear",
       "name": "Grillchita",
       "dex": 514,
-      "family": 263
+      "family": 263,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "panpour",
       "name": "Sodamak",
       "dex": 515,
-      "family": 264
+      "family": 264,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "simipour",
       "name": "Sodachita",
       "dex": 516,
-      "family": 264
+      "family": 264,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "munna",
       "name": "Somniam",
       "dex": 517,
-      "family": 265
+      "family": 265,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "musharna",
       "name": "Somnivora",
       "dex": 518,
-      "family": 265
+      "family": 265,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "pidove",
       "name": "Dusselgurr",
       "dex": 519,
-      "family": 266
+      "family": 266,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "tranquill",
       "name": "Navitaub",
       "dex": 520,
-      "family": 266
+      "family": 266,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "unfezant",
       "name": "Fasasnob",
       "dex": 521,
-      "family": 266
+      "family": 266,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "blitzle",
       "name": "Elezeba",
       "dex": 522,
-      "family": 267
+      "family": 267,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "zebstrika",
       "name": "Zebritz",
       "dex": 523,
-      "family": 267
+      "family": 267,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "roggenrola",
       "name": "Kiesling",
       "dex": 524,
-      "family": 268
+      "family": 268,
+      "types": [
+        "rock"
+      ]
     },
     {
       "species": "boldore",
       "name": "Sedimantur",
       "dex": 525,
-      "family": 268
+      "family": 268,
+      "types": [
+        "rock"
+      ]
     },
     {
       "species": "gigalith",
       "name": "Brockoloss",
       "dex": 526,
-      "family": 268
+      "family": 268,
+      "types": [
+        "rock"
+      ]
     },
     {
       "species": "woobat",
       "name": "Fleknoil",
       "dex": 527,
-      "family": 269
+      "family": 269,
+      "types": [
+        "psychic",
+        "flying"
+      ]
     },
     {
       "species": "swoobat",
       "name": "Fletiamo",
       "dex": 528,
-      "family": 269
+      "family": 269,
+      "types": [
+        "psychic",
+        "flying"
+      ]
     },
     {
       "species": "drilbur",
       "name": "Rotomurf",
       "dex": 529,
-      "family": 270
+      "family": 270,
+      "types": [
+        "ground"
+      ]
     },
     {
       "species": "excadrill",
       "name": "Stalobor",
       "dex": 530,
-      "family": 270
+      "family": 270,
+      "types": [
+        "ground",
+        "steel"
+      ]
     },
     {
       "species": "audino",
       "name": "Ohrdoch",
       "dex": 531,
-      "family": 271
+      "family": 271,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "timburr",
       "name": "Praktibalk",
       "dex": 532,
-      "family": 272
+      "family": 272,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "gurdurr",
       "name": "Strepoli",
       "dex": 533,
-      "family": 272
+      "family": 272,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "conkeldurr",
       "name": "Meistagrif",
       "dex": 534,
-      "family": 272
+      "family": 272,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "tympole",
       "name": "Schallquap",
       "dex": 535,
-      "family": 273
+      "family": 273,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "palpitoad",
       "name": "Mebrana",
       "dex": 536,
-      "family": 273
+      "family": 273,
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     {
       "species": "seismitoad",
       "name": "Branawarz",
       "dex": 537,
-      "family": 273
+      "family": 273,
+      "types": [
+        "water",
+        "ground"
+      ]
     },
     {
       "species": "throh",
       "name": "Jiutesto",
       "dex": 538,
-      "family": 274
+      "family": 274,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "sawk",
       "name": "Karadonis",
       "dex": 539,
-      "family": 275
+      "family": 275,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "sewaddle",
       "name": "Strawickl",
       "dex": 540,
-      "family": 276
+      "family": 276,
+      "types": [
+        "bug",
+        "grass"
+      ]
     },
     {
       "species": "swadloon",
       "name": "Folikon",
       "dex": 541,
-      "family": 276
+      "family": 276,
+      "types": [
+        "bug",
+        "grass"
+      ]
     },
     {
       "species": "leavanny",
       "name": "Matrifol",
       "dex": 542,
-      "family": 276
+      "family": 276,
+      "types": [
+        "bug",
+        "grass"
+      ]
     },
     {
       "species": "venipede",
       "name": "Toxiped",
       "dex": 543,
-      "family": 277
+      "family": 277,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "whirlipede",
       "name": "Rollum",
       "dex": 544,
-      "family": 277
+      "family": 277,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "scolipede",
       "name": "Cerapendra",
       "dex": 545,
-      "family": 277
+      "family": 277,
+      "types": [
+        "bug",
+        "poison"
+      ]
     },
     {
       "species": "cottonee",
       "name": "Waumboll",
       "dex": 546,
-      "family": 278
+      "family": 278,
+      "types": [
+        "grass",
+        "fairy"
+      ]
     },
     {
       "species": "whimsicott",
       "name": "Elfun",
       "dex": 547,
-      "family": 278
+      "family": 278,
+      "types": [
+        "grass",
+        "fairy"
+      ]
     },
     {
       "species": "petilil",
       "name": "Lilminip",
       "dex": 548,
-      "family": 279
+      "family": 279,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "lilligant",
       "name": "Dressella",
       "dex": 549,
-      "family": 279
+      "family": 279,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "basculin",
       "name": "Barschuft",
       "dex": 550,
-      "family": 280
+      "family": 280,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "sandile",
       "name": "Ganovil",
       "dex": 551,
-      "family": 281
+      "family": 281,
+      "types": [
+        "ground",
+        "dark"
+      ]
     },
     {
       "species": "krokorok",
       "name": "Rokkaiman",
       "dex": 552,
-      "family": 281
+      "family": 281,
+      "types": [
+        "ground",
+        "dark"
+      ]
     },
     {
       "species": "krookodile",
       "name": "Rabigator",
       "dex": 553,
-      "family": 281
+      "family": 281,
+      "types": [
+        "ground",
+        "dark"
+      ]
     },
     {
       "species": "darumaka",
       "name": "Flampion",
       "dex": 554,
-      "family": 282
+      "family": 282,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "darmanitan",
       "name": "Flampivian",
       "dex": 555,
-      "family": 282
+      "family": 282,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "maractus",
       "name": "Maracamba",
       "dex": 556,
-      "family": 283
+      "family": 283,
+      "types": [
+        "grass"
+      ]
     },
     {
       "species": "dwebble",
       "name": "Lithomith",
       "dex": 557,
-      "family": 284
+      "family": 284,
+      "types": [
+        "bug",
+        "rock"
+      ]
     },
     {
       "species": "crustle",
       "name": "Castellith",
       "dex": 558,
-      "family": 284
+      "family": 284,
+      "types": [
+        "bug",
+        "rock"
+      ]
     },
     {
       "species": "scraggy",
       "name": "Zurrokex",
       "dex": 559,
-      "family": 285
+      "family": 285,
+      "types": [
+        "dark",
+        "fighting"
+      ]
     },
     {
       "species": "scrafty",
       "name": "Irokex",
       "dex": 560,
-      "family": 285
+      "family": 285,
+      "types": [
+        "dark",
+        "fighting"
+      ]
     },
     {
       "species": "sigilyph",
       "name": "Symvolara",
       "dex": 561,
-      "family": 286
+      "family": 286,
+      "types": [
+        "psychic",
+        "flying"
+      ]
     },
     {
       "species": "yamask",
       "name": "Makabaja",
       "dex": 562,
-      "family": 287
+      "family": 287,
+      "types": [
+        "ghost"
+      ]
     },
     {
       "species": "cofagrigus",
       "name": "Echnatoll",
       "dex": 563,
-      "family": 287
+      "family": 287,
+      "types": [
+        "ghost"
+      ]
     },
     {
       "species": "tirtouga",
       "name": "Galapaflos",
       "dex": 564,
-      "family": 288
+      "family": 288,
+      "types": [
+        "water",
+        "rock"
+      ]
     },
     {
       "species": "carracosta",
       "name": "Karippas",
       "dex": 565,
-      "family": 288
+      "family": 288,
+      "types": [
+        "water",
+        "rock"
+      ]
     },
     {
       "species": "archen",
       "name": "Flapteryx",
       "dex": 566,
-      "family": 289
+      "family": 289,
+      "types": [
+        "rock",
+        "flying"
+      ]
     },
     {
       "species": "archeops",
       "name": "Aeropteryx",
       "dex": 567,
-      "family": 289
+      "family": 289,
+      "types": [
+        "rock",
+        "flying"
+      ]
     },
     {
       "species": "trubbish",
       "name": "Unratütox",
       "dex": 568,
-      "family": 290
+      "family": 290,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "garbodor",
       "name": "Deponitox",
       "dex": 569,
-      "family": 290
+      "family": 290,
+      "types": [
+        "poison"
+      ]
     },
     {
       "species": "zorua",
       "name": "Zorua",
       "dex": 570,
-      "family": 291
+      "family": 291,
+      "types": [
+        "dark"
+      ]
     },
     {
       "species": "zoroark",
       "name": "Zoroark",
       "dex": 571,
-      "family": 291
+      "family": 291,
+      "types": [
+        "dark"
+      ]
     },
     {
       "species": "minccino",
       "name": "Picochilla",
       "dex": 572,
-      "family": 292
+      "family": 292,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "cinccino",
       "name": "Chillabell",
       "dex": 573,
-      "family": 292
+      "family": 292,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "gothita",
       "name": "Mollimorba",
       "dex": 574,
-      "family": 293
+      "family": 293,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "gothorita",
       "name": "Hypnomorba",
       "dex": 575,
-      "family": 293
+      "family": 293,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "gothitelle",
       "name": "Morbitesse",
       "dex": 576,
-      "family": 293
+      "family": 293,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "solosis",
       "name": "Monozyto",
       "dex": 577,
-      "family": 294
+      "family": 294,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "duosion",
       "name": "Mitodos",
       "dex": 578,
-      "family": 294
+      "family": 294,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "reuniclus",
       "name": "Zytomega",
       "dex": 579,
-      "family": 294
+      "family": 294,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "ducklett",
       "name": "Piccolente",
       "dex": 580,
-      "family": 295
+      "family": 295,
+      "types": [
+        "water",
+        "flying"
+      ]
     },
     {
       "species": "swanna",
       "name": "Swaroness",
       "dex": 581,
-      "family": 295
+      "family": 295,
+      "types": [
+        "water",
+        "flying"
+      ]
     },
     {
       "species": "vanillite",
       "name": "Gelatini",
       "dex": 582,
-      "family": 296
+      "family": 296,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "vanillish",
       "name": "Gelatroppo",
       "dex": 583,
-      "family": 296
+      "family": 296,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "vanilluxe",
       "name": "Gelatwino",
       "dex": 584,
-      "family": 296
+      "family": 296,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "deerling",
       "name": "Sesokitz",
       "dex": 585,
-      "family": 297
+      "family": 297,
+      "types": [
+        "normal",
+        "grass"
+      ]
     },
     {
       "species": "sawsbuck",
       "name": "Kronjuwild",
       "dex": 586,
-      "family": 297
+      "family": 297,
+      "types": [
+        "normal",
+        "grass"
+      ]
     },
     {
       "species": "emolga",
       "name": "Emolga",
       "dex": 587,
-      "family": 298
+      "family": 298,
+      "types": [
+        "electric",
+        "flying"
+      ]
     },
     {
       "species": "karrablast",
       "name": "Laukaps",
       "dex": 588,
-      "family": 299
+      "family": 299,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "escavalier",
       "name": "Cavalanzas",
       "dex": 589,
-      "family": 299
+      "family": 299,
+      "types": [
+        "bug",
+        "steel"
+      ]
     },
     {
       "species": "foongus",
       "name": "Tarnpignon",
       "dex": 590,
-      "family": 300
+      "family": 300,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "amoonguss",
       "name": "Hutsassa",
       "dex": 591,
-      "family": 300
+      "family": 300,
+      "types": [
+        "grass",
+        "poison"
+      ]
     },
     {
       "species": "frillish",
       "name": "Quabbel",
       "dex": 592,
-      "family": 301
+      "family": 301,
+      "types": [
+        "water",
+        "ghost"
+      ]
     },
     {
       "species": "jellicent",
       "name": "Apoquallyp",
       "dex": 593,
-      "family": 301
+      "family": 301,
+      "types": [
+        "water",
+        "ghost"
+      ]
     },
     {
       "species": "alomomola",
       "name": "Mamolida",
       "dex": 594,
-      "family": 302
+      "family": 302,
+      "types": [
+        "water"
+      ]
     },
     {
       "species": "joltik",
       "name": "Wattzapf",
       "dex": 595,
-      "family": 303
+      "family": 303,
+      "types": [
+        "bug",
+        "electric"
+      ]
     },
     {
       "species": "galvantula",
       "name": "Voltula",
       "dex": 596,
-      "family": 303
+      "family": 303,
+      "types": [
+        "bug",
+        "electric"
+      ]
     },
     {
       "species": "ferroseed",
       "name": "Kastadur",
       "dex": 597,
-      "family": 304
+      "family": 304,
+      "types": [
+        "grass",
+        "steel"
+      ]
     },
     {
       "species": "ferrothorn",
       "name": "Tentantel",
       "dex": 598,
-      "family": 304
+      "family": 304,
+      "types": [
+        "grass",
+        "steel"
+      ]
     },
     {
       "species": "klink",
       "name": "Klikk",
       "dex": 599,
-      "family": 305
+      "family": 305,
+      "types": [
+        "steel"
+      ]
     },
     {
       "species": "klang",
       "name": "Kliklak",
       "dex": 600,
-      "family": 305
+      "family": 305,
+      "types": [
+        "steel"
+      ]
     },
     {
       "species": "klinklang",
       "name": "Klikdiklak",
       "dex": 601,
-      "family": 305
+      "family": 305,
+      "types": [
+        "steel"
+      ]
     },
     {
       "species": "tynamo",
       "name": "Zapplardin",
       "dex": 602,
-      "family": 306
+      "family": 306,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "eelektrik",
       "name": "Zapplalek",
       "dex": 603,
-      "family": 306
+      "family": 306,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "eelektross",
       "name": "Zapplarang",
       "dex": 604,
-      "family": 306
+      "family": 306,
+      "types": [
+        "electric"
+      ]
     },
     {
       "species": "elgyem",
       "name": "Pygraulon",
       "dex": 605,
-      "family": 307
+      "family": 307,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "beheeyem",
       "name": "Megalon",
       "dex": 606,
-      "family": 307
+      "family": 307,
+      "types": [
+        "psychic"
+      ]
     },
     {
       "species": "litwick",
       "name": "Lichtel",
       "dex": 607,
-      "family": 308
+      "family": 308,
+      "types": [
+        "ghost",
+        "fire"
+      ]
     },
     {
       "species": "lampent",
       "name": "Laternecto",
       "dex": 608,
-      "family": 308
+      "family": 308,
+      "types": [
+        "ghost",
+        "fire"
+      ]
     },
     {
       "species": "chandelure",
       "name": "Skelabra",
       "dex": 609,
-      "family": 308
+      "family": 308,
+      "types": [
+        "ghost",
+        "fire"
+      ]
     },
     {
       "species": "axew",
       "name": "Milza",
       "dex": 610,
-      "family": 309
+      "family": 309,
+      "types": [
+        "dragon"
+      ]
     },
     {
       "species": "fraxure",
       "name": "Sharfax",
       "dex": 611,
-      "family": 309
+      "family": 309,
+      "types": [
+        "dragon"
+      ]
     },
     {
       "species": "haxorus",
       "name": "Maxax",
       "dex": 612,
-      "family": 309
+      "family": 309,
+      "types": [
+        "dragon"
+      ]
     },
     {
       "species": "cubchoo",
       "name": "Petznief",
       "dex": 613,
-      "family": 310
+      "family": 310,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "beartic",
       "name": "Siberio",
       "dex": 614,
-      "family": 310
+      "family": 310,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "cryogonal",
       "name": "Frigometri",
       "dex": 615,
-      "family": 311
+      "family": 311,
+      "types": [
+        "ice"
+      ]
     },
     {
       "species": "shelmet",
       "name": "Schnuthelm",
       "dex": 616,
-      "family": 312
+      "family": 312,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "accelgor",
       "name": "Hydragil",
       "dex": 617,
-      "family": 312
+      "family": 312,
+      "types": [
+        "bug"
+      ]
     },
     {
       "species": "stunfisk",
       "name": "Flunschlik",
       "dex": 618,
-      "family": 313
+      "family": 313,
+      "types": [
+        "ground",
+        "electric"
+      ]
     },
     {
       "species": "mienfoo",
       "name": "Lin-Fu",
       "dex": 619,
-      "family": 314
+      "family": 314,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "mienshao",
       "name": "Wie-Shu",
       "dex": 620,
-      "family": 314
+      "family": 314,
+      "types": [
+        "fighting"
+      ]
     },
     {
       "species": "druddigon",
       "name": "Shardrago",
       "dex": 621,
-      "family": 315
+      "family": 315,
+      "types": [
+        "dragon"
+      ]
     },
     {
       "species": "golett",
       "name": "Golbit",
       "dex": 622,
-      "family": 316
+      "family": 316,
+      "types": [
+        "ground",
+        "ghost"
+      ]
     },
     {
       "species": "golurk",
       "name": "Golgantes",
       "dex": 623,
-      "family": 316
+      "family": 316,
+      "types": [
+        "ground",
+        "ghost"
+      ]
     },
     {
       "species": "pawniard",
       "name": "Gladiantri",
       "dex": 624,
-      "family": 317
+      "family": 317,
+      "types": [
+        "dark",
+        "steel"
+      ]
     },
     {
       "species": "bisharp",
       "name": "Caesurio",
       "dex": 625,
-      "family": 317
+      "family": 317,
+      "types": [
+        "dark",
+        "steel"
+      ]
     },
     {
       "species": "bouffalant",
       "name": "Bisofank",
       "dex": 626,
-      "family": 318
+      "family": 318,
+      "types": [
+        "normal"
+      ]
     },
     {
       "species": "rufflet",
       "name": "Geronimatz",
       "dex": 627,
-      "family": 319
+      "family": 319,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "braviary",
       "name": "Washakwil",
       "dex": 628,
-      "family": 319
+      "family": 319,
+      "types": [
+        "normal",
+        "flying"
+      ]
     },
     {
       "species": "vullaby",
       "name": "Skallyk",
       "dex": 629,
-      "family": 320
+      "family": 320,
+      "types": [
+        "dark",
+        "flying"
+      ]
     },
     {
       "species": "mandibuzz",
       "name": "Grypheldis",
       "dex": 630,
-      "family": 320
+      "family": 320,
+      "types": [
+        "dark",
+        "flying"
+      ]
     },
     {
       "species": "heatmor",
       "name": "Furnifraß",
       "dex": 631,
-      "family": 321
+      "family": 321,
+      "types": [
+        "fire"
+      ]
     },
     {
       "species": "durant",
       "name": "Fermicula",
       "dex": 632,
-      "family": 322
+      "family": 322,
+      "types": [
+        "bug",
+        "steel"
+      ]
     },
     {
       "species": "deino",
       "name": "Kapuno",
       "dex": 633,
-      "family": 323
+      "family": 323,
+      "types": [
+        "dark",
+        "dragon"
+      ]
     },
     {
       "species": "zweilous",
       "name": "Duodino",
       "dex": 634,
-      "family": 323
+      "family": 323,
+      "types": [
+        "dark",
+        "dragon"
+      ]
     },
     {
       "species": "hydreigon",
       "name": "Trikephalo",
       "dex": 635,
-      "family": 323
+      "family": 323,
+      "types": [
+        "dark",
+        "dragon"
+      ]
     },
     {
       "species": "larvesta",
       "name": "Ignivor",
       "dex": 636,
-      "family": 324
+      "family": 324,
+      "types": [
+        "bug",
+        "fire"
+      ]
     },
     {
       "species": "volcarona",
       "name": "Ramoth",
       "dex": 637,
-      "family": 324
+      "family": 324,
+      "types": [
+        "bug",
+        "fire"
+      ]
     },
     {
       "species": "cobalion",
       "name": "Kobalium",
       "dex": 638,
-      "family": 325
+      "family": 325,
+      "types": [
+        "steel",
+        "fighting"
+      ]
     },
     {
       "species": "terrakion",
       "name": "Terrakium",
       "dex": 639,
-      "family": 326
+      "family": 326,
+      "types": [
+        "rock",
+        "fighting"
+      ]
     },
     {
       "species": "virizion",
       "name": "Viridium",
       "dex": 640,
-      "family": 327
+      "family": 327,
+      "types": [
+        "grass",
+        "fighting"
+      ]
     },
     {
       "species": "tornadus",
       "name": "Boreos",
       "dex": 641,
-      "family": 328
+      "family": 328,
+      "types": [
+        "flying"
+      ]
     },
     {
       "species": "thundurus",
       "name": "Voltolos",
       "dex": 642,
-      "family": 329
+      "family": 329,
+      "types": [
+        "electric",
+        "flying"
+      ]
     },
     {
       "species": "reshiram",
       "name": "Reshiram",
       "dex": 643,
-      "family": 330
+      "family": 330,
+      "types": [
+        "dragon",
+        "fire"
+      ]
     },
     {
       "species": "zekrom",
       "name": "Zekrom",
       "dex": 644,
-      "family": 331
+      "family": 331,
+      "types": [
+        "dragon",
+        "electric"
+      ]
     },
     {
       "species": "landorus",
       "name": "Demeteros",
       "dex": 645,
-      "family": 332
+      "family": 332,
+      "types": [
+        "ground",
+        "flying"
+      ]
     },
     {
       "species": "kyurem",
       "name": "Kyurem",
       "dex": 646,
-      "family": 333
+      "family": 333,
+      "types": [
+        "dragon",
+        "ice"
+      ]
     },
     {
       "species": "keldeo",
       "name": "Keldeo",
       "dex": 647,
-      "family": 334
+      "family": 334,
+      "types": [
+        "water",
+        "fighting"
+      ]
     },
     {
       "species": "meloetta",
       "name": "Meloetta",
       "dex": 648,
-      "family": 335
+      "family": 335,
+      "types": [
+        "normal",
+        "psychic"
+      ]
     },
     {
       "species": "genesect",
       "name": "Genesect",
       "dex": 649,
-      "family": 336
+      "family": 336,
+      "types": [
+        "bug",
+        "steel"
+      ]
     }
   ]
 }

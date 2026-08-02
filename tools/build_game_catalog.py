@@ -112,6 +112,25 @@ def species_entry(pokemon_slug: str) -> dict[str, Any]:
     }
 
 
+def species_types(species: dict[str, Any]) -> list[str]:
+    """Typen der Standardform, in Slot-Reihenfolge.
+
+    Die Species-Antwort kennt keine Typen - die stehen am Pokémon. Gefragt wird
+    die Standardform: Formvarianten (Rotom, Wormadam) unterscheiden sich zwar im
+    Typ, die Tabelle fuehrt aber die Art, nicht die Form.
+
+    Es sind die heutigen Typen, nicht die der jeweiligen Edition. Piepi ist damit
+    auch in Platin eine Fee. Der Typenrechner rechnet ebenfalls modern; beides
+    auseinanderlaufen zu lassen waere schlimmer als beides gleich falsch.
+    """
+    variety = next(
+        (entry["pokemon"]["name"] for entry in species.get("varieties", []) if entry.get("is_default")),
+        species["name"],
+    )
+    pokemon = fetch(f"pokemon/{variety}")
+    return [entry["type"]["name"] for entry in sorted(pokemon["types"], key=lambda entry: entry["slot"])]
+
+
 def evolution_family(species: dict[str, Any]) -> int:
     """ID der Entwicklungskette, an der diese Art haengt.
 
@@ -124,11 +143,14 @@ def evolution_family(species: dict[str, Any]) -> int:
 
 
 def build_pokedex(dex_max: int) -> list[dict[str, Any]]:
-    """National-Dex von 1 bis dex_max, mit deutschem Namen und Familie.
+    """National-Dex von 1 bis dex_max, mit deutschem Namen, Familie und Typen.
 
     Das Frontend braucht die ganze Liste, damit sich auch Pokémon eintragen
-    lassen, die an keinem Ort der Edition wild vorkommen - und die Familie, um
-    vor einer schon vergebenen Entwicklungslinie zu warnen.
+    lassen, die an keinem Ort der Edition wild vorkommen - die Familie, um vor
+    einer schon vergebenen Entwicklungslinie zu warnen, und die Typen fuer die
+    Typ-Badges und den Typenrechner. Die Ortslisten fuehren keine Typen: das
+    Frontend schlaegt jede Art ohnehin im Pokedex nach, eine zweite Kopie waere
+    nur groesser.
     """
     print(f"  Pokedex #1-{dex_max} ...", file=sys.stderr)
     pokedex = []
@@ -140,6 +162,7 @@ def build_pokedex(dex_max: int) -> list[dict[str, Any]]:
                 "name": german_name(species, species["name"]),
                 "dex": species["id"],
                 "family": evolution_family(species),
+                "types": species_types(species),
             }
         )
     return pokedex
@@ -211,6 +234,13 @@ def build_location(raw: str | dict[str, Any], versions: set[str]) -> dict[str, A
 
 def load_game_definitions() -> dict[str, dict[str, Any]]:
     definitions: dict[str, dict[str, Any]] = {}
+    # Damit eine Spieldefinition ihre Nachbarn importieren kann (`from _sinnoh
+    # import LOCATIONS`): exec_module legt das Verzeichnis der Datei nicht selbst
+    # auf den Suchpfad. Dateien mit fuehrendem Unterstrich sind genau dafuer da
+    # und werden unten uebersprungen.
+    if str(GAMES_DIR) not in sys.path:
+        sys.path.insert(0, str(GAMES_DIR))
+
     for path in sorted(GAMES_DIR.glob("*.py")):
         if path.name.startswith("_"):
             continue
