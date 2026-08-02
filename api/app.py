@@ -334,7 +334,7 @@ class RunCreate(BaseModel):
     game_id: str = Field(max_length=80)
     make_current: bool = True
     prefill: bool = True
-    include_postgame: bool = False
+    include_postgame: bool = True
 
 
 class RunPatch(BaseModel):
@@ -589,6 +589,8 @@ def apply_catalog_moves(rows: list[dict[str, Any]], game_id: str) -> list[dict[s
         location = catalog.get(row.get("location_id") or "")
         if location:
             row["order"] = location["order"]
+            row["encounter"] = location["name"]
+            row["postgame"] = bool(location.get("postgame"))
 
     return result
 
@@ -612,7 +614,8 @@ def normalize_run(raw: dict[str, Any], fallback_id: str, player_ids: list[str]) 
     run["game_id"] = resolve_game_id(run.get("game_id") or legacy_game)
 
     rows = [normalize_encounter(row, player_ids, run["game_id"]) for row in run.get("encounters", [])]
-    run["encounters"] = apply_catalog_moves(rows, run["game_id"])
+    rows = apply_catalog_moves(rows, run["game_id"])
+    run["encounters"] = backfill_catalog_locations(rows, run["game_id"], player_ids)
     return RunRecord.model_validate(run).model_dump()
 
 
@@ -687,6 +690,27 @@ def build_rows(game_id: str, include_postgame: bool, player_ids: list[str]) -> l
     return rows
 
 
+def backfill_catalog_locations(
+    rows: list[dict[str, Any]], game_id: str, player_ids: list[str]
+) -> list[dict[str, Any]]:
+    """Ergaenze fehlende Orte aus dem aktuellen Katalog in bestehende Runs.
+
+    Runs wurden frueher mit einer kleineren Ortsliste angelegt. Die Kataloge
+    wachsen aber weiter; ohne Backfill blieb ein alter Run deshalb dauerhaft
+    hinter dem Spielkatalog zurueck. Bestehende Eintraege und unbekannte Alt-Orte
+    bleiben unangetastet, nur fehlende aktuelle Orte kommen als offene Zeilen
+    dazu. Postgame-Orte werden hier absichtlich ebenfalls angelegt: die Tabelle
+    soll immer alle Orte des Spiels abbilden.
+    """
+    known = {row.get("location_id") for row in rows if row.get("location_id")}
+    missing = [
+        row
+        for row in build_rows(game_id, include_postgame=True, player_ids=player_ids)
+        if row["location_id"] not in known
+    ]
+    return rows + missing
+
+
 def initial_state() -> dict[str, Any]:
     players = [Player.model_validate(player).model_dump() for player in DEFAULT_PLAYERS]
     player_ids = [player["id"] for player in players]
@@ -706,7 +730,7 @@ def initial_state() -> dict[str, Any]:
                 "created_at": timestamp,
                 "completed_at": None,
                 "progress": 0,
-                "encounters": build_rows(game_id, include_postgame=False, player_ids=player_ids),
+                "encounters": build_rows(game_id, include_postgame=True, player_ids=player_ids),
             }
         ],
         "updated_at": timestamp,

@@ -152,6 +152,7 @@ def test_platinum_catalog_includes_cities_with_encounters():
 
     assert expected_cities <= locations.keys()
     assert all(locations[location_id]["encounters"] for location_id in expected_cities)
+    assert locations["ravaged-path"]["name"] == "Ruinental"
 
 
 def test_the_pokedex_carries_types_for_every_species():
@@ -172,10 +173,14 @@ def test_every_level_cap_names_its_battle_type():
         assert all("type" in cap for cap in catalog["level_caps"]), path.name
 
 
-def test_empty_store_starts_prefilled_without_postgame(client):
+def test_empty_store_starts_prefilled_with_every_catalog_location(client):
     payload = client.get("/encounters").json()
 
-    assert [row["id"] for row in payload["encounters"]] == ["sinnoh-route-201", "sinnoh-route-202"]
+    assert [row["id"] for row in payload["encounters"]] == [
+        "sinnoh-route-201",
+        "sinnoh-route-202",
+        "sinnoh-victory-road",
+    ]
     assert all(row["outcome"] == "pending" for row in payload["encounters"])
     assert payload["game_name"] == "Testplatin"
 
@@ -303,12 +308,30 @@ def test_the_starter_row_moves_onto_its_location(data_file):
     client = stored_state(data_file, [starter_row()])
 
     rows = client.get("/encounters").json()["encounters"]
+    route_201 = next(row for row in rows if row["id"] == "sinnoh-route-201")
 
-    assert [row["id"] for row in rows] == ["sinnoh-route-201"]
-    assert rows[0]["location_id"] == "sinnoh-route-201"
-    assert rows[0]["encounter"] == "Route 201"
-    assert rows[0]["picks"]["marc"]["name"] == "Staralili"
-    assert rows[0]["in_team"] is True
+    assert route_201["location_id"] == "sinnoh-route-201"
+    assert route_201["encounter"] == "Route 201"
+    assert route_201["picks"]["marc"]["name"] == "Staralili"
+    assert route_201["in_team"] is True
+
+
+def test_existing_runs_are_backfilled_with_every_catalog_location(data_file):
+    # Ein älterer Run darf neue Orte nicht verlieren: fehlende Katalogzeilen
+    # werden als offene Encounter ergänzt, inklusive postgame.
+    client = stored_state(data_file, [starter_row()])
+
+    rows = client.get("/encounters").json()["encounters"]
+
+    assert [row["id"] for row in rows] == [
+        "sinnoh-route-201",
+        "sinnoh-route-202",
+        "sinnoh-victory-road",
+    ]
+    assert rows[1]["outcome"] == "pending"
+    assert rows[2]["postgame"] is True
+    stored = json.loads(data_file.read_text(encoding="utf-8"))
+    assert len(stored["runs"][0]["encounters"]) == 3
 
 
 def test_the_starter_row_wins_against_an_empty_location_row(data_file):
@@ -329,9 +352,10 @@ def test_the_starter_row_wins_against_an_empty_location_row(data_file):
 
     rows = client.get("/encounters").json()["encounters"]
 
-    assert len(rows) == 1
-    assert rows[0]["picks"]["nicolai"] == {"species": "bidoof", "name": "Bidiza", "status": "alive"}
-    assert rows[0]["outcome"] == "caught"
+    route_201 = next(row for row in rows if row["id"] == "sinnoh-route-201")
+    assert len(rows) == 3
+    assert route_201["picks"]["nicolai"] == {"species": "bidoof", "name": "Bidiza", "status": "alive"}
+    assert route_201["outcome"] == "caught"
 
 
 def test_order_follows_the_catalog_after_a_location_is_retired(data_file):
@@ -352,7 +376,11 @@ def test_order_follows_the_catalog_after_a_location_is_retired(data_file):
 
     rows = client.get("/encounters").json()["encounters"]
 
-    assert {row["id"]: row["order"] for row in rows} == {"sinnoh-route-201": 1, "sinnoh-route-202": 2}
+    assert {row["id"]: row["order"] for row in rows} == {
+        "sinnoh-route-201": 1,
+        "sinnoh-route-202": 2,
+        "sinnoh-victory-road": 3,
+    }
 
 
 def test_legacy_game_name_becomes_a_catalog_id(data_file):
@@ -411,7 +439,11 @@ def test_run_can_be_created_with_prefilled_locations(client):
     )
 
     assert created.status_code == 201
-    assert [row["id"] for row in created.json()["encounters"]] == ["sinnoh-route-201", "sinnoh-route-202"]
+    assert [row["id"] for row in created.json()["encounters"]] == [
+        "sinnoh-route-201",
+        "sinnoh-route-202",
+        "sinnoh-victory-road",
+    ]
     assert client.get("/encounters").json()["run_id"] == "run-2"
 
 
