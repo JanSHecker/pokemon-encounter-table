@@ -232,6 +232,13 @@ Pokémon, zählt aber als ein Tod – nämlich der des Verursachers. Schuld = To
 Encounter. Fangzahlen gibt es bewusst nicht mehr. Zeilen ohne Schuldigen laufen in
 `unassigned_*`, damit sie nicht stillschweigend aus der Summe fallen.
 
+Jeder Eintrag in `runs` trägt **dieselbe Aufschlüsselung noch einmal für sich** (`deaths_by_player`,
+`failed_encounters_by_player`, `unassigned_*` plus `encounter_count`/`caught_count`/`pending_count`).
+Daraus rechnet die Übersicht ihre drei Zuschnitte – gesamt, pro Run, pro Variante – aus **einem**
+Request; ohne die Aufschlüsselung bräuchte „pro Run“ einen Request je Run und „pro Variante“ einen
+eigenen Endpunkt. Die Summe über `runs` ist die Gesamtstatistik: beides kommt aus denselben Zeilen,
+gezählt wird pro Run und danach aufaddiert.
+
 ### Regeln, die der Code durchsetzt
 
 - **Soullink**: `couple_deaths()` macht aus einem Tod den Tod der ganzen Reihe – ausgelöst durch
@@ -300,6 +307,11 @@ Pokéball in der Tabelle.
   `dialog:not([open]) { display: none }`. Ansichten und Dialoge tragen eigene `display`-Werte
   (`grid`, `flex`), die sonst gegen das `hidden`-Attribut bzw. gegen die UA-Regel für geschlossene
   Dialoge gewinnen – beide Views stünden untereinander und Dialoge blieben nach dem Schließen stehen.
+- Rückfragen vor dem Löschen laufen über `ask()` und den eigenen `#confirm-dialog`, **nicht über
+  `window.confirm`**: den nativen Dialog darf der Browser unterdrücken – Chrome bietet dafür „weitere
+  Dialoge verhindern“ an, und wer das einmal anhakt, bekommt bis zum Neuladen still ein `false`
+  zurück. Der Löschknopf tat dann gar nichts, ohne Fehler und ohne Meldung. `ask()` löst erst beim
+  `close`-Ereignis auf, damit Abbrechen, Escape und Bestätigen denselben einen Ausgang haben.
 - Werte, die zum API-Vertrag gehören (`LOST_LABEL`, `NO_CULPRIT`, `TEAM_SIZE`), kommen aus
   `GET /runs` → `rules`. Der Platzhalter ist Protokoll: die API trägt ihn bei `outcome: failed`
   selbst bei allen Spielern ein. Eine zweite Kopie im Frontend fiele beim Umbenennen still
@@ -313,6 +325,10 @@ Pokéball in der Tabelle.
 - Das Suchfeld über der Tabelle filtert nur nach **Ortsnamen** und zeichnet ausschließlich die
   Tabelle neu (`renderTable()`), nicht die Toolbar: sonst verlöre das Feld bei jedem Tastendruck
   den Fokus. Die Zähler an den Filter-Pills bleiben absichtlich die des ganzen Runs.
+- Jede Suche vergleicht über `fold()`: klein, ohne Akzente, ohne Trennzeichen, und `ae`/`oe`/`ue`
+  auf einen Buchstaben zusammengezogen. Beide Seiten laufen durch dieselbe Faltung, deshalb trifft
+  „Verwuesteter“ auch „Verwüsteter“ – ein echtes `ue` im Wort schadet nicht, weil es dem Eintrag
+  genauso widerfährt wie der Eingabe.
 - Sortiert wird nur für die Anzeige (`visibleRows()`); `state.run.encounters` behält die Reihenfolge
   der API. „Nach Status“ **gruppiert** nur, innerhalb der Gruppe gilt weiter die Spielreihenfolge
   (`order`) – für einen Nuzlocke zählt, was als Nächstes drankommt.
@@ -330,6 +346,16 @@ Pokéball in der Tabelle.
   anderen“ mit dem Rest des Pokedex, und ein Suchfeld filtert beides (Enter nimmt den ersten
   Treffer). Als `<select>` je Zelle ginge das nicht: 43 Zeilen × 3 Spieler × 500 Einträge wären
   zehntausende `<option>`, und suchen ließe sich darin trotzdem nicht.
+- Gesucht wird über **deutschen Namen und Slug zugleich** – der Slug *ist* der englische Name in
+  Kleinbuchstaben (`mr-mime`), eine zweite Namensliste braucht es dafür nicht. Eingeben darf man
+  also beides, angezeigt wird immer der deutsche Name. Bleibt die wörtliche Suche überall leer,
+  läuft ein **zweiter Durchgang mit Tippfehler-Toleranz** (`nearDistance()`, Editierdistanz des
+  besten Teilstücks): „Geweiher“ findet so „Gehweiher“. Zwei Durchgänge statt einem, weil sonst
+  jede genaue Suche unscharfe Treffer mitschleppt; die Toleranz steigt mit der Länge und ist unter
+  fünf Zeichen null, sonst wäre der erste Treffer – den Enter nimmt – Zufall. Die Einträge bringen
+  ihre Suchschlüssel als `search` mit (`pickerEntry()`), gefaltet **einmal beim Öffnen** statt bei
+  jedem Tastendruck; derselbe Schritt holt Typen und Familie aus dem Pokedex nach, die den
+  Ortslisten fehlen.
 - Das ⚠ an einem Eintrag meint die **Entwicklungslinie**, nicht die Art: wer ein Karpador hat,
   bekommt es auch an Garados. Der Status zählt dabei nicht – ein totes Karpador gibt die Linie
   nicht wieder frei.
@@ -342,9 +368,22 @@ Pokéball in der Tabelle.
   sähe aus, als wäre die Markierung kaputt. Ein Generationsumschalter (Gen 1 / 2–5 / 6+) stand bis
   zum UI-Rework hier und ist mit dem Design entfallen; die Typen im Katalog sind ohnehin die
   heutigen.
-- Die **Fail-Statistik** rechnet lokal aus dem geladenen Run (`failStats()`, Schuld = Tod ×2 +
-  vergeigter Encounter), damit sich die Balken mit der Tabelle ändern statt erst beim nächsten Poll.
-  `GET /stats` wird nur für den Spieler-Dialog geholt – dort zählen alle Runs.
+- Jedes Pokémon der Tabelle hat einen **⚔-Knopf**, der es in den Rechner legt (`showMonTypes()` →
+  `state.typeMon`). Dann zeigt das Ergebnisfeld **beide Richtungen gleichzeitig** – am Tisch ist die
+  Frage immer beides: womit tut es weh, und was tut ihm weh. Der Modus daneben entscheidet weiter
+  nur, was die Tabelle markiert. Der Knopf fehlt bei Einträgen ohne Typen (Freitext ohne
+  Katalog-Art); von Hand einen Typ zu schalten löst das Pokémon wieder ab, denn dann steht dort
+  nicht mehr seine Auswahl.
+- Die **Fail-Statistik** rechnet lokal aus dem geladenen Run (`failStats()`), damit sich die Balken
+  mit der Tabelle ändern statt erst beim nächsten Poll. Schuld = Tod ×2 + vergeigter Encounter, und
+  zwar in `scorePlayers()` – dieselbe Formel bedient auch die Übersicht, sonst stünden zwei Zahlen
+  für dasselbe Wort.
+- Die **Statistik auf der Übersicht** (`renderStats()`) bündelt `GET /stats` → `runs` zu einem
+  Block je Zuschnitt: gesamt, pro Run oder pro Variante (`aggregateStats()`). Alle drei rechnen aus
+  derselben Liste, der Zuschnitt steht in `localStorage`. Geholt wird die Statistik nur, wenn die
+  Übersicht sichtbar ist, plus für den Spieler-Dialog – die Run-Ansicht braucht sie nicht. Sie ist
+  Beiwerk: schlägt der Request fehl, bleibt die Übersicht stehen und der Block zeigt seinen
+  Platzhalter.
 - `poll()` lädt über `loadRuns()`, nicht mit eigenem Fetch: nur so greift der Rückfall auf den
   aktuellen Run des Servers, wenn der eigene gelöscht wurde. Er pausiert, solange ein **Dialog**
   offen ist oder der Tab im Hintergrund liegt, und merkt sich das in `refreshPending`;

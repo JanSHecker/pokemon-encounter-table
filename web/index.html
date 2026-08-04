@@ -40,6 +40,15 @@
 
         <div class="run-grid" id="run-grid"></div>
 
+        <section class="stats-section">
+          <div class="stats-head">
+            <h2>Statistik</h2>
+            <span class="roster-note">nur Tode und vergeigte Encounter</span>
+            <div class="segmented" id="stats-scope"></div>
+          </div>
+          <div class="stats-grid" id="stats-grid"></div>
+        </section>
+
         <section class="roster">
           <div class="roster-head">
             <h2>Spieler</h2>
@@ -81,11 +90,14 @@
           <span class="blame-line" id="blame-line"></span>
         </div>
 
-        <div class="card type-card">
+        <div class="card type-card" id="type-card">
           <div class="card-head">
             <span class="pixel-label">TYPENRECHNER</span>
             <div class="segmented small" id="type-modes"></div>
           </div>
+          <!-- Das Pokémon, das aus der Tabelle geladen wurde. Solange eines
+               drinsteht, zeigt das Ergebnisfeld Angriff und Abwehr zugleich. -->
+          <div class="type-mon" id="type-mon" hidden></div>
           <div class="type-grid" id="type-grid"></div>
           <div class="type-result">
             <div class="type-result-head">
@@ -134,6 +146,20 @@
     </div>
     <div class="dialog-actions">
       <button type="button" class="ghost-button" data-close>Abbrechen</button>
+    </div>
+  </dialog>
+
+  <!-- Rueckfrage vor allem, was nicht zurueckzuholen ist. Ein eigener Dialog und
+       nicht window.confirm: den nativen darf der Browser unterdruecken, und dann
+       liefert er still 'false' - der Loeschknopf taete schlicht nichts. -->
+  <dialog id="confirm-dialog" class="dialog small-dialog">
+    <div class="dialog-titles">
+      <span class="dialog-title" id="confirm-title"></span>
+      <span class="dialog-sub" id="confirm-sub"></span>
+    </div>
+    <div class="dialog-actions spread">
+      <button type="button" class="ghost-button" data-close>Abbrechen</button>
+      <button type="button" class="danger-button" id="confirm-ok">Löschen</button>
     </div>
   </dialog>
 

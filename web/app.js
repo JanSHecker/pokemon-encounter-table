@@ -89,6 +89,15 @@ const RUN_STATUS_ACTIONS = [
   ['active', 'aktiv'], ['paused', 'pause'], ['completed', 'geschafft'], ['failed', 'verkackt'],
 ];
 
+// Die drei Zuschnitte der Statistik auf der Uebersicht. Alle drei rechnen aus
+// derselben Liste (GET /stats -> runs), nur anders gebuendelt.
+const STATS_SCOPES = [
+  ['all', 'GESAMT', 'Alle Runs zusammen'],
+  ['run', 'PRO RUN', 'Jeder Run für sich'],
+  ['variant', 'PRO VARIANTE', 'Nach Edition zusammengefasst'],
+];
+const STATS_SCOPE_KEY = 'encounter-stats-scope';
+
 const state = {
   view: 'home',
   games: [],
@@ -99,10 +108,14 @@ const state = {
   run: null,
   updatedAt: null,
   stats: null,
+  statsScope: 'all',
   filter: 'alle',
   sort: 'order',
   search: '',
   types: [],
+  // Das Pokémon, das per Knopf aus der Tabelle in den Rechner geladen wurde -
+  // oder null, wenn die Typen von Hand gewaehlt sind.
+  typeMon: null,
   // Der Modus wird bewusst nicht gespeichert: nur im Angriff markiert die
   // Tabelle die anfaelligen Pokémon, und ein aus der letzten Sitzung
   // stehengebliebenes 'def' sieht aus, als wuerde die Markierung fehlen.
@@ -122,6 +135,8 @@ const el = {
   homeView: document.getElementById('home-view'),
   homeSub: document.getElementById('home-sub'),
   runGrid: document.getElementById('run-grid'),
+  statsScope: document.getElementById('stats-scope'),
+  statsGrid: document.getElementById('stats-grid'),
   rosterChips: document.getElementById('roster-chips'),
 
   runView: document.getElementById('run-view'),
@@ -135,6 +150,8 @@ const el = {
   capCard: document.getElementById('cap-card'),
   failList: document.getElementById('fail-list'),
   blameLine: document.getElementById('blame-line'),
+  typeCard: document.getElementById('type-card'),
+  typeMon: document.getElementById('type-mon'),
   typeModes: document.getElementById('type-modes'),
   typeGrid: document.getElementById('type-grid'),
   typeResultTitle: document.getElementById('type-result-title'),
@@ -154,6 +171,11 @@ const el = {
   lostDialog: document.getElementById('lost-dialog'),
   lostSub: document.getElementById('lost-sub'),
   culpritList: document.getElementById('culprit-list'),
+
+  confirmDialog: document.getElementById('confirm-dialog'),
+  confirmTitle: document.getElementById('confirm-title'),
+  confirmSub: document.getElementById('confirm-sub'),
+  confirmOk: document.getElementById('confirm-ok'),
 
   playersDialog: document.getElementById('players-dialog'),
   playerList: document.getElementById('player-list'),
@@ -187,6 +209,91 @@ function esc(value) {
 function formatDate(value) {
   if (!value) return '';
   return new Intl.DateTimeFormat('de-DE', { dateStyle: 'short' }).format(new Date(value));
+}
+
+/** Vergleichsform fuer jede Suche: klein, ohne Akzente, ohne Trennzeichen.
+ *
+ * Damit ist der Slug einer Art dieselbe Form wie ihr englischer Name - er *ist*
+ * der englische Name in Kleinbuchstaben ('mr-mime'), nur mit Bindestrichen.
+ * Gesucht wird deshalb ueber deutschen Namen und Slug zugleich: eingeben darf
+ * man beides, angezeigt wird immer der deutsche Name.
+ */
+function fold(value) {
+  return String(value ?? '')
+    .toLocaleLowerCase('de')
+    .replaceAll('ß', 'ss')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '')
+    // 'ü', 'ue' und 'u' sind dieselbe Eingabe - wer keine Umlaut-Taste bemueht,
+    // tippt 'Verwuesteter'. Beide Seiten laufen durch dieselbe Zusammenziehung
+    // und treffen sich damit in der Mitte. Ein echtes 'ue' im Wort schadet nicht:
+    // dem Eintrag widerfaehrt es genauso wie der Eingabe.
+    .replace(/ae/g, 'a')
+    .replace(/oe/g, 'o')
+    .replace(/ue/g, 'u');
+}
+
+/** Editierdistanz des am besten passenden Teilstuecks von `text` zu `term`.
+ *
+ * Der Anfang kostet nichts (erste Zeile bleibt 0) und gewertet wird das Minimum
+ * der letzten Zeile - gemessen wird also, wie weit der Suchbegriff *irgendwo* in
+ * `text` danebenliegt, statt beide Woerter ganz zu vergleichen. 'geweiher' ist
+ * so einen Buchstaben von 'gehweiher' entfernt, obwohl kein Teilstueck woertlich
+ * passt.
+ */
+function nearDistance(term, text) {
+  let previous = new Array(text.length + 1).fill(0);
+  let current = new Array(text.length + 1);
+  for (let i = 1; i <= term.length; i += 1) {
+    current[0] = i;
+    for (let j = 1; j <= text.length; j += 1) {
+      current[j] = Math.min(
+        previous[j] + 1,
+        current[j - 1] + 1,
+        previous[j - 1] + (term[i - 1] === text[j - 1] ? 0 : 1),
+      );
+    }
+    [previous, current] = [current, previous];
+  }
+  return Math.min(...previous);
+}
+
+/** Wie weit ein Treffer danebenliegen darf.
+ *
+ * Kurze Begriffe muessen sitzen: bei vier Buchstaben ist sonst der halbe Pokedex
+ * "aehnlich" und der erste Treffer, den Enter nimmt, waere Zufall.
+ */
+function searchTolerance(term) {
+  return term.length < 5 ? 0 : Math.min(3, Math.floor(term.length / 4));
+}
+
+/** Treffer einer Liste: woertlich oder, im zweiten Durchgang, mit Tippfehlern.
+ *
+ * Jeder Eintrag bringt seine Suchschluessel als `search` mit (deutscher Name und
+ * Slug, beide gefaltet). Die Toleranzsuche sortiert nach Abstand - Enter nimmt
+ * den ersten Treffer, also muss der beste vorne stehen.
+ */
+/** Abstand des besten Treffers einer Gruppe - Infinity, wenn sie leer ist.
+ *
+ * Die Toleranzsuche hat bereits sortiert, es zaehlt also nur der erste Eintrag.
+ */
+function groupDistance(hits, term) {
+  if (!hits.length) return Infinity;
+  return Math.min(...hits[0].search.map((key) => nearDistance(term, key)));
+}
+
+function searchEntries(entries, term, fuzzy) {
+  if (!term) return entries;
+  if (!fuzzy) return entries.filter((entry) => entry.search.some((key) => key.includes(term)));
+
+  const tolerance = searchTolerance(term);
+  if (!tolerance) return [];
+  return entries
+    .map((entry) => ({ entry, distance: Math.min(...entry.search.map((key) => nearDistance(term, key))) }))
+    .filter((hit) => hit.distance <= tolerance)
+    .sort((a, b) => a.distance - b.distance)
+    .map((hit) => hit.entry);
 }
 
 function spriteUrl(dex) {
@@ -225,6 +332,40 @@ async function api(path, options = {}) {
     throw new ApiError(response.status, detail);
   }
   return payload;
+}
+
+/** Rueckfrage vor einer Aktion, die sich nicht zurueckholen laesst.
+ *
+ * Bewusst nicht `window.confirm`: den nativen Dialog darf der Browser
+ * unterdruecken - Chrome bietet dafuer sogar eine Checkbox an ("weitere Dialoge
+ * verhindern"), und wer sie einmal setzt, bekommt bis zum Neuladen still ein
+ * `false` zurueck. Der Loeschknopf tat dann nichts, ohne jede Meldung. Ein
+ * eigener Dialog kann nicht abgeschaltet werden und sieht aus wie der Rest.
+ */
+function ask({ title, text, confirmLabel = 'Löschen' }) {
+  el.confirmTitle.textContent = title;
+  el.confirmSub.textContent = text;
+  el.confirmOk.textContent = confirmLabel;
+
+  return new Promise((resolve) => {
+    let answer = false;
+    const accept = () => {
+      answer = true;
+      el.confirmDialog.close();
+    };
+    el.confirmOk.addEventListener('click', accept);
+    // Erst beim Schliessen antworten - egal ob ueber Abbrechen, Escape oder den
+    // Bestaetigen-Knopf. So gibt es genau einen Weg heraus.
+    el.confirmDialog.addEventListener(
+      'close',
+      () => {
+        el.confirmOk.removeEventListener('click', accept);
+        resolve(answer);
+      },
+      { once: true },
+    );
+    el.confirmDialog.showModal();
+  });
 }
 
 function showError(message) {
@@ -316,6 +457,11 @@ async function ensureCatalog(gameId) {
       ...(fetched.pokedex || []).map((entry) => [entry.species, entry]),
     ]),
   };
+  // Die Suchschluessel des Pokedex haengen nur am Katalog, nicht an der Zeile:
+  // einmal je Spiel falten statt bei jedem Oeffnen des Auswahldialogs. Der
+  // Pokedex-Eintrag ist zugleich sein eigener Nachschlag - er gewinnt oben im
+  // Index ohnehin.
+  fetched.index.choices = (fetched.pokedex || []).map((entry) => pickerEntry(entry, entry));
   state.catalogs[gameId] = fetched;
 }
 
@@ -350,11 +496,11 @@ function categoryCounts() {
 }
 
 function visibleRows() {
-  const term = normalize(state.search.trim());
+  const term = fold(state.search);
   const list = rows().filter(
     (row) =>
       (state.filter === 'alle' || category(row) === state.filter) &&
-      (!term || normalize(row.encounter).includes(term)),
+      (!term || fold(row.encounter).includes(term)),
   );
   const rank = (row) => (state.sort === 'status' ? CATEGORY_RANK[category(row)] : 0);
   return list.sort((a, b) => rank(a) - rank(b) || a.order - b.order || a.id.localeCompare(b.id));
@@ -370,6 +516,23 @@ function teamMons(playerId) {
     .filter((row) => row.in_team && category(row) !== 'tot')
     .map((row) => row.picks[playerId])
     .filter((pick) => isFilled(pick) && pick.status !== 'dead');
+}
+
+/** Spieler nach Schuld sortieren - die eine Rechnung fuer alle Balken.
+ *
+ * Schuld = Tod x2 + vergeigter Encounter: ein toter Link kostet die ganze Reihe,
+ * ein verpasster nur die Gelegenheit. Run-Ansicht und Uebersicht teilen sich die
+ * Formel, sonst stuenden zwei Zahlen fuer dasselbe Wort.
+ */
+function scorePlayers(deaths, misses) {
+  const scored = state.players
+    .map((entry) => {
+      const dead = deaths[entry.id] || 0;
+      const missed = misses[entry.id] || 0;
+      return { player: entry, deaths: dead, misses: missed, score: dead * 2 + missed };
+    })
+    .sort((a, b) => b.score - a.score);
+  return { scored, worst: scored[0], max: Math.max(1, ...scored.map((entry) => entry.score)) };
 }
 
 /** Negativstatistik des offenen Runs: eine Zeile = ein Vorfall beim Verursacher.
@@ -390,12 +553,7 @@ function failStats() {
     if (row.outcome === 'dead') deaths[blame] += 1;
     else if (row.outcome === 'failed') misses[blame] += 1;
   }
-  // Schuld = Tod x2 + vergeigter Encounter: ein toter Link kostet die ganze
-  // Reihe, ein verpasster nur die Gelegenheit.
-  const scored = state.players
-    .map((entry) => ({ player: entry, deaths: deaths[entry.id], misses: misses[entry.id], score: deaths[entry.id] * 2 + misses[entry.id] }))
-    .sort((a, b) => b.score - a.score);
-  return { scored, worst: scored[0], max: Math.max(1, ...scored.map((entry) => entry.score)) };
+  return scorePlayers(deaths, misses);
 }
 
 /** Was jeder Spieler im Run schon belegt hat - Arten und Entwicklungslinien.
@@ -516,6 +674,29 @@ function renderHeadStats() {
     headStat(counts.verloren, 'VERGEIGT', 'warn');
 }
 
+/** Die Schuld-Balken, wie sie in der Run-Ansicht und auf der Uebersicht stehen.
+ *
+ * Ein Markup fuer beide: laeuft es auseinander, zeigen zwei Karten dieselbe
+ * Rechnung unterschiedlich - genau das, was `scorePlayers()` schon fuer die
+ * Zahlen verhindert.
+ */
+function failRows(scored, max) {
+  return scored
+    .map(
+      (entry) => `
+      <div class="fail-row">
+        <span class="dot" style="background:${esc(entry.player.color)}"></span>
+        <span class="name">${esc(entry.player.name)}</span>
+        <div class="bar">
+          <span class="dead" style="width:${esc(((entry.deaths * 2) / max) * 100)}%"></span>
+          <span class="lost" style="width:${esc((entry.misses / max) * 100)}%"></span>
+        </div>
+        <span class="tally">${esc(entry.deaths)} ✝ · ${esc(entry.misses)} ✗</span>
+      </div>`,
+    )
+    .join('');
+}
+
 // --------------------------------------------------------- Run-Uebersicht -
 
 function playerChip(entry, className = 'chip') {
@@ -576,12 +757,136 @@ function renderHome() {
        <strong>Neuen Run anlegen</strong>
        <span>Spiel, Name und Spieler wählen</span>
      </button>`;
+  renderStats();
   el.rosterChips.innerHTML = state.players.map((entry) => playerChip(entry)).join('');
+}
+
+// ------------------------------------------------------------ Statistik ---
+
+// Alle drei Zuschnitte rechnen aus derselben Liste: GET /stats liefert jeden Run
+// samt Aufschluesselung, gebuendelt wird hier. Ein Request, drei Ansichten - und
+// 'pro Variante' braucht keinen eigenen Endpunkt.
+
+/** Mehrere Run-Statistiken zu einem Block zusammenfassen. */
+function aggregateStats(entries, title, sub) {
+  const deaths = {};
+  const misses = {};
+  const totals = { locations: 0, caught: 0, pending: 0, deaths: 0, misses: 0, unassigned: 0 };
+
+  for (const entry of entries) {
+    totals.locations += entry.encounter_count || 0;
+    totals.caught += entry.caught_count || 0;
+    totals.pending += entry.pending_count || 0;
+    totals.deaths += entry.deaths || 0;
+    totals.misses += entry.failed_encounters || 0;
+    totals.unassigned += (entry.unassigned_deaths || 0) + (entry.unassigned_failed_encounters || 0);
+    for (const person of state.players) {
+      deaths[person.id] = (deaths[person.id] || 0) + (entry.deaths_by_player?.[person.id] || 0);
+      misses[person.id] = (misses[person.id] || 0) + (entry.failed_encounters_by_player?.[person.id] || 0);
+    }
+  }
+  return { title, sub, totals, ...scorePlayers(deaths, misses) };
+}
+
+function runLabel(count) {
+  return `${count} ${count === 1 ? 'Run' : 'Runs'}`;
+}
+
+function statBlocks() {
+  const entries = state.stats?.runs || [];
+
+  if (state.statsScope === 'run') {
+    return entries.map((entry) =>
+      aggregateStats(
+        [entry],
+        entry.name,
+        `${entry.game_name || entry.game_id} · ${RUN_STATUS_LABELS[entry.status] || RUN_STATUS_LABELS.active}`,
+      ),
+    );
+  }
+
+  if (state.statsScope === 'variant') {
+    const byGame = new Map();
+    for (const entry of entries) {
+      if (!byGame.has(entry.game_id)) byGame.set(entry.game_id, []);
+      byGame.get(entry.game_id).push(entry);
+    }
+    return [...byGame.values()].map((group) =>
+      aggregateStats(group, group[0].game_name || group[0].game_id, runLabel(group.length)),
+    );
+  }
+
+  return [aggregateStats(entries, 'Alle Runs', `${runLabel(entries.length)} · ${state.players.length} Spieler`)];
+}
+
+function statCounter(value, label, tone = '') {
+  return `<div class="stat-counter ${esc(tone)}"><b>${esc(value)}</b><span>${esc(label)}</span></div>`;
+}
+
+function statBlock(block) {
+  const { totals, worst } = block;
+  const bars = failRows(block.scored, block.max);
+
+  // Ohne Punkte gibt es keinen Schuldigsten: liefen alle Vorfaelle auf 'niemand',
+  // stuende hier sonst der erste Spieler der Liste, der nichts verbrochen hat.
+  const foot =
+    totals.deaths + totals.misses === 0
+      ? 'Noch nichts schiefgegangen.'
+      : `Schuldigster: ${worst && worst.score > 0 ? worst.player.name : '–'}` +
+        (totals.unassigned ? ` · ${totals.unassigned} ohne Schuldigen` : '');
+
+  return `
+    <article class="stat-card">
+      <div class="stat-card-head">
+        <b>${esc(block.title)}</b>
+        <span>${esc(block.sub)}</span>
+      </div>
+      <div class="stat-counters">
+        ${statCounter(`${totals.caught}/${totals.locations}`, 'GEFANGEN', 'good')}
+        ${statCounter(totals.deaths, 'TOT', 'bad')}
+        ${statCounter(totals.misses, 'VERGEIGT', 'warn')}
+        ${statCounter(totals.pending, 'OFFEN')}
+      </div>
+      <div class="stat-bars">${bars}</div>
+      <span class="stat-foot">${esc(foot)}</span>
+    </article>`;
+}
+
+function renderStats() {
+  el.statsScope.innerHTML = STATS_SCOPES.map(
+    ([key, label, title]) => `<button type="button" class="${state.statsScope === key ? 'is-on' : ''}"
+                                      data-action="stats-scope" data-scope="${esc(key)}"
+                                      title="${esc(title)}">${esc(label)}</button>`,
+  ).join('');
+
+  if (!state.stats) {
+    el.statsGrid.innerHTML = '<p class="stats-empty">Statistik wird geladen…</p>';
+    return;
+  }
+  const blocks = statBlocks();
+  // 'Gesamt' ist ein Block und bekommt die ganze Breite; die anderen kacheln.
+  el.statsGrid.classList.toggle('is-single', blocks.length === 1);
+  el.statsGrid.innerHTML = blocks.length
+    ? blocks.map(statBlock).join('')
+    : '<p class="stats-empty">Noch keine Runs.</p>';
 }
 
 // ------------------------------------------------------------- Run-View ---
 
+/** Der Schnappschuss im Rechner gilt nur, solange die Zelle dieselbe Art zeigt.
+ *
+ * `showMonTypes()` kopiert Name, Sprite und Typen - traegt jemand danach etwas
+ * anderes ein oder meldet die Reihe als verloren, stuenden zwei verschiedene
+ * Pokémon nebeneinander: das neue in der Tabelle, das alte im Rechner. Die
+ * gewaehlten Typen bleiben stehen, sie sind ab hier eine Auswahl von Hand.
+ */
+function syncTypeMon() {
+  const mon = state.typeMon;
+  if (mon && findRow(mon.rowId)?.picks[mon.playerId]?.species !== mon.species) state.typeMon = null;
+}
+
 function renderRunView() {
+  syncTypeMon();
   renderFilters();
   renderSort();
   renderTable();
@@ -638,6 +943,8 @@ function pickCell(row, entry, context) {
   const spriteClass = dead ? 'is-dead' : row.in_team ? 'is-team' : '';
   const background = info ? ` style="background-image:url('${esc(spriteUrl(info.dex))}')"` : '';
 
+  const loaded = context.calcKey === `${row.id}:${entry.id}`;
+
   return `
     <div class="pick-cell${weak ? ' is-weak' : ''}">
       <button type="button" class="pick-button" title="${esc(`${entry.name}: ${name} ändern`)}"
@@ -652,6 +959,11 @@ function pickCell(row, entry, context) {
           </span>
         </span>
       </button>
+      ${types.length
+        ? `<button type="button" class="calc-button${loaded ? ' is-on' : ''}" data-action="type-mon"
+                   data-player="${esc(entry.id)}"
+                   title="${esc(`${name}: Angriff und Abwehr im Typenrechner`)}">⚔</button>`
+        : ''}
       <button type="button" class="kill-button${dead ? ' is-dead' : ''}" data-action="kill" data-player="${esc(entry.id)}"
               title="${esc(dead ? 'Reihe wiederbeleben' : `${entry.name} verliert ${name} – koppelt die Reihe und trägt ${entry.name} als Schuldigen ein`)}"
               >${dead ? '↺' : '☠'}</button>
@@ -706,9 +1018,10 @@ function rowHtml(row, context) {
 function renderTable() {
   const players = state.players;
   // Kopf und Zeilen teilen sich dasselbe Raster; es haengt an der Spieleranzahl
-  // und steht deshalb als Variable am Scroll-Container.
-  el.tableScroll.style.setProperty('--cols', `56px 164px repeat(${players.length}, minmax(196px, 1fr)) 124px`);
-  el.tableScroll.style.setProperty('--min', `${344 + players.length * 196}px`);
+  // und steht deshalb als Variable am Scroll-Container. Die Spalte ist seit dem
+  // Rechner-Knopf breiter: neben Name und Typen stehen jetzt zwei Knoepfe.
+  el.tableScroll.style.setProperty('--cols', `56px 164px repeat(${players.length}, minmax(226px, 1fr)) 124px`);
+  el.tableScroll.style.setProperty('--min', `${344 + players.length * 226}px`);
 
   el.tableHead.innerHTML =
     '<span>TEAM</span><span>ORT</span>' +
@@ -725,6 +1038,7 @@ function renderTable() {
     teamCount: rows().filter((row) => row.in_team).length,
     selection: state.types,
     mode: state.mode,
+    calcKey: state.typeMon ? `${state.typeMon.rowId}:${state.typeMon.playerId}` : null,
   };
   const visible = visibleRows();
   const term = state.search.trim();
@@ -777,28 +1091,54 @@ function renderCapCard() {
 
 function renderFailStats() {
   const { scored, worst, max } = failStats();
-  el.failList.innerHTML = scored
-    .map(
-      (entry) => `
-      <div class="fail-row">
-        <span class="dot" style="background:${esc(entry.player.color)}"></span>
-        <span class="name">${esc(entry.player.name)}</span>
-        <div class="bar">
-          <span class="dead" style="width:${esc(((entry.deaths * 2) / max) * 100)}%"></span>
-          <span class="lost" style="width:${esc((entry.misses / max) * 100)}%"></span>
-        </div>
-        <span class="tally">${esc(entry.deaths)} ✝ · ${esc(entry.misses)} ✗</span>
-      </div>`,
-    )
-    .join('');
+  el.failList.innerHTML = failRows(scored, max);
   el.blameLine.textContent = worst
     ? `Schuldigster: ${worst.player.name} · Schuld = Tod ×2 + vergeigter Encounter`
     : '';
 }
 
+/** Die Multiplikatoren einer Auswahl als Balkenliste. */
+function bucketList(selection, mode) {
+  const grouped = selection.length ? bucketsFor(selection, mode) : new Map();
+  return BUCKETS.filter((value) => grouped.has(value))
+    .map((value) => {
+      const tone = `${mode}-${BUCKET_CLASS[value]}`;
+      return `
+        <div class="bucket${value < 2 ? ' is-weak' : ''}">
+          <span class="bucket-badge ${esc(tone)}">${esc(formatFactor(value))}</span>
+          <div class="bucket-items">${grouped.get(value).map(typeBadge).join('')}</div>
+        </div>`;
+    })
+    .join('');
+}
+
+function typeSection(label, body) {
+  return `<div class="type-section">
+    <span class="pixel-label soft">${esc(label)}</span>
+    ${body || '<span class="type-plain">überall ×1</span>'}
+  </div>`;
+}
+
+/** Das Pokémon, das gerade im Rechner liegt - oder nichts. */
+function renderTypeMon() {
+  const mon = state.typeMon;
+  el.typeMon.hidden = !mon;
+  if (!mon) return;
+  el.typeMon.innerHTML = `
+    <span class="sprite" style="background-image:url('${esc(spriteUrl(mon.dex))}')"></span>
+    <span class="type-mon-text">
+      <b><span class="dot" style="background:${esc(mon.color)}"></span>${esc(mon.name)}</b>
+      <span class="type-mon-types">${mon.types.map(typeBadge).join('')}</span>
+    </span>
+    <button type="button" class="icon-button" data-action="type-mon-clear"
+            title="Pokémon aus dem Rechner nehmen">✕</button>`;
+}
+
 function renderTypeCalculator() {
   const selection = state.types;
   const attacking = state.mode === 'atk';
+
+  renderTypeMon();
 
   el.typeModes.innerHTML = [['atk', 'ANGRIFF'], ['def', 'ABWEHR']]
     .map(
@@ -813,23 +1153,23 @@ function renderTypeCalculator() {
                     aria-pressed="${on}"><span class="type-icon"></span>${esc(TYPE_LABELS[type])}</button>`;
   }).join('');
 
-  const labels = selection.map((type) => TYPE_LABELS[type].charAt(0) + TYPE_LABELS[type].slice(1).toLowerCase());
-  el.typeResultTitle.textContent = selection.length
-    ? `${labels.join(' + ')} ${attacking ? 'greift an' : 'wird angegriffen'}`
-    : 'Typ wählen (max. 2)';
   el.typeReset.hidden = !selection.length;
 
-  const grouped = selection.length ? bucketsFor(selection, state.mode) : new Map();
-  el.typeResultList.innerHTML = BUCKETS.filter((value) => grouped.has(value))
-    .map((value) => {
-      const tone = `${attacking ? 'atk' : 'def'}-${BUCKET_CLASS[value]}`;
-      return `
-        <div class="bucket${value < 2 ? ' is-weak' : ''}">
-          <span class="bucket-badge ${esc(tone)}">${esc(formatFactor(value))}</span>
-          <div class="bucket-items">${grouped.get(value).map(typeBadge).join('')}</div>
-        </div>`;
-    })
-    .join('');
+  if (state.typeMon) {
+    // Bei einem Pokémon aus der Tabelle ist die Frage am Tisch immer beides:
+    // womit tut es weh und was tut ihm weh. Der Modus daneben entscheidet
+    // weiterhin nur, was die Tabelle markiert.
+    el.typeResultTitle.textContent = `${state.typeMon.name}: Angriff & Abwehr`;
+    el.typeResultList.innerHTML =
+      typeSection('ANGRIFF · SEINE TYPEN GEGEN', bucketList(selection, 'atk')) +
+      typeSection('ABWEHR · SCHADEN AN IHM', bucketList(selection, 'def'));
+  } else {
+    const labels = selection.map((type) => TYPE_LABELS[type].charAt(0) + TYPE_LABELS[type].slice(1).toLowerCase());
+    el.typeResultTitle.textContent = selection.length
+      ? `${labels.join(' + ')} ${attacking ? 'greift an' : 'wird angegriffen'}`
+      : 'Typ wählen (max. 2)';
+    el.typeResultList.innerHTML = bucketList(selection, state.mode);
+  }
 
   el.teamCheckTitle.textContent = attacking ? 'WER HAT PROBLEME DAMIT' : 'WER HAT LINKS DIESES TYPS';
   el.teamCheckList.innerHTML = state.players
@@ -982,10 +1322,13 @@ el.renameForm.addEventListener('submit', async (event) => {
 async function deleteRun(runId) {
   const run = state.runs.find((entry) => entry.id === runId);
   if (!run) return;
-  const question =
-    `„${run.name}“ mit allen ${run.encounter_count} Zeilen löschen?\n` +
-    'Das lässt sich nur noch aus einem Backup zurückholen.';
-  if (!window.confirm(question)) return;
+  const confirmed = await ask({
+    title: `„${run.name}“ löschen?`,
+    text:
+      `Alle ${run.encounter_count} Zeilen verschwinden mit. ` +
+      'Das lässt sich nur noch aus einem Backup zurückholen.',
+  });
+  if (!confirmed) return;
   // DELETE antwortet mit 204, also ohne Inhalt - der Erfolg muss selbst markiert
   // werden, sonst ist er von einem abgefangenen Fehler nicht zu unterscheiden.
   const removed = await write(() =>
@@ -1001,6 +1344,19 @@ async function deleteRun(runId) {
 // Der Dialog ist einer fuer die ganze Tabelle: 132 Zellen mit je einer eigenen
 // Liste waeren sonst zehntausende DOM-Knoten.
 
+/** Ein Eintrag der Auswahlliste, angereichert um alles zum Suchen und Anzeigen.
+ *
+ * Die Ortslisten fuehren weder Typen noch Familie - beides steht nur im Pokedex
+ * (`index.species`). Ohne den Nachschlag blieben ausgerechnet die Arten des
+ * Ortes ohne Typ-Badge. Die Suchschluessel entstehen einmal beim Oeffnen des
+ * Dialogs und nicht bei jedem Tastendruck.
+ */
+function pickerEntry(entry, info = speciesInfo(entry.species)) {
+  const merged = { ...entry, ...(info || {}) };
+  merged.search = [fold(merged.name), fold(merged.species)];
+  return merged;
+}
+
 /** Die Auswahlliste: erst die Arten des Ortes nach Methode, dann der Rest. */
 function pickerGroups(row) {
   const encounters = catalogLocation(row.location_id)?.encounters || [];
@@ -1009,32 +1365,41 @@ function pickerGroups(row) {
   for (const entry of encounters) {
     const key = entry.methods.join(' / ');
     if (!byMethod.has(key)) byMethod.set(key, []);
-    byMethod.get(key).push(entry);
+    byMethod.get(key).push(pickerEntry(entry));
   }
   for (const [label, entries] of byMethod) groups.push({ label: `${label} · KOMMT HIER VOR`, entries, local: true });
 
   const here = new Set(encounters.map((entry) => entry.species));
-  const rest = (catalog()?.pokedex || []).filter((entry) => !here.has(entry.species));
+  const rest = (catalog()?.index.choices || []).filter((entry) => !here.has(entry.species));
   if (rest.length) groups.push({ label: 'ALLE ANDEREN', entries: rest, local: false });
   return groups;
-}
-
-function normalize(value) {
-  return String(value ?? '').toLocaleLowerCase('de');
 }
 
 function renderPickerList() {
   if (!state.picker) return;
   const { row, playerId, groups, counts } = state.picker;
-  const term = normalize(el.pickerSearch.value.trim());
+  const typed = el.pickerSearch.value.trim();
+  const term = fold(typed);
   const own = row.picks[playerId]?.species || null;
 
-  let html = '';
+  // Zwei Durchgaenge: solange irgendetwas woertlich passt, steht auch nur das
+  // da. Erst wenn ueberall nichts ankommt, wird mit Tippfehler-Toleranz gesucht -
+  // 'Geweiher' findet dann 'Gehweiher', ohne dass die Liste sonst aufweicht.
+  let perGroup = groups.map((group) => searchEntries(group.entries, term, false));
+  const fuzzy = Boolean(term) && !perGroup.some((entries) => entries.length);
+  if (fuzzy) perGroup = groups.map((group) => searchEntries(group.entries, term, true));
+
+  // Sortiert wird nur innerhalb einer Gruppe; im Toleranz-Durchgang stehen
+  // deshalb auch die Gruppen nach ihrem besten Treffer. Enter nimmt den ersten
+  // Eintrag im DOM - und das muss der beste ueber alle Gruppen hinweg sein.
+  const order = groups.map((group, at) => at);
+  if (fuzzy) order.sort((a, b) => groupDistance(perGroup[a], term) - groupDistance(perGroup[b], term));
+
+  let html = fuzzy ? `<p class="picker-hint">Nichts passt genau zu „${esc(typed)}“ – ähnliche Namen:</p>` : '';
   let matches = 0;
-  for (const group of groups) {
-    const hits = term
-      ? group.entries.filter((entry) => normalize(entry.name).includes(term) || entry.species.includes(term))
-      : group.entries;
+  for (const at of order) {
+    const group = groups[at];
+    const hits = perGroup[at];
     if (!hits.length) continue;
     matches += hits.length;
 
@@ -1069,7 +1434,7 @@ function renderPickerList() {
 
   el.pickerList.innerHTML = matches
     ? html
-    : `<p class="picker-empty">Nichts gefunden zu „${esc(el.pickerSearch.value.trim())}“.</p>`;
+    : `<p class="picker-empty">Nichts gefunden zu „${esc(typed)}“ – deutscher oder englischer Name.</p>`;
 }
 
 function openPicker(row, playerId) {
@@ -1172,12 +1537,8 @@ async function openPlayersDialog() {
   el.playersDialog.showModal();
   // Die Tallies gelten fuer alle Runs - anders als die Fail-Statistik der
   // rechten Spalte, die nur den offenen Run zeigt.
-  try {
-    state.stats = await api('/stats');
-    renderPlayerList();
-  } catch {
-    // Ohne Statistik bleibt die Liste stehen, nur ohne Zahlen.
-  }
+  await loadStats();
+  renderPlayerList();
 }
 
 function renderPlayerList() {
@@ -1201,7 +1562,12 @@ el.playerList.addEventListener('click', async (event) => {
   if (!button) return;
   const entry = player(button.dataset.remove);
   if (!entry) return;
-  if (!window.confirm(`${entry.name} entfernen? Die Einträge dieses Spielers verschwinden in allen Runs.`)) return;
+  const confirmed = await ask({
+    title: `${entry.name} entfernen?`,
+    text: 'Die Einträge dieses Spielers verschwinden in allen Runs.',
+    confirmLabel: 'Entfernen',
+  });
+  if (!confirmed) return;
   // DELETE antwortet mit 204, also ohne Inhalt - der Erfolg muss hier selbst
   // markiert werden, sonst ist er von einem abgefangenen Fehler nicht zu
   // unterscheiden (beides waere null).
@@ -1296,14 +1662,46 @@ el.locationSearch.addEventListener('keydown', (event) => {
 
 el.typeReset.addEventListener('click', () => {
   state.types = [];
+  state.typeMon = null;
   renderRunView();
 });
+
+/** Ein Pokémon aus der Tabelle in den Typenrechner legen.
+ *
+ * Die Auswahl im Rechner sind danach genau seine Typen, das Ergebnisfeld zeigt
+ * Angriff und Abwehr zugleich. Ohne Typen im Katalog (Freitext-Eintrag) gibt es
+ * den Knopf gar nicht erst - hier faellt nur der Rest ab.
+ */
+function showMonTypes(row, playerId) {
+  const pick = row.picks[playerId] || {};
+  const types = speciesTypes(pick.species);
+  if (!types.length) return;
+  const info = speciesInfo(pick.species);
+  state.types = types.slice(0, MAX_TYPES);
+  state.typeMon = {
+    rowId: row.id,
+    playerId,
+    // Die Art ist der Anker: weicht die Zelle spaeter davon ab, gilt der
+    // Schnappschuss nicht mehr (`syncTypeMon()`).
+    species: pick.species,
+    name: pick.name || info?.name || '',
+    dex: info?.dex ?? 0,
+    color: player(playerId)?.color || 'var(--accent)',
+    types: state.types,
+  };
+  renderRunView();
+  // Auf schmalen Fenstern steht die rechte Spalte unter der Tabelle - ohne das
+  // passierte auf den Klick sichtbar nichts.
+  el.typeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
 /**
  * Beim dritten Typ faellt der aelteste heraus, statt den Klick zu schlucken -
  * eine tote Schaltflaeche liest sich sonst wie ein Fehler.
  */
 function toggleType(type) {
+  // Von Hand gewaehlte Typen sind nicht mehr das geladene Pokémon.
+  state.typeMon = null;
   const at = state.types.indexOf(type);
   if (at >= 0) state.types.splice(at, 1);
   else state.types.push(type);
@@ -1330,14 +1728,22 @@ document.addEventListener('click', async (event) => {
     state.sort = target.dataset.sort;
     window.localStorage.setItem(SORT_KEY, state.sort);
     renderRunView();
+  } else if (action === 'stats-scope') {
+    state.statsScope = target.dataset.scope;
+    window.localStorage.setItem(STATS_SCOPE_KEY, state.statsScope);
+    renderStats();
   } else if (action === 'type') toggleType(target.dataset.type);
   else if (action === 'type-mode') {
     state.mode = target.dataset.mode;
+    renderRunView();
+  } else if (action === 'type-mon-clear') {
+    state.typeMon = null;
     renderRunView();
   } else if (action === 'cap') await changeCap(Number(target.dataset.cap));
   else if (action === 'cap-step') await changeCap((state.run?.progress ?? 0) + Number(target.dataset.delta));
   else if (!row) return;
   else if (action === 'team') await patchRow(row.id, { in_team: !row.in_team });
+  else if (action === 'type-mon') showMonTypes(row, target.dataset.player);
   else if (action === 'kill') await handleKill(row, target.dataset.player);
   else if (action === 'pick') openPicker(row, target.dataset.player);
   else if (action === 'state') await handleStateAction(row);
@@ -1367,9 +1773,25 @@ async function loadRun(runId) {
   await ensureCatalog(data.game_id);
 }
 
+/** Die Negativstatistik ueber alle Runs.
+ *
+ * Sie ist Beiwerk und darf deshalb scheitern, ohne die Seite mitzunehmen: der
+ * Block zeigt dann seinen Platzhalter, der Rest steht.
+ */
+async function loadStats() {
+  try {
+    state.stats = await api('/stats');
+  } catch {
+    // Ohne Zahlen ist die Uebersicht immer noch die Uebersicht. Der alte Stand
+    // faellt dabei weg: er zeigte sonst unbemerkt Runs, die es nicht mehr gibt.
+    state.stats = null;
+  }
+}
+
 async function reloadEverything() {
   await loadRuns();
   if (state.view === 'run') await loadRun(state.currentRunId);
+  else await loadStats();
   render();
 }
 
@@ -1379,6 +1801,8 @@ async function openRun(runId) {
     state.view = 'run';
     state.filter = 'alle';
     state.search = '';
+    // Das geladene Pokémon gehoerte zum vorherigen Run.
+    state.typeMon = null;
     el.locationSearch.value = '';
     updateHash();
     render();
@@ -1388,10 +1812,14 @@ async function openRun(runId) {
   }
 }
 
-function showHome() {
+async function showHome() {
   state.view = 'home';
   updateHash();
+  // Erst zeichnen, dann die Zahlen nachreichen: die Uebersicht soll nicht auf
+  // einen Request warten, den sie auch ohne darstellen kann.
   render();
+  await loadStats();
+  renderStats();
 }
 
 function updateHash() {
@@ -1431,6 +1859,7 @@ async function poll() {
     await loadRuns();
     if (state.updatedAt === seen) return;
     if (state.view === 'run') await loadRun(state.currentRunId);
+    else await loadStats();
     render();
   } catch {
     // Ein verpasster Poll ist kein Fehler, der die Seite stoeren soll.
@@ -1467,6 +1896,8 @@ function connectStream() {
 
 async function init() {
   state.sort = window.localStorage.getItem(SORT_KEY) === 'status' ? 'status' : 'order';
+  const scope = window.localStorage.getItem(STATS_SCOPE_KEY);
+  if (STATS_SCOPES.some(([key]) => key === scope)) state.statsScope = scope;
 
   try {
     state.games = await api('/games');
@@ -1477,6 +1908,8 @@ async function init() {
       await openRun(wanted);
     } else {
       render();
+      await loadStats();
+      renderStats();
     }
 
     connectStream();

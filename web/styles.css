@@ -51,6 +51,8 @@
   --warn-bg: #f7edd9;
   --warn-row: #faf3e4;
   --warn-bar: #c98f22;
+  /* Die Zahl an einem 'vergeigt'-Zaehler - im Kopf wie in der Statistik. */
+  --warn-stat: #c07a2c;
 
   --shadow-card: 0 2px 10px rgba(27, 35, 48, .05);
   --shadow-dialog: 0 24px 60px rgba(15, 20, 30, .4);
@@ -198,7 +200,7 @@ h1, h2 { margin: 0; }
 .head-stat span { font-size: 10px; font-weight: 800; letter-spacing: .08em; color: var(--label); }
 .head-stat.good b { color: var(--good); }
 .head-stat.bad b { color: var(--bad); }
-.head-stat.warn b { color: #c07a2c; }
+.head-stat.warn b { color: var(--warn-stat); }
 
 .error {
   flex: 0 0 auto;
@@ -238,6 +240,19 @@ h1, h2 { margin: 0; }
 }
 
 .ghost-button:hover { background: #eef2f8; }
+
+.danger-button {
+  padding: 10px 17px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--bad);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.danger-button:hover { background: #9b3831; }
 
 .icon-button {
   width: 32px;
@@ -425,6 +440,44 @@ h1, h2 { margin: 0; }
 .new-run-card b { font-size: 26px; font-weight: 800; color: var(--label); }
 .new-run-card strong { font-size: 14.5px; font-weight: 800; color: var(--ink-3); }
 .new-run-card span { font-size: 12.5px; font-weight: 600; color: var(--label-2); }
+
+/* ------------------------------------------------------------ Statistik -- */
+
+.stats-section { display: flex; flex-direction: column; gap: 13px; border-top: 1px solid #d8dfe9; padding-top: 22px; }
+.stats-head { display: flex; align-items: center; gap: 10px; }
+.stats-head h2 { font-size: 17px; font-weight: 800; }
+
+/* 'Gesamt' ist ein einziger Block und bekommt die ganze Breite; pro Run und pro
+   Variante kacheln nebeneinander. */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.stats-grid.is-single { grid-template-columns: 1fr; }
+.stats-empty { margin: 0; font-size: 13.5px; font-weight: 700; color: var(--label-2); }
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 17px 18px;
+  border: 1.5px solid var(--line-input);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.stat-card-head { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+.stat-card-head b { font-size: 17px; font-weight: 800; line-height: 1.1; }
+.stat-card-head span { font-size: 12.5px; font-weight: 700; color: var(--label); }
+
+.stat-counters { display: flex; gap: 22px; flex-wrap: wrap; }
+.stat-counter { display: flex; flex-direction: column; gap: 2px; }
+.stat-counter b { font-size: 21px; font-weight: 800; line-height: 1; }
+.stat-counter span { font-size: 9.5px; font-weight: 800; letter-spacing: .08em; color: var(--label); }
+.stat-counter.good b { color: var(--good); }
+.stat-counter.bad b { color: var(--bad); }
+.stat-counter.warn b { color: var(--warn-stat); }
+
+.stat-bars { display: flex; flex-direction: column; gap: 8px; }
+.stat-foot { font-size: 11.5px; font-weight: 600; color: var(--label); }
 
 .roster { display: flex; flex-direction: column; gap: 11px; border-top: 1px solid #d8dfe9; padding-top: 22px; }
 .roster-head { display: flex; align-items: center; gap: 10px; }
@@ -660,7 +713,7 @@ h1, h2 { margin: 0; }
 .weak-note { font-size: 11.5px; font-weight: 800; color: var(--bad); }
 .dupe-note { font-size: 12px; font-weight: 800; color: var(--warn-bar); }
 
-.kill-button {
+.kill-button, .calc-button {
   flex: 0 0 30px;
   margin: 7px 7px 7px 0;
   border: 1px solid var(--line-cell);
@@ -672,8 +725,11 @@ h1, h2 { margin: 0; }
   cursor: pointer;
 }
 
+.calc-button { margin-right: 4px; font-size: 13px; }
 .kill-button:hover { background: var(--bad-bg); border-color: #eec9c5; color: var(--bad); }
 .kill-button.is-dead { color: var(--bad); }
+.calc-button:hover { background: #eef2fb; border-color: #bdcdea; color: var(--accent); }
+.calc-button.is-on { border-color: var(--accent); background: var(--accent); color: #fff; }
 
 .state-cell {
   display: flex;
@@ -784,6 +840,29 @@ h1, h2 { margin: 0; }
 .fail-row .bar { flex: 1; height: 13px; border-radius: 7px; }
 .fail-row .tally { font-size: 12px; font-weight: 800; color: var(--ink-3); flex: 0 0 auto; }
 .blame-line { font-size: 11.5px; font-weight: 600; color: var(--label); }
+
+/* Das Pokémon aus der Tabelle, solange eines im Rechner liegt. */
+.type-mon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 9px;
+  border: 1.5px solid #bdcdea;
+  border-radius: 11px;
+  background: #f5f8fd;
+}
+
+.type-mon .sprite { flex-basis: 36px; width: 36px; height: 36px; background-color: var(--surface); background-size: 34px 34px; }
+.type-mon-text { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.type-mon-text b { display: flex; align-items: center; gap: 7px; font-size: 14.5px; font-weight: 800; line-height: 1.1; }
+.type-mon-text .dot { width: 9px; height: 9px; flex-basis: 9px; }
+.type-mon-types { display: flex; gap: 4px; flex-wrap: wrap; }
+.type-mon .icon-button { flex: 0 0 26px; width: 26px; height: 26px; font-size: 12px; }
+
+/* Bei geladenem Pokémon stehen Angriff und Abwehr untereinander im selben Feld. */
+.type-section { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.type-section:last-child { margin-bottom: 0; }
+.type-plain { font-size: 12px; font-weight: 700; color: var(--label-2); }
 
 .type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
 
@@ -919,6 +998,8 @@ h1, h2 { margin: 0; }
 .picker-option .warn { margin-left: auto; font-size: 15px; color: var(--warn-bar); }
 
 .picker-empty { padding: 22px 4px; font-size: 13.5px; font-weight: 700; color: var(--label-2); }
+/* Nur im zweiten Suchdurchgang: was hier steht, passt nicht woertlich. */
+.picker-hint { margin: 12px 0 0; font-size: 12.5px; font-weight: 700; color: var(--warn); }
 
 .dialog-foot {
   display: flex;

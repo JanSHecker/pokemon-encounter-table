@@ -1731,17 +1731,32 @@ def get_stats(
     per_run = []
 
     for run in runs:
-        run_counts = {"dead": 0, "failed": 0}
+        # Jeder Run zaehlt fuer sich und wird danach aufaddiert. Die Aufschluesselung
+        # pro Run ist es, woraus die Uebersicht 'Gesamt', 'pro Run' und 'pro
+        # Variante' rechnet - ohne sie braeuchte sie einen Request je Run.
+        run_by_player = {outcome: {player_id: 0 for player_id in player_ids} for outcome in ("dead", "failed")}
+        run_unassigned = {"dead": 0, "failed": 0}
+        # Die Zeilen werden genau einmal durchgegangen. row_counts() liefe noch
+        # fuenfmal darueber und rechnete dabei drei Werte aus, die hier niemand
+        # liest.
+        run_outcomes = {"pending": 0, "caught": 0, "dead": 0, "failed": 0}
+
         for row in run["encounters"]:
             outcome = row["outcome"]
-            if outcome not in run_counts:
+            if outcome in run_outcomes:
+                run_outcomes[outcome] += 1
+            if outcome not in run_unassigned:
                 continue
-            run_counts[outcome] += 1
             responsible = row.get("responsible_player")
-            if responsible in by_player[outcome]:
-                by_player[outcome][responsible] += 1
+            if responsible in run_by_player[outcome]:
+                run_by_player[outcome][responsible] += 1
             else:
-                unassigned[outcome] += 1
+                run_unassigned[outcome] += 1
+
+        for outcome in ("dead", "failed"):
+            for player_id, value in run_by_player[outcome].items():
+                by_player[outcome][player_id] += value
+            unassigned[outcome] += run_unassigned[outcome]
 
         per_run.append(
             {
@@ -1750,8 +1765,15 @@ def get_stats(
                 "game_id": run["game_id"],
                 "game_name": game_name_of(run["game_id"]),
                 "status": run["status"],
-                "deaths": run_counts["dead"],
-                "failed_encounters": run_counts["failed"],
+                "deaths": run_outcomes["dead"],
+                "failed_encounters": run_outcomes["failed"],
+                "deaths_by_player": run_by_player["dead"],
+                "failed_encounters_by_player": run_by_player["failed"],
+                "unassigned_deaths": run_unassigned["dead"],
+                "unassigned_failed_encounters": run_unassigned["failed"],
+                "encounter_count": len(run["encounters"]),
+                "caught_count": run_outcomes["caught"],
+                "pending_count": run_outcomes["pending"],
             }
         )
 

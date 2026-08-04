@@ -1227,3 +1227,48 @@ def test_stats_can_be_limited_to_one_game(client):
     stats = client.get("/stats?game_id=platinum").json()
     assert stats["scope"] == "platinum"
     assert stats["total_runs"] == 1
+
+
+def test_every_run_carries_its_own_breakdown(client):
+    """Die Uebersicht rechnet Gesamt, pro Run und pro Variante aus dieser Liste.
+
+    Ohne die Aufschluesselung am Run braeuchte sie einen Request je Run - und
+    'pro Variante' liesse sich gar nicht bilden.
+    """
+    catch_row(client, "sinnoh-route-201")
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        json={"picks": {"knev": {"status": "dead"}}, "responsible_player": "knev"},
+    )
+    client.patch(
+        "/encounters/sinnoh-route-202",
+        json={"outcome": "failed", "responsible_player": "niemand"},
+    )
+    # Der neue Run wird der aktuelle - '/encounters' schreibt ab hier in ihn.
+    # Ohne einen zweiten Vorfall haette die Summe ueber die Runs nichts zu
+    # addieren und ein '=' statt '+=' bliebe unbemerkt.
+    client.post("/runs", json={"id": "run-2", "name": "Run 2", "game_id": "platinum"})
+    client.patch(
+        "/encounters/sinnoh-route-201",
+        json={"picks": {"knev": {"status": "dead"}}, "responsible_player": "knev"},
+    )
+
+    stats = client.get("/stats").json()
+    first, second = stats["runs"]
+
+    assert first["deaths_by_player"] == {"marc": 0, "nicolai": 0, "knev": 1}
+    assert first["deaths"] == 1
+    assert first["failed_encounters"] == 1
+    assert first["unassigned_failed_encounters"] == 1
+    assert first["failed_encounters_by_player"] == {"marc": 0, "nicolai": 0, "knev": 0}
+    assert (first["encounter_count"], first["caught_count"]) == (3, 0)
+
+    assert second["deaths"] == 1
+    assert second["deaths_by_player"] == {"marc": 0, "nicolai": 0, "knev": 1}
+    assert second["failed_encounters"] == 0
+    assert second["caught_count"] == 0
+
+    # Die Summe der Runs ist die Gesamtstatistik - beides kommt aus denselben Zeilen.
+    assert stats["total_deaths"] == first["deaths"] + second["deaths"] == 2
+    assert stats["deaths_by_player"]["knev"] == 2
+    assert stats["unassigned_failed_encounters"] == 1
